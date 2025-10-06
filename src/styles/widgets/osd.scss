@@ -1,0 +1,47 @@
+@use '../../colors.scss' as c;
+
+.osd-container {
+  background-color: c.$bg;
+  color: c.$fg;
+  padding: 1rem 2rem;
+  border-radius: 1rem;
+  opacity: 0;
+  transform: translateY(4rem);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  margin-bottom: 1rem;
+}
+
+.osd-container.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.osd-container.hidden {
+  opacity: 0;
+  transform: translateY(4rem);
+}
+
+.volume-icon {
+  color: c.$accent;
+}
+
+.brightness-icon {
+  color: c.$accent;
+}
+
+.volume-bar,
+.brightness-bar {
+  min-width: 200px;
+  border-radius: 10px;
+}
+
+scale trough {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  min-height: 8px;
+}
+
+scale highlight {
+  background-color: c.$accent;
+  border-radius: 10px;
+}

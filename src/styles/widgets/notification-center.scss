@@ -1,0 +1,67 @@
+@use '../../colors.scss' as c;
+
+.notification-center-window {
+  margin: 1rem;
+  background-color: c.$bg;
+  padding: 1rem;
+  border-radius: 1rem;
+}
+
+.notification-center-header {
+  margin-bottom: 1rem;
+}
+
+.notification {
+  background-color: c.$bg-lighter;
+  border-radius: 1rem;
+  padding: 1rem;
+  margin-top: 1rem;
+}
+
+.notification-count {
+  background-color: c.$bg-lighter;
+  color: c.$fg;
+  min-width: 2rem;
+  font-size: 1.5rem;
+  border-radius: 2rem;
+}
+
+.notification-header-label {
+  font-size: 1.1rem;
+  margin-left: 0.5rem;
+}
+
+.notification-close {
+  color: c.$fg;
+  border-radius: 1rem;
+  padding: 0.25rem;
+  margin-left: 0.5rem;
+  transition: 0.3s;
+}
+
+.notification-clear-all {
+  transition: 0.3s;
+  border-radius: 1rem;
+  padding: 0.25rem 1rem;
+}
+
+.notification-action {
+  background-color: c.$accent;
+  color: c.$fg;
+  border-radius: 0.5rem;
+  padding: 0.25rem 0.25rem;
+  transition: 0.3s;
+}
+
+.notification-screenshot-label {
+  margin-top: 0.5rem;
+  font-size: 1.1rem;
+}
+
+.notification-center-info-label {
+  color: c.$fg;
+}
+
+.notification-body {
+  color: c.$fg;
+}

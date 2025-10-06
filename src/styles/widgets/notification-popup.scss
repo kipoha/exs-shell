@@ -1,0 +1,24 @@
+@use '../../colors.scss' as c;
+
+.notification-popup-window {
+  margin: 1rem;
+}
+
+.notification-popup {
+  margin-top: 0.5rem;
+  min-width: 25rem;
+  background-color: c.$bg;
+  padding: 1rem;
+  border-radius: 1rem;
+
+  & .notification-close {
+    background-color: c.$accent;
+    border-radius: 0.5rem;
+    color: c.$bg;
+  }
+
+  & .notification-action {
+    background-color: c.$accent;
+    border-radius: 0.5rem;
+    color: c.$bg;
+  }}

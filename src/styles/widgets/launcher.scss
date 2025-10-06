@@ -1,0 +1,35 @@
+@use '../../colors.scss' as c;
+
+.launcher {
+  padding: 2rem;
+  color: c.$fg;
+}
+
+.launcher-search-box {
+  padding: 1rem;
+  background-color: c.$bg-lighter;
+  border-radius: 1rem;
+  min-width: 40rem;
+  margin-top: 1rem;
+  margin-left: 100rem;
+  margin-right: 100rem;
+}
+
+.launcher-app {
+  all: unset;
+  border-radius: 1rem;
+  padding: 0.5rem;
+  border: 2px solid c.$border;
+  background-color: c.$bg-lighter;
+  margin: 0.5rem;
+  transition: 0.2s;
+
+  &:focus {
+    border: 2px solid c.$active;
+  }
+}
+
+.launcher-app-label {
+  font-size: 1rem;
+  margin-top: 0.5rem;
+}

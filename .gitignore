@@ -1,0 +1,63 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+venv
+
+.vscode
+.git
+
+**/__pycache__/
+
+**/migrations/*
+!**/migrations/__init__.py
+
+back_static/
+/back_static/
+*/back_static/
+
+back_media/
+/back_media/
+*/back_media/
+
+.env
+
+*.sqlite3
+*.sqlite3-journal
+*.sqlite
+*.sqlite-journal
+*.db
+*.db-journal
+
+.idea
+
+model.dot
+
+Makefile-dev
+
+# my test files
+text.txt
+test.py
+
+# Pyright
+pyrightconfig.json
+
+# Celery
+celerybeat-schedule
+
+# Postgres Data
+storage
+rabbitmq_data
+
+# Data
+data_only.dump
+full_dump.dump
+
+.dev_local/
+test_html

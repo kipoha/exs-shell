@@ -1,0 +1,22 @@
+.lockscreen-window {
+  background-color: rgba(0, 0, 0, 1);
+  /* backdrop-filter: blur(100px); */
+}
+
+.lockscreen-label {
+  color: #f0dedf;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.lockscreen-entry {
+  min-width: 20rem;
+  border-radius: 0.5rem;
+  padding: 0.7rem 1rem;
+  background-color: #261d1e;
+  color: #f0dedf;
+  border: 1px solid #37292b;
+}
+
+
