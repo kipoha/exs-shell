@@ -76,9 +76,11 @@ class NotificationList(widgets.Box):
 
 class NotificationCenter(widgets.Window):
     def __init__(self, **kwargs):
+        self._is_open = False
+
         self._box = widgets.Box(
             vertical=True,
-            css_classes=["notification-center-window"],
+            css_classes=["notification-center-window", "hidden"],
             child=[
                 widgets.Box(
                     css_classes=["notification-center-header"],
@@ -119,3 +121,23 @@ class NotificationCenter(widgets.Window):
             child=self._box,
             **kwargs,
         )
+
+    def toggle(self):
+        if not self._is_open:
+            self.set_visible(True)
+            self._box.remove_css_class("hidden")
+            self._box.add_css_class("visible")
+            self._is_open = True
+
+        else:
+            self._box.remove_css_class("visible")
+            self._box.add_css_class("hidden")
+
+            ANIMATION_DURATION_MS = 200
+
+            def hide_after_animation():
+                self.set_visible(False)
+                self._is_open = False
+                return False
+
+            GLib.timeout_add(ANIMATION_DURATION_MS, hide_after_animation)

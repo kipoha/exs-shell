@@ -5,6 +5,19 @@
   background-color: c.$bg;
   padding: 1rem;
   border-radius: 1rem;
+  opacity: 0;
+  transform: translateY(10rem);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.notification-center-window.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.notification-center-window.hidden {
+  opacity: 0;
+  transform: translateY(10rem);
 }
 
 .notification-center-header {

@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 import re
 import asyncio
 
@@ -10,7 +11,7 @@ from ignis.services.applications import (
 )
 from ignis.menu_model import IgnisMenuModel, IgnisMenuItem, IgnisMenuSeparator
 
-from gi.repository import Gio, Gtk  # type: ignore
+from gi.repository import Gio, GLib, Gdk, Gtk  # type: ignore
 
 from config import config, user_config
 
@@ -36,8 +37,35 @@ def is_url(url: str) -> bool:
     return re.match(regex, url) is not None
 
 
-class CustomActionItem(widgets.Button):
-    pass
+@dataclass
+class Action:
+    name: str
+    command: str
+    icon: str
+
+
+class ActionItem(widgets.Button):
+    def __init__(self, action: Action):
+        self.action = action
+        super().__init__(
+            on_click=lambda x: self.launch(),
+            css_classes=["launcher-app"],
+            child=widgets.Box(
+                child=[
+                    widgets.Icon(image=self.action.icon, pixel_size=48),
+                    widgets.Label(
+                        label=self.action.name,
+                        css_classes=["launcher-app-label"],
+                    ),
+                ],
+                spacing=10,
+            ),
+        )
+
+    def launch(self) -> None:
+        asyncio.create_task(utils.exec_sh_async(self.action.command))
+        window = window_manager.get_window(f"{config.NAMESPACE}_launcher")
+        window.toggle()
 
 
 class LauncherAppItem(widgets.Button):
@@ -59,7 +87,8 @@ class LauncherAppItem(widgets.Button):
                         css_classes=["launcher-app-label"],
                     ),
                     self._menu,
-                ]
+                ],
+                spacing=10,
             ),
         )
         self.__sync_menu()
@@ -67,11 +96,13 @@ class LauncherAppItem(widgets.Button):
 
     def launch(self) -> None:
         self._application.launch(terminal_format=TERMINAL_FORMAT)
-        window_manager.close_window(f"{config.NAMESPACE}_launcher")
+        window = window_manager.get_window(f"{config.NAMESPACE}_launcher")
+        window.toggle()
 
     def launch_action(self, action: ApplicationAction) -> None:
         action.launch()
-        window_manager.close_window(f"{config.NAMESPACE}_launcher")
+        window = window_manager.get_window(f"{config.NAMESPACE}_launcher")
+        window.toggle()
 
     def __sync_menu(self) -> None:
         self._menu.model = IgnisMenuModel(
@@ -130,19 +161,29 @@ class SearchWebButton(widgets.Button):
                         label=label,
                         css_classes=["launcher-app-label"],
                     ),
-                ]
+                ],
+                spacing=10,
             ),
         )
 
     def launch(self) -> None:
         asyncio.create_task(utils.exec_sh_async(f"xdg-open {self._url}"))
-        window_manager.close_window(f"{config.NAMESPACE}_launcher")
+        window = window_manager.get_window(f"{config.NAMESPACE}_launcher")
+        window.toggle()
+
+
+actions = [
+    Action(name="Terminal", command="kitty", icon="utilities-terminal-symbolic"),
+    Action(name="Browser", command="firefox", icon="web-browser-symbolic"),
+]
 
 
 class Launcher(widgets.Window):
     def __init__(self):
-        self.MAX_ITEMS = 78
+        self._is_open = False
+        self.MAX_ITEMS = 65
         self._app_list = widgets.Grid(
+            css_classes=["launcher-grid"],
             column_homogeneous=True,
             row_homogeneous=True,
             hexpand=True,
@@ -164,7 +205,7 @@ class Launcher(widgets.Window):
             vertical=True,
             valign="end",
             halign="center",
-            css_classes=["launcher"],
+            css_classes=["launcher", "hidden"],
             child=[
                 self._app_list,
                 widgets.Box(
@@ -185,10 +226,8 @@ class Launcher(widgets.Window):
         super().__init__(
             namespace=f"{config.NAMESPACE}_launcher",
             visible=False,
-            popup=True,
             kb_mode="on_demand",
             css_classes=["unset"],
-            setup=lambda self: self.connect("notify::visible", self.__on_open),
             anchor=["top", "right", "bottom", "left"],
             child=widgets.Overlay(
                 child=widgets.Button(
@@ -196,9 +235,7 @@ class Launcher(widgets.Window):
                     hexpand=True,
                     can_focus=False,
                     css_classes=["unset"],
-                    on_click=lambda x: window_manager.close_window(
-                        f"{config.NAMESPACE}_launcher"
-                    ),
+                    on_click=lambda x: self.toggle(),
                     style="background-color: rgba(0, 0, 0, 0.3);",
                 ),
                 overlays=[main_box],
@@ -206,7 +243,36 @@ class Launcher(widgets.Window):
             style="background-color: rgba(0, 0, 0, 0.7);",
         )
 
+        key_controller = Gtk.EventControllerKey()
+        key_controller.connect("key-pressed", self.__on_key_press)
+        self.add_controller(key_controller)
         self.__show_all_apps()
+
+    def __on_key_press(self, controller, keyval, keycode, state):
+        if keyval == Gdk.KEY_Escape and self._is_open:
+            self.toggle()
+            return True
+        return False
+
+    def toggle(self):
+        if not self._is_open:
+            self.set_visible(True)
+            self._main_box.remove_css_class("hidden")
+            self._main_box.add_css_class("visible")
+            self._is_open = True
+            self.__on_open()
+        else:
+            self._main_box.remove_css_class("visible")
+            self._main_box.add_css_class("hidden")
+
+            ANIMATION_DURATION_MS = 300
+
+            def hide_after_animation():
+                self.set_visible(False)
+                self._is_open = False
+                return False
+
+            GLib.timeout_add(ANIMATION_DURATION_MS, hide_after_animation)
 
     def __show_all_apps(self):
         apps = applications.apps
@@ -231,7 +297,7 @@ class Launcher(widgets.Window):
         if not items:
             return
 
-        columns = 6
+        columns = 5
         for idx, item in enumerate(items):
             row = idx // columns
             col = idx % columns
@@ -241,10 +307,15 @@ class Launcher(widgets.Window):
             self._added_items.append(widget)
 
     def __search(self, *args) -> None:
-        query = self._entry.text.strip()
+        query = self._entry.text.lower().strip()
 
         if query == "":
             self.__show_all_apps()
+            return
+
+        prefix = user_config.get("command_prefix", ">")
+        if query.startswith(prefix):
+            self._populate_grid([ActionItem(action) for action in actions if query.replace(prefix, "") in action.name.lower().strip()])
             return
 
         filtered = applications.search(applications.apps, query)

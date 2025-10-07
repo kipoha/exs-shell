@@ -3,6 +3,8 @@ import json
 from typing import Any
 
 from commands.osd import generate_osd_commands
+from commands.notification import generate_notification_commands
+from commands.launcher import generate_launcher_commands
 from utils import PathUtils, send_notification
 
 from config.log import logger
@@ -68,13 +70,15 @@ class Config(SingletonClass):
         )
 
         from window import Settings
-        Launcher()
-        NotificationCenter()
+        launcher = Launcher()
+        generate_launcher_commands(launcher)
+        notification_center = NotificationCenter()
+        generate_notification_commands(notification_center)
+        osd = OSD()
+        generate_osd_commands(osd)
 
         for i in range(utils.get_n_monitors()):
             Bar(i)
-            osd = OSD(i)
-            generate_osd_commands(osd)
             NotificationPopup(i)
 
         LockScreen()

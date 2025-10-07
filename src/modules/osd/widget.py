@@ -53,10 +53,9 @@ class OSDProgress(widgets.Box):
 
 
 class OSD(widgets.Window):
-    def __init__(self, monitor_id: int = 0, **kwargs):
+    def __init__(self, **kwargs):
         super().__init__(
-            namespace=f"{config.NAMESPACE}_osd_{monitor_id}",
-            monitor=monitor_id,
+            namespace=f"{config.NAMESPACE}_osd",
             popup=True,
             layer="overlay",
             visible=False,

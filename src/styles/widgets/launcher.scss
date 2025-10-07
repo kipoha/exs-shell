@@ -3,6 +3,20 @@
 .launcher {
   padding: 2rem;
   color: c.$fg;
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.launcher.visible {
+  opacity: 1;
+}
+
+.launcher.hidden {
+  opacity: 0;
+}
+
+.launcher-grid {
+  margin-bottom: 1rem;
 }
 
 .launcher-search-box {
@@ -10,17 +24,15 @@
   background-color: c.$bg-lighter;
   border-radius: 1rem;
   min-width: 40rem;
-  margin-top: 1rem;
   margin-left: 100rem;
   margin-right: 100rem;
 }
 
 .launcher-app {
   all: unset;
-  border-radius: 1rem;
-  padding: 0.5rem;
-  border: 2px solid c.$border;
-  background-color: c.$bg-lighter;
+  border-radius: 3rem;
+  padding: 1rem;
+  border: 2px solid transparent;
   margin: 0.5rem;
   transition: 0.2s;
 

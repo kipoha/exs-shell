@@ -1,7 +1,6 @@
 from ignis.command_manager import CommandManager
 
 
-
 command_manager = CommandManager.get_default()
 
 
