@@ -20,7 +20,7 @@ class Bar(widgets.Window):
 
         self.niri = NiriService.get_default()
         self.niri.connect("notify::overview-opened", self.on_overview_changed)
-        GLib.idle_add(lambda: self.show() if self.niri.get_property("overview-opened") else self.hide())
+        GLib.idle_add(lambda: self.set_visible(True) if self.niri.get_property("overview-opened") else self.set_visible(False))
 
         monitor_name = utils.get_monitor(monitor_id).get_connector()  # type: ignore
         super().__init__(
@@ -30,7 +30,7 @@ class Bar(widgets.Window):
             # exclusivity="exclusive",
             child=widgets.CenterBox(
                 css_classes=["bar"],
-                start_widget=left(monitor_name),  # type: ignore
+                start_widget=left(monitor_name),
                 center_widget=center(monitor_name),
                 end_widget=right(monitor_name),
             ),
@@ -46,7 +46,7 @@ class Bar(widgets.Window):
             GLib.idle_add(self._hide_bar)
 
     def _show_bar(self):
-        self.show()
+        self.set_visible(True)
         GLib.timeout_add(150, lambda: self.get_child().add_css_class("visible") or False)
         self.get_child().remove_css_class("hidden")
         return False
@@ -54,5 +54,5 @@ class Bar(widgets.Window):
     def _hide_bar(self):
         self.get_child().remove_css_class("visible")
         self.get_child().add_css_class("hidden")
-        GLib.timeout_add(300, lambda: self.hide())
+        GLib.timeout_add(300, lambda: self.set_visible(False) or False)
         return False

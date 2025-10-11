@@ -3,9 +3,11 @@ from ignis.services.notifications import Notification, NotificationService
 
 from gi.repository import GLib  # type: ignore
 
+from base.singleton import SingletonClass
+from base.window.animated import AnimatedWindow
 from config import config
 
-from modules import NotificationWidget
+from modules.notification.widget import NotificationWidget
 
 
 notifications = NotificationService.get_default()
@@ -74,11 +76,9 @@ class NotificationList(widgets.Box):
         return contents
 
 
-class NotificationCenter(widgets.Window):
+class NotificationCenter(AnimatedWindow, SingletonClass):
     def __init__(self, **kwargs):
-        self._is_open = False
-
-        self._box = widgets.Box(
+        self._main_box = widgets.Box(
             vertical=True,
             css_classes=["notification-center-window", "hidden"],
             child=[
@@ -118,26 +118,6 @@ class NotificationCenter(widgets.Window):
             default_height=400,
             resizable=False,
             visible=False,
-            child=self._box,
+            child=self._main_box,
             **kwargs,
         )
-
-    def toggle(self):
-        if not self._is_open:
-            self.set_visible(True)
-            self._box.remove_css_class("hidden")
-            self._box.add_css_class("visible")
-            self._is_open = True
-
-        else:
-            self._box.remove_css_class("visible")
-            self._box.add_css_class("hidden")
-
-            ANIMATION_DURATION_MS = 200
-
-            def hide_after_animation():
-                self.set_visible(False)
-                self._is_open = False
-                return False
-
-            GLib.timeout_add(ANIMATION_DURATION_MS, hide_after_animation)

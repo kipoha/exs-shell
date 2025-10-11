@@ -61,3 +61,5 @@ full_dump.dump
 
 .dev_local/
 test_html
+
+*.log

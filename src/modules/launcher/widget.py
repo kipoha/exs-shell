@@ -13,6 +13,8 @@ from ignis.menu_model import IgnisMenuModel, IgnisMenuItem, IgnisMenuSeparator
 
 from gi.repository import Gio, GLib, Gdk, Gtk  # type: ignore
 
+from base.singleton import SingletonClass
+from base.window.animated import AnimatedWindowPopup
 from config import config, user_config
 
 window_manager = WindowManager.get_default()
@@ -172,15 +174,11 @@ class SearchWebButton(widgets.Button):
         window.toggle()
 
 
-actions = [
-    Action(name="Terminal", command="kitty", icon="utilities-terminal-symbolic"),
-    Action(name="Browser", command="firefox", icon="web-browser-symbolic"),
-]
+actions = [Action(**action) for action in user_config.get("actions", [])]
 
 
-class Launcher(widgets.Window):
+class Launcher(AnimatedWindowPopup, SingletonClass):
     def __init__(self):
-        self._is_open = False
         self.MAX_ITEMS = 65
         self._app_list = widgets.Grid(
             css_classes=["launcher-grid"],
@@ -243,36 +241,12 @@ class Launcher(widgets.Window):
             style="background-color: rgba(0, 0, 0, 0.7);",
         )
 
-        key_controller = Gtk.EventControllerKey()
-        key_controller.connect("key-pressed", self.__on_key_press)
-        self.add_controller(key_controller)
         self.__show_all_apps()
 
-    def __on_key_press(self, controller, keyval, keycode, state):
-        if keyval == Gdk.KEY_Escape and self._is_open:
-            self.toggle()
-            return True
-        return False
-
-    def toggle(self):
+    def open(self):
         if not self._is_open:
-            self.set_visible(True)
-            self._main_box.remove_css_class("hidden")
-            self._main_box.add_css_class("visible")
-            self._is_open = True
+            super().open()
             self.__on_open()
-        else:
-            self._main_box.remove_css_class("visible")
-            self._main_box.add_css_class("hidden")
-
-            ANIMATION_DURATION_MS = 300
-
-            def hide_after_animation():
-                self.set_visible(False)
-                self._is_open = False
-                return False
-
-            GLib.timeout_add(ANIMATION_DURATION_MS, hide_after_animation)
 
     def __show_all_apps(self):
         apps = applications.apps

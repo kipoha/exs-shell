@@ -1,15 +1,16 @@
+import os
+import asyncio
 import json
 
 from typing import Any
 
-from commands.osd import generate_osd_commands
-from commands.notification import generate_notification_commands
-from commands.launcher import generate_launcher_commands
 from utils import PathUtils, send_notification
 
 from config.log import logger
 
 from base.singleton import SingletonClass
+
+from ipc_server.server import run_ipc_server
 
 try:
     from ignis import utils
@@ -25,7 +26,7 @@ class Config(SingletonClass):
     NAMESPACE: str = "EXS_SHELL"
 
     def __init__(self):
-        self._app: IgnisApp = IgnisApp.get_initialized()
+        self._app: IgnisApp = IgnisApp()
         self._css_manager: CssManager = CssManager.get_default()
 
     @property
@@ -56,37 +57,63 @@ class Config(SingletonClass):
             )
         )
 
-    def init_css(self):
+    def init_css(self) -> None:
         self.set_css_file("styles/main.scss")
 
-    def init_widgets(self):
-        from modules import (
-            Bar,
-            OSD,
-            Launcher,
-            LockScreen,
-            NotificationPopup,
-            NotificationCenter,
-        )
-
+    def init_widgets(self) -> None:
+        from modules.osd import OSD
+        from modules.bar import Bar
+        from modules.notification import NotificationPopup, NotificationCenter
+        from modules.launcher import Launcher
+        from modules.lockscreen import LockScreen
         from window import Settings
-        launcher = Launcher()
-        generate_launcher_commands(launcher)
-        notification_center = NotificationCenter()
-        generate_notification_commands(notification_center)
-        osd = OSD()
-        generate_osd_commands(osd)
+
+        Launcher.get_default()
+        NotificationCenter.get_default()
+        OSD.get_default()
 
         for i in range(utils.get_n_monitors()):
             Bar(i)
             NotificationPopup(i)
 
         LockScreen()
-        Settings()
+        Settings.get_default()
+        asyncio.create_task(run_ipc_server())
 
-    def __call__(self) -> None:
+    def init(self) -> None:
         self.init_css()
         self.init_widgets()
+
+    def get_full_path(self, path: str) -> str:
+        return os.path.abspath(os.path.expanduser(path))
+
+    def __call__(self, config: str, debug: bool = False) -> None:
+        from ignis.log_utils import configure_logger
+        from ignis._deprecation import _enable_deprecation_warnings
+        from ignis.config_manager import ConfigManager
+        from ignis.client import IgnisClient
+
+        client = IgnisClient()
+
+        if client.has_owner:
+            print("Exs-shell is already running.")
+            exit(1)
+
+        config_path = self.get_full_path(config)
+
+        _enable_deprecation_warnings()
+        configure_logger(debug)
+
+
+        self.app.connect(
+            "activate",
+            lambda x: ConfigManager.get_default()._load_config(app=x, path=config_path),
+        )
+
+        try:
+            self.app.run(None)
+        except KeyboardInterrupt:
+            pass
 
 
 cfg = Config.get_default()

@@ -1,2 +1,6 @@
-# ignis init -c ./src/main.py
-ignis init -c $HOME/.config/exs-shell/src/main.py
+#!/bin/bash
+
+shell="$HOME/.config/exs-shell"
+src="${shell}/src"
+
+ignis init -c "${src}/main.py"

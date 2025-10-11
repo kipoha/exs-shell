@@ -13,5 +13,17 @@
       "10": ""
     },
     "critical_level": 10
-  }
+  },
+  "actions": [
+    {
+      "name": "Terminal",
+      "command": "kitty",
+      "icon": "terminal"
+    },
+    {
+      "name": "Browser",
+      "command": "firefox",
+      "icon": "input-mouse"
+    }
+  ]
 }

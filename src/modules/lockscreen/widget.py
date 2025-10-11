@@ -75,6 +75,6 @@ class LockScreen(widgets.Window):
 
         auth = pam.pam()
         if auth.authenticate(username, password):
-            self.hide()
+            self.set_visible(False)
         else:
             self._entry.set_text("")

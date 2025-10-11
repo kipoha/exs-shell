@@ -2,7 +2,7 @@ from ignis import widgets
 
 
 def left(monitor_name) -> widgets.Box:
-    from modules.bar import modules
+    from modules.bar.childs import modules
     return widgets.Box(
         child=[
             modules["tray"]()
@@ -12,7 +12,7 @@ def left(monitor_name) -> widgets.Box:
 
 
 def center(monitor_name) -> widgets.Box:
-    from modules.bar import modules
+    from modules.bar.childs import modules
     return widgets.Box(
         child=[
             modules["clock"](),
@@ -23,7 +23,7 @@ def center(monitor_name) -> widgets.Box:
 
 
 def right(monitor_name) -> widgets.Box:
-    from modules.bar import modules
+    from modules.bar.childs import modules
     return widgets.Box(
         child=[
             modules["battery"](),

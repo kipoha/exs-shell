@@ -6,6 +6,6 @@ class SingletonClass:
 
     @classmethod
     def get_default(cls) -> Self:
-        if not cls._instance:
+        if cls._instance is None:
             cls._instance = cls()
         return cls._instance

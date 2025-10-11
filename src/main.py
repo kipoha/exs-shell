@@ -1,3 +1,3 @@
 from config import config as App
 
-App()
+App.init()

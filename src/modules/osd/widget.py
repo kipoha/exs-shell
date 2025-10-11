@@ -1,8 +1,10 @@
-import subprocess
+import asyncio
 
 from gi.repository import GLib  # type: ignore
 
 from ignis import widgets, utils
+
+from base.singleton import SingletonClass
 
 from config import config
 
@@ -52,7 +54,7 @@ class OSDProgress(widgets.Box):
         self._label.set_label(self._icon_muted if muted else self._icon_active)
 
 
-class OSD(widgets.Window):
+class OSD(widgets.Window, SingletonClass):
     def __init__(self, **kwargs):
         super().__init__(
             namespace=f"{config.NAMESPACE}_osd",
@@ -66,8 +68,9 @@ class OSD(widgets.Window):
         self._hide_timeout = None
         self._last_device = None
 
-        self._volume_value = self.get_volume()
-        self._brightness_value = self.get_brightness()
+        self._volume_value = 0
+        self._brightness_value = 0
+        asyncio.create_task(self.async_init())
 
         self._volume_widget = OSDProgress("", "volume")
         self._brightness_widget = OSDProgress("󰃞", "brightness")
@@ -88,30 +91,26 @@ class OSD(widgets.Window):
 
         self._start_device_monitor()
 
-    def get_volume(self) -> int:
+    async def async_init(self):
+        self._volume_value = await self.get_volume()
+        self._brightness_value = await self.get_brightness()
+        self._volume_widget.update(self._volume_value)
+        self._brightness_widget.update(self._brightness_value)
+
+    async def get_volume(self) -> int:
         try:
-            result = subprocess.run(
-                ["wpctl", "get-volume", "@DEFAULT_AUDIO_SINK@"],
-                capture_output=True,
-                text=True,
-            )
+            result = await utils.exec_sh_async("wpctl get-volume @DEFAULT_AUDIO_SINK@")
             parts = result.stdout.strip().split()
             return int(float(parts[1]) * 100) if len(parts) > 1 else 0
         except Exception:
             return 0
 
-    def get_brightness(self) -> int:
+    async def get_brightness(self) -> int:
         try:
-            bright = int(
-                subprocess.run(
-                    ["brightnessctl", "get"], capture_output=True, text=True
-                ).stdout.strip()
-            )
-            max_bright = int(
-                subprocess.run(
-                    ["brightnessctl", "max"], capture_output=True, text=True
-                ).stdout.strip()
-            )
+            result = await utils.exec_sh_async("brightnessctl get")
+            bright = int(result.stdout.strip())
+            result = await utils.exec_sh_async("brightnessctl max")
+            max_bright = int(result.stdout.strip())
             return int(bright * 100 / max_bright)
         except Exception:
             return 0
@@ -145,20 +144,31 @@ class OSD(widgets.Window):
     def update_volume(self, up: bool = True):
         step = 5 if up else -5
         self._volume_value = max(0, min(100, self._volume_value + step))
-        subprocess.Popen(
-            ["wpctl", "set-volume", "@DEFAULT_AUDIO_SINK@", f"{self._volume_value / 100.0}"]
-        )
         self._volume_widget.update(self._volume_value)
         self.show_osd()
+        asyncio.create_task(self._set_volume_shell())
+
+    async def _set_volume_shell(self):
+        try:
+            await utils.exec_sh_async(
+                f"wpctl set-volume @DEFAULT_AUDIO_SINK@ {self._volume_value / 100.0}"
+            )
+        except Exception:
+            pass
 
     def toggle_mute(self):
-        subprocess.Popen(["wpctl", "set-mute", "@DEFAULT_AUDIO_SINK@", "toggle"])
-        GLib.timeout_add(100, self._update_mute_state)
         self.show_osd()
+        GLib.timeout_add(100, self._update_mute_state)
+        asyncio.create_task(self._set_mute_shell())
 
-    def _update_mute_state(self):
+    async def _set_mute_shell(self):
+        await utils.exec_sh_async("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle")
+
+    async def _update_mute_state(self):
         try:
-            out = subprocess.check_output(["wpctl", "get-volume", "@DEFAULT_AUDIO_SINK@"], text=True)
+            out = (
+                await utils.exec_sh_async("wpctl get-volume @DEFAULT_AUDIO_SINK@")
+            ).stdout
             self._volume_widget.set_muted("MUTED" in out)
         except Exception:
             pass
@@ -167,22 +177,28 @@ class OSD(widgets.Window):
     def update_brightness(self, up: bool = True):
         step = 5 if up else -5
         self._brightness_value = max(1, min(100, self._brightness_value + step))
-        subprocess.Popen(["brightnessctl", "set", f"{self._brightness_value}%"])
         self._brightness_widget.update(self._brightness_value)
         self.show_osd()
+        asyncio.create_task(self._set_brightness_shell())
+
+    async def _set_brightness_shell(self):
+        try:
+            await utils.exec_sh_async(f"brightnessctl set {self._brightness_value}%")
+        except Exception:
+            pass
 
     def _start_device_monitor(self):
         self._last_device = None
 
-        def poll_device():
+        async def poll_device():
             try:
-                out = subprocess.check_output(["pactl", "info"], text=True)
+                out = (await utils.exec_sh_async("pactl info")).stdout
                 for line in out.splitlines():
                     if line.startswith("Default Sink:"):
                         device = line.split(":", 1)[1].strip()
                         if device != self._last_device:
                             self._last_device = device
-                            self._volume_value = self.get_volume()
+                            self._volume_value = await self.get_volume()
                             self._volume_widget.update(self._volume_value)
                             self.show_osd()
                         break
@@ -190,4 +206,8 @@ class OSD(widgets.Window):
                 pass
             return True
 
-        GLib.timeout_add_seconds(2, poll_device)
+        def poll_wrapper():
+            asyncio.create_task(poll_device())
+            return True
+
+        GLib.timeout_add_seconds(2, poll_wrapper)

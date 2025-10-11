@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "exs-shell"
+version = "0.1.0"
+description = "Just Desktop for Niri Wayland Compositor"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "ignis @ git+https://git@github.com/ignis-sh/ignis.git",
+]
+
+[tool.uv.sources]
+ignis = { git = "https://github.com/ignis-sh/ignis.git" }
+
+[project.scripts]
+exs-shell = "run:main"
+exs-ipc = "ipc:main"

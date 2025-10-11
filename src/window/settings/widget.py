@@ -1,4 +1,5 @@
 from ignis import widgets
+from base.singleton import SingletonClass
 from config import config
 from user_options import user_options
 from .active_page import active_page
@@ -7,7 +8,7 @@ from .pages import (
 )
 
 
-class Settings(widgets.RegularWindow):
+class Settings(widgets.RegularWindow, SingletonClass):
 
     def __init__(self) -> None:
         content = widgets.Box(
