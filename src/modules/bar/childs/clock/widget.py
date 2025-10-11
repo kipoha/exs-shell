@@ -2,15 +2,14 @@ import datetime
 
 from ignis import utils, widgets
 
-from config import user_config
-
+from config.user import options
 
 class Clock(widgets.Label):
     def __init__(self, **kwargs):
         super().__init__(
             css_classes=["clock"],
             label=utils.Poll(
-                1_000, lambda _: datetime.datetime.now().strftime(user_config.get('clock_format', "󰥔 %H:%M:%S"))
+                1_000, lambda _: datetime.datetime.now().strftime(options.user_config.clock_format)
             ).bind("output"),
             **kwargs
         )

@@ -21,4 +21,15 @@
     background-color: c.$accent;
     border-radius: 0.5rem;
     color: c.$bg;
-  }}
+  }
+
+  & .notification-close:hover {
+    background-color: c.$accent-dark;
+    color: c.$fg;
+  }
+
+  & .notification-action:hover {
+    background-color: c.$accent-dark;
+    color: c.$fg;
+  }
+}

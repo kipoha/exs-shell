@@ -1,10 +1,7 @@
 import os
 import asyncio
-import json
 
-from typing import Any
-
-from utils import PathUtils, send_notification
+from utils import PathUtils, Dirs, send_notification, kill_process
 
 from config.log import logger
 
@@ -66,10 +63,12 @@ class Config(SingletonClass):
         from modules.notification import NotificationPopup, NotificationCenter
         from modules.launcher import Launcher
         from modules.lockscreen import LockScreen
+        from modules.powermenu import PowenMenu
         from window import Settings
 
         Launcher.get_default()
         NotificationCenter.get_default()
+        PowenMenu.get_default()
         OSD.get_default()
 
         for i in range(utils.get_n_monitors()):
@@ -81,6 +80,8 @@ class Config(SingletonClass):
         asyncio.create_task(run_ipc_server())
 
     def init(self) -> None:
+        kill_process()
+        Dirs.ensure_dirs_exist()
         self.init_css()
         self.init_widgets()
 
@@ -104,7 +105,6 @@ class Config(SingletonClass):
         _enable_deprecation_warnings()
         configure_logger(debug)
 
-
         self.app.connect(
             "activate",
             lambda x: ConfigManager.get_default()._load_config(app=x, path=config_path),
@@ -119,17 +119,3 @@ class Config(SingletonClass):
 cfg = Config.get_default()
 app = cfg.app
 css_manager = cfg.css_manager
-
-
-def get_user_config() -> dict[str, Any]:
-    config_file = PathUtils.generate_path("config.jsonc", PathUtils.root)
-    try:
-        with open(config_file, "r") as f:
-            return json.load(f)
-    except FileNotFoundError:
-        return {
-            "clock_format": "󰥔 %H:%M:%S",
-        }
-
-
-user_config = get_user_config()

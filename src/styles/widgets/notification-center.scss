@@ -52,10 +52,37 @@
   transition: 0.3s;
 }
 
+.notification-close:hover {
+  background-color: c.$accent;
+  color: c.$fg;
+}
+
 .notification-clear-all {
   transition: 0.3s;
   border-radius: 1rem;
-  padding: 0.25rem 1rem;
+  padding: 0.25rem 1rem 0.25rem 0.9rem;
+  font-size: 2rem;
+  background-color: c.$bg-lighter;
+  color: c.$fg;
+}
+
+.notification-clear-all:hover {
+  background-color: c.$accent;
+  color: c.$bg;
+}
+
+.notification-dnd {
+  transition: 0.3s;
+  border-radius: 1rem;
+  padding: 0.25rem 1rem 0.25rem 0.5rem;
+  font-size: 1.5rem;
+  background-color: c.$bg-lighter;
+  color: c.$fg;
+}
+
+.notification-dnd:hover {
+  background-color: c.$accent;
+  color: c.$bg;
 }
 
 .notification-action {
@@ -64,6 +91,11 @@
   border-radius: 0.5rem;
   padding: 0.25rem 0.25rem;
   transition: 0.3s;
+}
+
+.notification-action:hover {
+  background-color: c.$accent-dark;
+  color: c.$fg;
 }
 
 .notification-screenshot-label {

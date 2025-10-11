@@ -2,6 +2,7 @@ from typing import Any
 
 from ipc_server.commands.launcher import launcher_commands
 from ipc_server.commands.notification import notification_commands
+from ipc_server.commands.powermenu import powermenu_commands
 from ipc_server.commands.osd import osd_commands
 
 
@@ -18,5 +19,6 @@ def include(
 commands = include(
     osd_commands(),
     launcher_commands(),
-    notification_commands()
+    notification_commands(),
+    powermenu_commands()
 )

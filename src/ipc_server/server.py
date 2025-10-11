@@ -1,6 +1,7 @@
 import json
 import asyncio
 from typing import Any
+from utils import Dirs
 
 
 async def return_error(writer: asyncio.StreamWriter) -> None:
@@ -71,6 +72,6 @@ async def handle_client(
 
 
 async def run_ipc_server() -> None:
-    server = await asyncio.start_unix_server(handle_client, path="/tmp/exs-shell.sock")
+    server = await asyncio.start_unix_server(handle_client, path=f"{Dirs.TEMP_DIR}/ipc.sock")
     async with server:
         await server.serve_forever()

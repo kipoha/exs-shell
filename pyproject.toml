@@ -1,6 +1,10 @@
 [build-system]
-requires = ["setuptools", "setuptools-scm"]
+requires = ["setuptools>=65.0", "wheel", "setuptools_scm"]
 build-backend = "setuptools.build_meta"
+
+[tool.setuptools_scm]
+version_scheme = "post-release"
+local_scheme = "node-and-date"
 
 [project]
 name = "exs-shell"
@@ -10,6 +14,7 @@ readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
     "ignis @ git+https://git@github.com/ignis-sh/ignis.git",
+    "psutil>=7.1.0",
 ]
 
 [tool.uv.sources]
@@ -18,3 +23,6 @@ ignis = { git = "https://github.com/ignis-sh/ignis.git" }
 [project.scripts]
 exs-shell = "run:main"
 exs-ipc = "ipc:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

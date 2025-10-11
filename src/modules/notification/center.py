@@ -78,6 +78,24 @@ class NotificationList(widgets.Box):
 
 class NotificationCenter(AnimatedWindow, SingletonClass):
     def __init__(self, **kwargs):
+        self.header_buttons = widgets.Box(
+            css_classes=["notification-center-header-buttons"],
+            halign="end",
+            hexpand=True,
+            child=[
+                widgets.Button(
+                    child=widgets.Label(label=""),
+                    on_click=lambda x: self.dnd(),  # not working
+                    css_classes=["notification-dnd"],
+                ),
+                widgets.Button(
+                    child=widgets.Label(label="󰩹"),
+                    on_click=lambda x: notifications.clear_all(),
+                    css_classes=["notification-clear-all"],
+                ),
+            ],
+            spacing=5,
+        )
         self._main_box = widgets.Box(
             vertical=True,
             css_classes=["notification-center-window", "hidden"],
@@ -95,13 +113,7 @@ class NotificationCenter(AnimatedWindow, SingletonClass):
                             label="notifications",
                             css_classes=["notification-header-label"],
                         ),
-                        widgets.Button(
-                            child=widgets.Label(label="Clear all"),
-                            halign="end",
-                            hexpand=True,
-                            on_click=lambda x: notifications.clear_all(),
-                            css_classes=["notification-clear-all"],
-                        ),
+                        self.header_buttons,
                     ],
                 ),
                 widgets.Scroll(
@@ -121,3 +133,6 @@ class NotificationCenter(AnimatedWindow, SingletonClass):
             child=self._main_box,
             **kwargs,
         )
+
+    def dnd(self):
+        raise NotImplementedError("DND not implemented")

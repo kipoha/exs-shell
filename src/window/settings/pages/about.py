@@ -3,7 +3,7 @@ from ignis import utils
 from ignis import widgets
 from ignis.services.fetch import FetchService
 from ignis._version import __version__
-from user_options import user_options
+from config.user import options as user_options
 
 fetch = FetchService.get_default()
 

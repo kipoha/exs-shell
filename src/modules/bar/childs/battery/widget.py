@@ -1,9 +1,9 @@
 from ignis import widgets
 from ignis.services.upower import UPowerService
 
-from config import user_config
+from config.user import options
 
-battery_cfg = user_config.get("battery", {})
+battery_cfg = options.user_config.battery
 
 
 class Battery(widgets.Label):

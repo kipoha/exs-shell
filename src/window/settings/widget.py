@@ -1,7 +1,7 @@
 from ignis import widgets
 from base.singleton import SingletonClass
 from config import config
-from user_options import user_options
+from config.user import options as user_options
 from .active_page import active_page
 from .pages import (
     AboutEntry,

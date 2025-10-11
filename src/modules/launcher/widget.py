@@ -11,11 +11,12 @@ from ignis.services.applications import (
 )
 from ignis.menu_model import IgnisMenuModel, IgnisMenuItem, IgnisMenuSeparator
 
-from gi.repository import Gio, GLib, Gdk, Gtk  # type: ignore
+from gi.repository import Gio  # type: ignore
 
 from base.singleton import SingletonClass
 from base.window.animated import AnimatedWindowPopup
-from config import config, user_config
+from config import config
+from config.user import options
 
 window_manager = WindowManager.get_default()
 
@@ -174,7 +175,7 @@ class SearchWebButton(widgets.Button):
         window.toggle()
 
 
-actions = [Action(**action) for action in user_config.get("actions", [])]
+actions = [Action(**action) for action in options.user_config.actions]
 
 
 class Launcher(AnimatedWindowPopup, SingletonClass):
@@ -287,7 +288,7 @@ class Launcher(AnimatedWindowPopup, SingletonClass):
             self.__show_all_apps()
             return
 
-        prefix = user_config.get("command_prefix", ">")
+        prefix = options.user_config.command_prefix
         if query.startswith(prefix):
             self._populate_grid([ActionItem(action) for action in actions if query.replace(prefix, "") in action.name.lower().strip()])
             return

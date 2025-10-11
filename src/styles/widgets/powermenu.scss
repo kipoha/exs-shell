@@ -1,0 +1,59 @@
+@use '../../colors.scss' as c;
+
+.powermenu {
+  padding: 1rem;
+  background-color: c.$bg;
+  color: c.$fg;
+  border-radius: 2rem;
+  opacity: 0;
+  margin-right: 0.3rem;
+  transform: translateX(16rem);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.powermenu.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.powermenu.hidden {
+  opacity: 0;
+  transform: translateX(16rem);
+}
+
+.powermenu-actions {
+  background-color: c.$bg-light;
+  padding: 0.4rem 0.6rem;
+  border-radius: 1rem;
+  color: c.$accent;
+  font-size: 2.5rem;
+}
+
+.powermenu-action {
+  padding: 0.6rem;
+  border-radius: 1rem;
+}
+
+.powermenu-action:nth-child(1) {
+  padding-right: 1.1rem;
+}
+
+.powermenu-action:nth-child(2) {
+  padding-left: 0.7rem;
+}
+
+.powermenu-action:nth-child(3) {
+  padding-left: 0.8rem;
+}
+
+.powermenu-action:nth-child(4) {
+  padding-right: 1.1rem;
+}
+
+.powermenu-action:nth-child(5) {
+  padding-left: 0.85rem;
+}
+
+.powermenu-action:hover {
+  background-color: c.$bg-lighter;
+}
