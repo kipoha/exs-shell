@@ -1,7 +1,7 @@
 import sys
 import asyncio
 
-from ipc_server.client import send_command
+from ipc_utils.client import send_command
 
 
 def main():

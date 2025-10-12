@@ -1,6 +1,7 @@
 import os
 
-from ignis.options_manager import OptionsGroup, OptionsManager
+from ignis.options_manager import OptionsGroup, OptionsManager, TrackedList
+from ignis.options import Options
 
 from utils import Dirs
 
@@ -43,18 +44,16 @@ class UserOptions(OptionsManager):
                 "70": "",
                 "50": "",
                 "30": "",
-                "10": ""
+                "10": "",
             },
             "critical_level": 10,
         }
 
         actions: list[dict] = [
-            {
-                "name": "lock",
-                "command": "exs-ipc toggle-lock",
-                "icon": "lock"
-            }
+            {"name": "lock", "command": "exs-ipc toggle-lock", "icon": "lock"}
         ]
+        # actions: TrackedList[dict] = TrackedList()
+        # actions.append({"name": "lock", "command": "exs-ipc toggle-lock", "icon": "lock"})
 
         powermenu_actions: list[dict] = [
             {"command": "hyprlock", "icon": ""},
@@ -69,6 +68,9 @@ class UserOptions(OptionsManager):
 
     _settings: Settings = Settings()
     _user_config: UserConfig = UserConfig()
+    _notifications: Options.Notifications = Options.Notifications()
+    _applications: Options.Applications = Options.Applications()
+    _wallpaper: Options.Wallpaper = Options.Wallpaper()
 
     @property
     def user_config(self) -> UserConfig:
@@ -77,6 +79,18 @@ class UserOptions(OptionsManager):
     @property
     def settings(self) -> Settings:
         return self._settings
+
+    @property
+    def notifications(self) -> Options.Notifications:
+        return self._notifications
+
+    @property
+    def applications(self) -> Options.Applications:
+        return self._applications
+
+    @property
+    def wallpaper(self) -> Options.Wallpaper:
+        return self._wallpaper
 
 
 options = UserOptions()

@@ -63,3 +63,4 @@ full_dump.dump
 test_html
 
 *.log
+.tmp/

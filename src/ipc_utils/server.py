@@ -43,7 +43,7 @@ async def help_command(
 async def handle_client(
     reader: asyncio.StreamReader, writer: asyncio.StreamWriter
 ) -> None:
-    from ipc_server.utils import commands
+    from ipc_utils.utils import commands
 
     data = await reader.readline()
     if not data:

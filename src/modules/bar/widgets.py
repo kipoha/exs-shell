@@ -26,6 +26,7 @@ def right(monitor_name) -> widgets.Box:
     from modules.bar.childs import modules
     return widgets.Box(
         child=[
+            modules["layout"](),
             modules["battery"](),
         ],
         spacing=10

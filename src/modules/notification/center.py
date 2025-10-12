@@ -5,7 +5,9 @@ from gi.repository import GLib  # type: ignore
 
 from base.singleton import SingletonClass
 from base.window.animated import AnimatedWindow
+
 from config import config
+from config.user import options
 
 from modules.notification.widget import NotificationWidget
 
@@ -78,24 +80,26 @@ class NotificationList(widgets.Box):
 
 class NotificationCenter(AnimatedWindow, SingletonClass):
     def __init__(self, **kwargs):
+        self.dnd_button = widgets.Button(
+            child=widgets.Label(label=""),
+            on_click=lambda x: self.toggle_dnd(),
+            css_classes=["notification-dnd"],
+        )
+
+        self.clear_button = widgets.Button(
+            child=widgets.Label(label="󰩹"),
+            on_click=lambda x: notifications.clear_all(),
+            css_classes=["notification-clear-all"],
+        )
+
         self.header_buttons = widgets.Box(
             css_classes=["notification-center-header-buttons"],
             halign="end",
             hexpand=True,
-            child=[
-                widgets.Button(
-                    child=widgets.Label(label=""),
-                    on_click=lambda x: self.dnd(),  # not working
-                    css_classes=["notification-dnd"],
-                ),
-                widgets.Button(
-                    child=widgets.Label(label="󰩹"),
-                    on_click=lambda x: notifications.clear_all(),
-                    css_classes=["notification-clear-all"],
-                ),
-            ],
+            child=[self.dnd_button, self.clear_button],
             spacing=5,
         )
+
         self._main_box = widgets.Box(
             vertical=True,
             css_classes=["notification-center-window", "hidden"],
@@ -134,5 +138,17 @@ class NotificationCenter(AnimatedWindow, SingletonClass):
             **kwargs,
         )
 
-    def dnd(self):
-        raise NotImplementedError("DND not implemented")
+        self.update_dnd_button()
+
+        options.notifications.bind("dnd", lambda *_: self.update_dnd_button())
+
+    def toggle_dnd(self):
+        options.notifications.set_dnd(not options.notifications.dnd)
+        self.update_dnd_button()
+
+    def update_dnd_button(self):
+        css = self.dnd_button.get_style_context()
+        if options.notifications.dnd:
+            css.add_class("active")
+        else:
+            css.remove_class("active")

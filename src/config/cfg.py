@@ -7,7 +7,7 @@ from config.log import logger
 
 from base.singleton import SingletonClass
 
-from ipc_server.server import run_ipc_server
+from ipc_utils.server import run_ipc_server
 
 try:
     from ignis import utils
@@ -80,6 +80,13 @@ class Config(SingletonClass):
         asyncio.create_task(run_ipc_server())
 
     def init(self) -> None:
+        import window.wallpaper.background as _
+        from ignis.services.niri import NiriService
+
+        if not NiriService.get_default().is_available:
+            logger.error("Niri is not available")
+            exit(1)
+
         kill_process()
         Dirs.ensure_dirs_exist()
         self.init_css()

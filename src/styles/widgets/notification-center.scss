@@ -85,6 +85,11 @@
   color: c.$bg;
 }
 
+.notification-dnd.active {
+  background-color: c.$accent;
+  color: c.$bg;
+}
+
 .notification-action {
   background-color: c.$accent;
   color: c.$fg;

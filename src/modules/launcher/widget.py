@@ -175,11 +175,11 @@ class SearchWebButton(widgets.Button):
         window.toggle()
 
 
-actions = [Action(**action) for action in options.user_config.actions]
 
 
 class Launcher(AnimatedWindowPopup, SingletonClass):
     def __init__(self):
+        self.actions = [Action(**action) for action in options.user_config.actions]
         self.MAX_ITEMS = 65
         self._app_list = widgets.Grid(
             css_classes=["launcher-grid"],
@@ -243,6 +243,10 @@ class Launcher(AnimatedWindowPopup, SingletonClass):
         )
 
         self.__show_all_apps()
+        options.user_config.bind("actions", self.update_actions)
+
+    def update_actions(self):
+        self.actions = [Action(**action) for action in options.user_config.actions]
 
     def open(self):
         if not self._is_open:
@@ -290,7 +294,7 @@ class Launcher(AnimatedWindowPopup, SingletonClass):
 
         prefix = options.user_config.command_prefix
         if query.startswith(prefix):
-            self._populate_grid([ActionItem(action) for action in actions if query.replace(prefix, "") in action.name.lower().strip()])
+            self._populate_grid([ActionItem(action) for action in self.actions if query.replace(prefix, "") in action.name.lower().strip()])
             return
 
         filtered = applications.search(applications.apps, query)

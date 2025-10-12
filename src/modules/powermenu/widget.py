@@ -47,7 +47,6 @@ class PowerMenuItem(widgets.Button):
         window.toggle()
 
 
-actions = [PowenMenuButton(**action) for action in options.user_config.powermenu_actions]
 
 
 class PowenMenu(AnimatedWindowPopup, SingletonClass):
@@ -55,10 +54,11 @@ class PowenMenu(AnimatedWindowPopup, SingletonClass):
         self,
         **kwargs,
     ):
+        self.actions = [PowenMenuButton(**action) for action in options.user_config.powermenu_actions]
         self.buttons = widgets.Box(
             css_classes=["powermenu-actions"],
             vertical=True,
-            child=[PowerMenuItem(item=item) for item in actions],
+            child=[PowerMenuItem(item=item) for item in self.actions],
             spacing=10,
         )
         self._main_box = widgets.Box(
@@ -74,3 +74,8 @@ class PowenMenu(AnimatedWindowPopup, SingletonClass):
             child=self._main_box,
             **kwargs,
         )
+
+        options.user_config.bind("powermenu_actions", self.update_actions)
+
+    def update_actions(self):
+        self.actions = [PowenMenuButton(**action) for action in options.user_config.powermenu_actions]
