@@ -65,6 +65,7 @@ class Config(SingletonClass):
         from modules.lockscreen import LockScreen
         from modules.powermenu import PowenMenu
         from window import Settings
+        from window.wallpaper import Wallpaper, options
 
         Launcher.get_default()
         NotificationCenter.get_default()
@@ -76,11 +77,13 @@ class Config(SingletonClass):
             NotificationPopup(i)
 
         LockScreen()
+        Wallpaper.get_default()
+        # options.wallpaper.wallpaper_path = "/home/kipoha/_projects/dots/exsdot/wallpapers/touhou/764022.jpg"
+        # options.wallpaper.wallpaper_path = "/home/kipoha/_projects/dots/exsdot/wallpapers/touhou/763104.jpg"
         Settings.get_default()
         asyncio.create_task(run_ipc_server())
 
     def init(self) -> None:
-        import window.wallpaper.background as _
         from ignis.services.niri import NiriService
 
         if not NiriService.get_default().is_available:

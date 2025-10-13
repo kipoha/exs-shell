@@ -75,7 +75,7 @@ class PowenMenu(AnimatedWindowPopup, SingletonClass):
             **kwargs,
         )
 
-        options.user_config.bind("powermenu_actions", self.update_actions)
+        options.user_config.connect_option("powermenu_actions", self.update_actions)
 
     def update_actions(self):
         self.actions = [PowenMenuButton(**action) for action in options.user_config.powermenu_actions]

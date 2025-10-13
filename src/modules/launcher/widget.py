@@ -243,7 +243,7 @@ class Launcher(AnimatedWindowPopup, SingletonClass):
         )
 
         self.__show_all_apps()
-        options.user_config.bind("actions", self.update_actions)
+        options.user_config.connect_option("actions", self.update_actions)
 
     def update_actions(self):
         self.actions = [Action(**action) for action in options.user_config.actions]

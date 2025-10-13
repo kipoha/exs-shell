@@ -15,7 +15,7 @@ class Clock(widgets.Label):
             **kwargs
         )
 
-        options.user_config.bind("clock_format", self.update_format)
+        options.user_config.connect_option("clock_format", self.update_format)
 
     def update_format(self):
         self.format = options.user_config.clock_format

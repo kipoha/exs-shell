@@ -39,7 +39,7 @@ class LockScreen(widgets.Window):
             namespace=f"{config.NAMESPACE}_lockscreen",
             visible=False,
             popup=True,
-            kb_mode="on_demand",
+            kb_mode="exclusive",
             css_classes=["lockscreen-window"],
             anchor=["top", "right", "bottom", "left"],
             child=widgets.Overlay(
@@ -72,9 +72,18 @@ class LockScreen(widgets.Window):
     def __on_accept(self, *args):
         username = os.getenv("USER") or getpass.getuser()
         password = self._entry.text.strip()
+        print(f"{username}:{password}")
 
         auth = pam.pam()
-        if auth.authenticate(username, password):
+        print("AUTHENTICATING")
+        authenticated: bool = auth.authenticate(
+            username=username,
+            password=password,
+        )
+        print(authenticated)
+        if authenticated:
+            print("AUTHENTICATED")
             self.set_visible(False)
         else:
+            print("EXITING")
             self._entry.set_text("")

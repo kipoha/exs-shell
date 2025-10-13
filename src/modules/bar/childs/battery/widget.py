@@ -26,7 +26,7 @@ class Battery(widgets.Label):
         self.battery.connect("notify::charged", lambda *_: self._update_label())
 
         self._update_label()
-        options.user_config.bind("battery", self.update_battery)
+        options.user_config.connect_option("battery", self.update_battery)
 
     def _update_label(self):
         perc = self.battery.get_property("percent") or 0

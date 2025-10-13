@@ -3,6 +3,7 @@ from ignis import widgets
 
 from gi.repository import Gtk, Gdk, GLib  # type: ignore
 
+
 class AnimatedWindow(widgets.Window):
     def __init__(
         self,
@@ -19,7 +20,7 @@ class AnimatedWindow(widgets.Window):
         margin_top: int = 0,
         dynamic_input_region: bool = False,
         animation_duration: int = 300,
-        **kwargs: Any
+        **kwargs: Any,
     ):
         self._is_open = False
         self.animation_duration = animation_duration
@@ -36,10 +37,13 @@ class AnimatedWindow(widgets.Window):
             margin_right=margin_right,
             margin_top=margin_top,
             dynamic_input_region=dynamic_input_region,
-            **kwargs
+            **kwargs,
         )
 
     def open(self):
+        if not hasattr(self, "_main_box"):
+            raise NotImplementedError("You need to implement _main_box")
+
         if not self._is_open:
             self.set_visible(True)
             self._main_box.remove_css_class("hidden")
@@ -47,6 +51,9 @@ class AnimatedWindow(widgets.Window):
             self._is_open = True
 
     def close(self):
+        if not hasattr(self, "_main_box"):
+            raise NotImplementedError("You need to implement _main_box")
+
         if self._is_open:
             self._main_box.remove_css_class("visible")
             self._main_box.add_css_class("hidden")
@@ -59,9 +66,6 @@ class AnimatedWindow(widgets.Window):
             GLib.timeout_add(self.animation_duration, hide_after_animation)
 
     def toggle(self):
-        if not hasattr(self, "_main_box"):
-            raise NotImplementedError("You need to implement _main_box")
-
         if not self._is_open:
             self.open()
         else:
@@ -84,7 +88,7 @@ class AnimatedWindowPopup(AnimatedWindow):
         margin_top: int = 0,
         dynamic_input_region: bool = False,
         animation_duration: int = 300,
-        **kwargs: Any
+        **kwargs: Any,
     ):
         self.animation_duration = animation_duration
 
@@ -102,7 +106,7 @@ class AnimatedWindowPopup(AnimatedWindow):
             margin_top=margin_top,
             dynamic_input_region=dynamic_input_region,
             animation_duration=animation_duration,
-            **kwargs
+            **kwargs,
         )
 
         key_controller = Gtk.EventControllerKey()

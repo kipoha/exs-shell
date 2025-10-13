@@ -31,7 +31,7 @@ class UserOptions(OptionsManager):
             pass
 
     class UserConfig(OptionsGroup):
-        user_avatar: str = ""
+        avatar: str = ""
         command_prefix: str = ">"
         clock_format: str = "󰥔 %H:%M:%S"
         notification_dnd: bool = False
