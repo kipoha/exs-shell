@@ -1,0 +1,220 @@
+@use '../../colors.scss' as c;
+
+/* === Switch === */
+switch {
+  min-width: 44px;
+  min-height: 26px;
+  border-radius: 13px;
+  background-color: c.$bg-darker;
+  border: none;
+  transition: background-color 0.25s ease;
+}
+
+switch:checked {
+  background-color: c.$accent;
+}
+
+switch slider {
+  min-width: 20px;
+  min-height: 20px;
+  margin: 3px;
+  border-radius: 50%;
+  background: c.$fg-strong;
+  transition: margin-left 0.25s ease, background-color 0.25s ease;
+}
+
+/* === SpinButton === */
+spinbutton {
+  background-color: c.$bg-darker;
+  border-radius: 8px;
+  border: 1px solid c.$border-light;
+  padding: 4px;
+  color: c.$fg-strong;
+}
+
+spinbutton button.up,
+spinbutton button.down {
+  background: transparent;
+  color: c.$accent;
+}
+
+spinbutton:focus {
+  border-color: c.$accent;
+  box-shadow: 0 0 6px rgba(c.$accent-light, 0.5);
+}
+
+/* === Rows / ListBox === */
+row,
+listbox > row {
+  padding: 10px 14px;
+  border-radius: 10px;
+  transition: background-color 0.2s ease;
+}
+
+row:hover {
+  background-color: c.$bg-light;
+}
+
+/* === Dropdown === */
+dropdown {
+  background-color: c.$bg-darker;
+  border-radius: 8px;
+  padding: 6px 12px;
+  border: 1px solid c.$border-light;
+  color: c.$fg-strong;
+  font-size: 14px;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+dropdown > button {
+  background-color: transparent;
+  border: none;
+  color: c.$fg-strong;
+  padding: 0 4px;
+}
+
+dropdown row {
+  background-color: c.$surface;
+  border-radius: 6px;
+  padding: 4px 0;
+  border: 1px solid c.$border-light;
+  box-shadow: 0 4px 12px c.$shadow;
+}
+
+dropdown row button {
+  color: c.$fg-strong;
+  padding: 8px 12px;
+  border-radius: 4px;
+  text-align: left;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+dropdown row button:hover {
+  background-color: c.$surface-light;
+}
+
+dropdown row button:selected {
+  background-color: c.$accent;
+  color: c.$fg-strong;
+}
+
+dropdown:focus {
+  border-color: c.$accent;
+  box-shadow: 0 0 6px rgba(c.$accent-light, 0.5);
+}
+
+/* === Preferences === */
+preferencesgroup {
+  margin-top: 12px;
+  margin-bottom: 12px;
+  border-top: 1px solid c.$border-light;
+}
+
+preferencespage {
+  background-color: c.$bg;
+  color: c.$fg-strong;
+  padding: 20px;
+  font-size: 14px;
+}
+
+.settings-entry {
+  background-color: c.$bg-darker;
+  border-radius: 8px;
+  border: 1px solid c.$border-light;
+  padding: 6px 10px;
+  color: c.$fg-strong;
+  font-size: 14px;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.settings-entry:hover,
+.settings-entry:focus {
+  background-color: c.$bg-light;
+  border-color: c.$accent;
+  box-shadow: 0 0 6px rgba(c.$accent-light, 0.5);
+}
+
+
+.filechooser {
+  background-color: c.$bg-light;
+  border-radius: 8px;
+  border: 1px solid c.$border-light;
+  padding: 4px 8px;
+  color: c.$fg-strong;
+}
+
+.filechooser:hover {
+  background-color: c.$bg-darker;
+}
+
+.file-row-button {
+  background-color: c.$bg-light;
+  border-radius: 8px;
+  border: 1px solid c.$border-light;
+  padding: 4px 8px;
+  color: c.$fg-strong;
+}
+
+.file-row-button:hover {
+  background-color: c.$bg-darker;
+}
+
+.multi-select-row {
+  background-color: c.$bg-light;
+  padding: 4px 8px;
+}
+
+.multi-checkbox {
+  background-color: c.$bg-light;
+  color: c.$fg;
+  border: 1px solid c.$border;
+  border-radius: 6px;
+  padding: 4px 8px;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.multi-checkbox:hover {
+  background-color: c.$bg-lighter;
+}
+
+.multi-checkbox:checked {
+  background-color: c.$accent;
+  color: c.$fg-strong;
+}
+
+scale {
+  min-height: 24px;
+  border-radius: 12px;
+  background-color: c.$bg-light;
+}
+
+scale slider {
+  background-color: c.$accent;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+}
+
+/* === MultiSelectRow / CheckButtons === */
+checkbutton {
+    color: c.$fg-strong;
+    padding: 4px 8px;
+}
+
+checkbutton:hover {
+    background-color: c.$bg-darker;
+}
+
+checkbutton:checked {
+    background-color: c.$accent;
+    color: c.$fg-strong;
+}
+
+
+/* Sublabel / description */
+label.sub {
+  font-size: 12px;
+  color: c.$fg-muted;
+  margin-top: 2px;
+}
+

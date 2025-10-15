@@ -1,5 +1,5 @@
 from ignis import widgets
-from .row import SettingsRow
+from window.settings.elements.row import SettingsRow
 from typing import Callable
 from ignis.gobject import Binding
 

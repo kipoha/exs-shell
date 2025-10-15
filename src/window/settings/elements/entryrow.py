@@ -1,5 +1,5 @@
 from ignis import widgets
-from .row import SettingsRow
+from window.settings.elements.row import SettingsRow
 from typing import Callable
 from ignis.gobject import Binding
 
@@ -20,5 +20,6 @@ class EntryRow(SettingsRow):
             valign="center",
             width_request=width,
             hexpand=True,
+            css_classes=["settings-entry"],
         )
         self.child.append(self._entry)

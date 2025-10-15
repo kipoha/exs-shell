@@ -1,79 +1,101 @@
 @use '../../colors.scss' as c;
+@import "./internal.scss";
 
 .settings {
   background-color: c.$bg;
   color: c.$fg;
   border-radius: 0.7rem;
+  transition: 0.2s;
 }
 
 .settings-sidebar {
-    background-color: c.$bg-light;
-    min-width: 300px;
+  background-color: c.$bg-light;
+  min-width: 300px;
+}
+
+.settings-sidebar-user {
+  margin: 2rem 1rem 2rem 1rem;
+}
+
+.settings-sidebar-user-name {
+  font-size: 1.5rem;
+}
+
+.settings-sidebar-user-info {
+  margin-top: 0.6rem;
+}
+
+.settings-sidebar-user-os {
+  font-size: 0.9rem;
+}
+
+.settings-sidebar-user-uptime {
+  font-size: 0.9rem;
+}
+
+.settings-sidebar-user-avatar-image {
+  border-radius: 50%;
+}
+
+.settings-sidebar-user-avatar-image:hover {
+  background-color: rgba(0, 0, 0, 0.05);
 }
 
 .settings-sidebar-label {
-    font-size: 2rem;
-    margin-left: 1rem;
-    margin-bottom: 0.5rem;
-    margin-top: 2rem;
+  font-size: 2rem;
+  margin-left: 1rem;
+  margin-bottom: 0.5rem;
+  margin-top: 2rem;
 }
 
 .settings-sidebar-entry {
-    all: unset;
-    background-color: c.$bg-light;
-    padding: 1rem 2rem;
-    padding-left: 0.75rem;
-    font-size: 1.2rem;
+  all: unset;
+  background-color: c.$bg-light;
+  padding: 1rem 2rem;
+  padding-left: 0.75rem;
+  font-size: 1.2rem;
 
-    /* &:selected { */
-    /*     @if $darkmode == true { */
-    /*         background-color: lighten(c.$bg-light, 10%); */
-    /*     } */
-    /*     @else { */
-    /*         background-color: darken(c.$bg-light, 10%); */
-    /*     } */
-    /* } */
+  &:selected {
+    /* background-color: lighten(c.$bg-light, 10%); */
+    background-color: darken(c.$bg-light, 10%);
+  }
 }
 
 
 .settings-page-name {
-    font-size: 2rem;
-    margin-left: 2.5rem;
-    margin-bottom: 2rem;
-    margin-top: 2rem;
+  font-size: 2rem;
+  margin-left: 2.5rem;
+  margin-bottom: 2rem;
+  margin-top: 2rem;
 }
 
 .settings-group-name {
-    margin-left: 2.5rem;
-    color: c.$active;
+  margin-left: 2.5rem;
+  color: c.$active;
 }
 
 .settings-row {
-    all: unset;
-    padding: 0.7rem 2.5rem;
-    transition: 0.2s;
+  all: unset;
+  padding: 0.7rem 2.5rem;
+  transition: 0.2s;
 
-    /* &:active { */
-    /*     @if $darkmode == true { */
-    /*         background-color: rgba(255, 255, 255, 0.05); */
-    /*     } */
-    /*     @else { */
-    /*         background-color: rgba(0, 0, 0, 0.05); */
-    /*     } */
-    /* } */
+  &:active {
+    /* background-color: rgba(255, 255, 255, 0.05); */
+    background-color: rgba(0, 0, 0, 0.05);
+  }
 }
 
 .settings-row-label {
-    font-size: 1.2rem;
+  font-size: 1.2rem;
 }
 
 .settings-row-sublabel {
-    font-size: 0.9rem;
-    font-weight: normal;
-    color: c.$fg;
+  font-size: 0.9rem;
+  font-weight: normal;
+  color: c.$fg;
 }
 
 .settings-user-name {
-    font-size: 2.3rem;
-    margin-left: 1.5rem;
+  font-size: 2.3rem;
+  margin-left: 1.5rem;
 }

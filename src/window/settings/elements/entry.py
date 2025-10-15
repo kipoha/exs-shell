@@ -1,5 +1,5 @@
 from ignis import widgets
-from .page import SettingsPage
+from window.settings.elements.page import SettingsPage
 
 
 class SettingsEntry(widgets.ListBoxRow):
@@ -10,7 +10,7 @@ class SettingsEntry(widgets.ListBoxRow):
         page: SettingsPage,
         **kwargs,
     ):
-        from ..active_page import active_page  # avoid a circular import
+        from window.settings.active_page import active_page
 
         super().__init__(
             child=widgets.Box(

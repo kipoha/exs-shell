@@ -1,5 +1,5 @@
 from ignis import widgets
-from .row import SettingsRow
+from window.settings.elements.row import SettingsRow
 from ignis.gobject import Binding
 
 
@@ -18,6 +18,7 @@ class FileRow(SettingsRow):
             ),
             hexpand=True,
             halign="end",
+            css_classes=["file-row-button"],
         )
 
         self.child.append(self._button)

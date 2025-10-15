@@ -22,17 +22,16 @@ class Bar(widgets.Window):
         self.niri.connect("notify::overview-opened", self.on_overview_changed)
         GLib.idle_add(lambda: self.set_visible(True) if self.niri.get_property("overview-opened") else self.set_visible(False))
 
-        monitor_name = utils.get_monitor(monitor_id).get_connector()  # type: ignore
+        # monitor_name = utils.get_monitor(monitor_id).get_connector()  # type: ignore
         super().__init__(
             namespace=f"{config.NAMESPACE}_bar_{monitor_id}",
             monitor=monitor_id,
             anchor=["left", "top", "right"],
-            # exclusivity="exclusive",
             child=widgets.CenterBox(
                 css_classes=["bar"],
-                start_widget=left(monitor_name),
-                center_widget=center(monitor_name),
-                end_widget=right(monitor_name),
+                start_widget=left,
+                center_widget=center,
+                end_widget=right,
             ),
             **extra
         )
@@ -40,7 +39,7 @@ class Bar(widgets.Window):
         active = niri.overview_opened
         lockscreen = window_manager.get_window(f"{config.NAMESPACE}_lockscreen")
         launcher = window_manager.get_window(f"{config.NAMESPACE}_launcher")
-        if active and not lockscreen.visible and not launcher.visible:
+        if active and not lockscreen.visible and not launcher.visible and (left.child and center.child and right.child):
             GLib.idle_add(self._show_bar)
         else:
             GLib.idle_add(self._hide_bar)

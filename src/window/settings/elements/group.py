@@ -1,5 +1,5 @@
 from ignis import widgets
-from .row import SettingsRow
+from window.settings.elements.row import SettingsRow
 from ignis.base_widget import BaseWidget
 
 

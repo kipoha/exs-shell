@@ -1,5 +1,5 @@
 from ignis import widgets
-from .group import SettingsGroup
+from window.settings.elements.group import SettingsGroup
 from ignis.base_widget import BaseWidget
 
 

@@ -1,5 +1,5 @@
 from ignis import widgets
-from .row import SettingsRow
+from window.settings.elements.row import SettingsRow
 from typing import Callable
 from ignis.gobject import Binding
 
@@ -13,6 +13,7 @@ class SwitchRow(SettingsRow):
     ):
         super().__init__(**kwargs)
         self._switch = widgets.Switch(
+            css_classes=["settings-switch"],
             active=active,
             on_change=on_change,
             halign="end",

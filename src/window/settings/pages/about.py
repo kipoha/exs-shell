@@ -7,11 +7,8 @@ from config.user import options as user_options
 
 fetch = FetchService.get_default()
 
-def get_os_logo(dark_mode: bool) -> str | None:
-    if dark_mode:
-        return fetch.os_logo_text_dark or fetch.os_logo_dark or fetch.os_logo
-    else:
-        return fetch.os_logo_text or fetch.os_logo
+def get_os_logo() -> str | None:
+    return fetch.os_logo_text_dark or fetch.os_logo_dark or fetch.os_logo
 
 class AboutEntry(SettingsEntry):
     def __init__(self):
@@ -19,10 +16,7 @@ class AboutEntry(SettingsEntry):
             name="About",
             groups=[
                 widgets.Icon(
-                    icon_name=user_options.material.bind(
-                        "dark_mode",
-                        transform=lambda value: get_os_logo(value),
-                    ),
+                    icon_name=get_os_logo(),
                     pixel_size=200,
                 ),
                 SettingsGroup(

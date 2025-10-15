@@ -66,11 +66,20 @@ class UserOptions(OptionsManager):
     class Settings(OptionsGroup):
         last_page: int = 0
 
+    class Bar(OptionsGroup):
+        right: TrackedList[str] = TrackedList()
+        right_spacing: int = 10
+        center: TrackedList[str] = TrackedList()
+        center_spacing: int = 20
+        left: TrackedList[str] = TrackedList()
+        left_spacing: int = 10
+
+    _bar: Bar = Bar()
     _settings: Settings = Settings()
     _user_config: UserConfig = UserConfig()
-    _notifications: Options.Notifications = Options.Notifications()
-    _applications: Options.Applications = Options.Applications()
     _wallpaper: Options.Wallpaper = Options.Wallpaper()
+    _applications: Options.Applications = Options.Applications()
+    _notifications: Options.Notifications = Options.Notifications()
 
     @property
     def user_config(self) -> UserConfig:
@@ -91,6 +100,10 @@ class UserOptions(OptionsManager):
     @property
     def wallpaper(self) -> Options.Wallpaper:
         return self._wallpaper
+
+    @property
+    def bar(self) -> Bar:
+        return self._bar
 
 
 options = UserOptions()
