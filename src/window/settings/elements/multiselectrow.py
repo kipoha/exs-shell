@@ -2,94 +2,107 @@ from ignis import widgets
 from window.settings.elements.row import SettingsRow
 from typing import Callable, Iterable
 
+
 class MultiSelectRow(SettingsRow):
     def __init__(
         self,
         options: Iterable[str],
         selected_items: list[str] | None = None,
         on_change: Callable[[list[str]], None] | None = None,
-        max_row_width: int = 300,
+        max_per_row: int = 4,
         **kwargs,
     ):
         super().__init__(**kwargs)
-        self._main_box = widgets.Box(orientation="vertical", spacing=6, hexpand=True)
-        self._main_box.css_classes = ["multi-select-row"]
 
-        self._checkboxes = []
-        selected_items = selected_items or []
+        self.options = list(options)
+        self.selected_items = selected_items or []
+        self.on_change = on_change
+        self.max_per_row = max_per_row
 
-        current_row = widgets.Box(orientation="horizontal", spacing=6)
-        current_width = 0
+        self._added_items: list[widgets.Box] = []
 
-        for opt in options:
-            cb = widgets.CheckButton(label=opt)
-            cb.set_active(opt in selected_items)
-            cb.css_classes = ["multi-checkbox"]
-            if on_change:
-                cb.connect("toggled", self._make_handler(on_change))
+        self._select = widgets.DropDown(
+            items=["-- Select --"] + self.options,
+            hexpand=True,
+            halign="end",
+            css_classes=["settings-row-select"]
+        )
 
-            # грубое измерение ширины кнопки
-            cb_width = 8 + len(opt) * 7  # padding + примерная ширина текста
-            if current_width + cb_width > max_row_width:
-                self._main_box.append(current_row)
-                current_row = widgets.Box(orientation="horizontal", spacing=6)
-                current_width = 0
+        self._grid = widgets.Grid(
+            hexpand=True,
+            halign="end",
+            css_classes=["settings-row-multi-select"],
+            row_spacing=10,
+            column_spacing=10,
+            visible=True if self.selected_items else False
+        )
 
-            current_row.append(cb)
-            current_width += cb_width + 6  # +spacing
-            self._checkboxes.append(cb)
+        self._box = widgets.Box(
+            vertical=True,
+            hexpand=True,
+            halign="end",
+            spacing=10,
+            child=[self._select, self._grid],
+        )
+        self.child.append(self._box)
 
-        if len(current_row.child) > 0:
-            self._main_box.append(current_row)
+        self._select.connect("notify::selected-item", self._on_select)
 
-        self.child.append(self._main_box)
+        for item in self.selected_items:
+            self._add_item_to_grid(item)
 
-    def _make_handler(self, callback):
-        def handler(_widget):
-            checked = [cb.get_label() for cb in self._checkboxes if cb.get_active()]
-            callback(checked)
-        return handler
+    def _on_select(self, widget, _param):
+        value = widget.get_selected()
+        if not value:
+            return
+        value = str(value)
+        if value not in self.options:
+            return
+        self.selected_items.append(value)
+        self._add_item_to_grid(value)
+        self._grid.set_visible(True if self.selected_items else False)
+        if self.on_change:
+            self.on_change(self.selected_items)
 
-# from ignis import widgets
-# from window.settings.elements.row import SettingsRow
-# from typing import Callable, Iterable
-#
-#
-# class MultiSelectRow(SettingsRow):
-#     def __init__(
-#         self,
-#         options: Iterable[str],
-#         selected_items: list[str] | None = None,
-#         on_change: Callable[[list[str]], None] | None = None,
-#         **kwargs,
-#     ):
-#         super().__init__(**kwargs)
-#
-#         self._flow_box = widgets.Box(
-#             css_classes=["multi-select-row"],
-#             spacing=6,
-#             hexpand=False,
-#             halign="end",
-#             width_request=300,
-#         )
-#
-#         self._checkboxes = []
-#         selected_items = selected_items or []
-#
-#         for opt in options:
-#             cb = widgets.CheckButton(label=opt)
-#             cb.set_active(opt in selected_items)
-#             cb.css_classes = ["multi-checkbox"]
-#             if on_change:
-#                 cb.connect("toggled", self._make_handler(on_change))
-#             self._checkboxes.append(cb)
-#             self._flow_box.append(cb)
-#
-#         self.child.append(self._flow_box)
-#
-#     def _make_handler(self, callback):
-#         def handler(_widget):
-#             checked = [cb.get_label() for cb in self._checkboxes if cb.get_active()]
-#             callback(checked)
-#
-#         return handler
+    def _add_item_to_grid(self, value: str):
+        index = len(self._added_items)
+        row = index // self.max_per_row
+        col = index % self.max_per_row
+
+        label = widgets.Label(label=value)
+        btn_delete = widgets.Button(
+            css_classes=["settings-row-multi-select-item-del"],
+            label="",
+            on_click=lambda b, val=value: self._remove_item(val)
+        )
+
+        container = widgets.Box(spacing=8, css_classes=["settings-row-multi-select-item"])
+        container.append(label)
+        container.append(btn_delete)
+
+        self._grid.attach(container, col, row, 1, 1)
+        self._added_items.append(container)
+
+
+    def _remove_item(self, value: str):
+        container = next((c for c in self._added_items if c.child[0].get_label() == value), None)  # type: ignore
+        if not container:
+            return
+
+        if container.get_parent() is self._grid:
+            container.unparent()
+        self._added_items.remove(container)
+        self.selected_items.remove(value)
+
+        for c in list(self._added_items):
+            if c.get_parent() is self._grid:
+                c.unparent()
+        self._added_items.clear()
+
+        for item in self.selected_items.copy():
+            self._add_item_to_grid(item)
+
+        if self.on_change:
+            self.on_change(self.selected_items)
+
+        self._grid.set_visible(True if self.selected_items else False)

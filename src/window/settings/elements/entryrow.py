@@ -20,6 +20,6 @@ class EntryRow(SettingsRow):
             valign="center",
             width_request=width,
             hexpand=True,
-            css_classes=["settings-entry"],
+            css_classes=["settings-row-entry"],
         )
         self.child.append(self._entry)

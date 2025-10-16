@@ -13,6 +13,10 @@ class SettingsRow(widgets.ListBoxRow):
             child=widgets.Box(
                 child=[
                     widgets.Box(
+                        vexpand=True,
+                        hexpand=True,
+                        valign="start",
+                        halign="start",
                         vertical=True,
                         child=[
                             widgets.Label(

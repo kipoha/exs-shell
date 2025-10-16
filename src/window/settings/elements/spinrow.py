@@ -17,6 +17,7 @@ class SpinRow(SettingsRow):
     ):
         super().__init__(**kwargs)
         self._spin_button = widgets.SpinButton(
+            css_classes=["settings-row-spin-button"],
             value=value,
             on_change=on_change,
             min=min,

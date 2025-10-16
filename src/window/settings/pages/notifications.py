@@ -46,6 +46,6 @@ class NotificationsEntry(SettingsEntry):
         )
         super().__init__(
             label="Notifications",
-            icon="notification-symbolic",
+            icon="",
             page=page,
         )

@@ -8,15 +8,16 @@ from window.settings.elements import (
     FileRow,
     EntryRow,
     SelectRow,
-    MultiSelectRow,
+    MultiSelectButtonRow,
     SliderRow,
+    MultiSelectRow
 )
 
 
 class TestEntry(SettingsEntry):
     def __init__(self):
         page = SettingsPage(
-            name="Bar",
+            name="Test",
             groups=[
                 SettingsGroup(
                     name="General",
@@ -50,6 +51,11 @@ class TestEntry(SettingsEntry):
                             sublabel="File description",
                             button_label="Change",
                         ),
+                        MultiSelectRow(
+                            label="Multi select",
+                            options=["Option 1", "Option 2", "Option 3", "Option 1", "Option 2", "Option 3", "Option 4", "Option 5", "Option 5"],
+                            on_change=lambda x: print(x),
+                        ),
                         SliderRow(
                             label="Slider",
                             min=0,
@@ -57,9 +63,9 @@ class TestEntry(SettingsEntry):
                             value=50,
                             on_change=lambda value: print(value),
                         ),
-                        MultiSelectRow(
-                            label="Multi select",
-                            options=["Option 1", "Option 2", "Option 3"],
+                        MultiSelectButtonRow(
+                            label="Multi select buttons",
+                            options=["Option 1", "Option 2", "Option 3", "Option 1", "Option 2", "Option 3", "Option 4", "Option 5", "Option 5"],
                             on_change=lambda x: print(x),
                         ),
                     ],
@@ -68,6 +74,6 @@ class TestEntry(SettingsEntry):
         )
         super().__init__(
             label="Test",
-            icon="test-symbolic",
+            icon="󰙨",
             page=page,
         )

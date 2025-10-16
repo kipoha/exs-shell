@@ -11,7 +11,7 @@ from config import config
 from config.user import options
 
 from window.settings.active_page import active_page
-from window.settings.pages import AboutEntry, NotificationsEntry, TestEntry
+from window.settings.pages import AboutEntry, NotificationsEntry, TestEntry, BarEntry
 
 
 fetch = FetchService.get_default()
@@ -30,6 +30,7 @@ class Settings(widgets.RegularWindow, SingletonClass):
             image=options.user_config.avatar,
             width=80,
             height=80,
+            content_fit="cover",
         )
 
         user_profile = widgets.Box(
@@ -78,8 +79,8 @@ class Settings(widgets.RegularWindow, SingletonClass):
         )
 
         super().__init__(
-            default_width=900,
-            default_height=600,
+            default_width=1600,
+            default_height=900,
             resizable=False,
             hide_on_close=True,
             visible=False,
@@ -118,6 +119,7 @@ class Settings(widgets.RegularWindow, SingletonClass):
             return
 
         rows = [
+            BarEntry(),
             NotificationsEntry(),
             AboutEntry(),
             TestEntry(),

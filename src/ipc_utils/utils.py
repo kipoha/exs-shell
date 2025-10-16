@@ -16,12 +16,16 @@ def include_commands() -> dict[str, tuple[object, str, dict[str, Any], str]]:
     from ipc_utils.commands.notification import notification_commands
     from ipc_utils.commands.powermenu import powermenu_commands
     from ipc_utils.commands.osd import osd_commands
+    from ipc_utils.commands.settings import settings_commands
+    from ipc_utils.commands.lockscreen import lockscreen_commands
 
     return include(
         osd_commands(),
         launcher_commands(),
         notification_commands(),
         powermenu_commands(),
+        settings_commands(),
+        lockscreen_commands(),
     )
 
 

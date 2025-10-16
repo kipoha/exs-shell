@@ -66,13 +66,21 @@ class UserOptions(OptionsManager):
     class Settings(OptionsGroup):
         last_page: int = 0
 
+    # class Bar(OptionsGroup):
+    #     right: TrackedList[str] = TrackedList()
+    #     right_spacing: int = 10
+    #     center: TrackedList[str] = TrackedList()
+    #     center_spacing: int = 20
+    #     left: TrackedList[str] = TrackedList()
+    #     left_spacing: int = 10
+
     class Bar(OptionsGroup):
-        right: TrackedList[str] = TrackedList()
-        right_spacing: int = 10
-        center: TrackedList[str] = TrackedList()
-        center_spacing: int = 20
-        left: TrackedList[str] = TrackedList()
+        left: list[str] = []
         left_spacing: int = 10
+        center: list[str] = []
+        center_spacing: int = 20
+        right: list[str] = []
+        right_spacing: int = 10
 
     _bar: Bar = Bar()
     _settings: Settings = Settings()

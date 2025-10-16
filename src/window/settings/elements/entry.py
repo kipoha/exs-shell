@@ -15,8 +15,9 @@ class SettingsEntry(widgets.ListBoxRow):
         super().__init__(
             child=widgets.Box(
                 child=[
-                    widgets.Icon(image=icon, pixel_size=20),
-                    widgets.Label(label=label, style="margin-left: 0.75rem;"),
+                    # widgets.Icon(image=icon, pixel_size=20),
+                    widgets.Label(label=icon, style="font-size: 20px;"),
+                    widgets.Label(label=label, style="margin-left: 1.5rem;"),
                 ],
             ),
             css_classes=["settings-sidebar-entry"],

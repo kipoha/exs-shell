@@ -15,6 +15,7 @@ class SliderRow(SettingsRow):
         super().__init__(**kwargs)
 
         self._scale = widgets.Scale(
+            css_classes=["settings-row-scale"],
             value=value,
             # draw_value=True,
             min=min,

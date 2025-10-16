@@ -13,14 +13,12 @@ class SwitchRow(SettingsRow):
     ):
         super().__init__(**kwargs)
         self._switch = widgets.Switch(
-            css_classes=["settings-switch"],
+            css_classes=["settings-row-switch"],
             active=active,
             on_change=on_change,
             halign="end",
             valign="center",
             hexpand=True,
         )
-        self.on_activate = lambda x: self._switch.emit(
-            "activate"
-        )  # if set "active" property animation will not work
+        self.on_activate = lambda x: self._switch.emit("activate")  # type: ignore
         self.child.append(self._switch)

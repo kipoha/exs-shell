@@ -39,7 +39,7 @@ class Bar(widgets.Window):
         active = niri.overview_opened
         lockscreen = window_manager.get_window(f"{config.NAMESPACE}_lockscreen")
         launcher = window_manager.get_window(f"{config.NAMESPACE}_launcher")
-        if active and not lockscreen.visible and not launcher.visible and (left.child and center.child and right.child):
+        if active and not lockscreen.visible and not launcher.visible and (left.child or center.child or right.child):
             GLib.idle_add(self._show_bar)
         else:
             GLib.idle_add(self._hide_bar)

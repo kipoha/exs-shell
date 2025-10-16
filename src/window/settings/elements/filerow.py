@@ -18,7 +18,7 @@ class FileRow(SettingsRow):
             ),
             hexpand=True,
             halign="end",
-            css_classes=["file-row-button"],
+            css_classes=["settings-row-file-button"],
         )
 
         self.child.append(self._button)

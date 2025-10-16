@@ -9,12 +9,15 @@
 }
 
 .settings-sidebar {
-  background-color: c.$bg-light;
+  background-color: rgba(255, 255, 255, 0.1);
   min-width: 300px;
 }
 
 .settings-sidebar-user {
   margin: 2rem 1rem 2rem 1rem;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 1rem;
+  padding: 1rem;
 }
 
 .settings-sidebar-user-name {
@@ -35,10 +38,10 @@
 
 .settings-sidebar-user-avatar-image {
   border-radius: 50%;
-}
 
-.settings-sidebar-user-avatar-image:hover {
-  background-color: rgba(0, 0, 0, 0.05);
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
 }
 
 .settings-sidebar-label {
@@ -50,52 +53,21 @@
 
 .settings-sidebar-entry {
   all: unset;
-  background-color: c.$bg-light;
+  /* background-color: c.$bg-light; */
   padding: 1rem 2rem;
   padding-left: 0.75rem;
   font-size: 1.2rem;
+  transition:  0.2s;
+  border-radius: 1rem;
+  margin-left: 0.5rem;
+
+  &:hover {
+    margin: 0.3rem 0.5rem 0.3rem 1rem;
+    background-color: rgba(0, 0, 0, 0.4);
+  }
 
   &:selected {
-    /* background-color: lighten(c.$bg-light, 10%); */
-    background-color: darken(c.$bg-light, 10%);
+    margin: 0.3rem 0.5rem 0.3rem 1rem;
+    background-color: rgba(0, 0, 0, 0.4);
   }
-}
-
-
-.settings-page-name {
-  font-size: 2rem;
-  margin-left: 2.5rem;
-  margin-bottom: 2rem;
-  margin-top: 2rem;
-}
-
-.settings-group-name {
-  margin-left: 2.5rem;
-  color: c.$active;
-}
-
-.settings-row {
-  all: unset;
-  padding: 0.7rem 2.5rem;
-  transition: 0.2s;
-
-  &:active {
-    /* background-color: rgba(255, 255, 255, 0.05); */
-    background-color: rgba(0, 0, 0, 0.05);
-  }
-}
-
-.settings-row-label {
-  font-size: 1.2rem;
-}
-
-.settings-row-sublabel {
-  font-size: 0.9rem;
-  font-weight: normal;
-  color: c.$fg;
-}
-
-.settings-user-name {
-  font-size: 2.3rem;
-  margin-left: 1.5rem;
 }

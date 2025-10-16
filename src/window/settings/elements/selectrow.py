@@ -14,6 +14,7 @@ class SelectRow(SettingsRow):
         super().__init__(**kwargs)
 
         self._select = widgets.DropDown(
+            css_classes=["settings-row-select"],
             items=list(options),
             hexpand=True,
             halign="end",
@@ -23,8 +24,6 @@ class SelectRow(SettingsRow):
             active.bind("selected")
         elif active in options:  # type: ignore
             self._select.set_selected(options.index(active))  # type: ignore
-        else:
-            self._select.set_selected(0)
 
         if on_selected:
             self._select.connect("notify::selected-item", self._make_handler(on_selected))
