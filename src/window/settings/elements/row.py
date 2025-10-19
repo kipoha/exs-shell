@@ -6,10 +6,11 @@ class SettingsRow(widgets.ListBoxRow):
         self,
         label: str | None = None,
         sublabel: str | None = None,
+        css_classes: list[str] = ["settings-row"],
         **kwargs,
     ):
         super().__init__(
-            css_classes=["settings-row"],
+            css_classes=css_classes,
             child=widgets.Box(
                 child=[
                     widgets.Box(

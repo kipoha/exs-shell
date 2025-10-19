@@ -7,9 +7,11 @@ from .spinrow import SpinRow
 from .entryrow import EntryRow
 from .entry import SettingsEntry
 from .selectrow import SelectRow
+from .selectbuttonrow import SelectButtonRow
 from .multiselectbuttonrow import MultiSelectButtonRow
 from .multiselectrow import MultiSelectRow
 from .sliderrow import SliderRow
+from .dividerrow import DividerRow
 
 __all__ = [
     "SettingsRow",
@@ -23,5 +25,6 @@ __all__ = [
     "SelectRow",
     "MultiSelectRow",
     "SliderRow",
-    "MultiSelectButtonRow"
+    "MultiSelectButtonRow",
+    "DividerRow"
 ]

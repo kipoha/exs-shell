@@ -101,7 +101,7 @@ class CavaManager(SingletonClass):
     def _make_visual(self, values):
         # blocks = "⣀⣄⣤⣦⣶⣷⣿"
 
-        blocks = " ▁▂▃▄▅▆▇█"
+        blocks = "▁▂▃▄▅▆▇█"
         result = []
         for v in values:
             idx = min(int(v * (len(blocks) - 1)), len(blocks) - 1)

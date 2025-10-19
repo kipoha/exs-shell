@@ -1,23 +1,42 @@
 @use '../../colors.scss' as c;
 
+/* window { */
+/*   background-color: #000; */
+/* } */
 .bar {
   padding: 0.4rem 1rem;
   background-color: c.$bg;
   color: c.$fg;
   border-radius: 0.7rem;
-  /* margin: 230px 500px 0 500px; */
-  margin: 17rem 37rem 0 37rem;
   opacity: 0;
   transform: translateY(0);
   transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
-.bar.visible {
+.bar.top {
+  margin: 17rem 37rem 0 37rem;
+}
+
+.bar.bottom {
+  margin: 0 37rem 17rem 37rem;
+}
+
+.bar.top.visible {
   opacity: 1;
   transform: translateY(0);
 }
 
-.bar.hidden {
+.bar.top.hidden {
   opacity: 0;
   transform: translateY(-16rem);
+}
+
+.bar.bottom.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.bar.bottom.hidden {
+  opacity: 0;
+  transform: translateY(16rem);
 }

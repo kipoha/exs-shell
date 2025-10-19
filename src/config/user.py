@@ -1,4 +1,5 @@
 import os
+from typing import Literal
 
 from ignis.options_manager import OptionsGroup, OptionsManager, TrackedList
 from ignis.options import Options
@@ -55,37 +56,36 @@ class UserOptions(OptionsManager):
         # actions: TrackedList[dict] = TrackedList()
         # actions.append({"name": "lock", "command": "exs-ipc toggle-lock", "icon": "lock"})
 
-        powermenu_actions: list[dict] = [
+        powermenu_actions: TrackedList[dict] = TrackedList()
+        for i in [
             {"command": "hyprlock", "icon": ""},
             {"command": "niri msg action quit --skip-confirmation", "icon": "󰈆"},
             {"command": "systemctl suspend", "icon": "󰤄"},
             {"command": "systemctl reboot", "icon": ""},
             {"command": "systemctl poweroff", "icon": "⏻"},
-        ]
+        ]:
+            powermenu_actions.append(i)
 
     class Settings(OptionsGroup):
         last_page: int = 0
 
-    # class Bar(OptionsGroup):
-    #     right: TrackedList[str] = TrackedList()
-    #     right_spacing: int = 10
-    #     center: TrackedList[str] = TrackedList()
-    #     center_spacing: int = 20
-    #     left: TrackedList[str] = TrackedList()
-    #     left_spacing: int = 10
-
     class Bar(OptionsGroup):
-        left: list[str] = []
-        left_spacing: int = 10
-        center: list[str] = []
-        center_spacing: int = 20
-        right: list[str] = []
+        position: str = "top"
+        right: TrackedList[str] = TrackedList()
         right_spacing: int = 10
+        center: TrackedList[str] = TrackedList()
+        center_spacing: int = 20
+        left: TrackedList[str] = TrackedList()
+        left_spacing: int = 10
+
+    class Wallpaper(OptionsGroup):
+        wallpaper_path: str | None = None
+        wallpaper_dir: str | None = None
 
     _bar: Bar = Bar()
     _settings: Settings = Settings()
     _user_config: UserConfig = UserConfig()
-    _wallpaper: Options.Wallpaper = Options.Wallpaper()
+    _wallpaper: Wallpaper = Wallpaper()
     _applications: Options.Applications = Options.Applications()
     _notifications: Options.Notifications = Options.Notifications()
 
@@ -106,7 +106,7 @@ class UserOptions(OptionsManager):
         return self._applications
 
     @property
-    def wallpaper(self) -> Options.Wallpaper:
+    def wallpaper(self) -> Wallpaper:
         return self._wallpaper
 
     @property

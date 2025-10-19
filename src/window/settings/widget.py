@@ -11,7 +11,15 @@ from config import config
 from config.user import options
 
 from window.settings.active_page import active_page
-from window.settings.pages import AboutEntry, NotificationsEntry, TestEntry, BarEntry
+from window.settings.pages import (
+    AboutEntry,
+    NotificationsEntry,
+    TestEntry,
+    BarEntry,
+    AppearanceEntry,
+    WifiEntry,
+    BluetoothEntry,
+)
 
 
 fetch = FetchService.get_default()
@@ -119,7 +127,10 @@ class Settings(widgets.RegularWindow, SingletonClass):
             return
 
         rows = [
+            AppearanceEntry(),
             BarEntry(),
+            WifiEntry(),
+            BluetoothEntry(),
             NotificationsEntry(),
             AboutEntry(),
             TestEntry(),

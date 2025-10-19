@@ -3,7 +3,9 @@ from window.settings.elements import (
     SettingsGroup,
     SettingsEntry,
     MultiSelectRow,
-    SpinRow
+    SpinRow,
+    DividerRow,
+    SelectButtonRow,
 )
 from modules.bar.childs import modules
 from config.user import options
@@ -17,50 +19,87 @@ class BarEntry(SettingsEntry):
                 SettingsGroup(
                     name="General",
                     rows=[
-                        MultiSelectRow(
-                            label="Left bar modules",
-                            sublabel="Modules that will be displayed on the left of the bar",
-                            options=modules.keys(),
-                            selected_items=options.bar.left,
-                            on_change=lambda value: options.bar.set_left(value),
+                        DividerRow(),
+                        SettingsGroup(
+                            name="Position",
+                            rows=[
+                                SelectButtonRow(
+                                    label="Bar position",
+                                    sublabel="Position of the bar",
+                                    options=["top", "bottom"],
+                                    selected_item=options.bar.position,
+                                    on_change=lambda value: options.bar.set_position(value),
+                                ),
+                            ]
                         ),
-                        SpinRow(
-                            label="Bar left spacing",
-                            sublabel="Spacing between modules",
-                            value=options.bar.bind("left_spacing"),
-                            min=1,
-                            max=100,
-                            on_change=lambda x, value: options.bar.set_left_spacing(value),
+                        DividerRow(),
+                        SettingsGroup(
+                            name="Left",
+                            rows=[
+                                MultiSelectRow(
+                                    label="Bar modules",
+                                    sublabel="Modules that will be displayed on the left of the bar",
+                                    options=modules.keys(),
+                                    selected_items=options.bar.left,
+                                    on_change=lambda value: options.bar.set_left(value),
+                                ),
+                                SpinRow(
+                                    label="Bar spacing",
+                                    sublabel="Spacing between modules",
+                                    value=options.bar.bind("left_spacing"),
+                                    min=1,
+                                    max=100,
+                                    on_change=lambda x, value: options.bar.set_left_spacing(
+                                        value
+                                    ),
+                                ),
+                            ]
                         ),
-                        MultiSelectRow(
-                            label="Center bar modules",
-                            sublabel="Modules that will be displayed on the center of the bar",
-                            options=modules.keys(),
-                            selected_items=options.bar.center,
-                            on_change=lambda value: options.bar.set_center(value),
+                        DividerRow(),
+                        SettingsGroup(
+                            name="Center",
+                            rows=[
+                                MultiSelectRow(
+                                    label="Bar modules",
+                                    sublabel="Modules that will be displayed on the center of the bar",
+                                    options=modules.keys(),
+                                    selected_items=options.bar.center,
+                                    on_change=lambda value: options.bar.set_center(value),
+                                ),
+                                SpinRow(
+                                    label="Bar spacing",
+                                    sublabel="Spacing between modules",
+                                    value=options.bar.bind("center_spacing"),
+                                    min=1,
+                                    max=100,
+                                    on_change=lambda x, value: options.bar.set_center_spacing(
+                                        value
+                                    ),
+                                ),
+                            ]
                         ),
-                        SpinRow(
-                            label="Bar center spacing",
-                            sublabel="Spacing between modules",
-                            value=options.bar.bind("center_spacing"),
-                            min=1,
-                            max=100,
-                            on_change=lambda x, value: options.bar.set_center_spacing(value),
-                        ),
-                        MultiSelectRow(
-                            label="Right bar modules",
-                            sublabel="Modules that will be displayed on the right of the bar",
-                            options=modules.keys(),
-                            selected_items=options.bar.right,
-                            on_change=lambda value: options.bar.set_right(value),
-                        ),
-                        SpinRow(
-                            label="Bar right spacing",
-                            sublabel="Spacing between modules",
-                            value=options.bar.bind("right_spacing"),
-                            min=1,
-                            max=100,
-                            on_change=lambda x, value: options.bar.set_right_spacing(value),
+                        DividerRow(),
+                        SettingsGroup(
+                            name="Right",
+                            rows=[
+                                MultiSelectRow(
+                                    label="Bar modules",
+                                    sublabel="Modules that will be displayed on the right of the bar",
+                                    options=modules.keys(),
+                                    selected_items=options.bar.right,
+                                    on_change=lambda value: options.bar.set_right(value),
+                                ),
+                                SpinRow(
+                                    label="Bar spacing",
+                                    sublabel="Spacing between modules",
+                                    value=options.bar.bind("right_spacing"),
+                                    min=1,
+                                    max=100,
+                                    on_change=lambda x, value: options.bar.set_right_spacing(
+                                        value
+                                    ),
+                                ),
+                            ]
                         ),
                     ],
                 )

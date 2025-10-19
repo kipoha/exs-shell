@@ -11,5 +11,6 @@ class Wallpaper(SingletonClass):
     def __init__(self):
         options.wallpaper.connect_option("wallpaper_path", self.__set_wallpaper)
 
-    def __set_wallpaper(self, path: str):
+    def __set_wallpaper(self):
+        path = options.wallpaper.wallpaper_path
         asyncio.create_task(utils.exec_sh_async(f"swww img {path}"))

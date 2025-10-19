@@ -172,28 +172,38 @@
   }
 }
 
-
-/* === MultiSelectButtonRow === */
+/* === SelectButtonRow / MultiSelectButtonRow === */
+.settings-row-select-button,
 .settings-row-multi-select-button {
   padding: 0.1rem;
 }
 
-.settings-row-multi-select-button-checkbox {
+.settings-row-select-button-btn,
+.settings-row-multi-select-button-btn {
+  font-size: 1.2rem;
   background-color: c.$bg-light;
   color: c.$fg;
   border: 1px solid c.$border;
   border-radius: 6px;
   padding: 4px 8px;
   transition: background 0.2s ease, color 0.2s ease;
+}
 
-  &:hover {
-    background-color: c.$bg-lighter;
-  }
+.settings-row-select-button-btn:hover,
+.settings-row-multi-select-button-btn:hover {
+  background-color: c.$bg-lighter;
+}
 
-  &:checked {
-    background-color: c.$accent;
-    color: c.$fg-strong;
-  }
+.settings-row-select-button-btn.active,
+.settings-row-multi-select-button-btn.active {
+  background-color: c.$accent;
+  color: c.$fg-strong;
+  border-color: c.$accent;
+}
+
+.settings-row-select-button-btn.active label,
+.settings-row-multi-select-button-btn.active label {
+  color: c.$bg;
 }
 
 /* === Scale === */
@@ -206,9 +216,6 @@
   background-color: c.$accent;
   border-radius: 50%;
 }
-
-
-
 
 /* === Page === */
 .settings-page-name {
@@ -258,3 +265,14 @@
   border-radius: 1rem;
   margin: 0.3rem 0.5rem 0.3rem 1rem;
 }
+
+
+/* === Separator === */
+.settings-row-separator {
+  background-color: rgba(255, 255, 255, 0.15);
+  min-height: 5px;
+  margin: 1rem 2.5rem;
+  border-radius: 1rem;
+}
+
+
