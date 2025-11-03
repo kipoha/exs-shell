@@ -5,6 +5,7 @@ from ignis import widgets, utils
 
 from gi.repository import GLib, GdkPixbuf  # type: ignore
 
+from base.singleton import SingletonClass
 from base.window.animated import AnimatedWindowPopup
 
 from utils.clipboard import get_clipboard_history
@@ -12,7 +13,7 @@ from utils.clipboard import get_clipboard_history
 from config import config
 
 
-class ClipboardManager(AnimatedWindowPopup):
+class ClipboardManager(AnimatedWindowPopup, SingletonClass):
     def __init__(
         self,
         animation_duration: int = 300,
@@ -22,9 +23,13 @@ class ClipboardManager(AnimatedWindowPopup):
         self._entry = widgets.Entry(
             placeholder_text="Search", on_change=..., on_accept=...
         )
-        self.buffers_scrolled = widgets.Scroll(
-            vertical=True,
-            child=[]
+        self.buffers_scrolled = widgets.Scroll()
+        self._main_box = widgets.Box(
+            spacing=6,
+            child=[
+                self._entry,
+                self.buffers_scrolled,
+            ],
         )
         super().__init__(
             namespace=f"{config.NAMESPACE}_clipboard",
@@ -32,6 +37,10 @@ class ClipboardManager(AnimatedWindowPopup):
             anchor=["bottom"],
             kb_mode="on_demand",
             animation_duration=animation_duration,
+            child=self._main_box,
+            style="""
+            background-color: black;
+            """,
             **kwargs,
         )
 

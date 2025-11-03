@@ -1,5 +1,4 @@
 import os
-from typing import Literal
 
 from ignis.options_manager import OptionsGroup, OptionsManager, TrackedList
 from ignis.options import Options

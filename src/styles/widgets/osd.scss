@@ -1,24 +1,32 @@
 @use '../../colors.scss' as c;
 
-.osd-container {
-  background-color: c.$bg;
-  color: c.$fg;
-  padding: 1rem 2rem;
-  border-radius: 1rem;
+
+.osd-block {
   opacity: 0;
   transform: translateY(4rem);
   transition: opacity 0.25s ease, transform 0.25s ease;
-  margin-bottom: 1rem;
 }
 
-.osd-container.visible {
+.osd-block.visible {
   opacity: 1;
   transform: translateY(0);
 }
 
-.osd-container.hidden {
+.osd-block.hidden {
   opacity: 0;
   transform: translateY(4rem);
+}
+
+.osd-left-corner,
+.osd-right-corner {
+  color: c.$bg;
+}
+
+.osd-container {
+  background-color: c.$bg;
+  color: c.$fg;
+  padding: 1rem 2rem;
+  border-radius: 1rem 1rem 0 0;
 }
 
 .volume-icon {

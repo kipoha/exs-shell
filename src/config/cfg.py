@@ -61,6 +61,7 @@ class Config(SingletonClass):
         from modules.osd import OSD
         from modules.bar import Bar
         from modules.notification import NotificationPopup, NotificationCenter
+        from modules.clipboard import ClipboardManager
         from modules.launcher import Launcher
         from modules.lockscreen import LockScreen
         from modules.powermenu import PowenMenu
@@ -71,6 +72,7 @@ class Config(SingletonClass):
         NotificationCenter.get_default()
         PowenMenu.get_default()
         OSD.get_default()
+        # ClipboardManager.get_default()
 
         for i in range(utils.get_n_monitors()):
             Bar(i)

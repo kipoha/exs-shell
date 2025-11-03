@@ -84,7 +84,34 @@ class OSD(widgets.Window, SingletonClass):
             child=[self._brightness_widget, self._volume_widget],
         )
 
-        self.set_child(self._box)
+        self.left_corner = widgets.Corner(
+            css_classes=["osd-left-corner"],
+            orientation="bottom-right",
+            width_request=50, 
+            height_request=70, 
+            halign="end",
+            valign="end",
+        )
+        self.right_corner = widgets.Corner(
+            css_classes=["osd-right-corner"],
+            orientation="bottom-left",
+            width_request=50, 
+            height_request=70, 
+            halign="end",
+            valign="end",
+        )
+
+        self._main_box = widgets.Box(
+            css_classes=["osd-block", "hidden"],
+            child=[
+                self.left_corner,
+                self._box,
+                self.right_corner,
+            ],
+        )
+
+
+        self.set_child(self._main_box)
 
         self._volume_widget.update(self._volume_value)
         self._brightness_widget.update(self._brightness_value)
@@ -119,8 +146,8 @@ class OSD(widgets.Window, SingletonClass):
         if not self.visible:
             self.visible = True
 
-        self._box.remove_css_class("hidden")
-        self._box.add_css_class("visible")
+        self._main_box.remove_css_class("hidden")
+        self._main_box.add_css_class("visible")
 
         if self._hide_timeout:
             try:
@@ -131,8 +158,8 @@ class OSD(widgets.Window, SingletonClass):
         self._hide_timeout = GLib.timeout_add_seconds(1, self.hide_osd)
 
     def hide_osd(self):
-        self._box.remove_css_class("visible")
-        self._box.add_css_class("hidden")
+        self._main_box.remove_css_class("visible")
+        self._main_box.add_css_class("hidden")
 
         def hide_window():
             self.visible = False

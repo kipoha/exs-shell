@@ -1,23 +1,31 @@
 @use '../../colors.scss' as c;
 
-.notification-center-window {
-  margin: 1rem;
-  background-color: c.$bg;
-  padding: 1rem;
-  border-radius: 1rem;
+.notification-right-corner,
+.notification-left-corner {
+  color: c.$bg;
+}
+
+.notification-center {
   opacity: 0;
   transform: translateY(10rem);
   transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
-.notification-center-window.visible {
+.notification-center.visible {
   opacity: 1;
   transform: translateY(0);
 }
 
-.notification-center-window.hidden {
+.notification-center.hidden {
   opacity: 0;
   transform: translateY(10rem);
+}
+
+.notification-center-window {
+  min-width: 600px;
+  background-color: c.$bg;
+  padding: 1rem;
+  border-radius: 1rem 1rem 0 0;
 }
 
 .notification-center-header {

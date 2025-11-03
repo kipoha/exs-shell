@@ -6,10 +6,10 @@ from ignis import widgets, utils
 from ignis.window_manager import WindowManager
 
 from base.window.animated import AnimatedWindowPopup
+from base.singleton import SingletonClass
 
 from config import config
 from config.user import options
-from base.singleton import SingletonClass
 
 
 window_manager = WindowManager.get_default()
@@ -47,27 +47,51 @@ class PowerMenuItem(widgets.Button):
         window.toggle()
 
 
-
-
 class PowenMenu(AnimatedWindowPopup, SingletonClass):
     def __init__(
         self,
         **kwargs,
     ):
-        self.actions = [PowenMenuButton(**action) for action in options.user_config.powermenu_actions]
+        self.actions = [
+            PowenMenuButton(**action)
+            for action in options.user_config.powermenu_actions
+        ]
         self.buttons = widgets.Box(
             css_classes=["powermenu-actions"],
             vertical=True,
             child=[PowerMenuItem(item=item) for item in self.actions],
             spacing=10,
         )
+        self._box = widgets.Box(css_classes=["powermenu-box"], child=[self.buttons])
+        self.top_corner = widgets.Corner(
+            css_classes=["powermenu-top-corner"],
+            orientation="bottom-right",
+            height_request=50,
+            width_request=70,
+            halign="end",
+            valign="end",
+        )
+        self.bottom_corner = widgets.Corner(
+            css_classes=["powermenu-bottom-corner"],
+            orientation="top-right",
+            height_request=50,
+            width_request=70,
+            halign="end",
+            valign="end",
+        )
         self._main_box = widgets.Box(
-            css_classes=["powermenu"], child=[self.buttons] 
+            css_classes=["powermenu"],
+            vertical=True,
+            child=[
+                self.top_corner,
+                self._box,
+                self.bottom_corner
+            ],
         )
         super().__init__(
             namespace=f"{config.NAMESPACE}_powermenu",
             anchor=["right"],
-            kb_mode = "on_demand",
+            kb_mode="on_demand",
             animation_duration=300,
             visible=True,
             layer="overlay",
@@ -78,4 +102,7 @@ class PowenMenu(AnimatedWindowPopup, SingletonClass):
         options.user_config.connect_option("powermenu_actions", self.update_actions)
 
     def update_actions(self):
-        self.actions = [PowenMenuButton(**action) for action in options.user_config.powermenu_actions]
+        self.actions = [
+            PowenMenuButton(**action)
+            for action in options.user_config.powermenu_actions
+        ]

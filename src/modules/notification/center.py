@@ -100,7 +100,24 @@ class NotificationCenter(AnimatedWindow, SingletonClass):
             spacing=5,
         )
 
-        self._main_box = widgets.Box(
+        self.left_corner = widgets.Corner(
+            css_classes=["notification-left-corner"],
+            orientation="bottom-right",
+            width_request=50,
+            height_request=70, 
+            halign="end",
+            valign="end", 
+        )
+        self.right_corner = widgets.Corner(
+            css_classes=["notification-right-corner"],
+            orientation="bottom-left",
+            width_request=50,
+            height_request=70, 
+            halign="end",
+            valign="end",
+        )
+
+        self._box = widgets.Box(
             vertical=True,
             css_classes=["notification-center-window", "hidden"],
             child=[
@@ -125,6 +142,11 @@ class NotificationCenter(AnimatedWindow, SingletonClass):
                     vexpand=True,
                 ),
             ],
+        )
+
+        self._main_box = widgets.Box(
+            css_classes=["notification-center"],
+            child=[self.left_corner, self._box, self.right_corner]
         )
 
         super().__init__(

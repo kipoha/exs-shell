@@ -1,12 +1,7 @@
 @use '../../colors.scss' as c;
 
 .powermenu {
-  padding: 1rem;
-  background-color: c.$bg;
-  color: c.$fg;
-  border-radius: 2rem;
   opacity: 0;
-  margin-right: 0.3rem;
   transform: translateX(16rem);
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
@@ -19,6 +14,19 @@
 .powermenu.hidden {
   opacity: 0;
   transform: translateX(16rem);
+}
+
+.powermenu-box {
+  padding: 1rem;
+  background-color: c.$bg;
+  color: c.$fg;
+  border-radius: 2rem 0 0 2rem;
+}
+
+
+.powermenu-top-corner,
+.powermenu-bottom-corner {
+  color: c.$bg;
 }
 
 .powermenu-actions {
