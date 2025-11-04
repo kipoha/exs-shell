@@ -50,7 +50,8 @@ class UserOptions(OptionsManager):
         }
 
         actions: list[dict] = [
-            {"name": "lock", "command": "exs-ipc toggle-lock", "icon": "lock"}
+            {"name": "Lock", "command": "exs-ipc open-lockscreen", "icon": "lock"},
+            {"name": "Clipboard", "command": "exs-ipc toggle-clipboard", "icon": "clipboard"},
         ]
         # actions: TrackedList[dict] = TrackedList()
         # actions.append({"name": "lock", "command": "exs-ipc toggle-lock", "icon": "lock"})

@@ -3,29 +3,41 @@
 .notification-right-corner,
 .notification-left-corner {
   color: c.$bg;
+  transform: translateY(70px);
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: 0s;
 }
 
-.notification-center {
-  opacity: 0;
-  transform: translateY(10rem);
-  transition: opacity 0.2s ease, transform 0.2s ease;
+.notification-right-corner.visible,
+.notification-left-corner.visible {
+  transform: translateY(0);
+  transition-delay: 0s;
 }
 
-.notification-center.visible {
-  opacity: 1;
+.notification-right-corner.hidden,
+.notification-left-corner.hidden {
+  transform: translateY(70px);
+  transition-delay: 0.08s;
+}
+
+.notification-center-window {
+  transform: translateY(400px);
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.notification-center-window.visible {
   transform: translateY(0);
 }
 
-.notification-center.hidden {
-  opacity: 0;
-  transform: translateY(10rem);
+.notification-center-window.hidden {
+  transform: translateY(400px);
 }
 
 .notification-center-window {
   min-width: 600px;
   background-color: c.$bg;
   padding: 1rem;
-  border-radius: 1rem 1rem 0 0;
+  border-radius: 2rem 2rem 0 0;
 }
 
 .notification-center-header {

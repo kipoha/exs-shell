@@ -1,5 +1,6 @@
 import asyncio
 
+from base.window.animated import PartiallyAnimatedWindow
 from gi.repository import GLib  # type: ignore
 
 from ignis import widgets, utils
@@ -53,8 +54,7 @@ class OSDProgress(widgets.Box):
         self._muted = muted
         self._label.set_label(self._icon_muted if muted else self._icon_active)
 
-
-class OSD(widgets.Window, SingletonClass):
+class OSD(PartiallyAnimatedWindow, SingletonClass):
     def __init__(self, **kwargs):
         super().__init__(
             namespace=f"{config.NAMESPACE}_osd",
@@ -67,9 +67,9 @@ class OSD(widgets.Window, SingletonClass):
 
         self._hide_timeout = None
         self._last_device = None
-
         self._volume_value = 0
         self._brightness_value = 0
+
         asyncio.create_task(self.async_init())
 
         self._volume_widget = OSDProgress("", "volume")
@@ -85,24 +85,24 @@ class OSD(widgets.Window, SingletonClass):
         )
 
         self.left_corner = widgets.Corner(
-            css_classes=["osd-left-corner"],
+            css_classes=["osd-left-corner", "hidden"],
             orientation="bottom-right",
-            width_request=50, 
-            height_request=70, 
+            width_request=50,
+            height_request=50,
             halign="end",
             valign="end",
         )
         self.right_corner = widgets.Corner(
-            css_classes=["osd-right-corner"],
+            css_classes=["osd-right-corner", "hidden"],
             orientation="bottom-left",
-            width_request=50, 
-            height_request=70, 
+            width_request=50,
+            height_request=50,
             halign="end",
             valign="end",
         )
 
         self._main_box = widgets.Box(
-            css_classes=["osd-block", "hidden"],
+            css_classes=["osd-block"],
             child=[
                 self.left_corner,
                 self._box,
@@ -110,8 +110,9 @@ class OSD(widgets.Window, SingletonClass):
             ],
         )
 
-
         self.set_child(self._main_box)
+
+        self._animated_parts = [self.left_corner, self._box, self.right_corner]
 
         self._volume_widget.update(self._volume_value)
         self._brightness_widget.update(self._brightness_value)
@@ -143,28 +144,21 @@ class OSD(widgets.Window, SingletonClass):
             return 0
 
     def show_osd(self):
-        if not self.visible:
-            self.visible = True
-
-        self._main_box.remove_css_class("hidden")
-        self._main_box.add_css_class("visible")
-
-        if self._hide_timeout:
-            try:
-                GLib.source_remove(self._hide_timeout)
-            except Exception:
-                pass
+        if not self._is_open:
+            self.open()
+        else:
+            if self._hide_timeout:
+                try:
+                    GLib.source_remove(self._hide_timeout)
+                except Exception:
+                    pass
 
         self._hide_timeout = GLib.timeout_add_seconds(1, self.hide_osd)
 
     def hide_osd(self):
-        self._main_box.remove_css_class("visible")
-        self._main_box.add_css_class("hidden")
+        if self._is_open:
+            self.close()
 
-        def hide_window():
-            self.visible = False
-
-        utils.Timeout(300, hide_window)
         self._hide_timeout = None
         return False
 

@@ -66,13 +66,13 @@ class Config(SingletonClass):
         from modules.lockscreen import LockScreen
         from modules.powermenu import PowenMenu
         from window import Settings
-        from window.wallpaper import Wallpaper, options
+        from window.wallpaper import Wallpaper
 
         Launcher.get_default()
         NotificationCenter.get_default()
         PowenMenu.get_default()
         OSD.get_default()
-        # ClipboardManager.get_default()
+        ClipboardManager.get_default()
 
         for i in range(utils.get_n_monitors()):
             Bar(i)
@@ -80,8 +80,6 @@ class Config(SingletonClass):
 
         LockScreen()
         Wallpaper.get_default()
-        # options.wallpaper.wallpaper_path = "/home/kipoha/_projects/dots/exsdot/wallpapers/touhou/764022.jpg"
-        # options.wallpaper.wallpaper_path = "/home/kipoha/_projects/dots/exsdot/wallpapers/touhou/763104.jpg"
         Settings.get_default()
         asyncio.create_task(run_ipc_server())
 

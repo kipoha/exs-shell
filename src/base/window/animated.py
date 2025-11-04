@@ -63,13 +63,56 @@ class AnimatedWindow(widgets.Window):
                 self.set_visible(False)
                 return False
 
-            GLib.timeout_add(self.animation_duration, hide_after_animation)
+            GLib.timeout_add(self.animation_duration + 50, hide_after_animation)
 
     def toggle(self):
         if not self._is_open:
             self.open()
         else:
             self.close()
+
+class PartiallyAnimatedWindow(AnimatedWindow):
+    def open(self):
+        if self._is_open:
+            return
+
+        self.set_visible(True)
+        self._is_open = True
+
+        if hasattr(self, "_animated_parts") and self._animated_parts:
+            for widget in self._animated_parts:
+                self._animate_show(widget)
+        else:
+            self._animate_show(self._main_box)
+
+    def close(self):
+        if not self._is_open:
+            return
+
+        if hasattr(self, "_animated_parts") and self._animated_parts:
+            for widget in self._animated_parts:
+                self._animate_hide(widget)
+        else:
+            self._animate_hide(self._main_box)
+
+        GLib.timeout_add(self.animation_duration + 50, self._final_hide)
+
+    def _animate_show(self, widget):
+        ctx = widget.get_style_context()
+        ctx.remove_class("hidden")
+        ctx.add_class("visible")
+        return False
+
+    def _animate_hide(self, widget):
+        ctx = widget.get_style_context()
+        ctx.remove_class("visible")
+        ctx.add_class("hidden")
+        return False
+
+    def _final_hide(self):
+        self.set_visible(False)
+        self._is_open = False
+        return False
 
 
 class AnimatedWindowPopup(AnimatedWindow):

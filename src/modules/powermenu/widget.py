@@ -5,7 +5,7 @@ from dataclasses import dataclass
 from ignis import widgets, utils
 from ignis.window_manager import WindowManager
 
-from base.window.animated import AnimatedWindowPopup
+from base.window.animated import PartiallyAnimatedWindow
 from base.singleton import SingletonClass
 
 from config import config
@@ -47,7 +47,7 @@ class PowerMenuItem(widgets.Button):
         window.toggle()
 
 
-class PowenMenu(AnimatedWindowPopup, SingletonClass):
+class PowenMenu(PartiallyAnimatedWindow, SingletonClass):
     def __init__(
         self,
         **kwargs,
@@ -88,6 +88,9 @@ class PowenMenu(AnimatedWindowPopup, SingletonClass):
                 self.bottom_corner
             ],
         )
+
+        self._animated_parts = [self.top_corner, self.bottom_corner, self._box]
+
         super().__init__(
             namespace=f"{config.NAMESPACE}_powermenu",
             anchor=["right"],

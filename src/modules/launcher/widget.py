@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 import re
 import asyncio
+from typing import Any
 
 from ignis import widgets, utils
 from ignis.window_manager import WindowManager
@@ -11,10 +12,10 @@ from ignis.services.applications import (
 )
 from ignis.menu_model import IgnisMenuModel, IgnisMenuItem, IgnisMenuSeparator
 
-from gi.repository import Gio  # type: ignore
+from gi.repository import Gio, GLib  # type: ignore
 
 from base.singleton import SingletonClass
-from base.window.animated import AnimatedWindowPopup
+from base.window.animated import AnimatedWindowPopup, PartiallyAnimatedWindow
 from config import config
 from config.user import options
 
@@ -175,22 +176,11 @@ class SearchWebButton(widgets.Button):
         window.toggle()
 
 
-
-
-class Launcher(AnimatedWindowPopup, SingletonClass):
+class Launcher(PartiallyAnimatedWindow, AnimatedWindowPopup, SingletonClass):
     def __init__(self):
-        self.actions = [Action(**action) for action in options.user_config.actions]
-        self.MAX_ITEMS = 65
-        self._app_list = widgets.Grid(
-            css_classes=["launcher-grid"],
-            column_homogeneous=True,
-            row_homogeneous=True,
-            hexpand=True,
-            vexpand=True,
-            halign="center",
-            valign="start",
-        )
-        self._added_items = []
+        self.MAX_ITEMS = 5
+
+        self.current_items = applications.apps[: self.MAX_ITEMS]
 
         self._entry = widgets.Entry(
             hexpand=True,
@@ -200,19 +190,49 @@ class Launcher(AnimatedWindowPopup, SingletonClass):
             on_accept=self.__on_accept,
         )
 
-        main_box = widgets.Box(
+        self._list_box = widgets.Box(
+            vertical=True,
+            spacing=4,
+            css_classes=["launcher-app-list"],
+        )
+        self._scroll = widgets.Scroll(
+            vexpand=True,
+            hexpand=True,
+            child=self._list_box,
+            css_classes=["launcher-scroll"],
+        )
+
+        self.left_corner = widgets.Corner(
+            css_classes=["launcher-left-corner"],
+            orientation="bottom-right",
+            width_request=50,
+            height_request=70,
+            halign="end",
+            valign="end",
+        )
+        self.right_corner = widgets.Corner(
+            css_classes=["launcher-right-corner"],
+            orientation="bottom-left",
+            width_request=50,
+            height_request=70,
+            halign="end",
+            valign="end",
+        )
+
+        self._box = widgets.Box(
             vertical=True,
             valign="end",
             halign="center",
             css_classes=["launcher", "hidden"],
+            spacing=15,
             child=[
-                self._app_list,
+                self._scroll,
                 widgets.Box(
                     css_classes=["launcher-search-box"],
                     child=[
                         widgets.Icon(
                             icon_name="system-search-symbolic",
-                            pixel_size=24,
+                            pixel_size=20,
                             style="margin-right: 0.5rem;",
                         ),
                         self._entry,
@@ -220,29 +240,37 @@ class Launcher(AnimatedWindowPopup, SingletonClass):
                 ),
             ],
         )
-        self._main_box = main_box
+
+        self._main_box = widgets.Box(
+            css_classes=["launcher-main"],
+            child=[self.left_corner, self._box, self.right_corner],
+        )
+
+        self._animated_parts = [self.left_corner, self.right_corner, self._box]
+
+        self._background_button = widgets.Button(
+            vexpand=True,
+            hexpand=True,
+            can_focus=False,
+            css_classes=["launcher-backdrop"],
+            on_click=lambda x: self.close(),
+        )
 
         super().__init__(
             namespace=f"{config.NAMESPACE}_launcher",
             visible=False,
             kb_mode="on_demand",
-            css_classes=["unset"],
-            anchor=["top", "right", "bottom", "left"],
-            child=widgets.Overlay(
-                child=widgets.Button(
-                    vexpand=True,
-                    hexpand=True,
-                    can_focus=False,
-                    css_classes=["unset"],
-                    on_click=lambda x: self.toggle(),
-                    style="background-color: rgba(0, 0, 0, 0.3);",
-                ),
-                overlays=[main_box],
+            anchor=["bottom"],
+            child=widgets.Box(
+                css_classes=["launcher-overlay"],
+                child=[self._background_button, self._main_box],
             ),
-            style="background-color: rgba(0, 0, 0, 0.7);",
         )
 
-        self.__show_all_apps()
+        self._added_items = []
+        self._populate_box(self.current_items)
+
+        self.actions = [Action(**action) for action in options.user_config.actions]
         options.user_config.connect_option("actions", self.update_actions)
 
     def update_actions(self):
@@ -253,52 +281,74 @@ class Launcher(AnimatedWindowPopup, SingletonClass):
             super().open()
             self.__on_open()
 
-    def __show_all_apps(self):
-        apps = applications.apps
-        self._populate_grid(apps[:self.MAX_ITEMS])
-
-    def __on_open(self, *args) -> None:
+    def __on_open(self):
         if not self.visible:
             return
-
         self._entry.text = ""
         self._entry.grab_focus()
 
-    def __on_accept(self, *args) -> None:
-        if self._added_items:
-            self._added_items[0].launch()
-
-    def _populate_grid(self, items):
+    def _populate_box(self, items: list[Any]):
         for item in self._added_items:
-            self._app_list.remove(item)
+            self._list_box.remove(item)
         self._added_items.clear()
 
-        if not items:
-            return
-
-        columns = 5
-        for idx, item in enumerate(items):
-            row = idx // columns
-            col = idx % columns
-
-            widget = LauncherAppItem(item) if isinstance(item, Application) else item
-            self._app_list.attach(widget, col, row, 1, 1)
+        for item in items:
+            if isinstance(item, widgets.Widget):
+                widget = item
+            elif isinstance(item, Application):
+                widget = LauncherAppItem(item)
+            else:
+                widget = item
+            self._list_box.append(widget)
             self._added_items.append(widget)
 
-    def __search(self, *args) -> None:
-        query = self._entry.text.lower().strip()
+        height = min(len(items) * 75 + 90, 500)
+        self._box.set_size_request(-1, height)
+    #     self._animate_height(height)
+    #
+    # def _animate_height(self, target_height, duration=0.15):
+    #     start_height = self._box.get_allocated_height()
+    #     steps = max(int(duration * 60), 1)  # 60 FPS
+    #     delta = (target_height - start_height) / steps
+    #     i = 0
+    #
+    #     def step():
+    #         nonlocal i
+    #         new_height = round(start_height + delta * i)
+    #         self._box.set_size_request(-1, new_height)
+    #         i += 1
+    #         return i <= steps
+    #
+    #     GLib.timeout_add(int(duration * 1000 / steps), step)
+    #
+    def __on_accept(self, *_):
+        if self._added_items:
+            first_item = self._added_items[0]
+            if hasattr(first_item, "launch"):
+                first_item.launch()
 
-        if query == "":
-            self.__show_all_apps()
+    def __search(self, *args):
+        query = self._entry.text.lower().strip()
+        if not query:
+            self.current_items = applications.apps[: self.MAX_ITEMS]
+            self._populate_box(self.current_items)
             return
 
         prefix = options.user_config.command_prefix
         if query.startswith(prefix):
-            self._populate_grid([ActionItem(action) for action in self.actions if query.replace(prefix, "") in action.name.lower().strip()])
+            filtered = [
+                ActionItem(action)
+                for action in self.actions
+                if query.replace(prefix, "") in action.name.lower().strip()
+            ]
+            self.current_items = filtered
+            self._populate_box(filtered)
             return
 
         filtered = applications.search(applications.apps, query)
-        if not filtered:
-            self._populate_grid([SearchWebButton(query)])
+        if filtered:
+            self.current_items = filtered[: self.MAX_ITEMS]
+            self._populate_box(filtered[: self.MAX_ITEMS])
         else:
-            self._populate_grid(filtered[:self.MAX_ITEMS])
+            self.current_items = [SearchWebButton(query)]
+            self._populate_box([SearchWebButton(query)])

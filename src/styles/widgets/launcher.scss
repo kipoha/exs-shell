@@ -1,47 +1,92 @@
 @use '../../colors.scss' as c;
 
+.launcher-left-corner,
+.launcher-right-corner {
+  color: c.$bg;
+  transform: translateY(70px);
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: 0s;
+}
+
+.launcher-left-corner.visible,
+.launcher-right-corner.visible {
+  transform: translateY(0);
+  transition-delay: 0s;
+}
+
+.launcher-left-corner.hidden,
+.launcher-right-corner.hidden {
+  transform: translateY(70px);
+}
+
 .launcher {
-  padding: 2rem;
-  color: c.$fg;
-  opacity: 0;
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  min-width: 550px;
+  transform: translateY(470px);
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  padding: 1rem 2rem;
+  background-color: c.$bg;
+  border-radius: 2rem 2rem 0 0;
 }
 
 .launcher.visible {
-  opacity: 1;
+  transform: translateY(0);
 }
 
 .launcher.hidden {
-  opacity: 0;
+  transform: translateY(470px);
 }
 
-.launcher-grid {
-  margin-bottom: 1rem;
+.launcher-app-list {
+  padding-right: 0.5rem;
+}
+
+.launcher-app {
+  all: unset;
+  border-radius: 2rem;
+  padding: 0.5rem;
+  margin: 0.5rem 0;
+  transition: 0.2s;
+
+  &:focus {
+    background-color: c.$bg-lighter;
+  }
+
+  &:hover {
+    background-color: c.$bg-lighter;
+  }
+}
+
+.clipboard-item {
+  padding: 0.5rem 1rem;
+  border-radius: 1.5rem;
+  background-color: rgba(255, 255, 255, 0.03);
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+  }
+
+  &:focus {
+    background-color: rgba(255, 255, 255, 0.12);
+  }
+
+  label {
+    font-size: 14px;
+    color: c.$fg;
+  }
+
+  .clipboard-image {
+    margin-right: 8px;
+    border-radius: 1rem;
+  }
 }
 
 .launcher-search-box {
   padding: 1rem;
   background-color: c.$bg-lighter;
-  border-radius: 1rem;
-  min-width: 40rem;
-  margin-left: 100rem;
-  margin-right: 100rem;
+  border-radius: 2rem;
 }
 
-.launcher-app {
-  all: unset;
-  border-radius: 3rem;
-  padding: 1rem;
-  border: 2px solid transparent;
-  margin: 0.5rem;
-  transition: 0.2s;
-
-  &:focus {
-    border: 2px solid c.$active;
-  }
-}
-
-.launcher-app-label {
-  font-size: 1rem;
-  margin-top: 0.5rem;
+.launcher-backdrop {
+  background-color: rgba(0, 0, 0, 0.5);
 }

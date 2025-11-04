@@ -4,7 +4,7 @@ from ignis.services.notifications import Notification, NotificationService
 from gi.repository import GLib  # type: ignore
 
 from base.singleton import SingletonClass
-from base.window.animated import AnimatedWindow
+from base.window.animated import PartiallyAnimatedWindow
 
 from config import config
 from config.user import options
@@ -78,7 +78,7 @@ class NotificationList(widgets.Box):
         return contents
 
 
-class NotificationCenter(AnimatedWindow, SingletonClass):
+class NotificationCenter(PartiallyAnimatedWindow, SingletonClass):
     def __init__(self, **kwargs):
         self.dnd_button = widgets.Button(
             child=widgets.Label(label=""),
@@ -148,6 +148,8 @@ class NotificationCenter(AnimatedWindow, SingletonClass):
             css_classes=["notification-center"],
             child=[self.left_corner, self._box, self.right_corner]
         )
+
+        self._animated_parts = [self.left_corner, self.right_corner, self._box]
 
         super().__init__(
             namespace=f"{config.NAMESPACE}_notification",

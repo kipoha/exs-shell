@@ -1,32 +1,53 @@
 @use '../../colors.scss' as c;
 
-.powermenu {
-  opacity: 0;
-  transform: translateX(16rem);
-  transition: opacity 0.3s ease, transform 0.3s ease;
-}
-
-.powermenu.visible {
-  opacity: 1;
-  transform: translateX(0);
-}
-
-.powermenu.hidden {
-  opacity: 0;
-  transform: translateX(16rem);
-}
+/* .powermenu { */
+/*   opacity: 0; */
+/*   transition: opacity 0.3s ease, transform 0.3s ease; */
+/* } */
+/**/
+/* .powermenu.visible { */
+/*   opacity: 1; */
+/*   transform: translateX(0); */
+/* } */
+/**/
+/* .powermenu.hidden { */
+/*   opacity: 0; */
+/*   transform: translateX(16rem); */
+/* } */
 
 .powermenu-box {
   padding: 1rem;
   background-color: c.$bg;
   color: c.$fg;
   border-radius: 2rem 0 0 2rem;
+  transform: translateX(85px);
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.powermenu-box.visible {
+  transform: translateX(0);
+}
+
+.powermenu-box.hidden {
+  transform: translateX(85px);
 }
 
 
 .powermenu-top-corner,
 .powermenu-bottom-corner {
   color: c.$bg;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  transform: translateX(85px);
+}
+
+.powermenu-top-corner.visible,
+.powermenu-bottom-corner.visible {
+  transform: translateX(0);
+}
+
+.powermenu-top-corner.hidden,
+.powermenu-bottom-corner.hidden {
+  transform: translateX(85px);
 }
 
 .powermenu-actions {
