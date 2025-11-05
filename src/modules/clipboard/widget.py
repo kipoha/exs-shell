@@ -37,7 +37,6 @@ class ClipboardManager(PartiallyAnimatedWindow, AnimatedWindowPopup, SingletonCl
             css_classes=["launcher-scroll"],
         )
 
-        # Углы для анимации
         self.left_corner = widgets.Corner(
             css_classes=["launcher-left-corner"],
             orientation="bottom-right",
@@ -74,7 +73,6 @@ class ClipboardManager(PartiallyAnimatedWindow, AnimatedWindowPopup, SingletonCl
 
         self._animated_parts = [self.left_corner, self.right_corner, self._box]
 
-        # Фон
         self._background_button = widgets.Button(
             vexpand=True,
             hexpand=True,
@@ -86,7 +84,7 @@ class ClipboardManager(PartiallyAnimatedWindow, AnimatedWindowPopup, SingletonCl
         super().__init__(
             namespace=f"{config.NAMESPACE}_clipboard",
             visible=False,
-            kb_mode="on_demand",
+            kb_mode="exclusive",
             anchor=["bottom"],
             child=widgets.Box(
                 css_classes=["launcher-overlay"],
@@ -108,7 +106,24 @@ class ClipboardManager(PartiallyAnimatedWindow, AnimatedWindowPopup, SingletonCl
             self._added_items.append(widget)
 
         height = min(len(items) * 40 + 50, 500)
-        self._box.set_size_request(-1, height)
+        self._animate_height(height)
+
+    def _animate_height(self, target_height, duration=0.25):
+        start_height = self._box.get_allocated_height()
+        start_time = GLib.get_monotonic_time()
+
+        def update():
+            elapsed = (GLib.get_monotonic_time() - start_time) / 1_000_000
+            t = min(elapsed / duration, 1.0)
+            t_smooth = 1 - pow(1 - t, 3)
+            new_height = round(start_height + (target_height - start_height) * t_smooth)
+            self._box.set_size_request(-1, new_height)
+            if t < 1.0:
+                return True
+            else:
+                return False
+
+        GLib.idle_add(update)
 
     def _create_buffer_widget(self, buffer_data: dict):
         buffer_id = buffer_data["id"]
@@ -143,8 +158,10 @@ class ClipboardManager(PartiallyAnimatedWindow, AnimatedWindowPopup, SingletonCl
                 print(e)
                 box = widgets.Box(spacing=6, child=[widgets.Label(label="[image]")], hexpand=True)
         else:
-            raw = raw_text.split("\t")[-1][:50]
-            label = widgets.Label(label=f"{raw}...")
+            text = raw_text.split("\t")[-1]
+            if len(text) > 60:
+                text = text[:57] + "..."
+            label = widgets.Label(label=text)
             box = widgets.Box(spacing=6, child=[label], hexpand=True)
 
         btn = widgets.Button(child=box, css_classes=["launcher-app", "clipboard-item"])

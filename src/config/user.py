@@ -49,12 +49,13 @@ class UserOptions(OptionsManager):
             "critical_level": 10,
         }
 
-        actions: list[dict] = [
+        actions: TrackedList[dict] = TrackedList()
+        for i in [
             {"name": "Lock", "command": "exs-ipc open-lockscreen", "icon": "lock"},
             {"name": "Clipboard", "command": "exs-ipc toggle-clipboard", "icon": "clipboard"},
-        ]
-        # actions: TrackedList[dict] = TrackedList()
-        # actions.append({"name": "lock", "command": "exs-ipc toggle-lock", "icon": "lock"})
+            {"name": "Color Picker", "command": "exs-ipc action-color-picker", "icon": "color-picker"},
+        ]:
+            actions.append(i)
 
         powermenu_actions: TrackedList[dict] = TrackedList()
         for i in [

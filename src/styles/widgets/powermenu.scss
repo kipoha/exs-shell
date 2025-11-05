@@ -1,20 +1,5 @@
 @use '../../colors.scss' as c;
 
-/* .powermenu { */
-/*   opacity: 0; */
-/*   transition: opacity 0.3s ease, transform 0.3s ease; */
-/* } */
-/**/
-/* .powermenu.visible { */
-/*   opacity: 1; */
-/*   transform: translateX(0); */
-/* } */
-/**/
-/* .powermenu.hidden { */
-/*   opacity: 0; */
-/*   transform: translateX(16rem); */
-/* } */
-
 .powermenu-box {
   padding: 1rem;
   background-color: c.$bg;

@@ -1,0 +1,39 @@
+@use '../../colors.scss' as c;
+
+.dashboard-left-corner,
+.dashboard-right-corner {
+  color: c.$bg;
+  transform: translateY(-50px);
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.dashboard-left-corner.visible,
+.dashboard-right-corner.visible {
+  transform: translateY(0);
+}
+
+.dashboard-left-corner.hidden,
+.dashboard-right-corner.hidden {
+  transform: translateY(-50px);
+}
+
+.dashboard-window {
+  transform: translateY(-300px);
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  min-width: 500px;
+  background-color: c.$bg;
+  padding: 1rem;
+  border-radius: 0 0 2rem 2rem;
+}
+
+.dashboard-window.visible {
+  transform: translateY(0);
+}
+
+.dashboard-window.hidden {
+  transform: translateY(-300px);
+}
+
+.dashboard-trigger {
+  background-color: rgba(0, 0, 0, 0.01);
+}

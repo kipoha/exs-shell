@@ -8,13 +8,17 @@ local_scheme = "node-and-date"
 
 [project]
 name = "exs-shell"
-version = "0.1.0"
+version = "0.1.5"
 description = "Just Desktop for Niri Wayland Compositor"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
     "ignis @ git+https://git@github.com/ignis-sh/ignis.git",
+    "pillow>=12.0.0",
     "psutil>=7.1.0",
+]
+authors = [
+    { name = "kipoha", email = "kipoha.core@gmail.com" },
 ]
 
 [tool.uv.sources]

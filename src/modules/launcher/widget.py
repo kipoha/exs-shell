@@ -12,7 +12,7 @@ from ignis.services.applications import (
 )
 from ignis.menu_model import IgnisMenuModel, IgnisMenuItem, IgnisMenuSeparator
 
-from gi.repository import Gio, GLib  # type: ignore
+from gi.repository import Gio, GLib, Gdk  # type: ignore
 
 from base.singleton import SingletonClass
 from base.window.animated import AnimatedWindowPopup, PartiallyAnimatedWindow
@@ -56,7 +56,7 @@ class ActionItem(widgets.Button):
             css_classes=["launcher-app"],
             child=widgets.Box(
                 child=[
-                    widgets.Icon(image=self.action.icon, pixel_size=48),
+                    widgets.Picture(image=self.action.icon, width=48, height=48),
                     widgets.Label(
                         label=self.action.name,
                         css_classes=["launcher-app-label"],
@@ -259,7 +259,7 @@ class Launcher(PartiallyAnimatedWindow, AnimatedWindowPopup, SingletonClass):
         super().__init__(
             namespace=f"{config.NAMESPACE}_launcher",
             visible=False,
-            kb_mode="on_demand",
+            kb_mode="exclusive",
             anchor=["bottom"],
             child=widgets.Box(
                 css_classes=["launcher-overlay"],
@@ -303,24 +303,25 @@ class Launcher(PartiallyAnimatedWindow, AnimatedWindowPopup, SingletonClass):
             self._added_items.append(widget)
 
         height = min(len(items) * 75 + 90, 500)
-        self._box.set_size_request(-1, height)
-    #     self._animate_height(height)
-    #
-    # def _animate_height(self, target_height, duration=0.15):
-    #     start_height = self._box.get_allocated_height()
-    #     steps = max(int(duration * 60), 1)  # 60 FPS
-    #     delta = (target_height - start_height) / steps
-    #     i = 0
-    #
-    #     def step():
-    #         nonlocal i
-    #         new_height = round(start_height + delta * i)
-    #         self._box.set_size_request(-1, new_height)
-    #         i += 1
-    #         return i <= steps
-    #
-    #     GLib.timeout_add(int(duration * 1000 / steps), step)
-    #
+        self._animate_height(height)
+
+    def _animate_height(self, target_height, duration=0.25):
+        start_height = self._box.get_allocated_height()
+        start_time = GLib.get_monotonic_time()
+
+        def update():
+            elapsed = (GLib.get_monotonic_time() - start_time) / 1_000_000
+            t = min(elapsed / duration, 1.0)
+            t_smooth = 1 - pow(1 - t, 3)
+            new_height = round(start_height + (target_height - start_height) * t_smooth)
+            self._box.set_size_request(-1, new_height)
+            if t < 1.0:
+                return True
+            else:
+                return False
+
+        GLib.idle_add(update)
+
     def __on_accept(self, *_):
         if self._added_items:
             first_item = self._added_items[0]

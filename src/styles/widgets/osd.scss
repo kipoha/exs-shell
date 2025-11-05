@@ -3,7 +3,7 @@
 .osd-left-corner,
 .osd-right-corner {
   color: c.$bg;
-  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
   transform: translateY(70px);
 }
 

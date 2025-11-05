@@ -65,6 +65,7 @@ class Config(SingletonClass):
         from modules.launcher import Launcher
         from modules.lockscreen import LockScreen
         from modules.powermenu import PowenMenu
+        from modules.dashboard import Dashboard, DashboardTrigger
         from window import Settings
         from window.wallpaper import Wallpaper
 
@@ -73,6 +74,9 @@ class Config(SingletonClass):
         PowenMenu.get_default()
         OSD.get_default()
         ClipboardManager.get_default()
+
+        Dashboard.get_default()
+        DashboardTrigger.get_default()
 
         for i in range(utils.get_n_monitors()):
             Bar(i)
@@ -100,7 +104,6 @@ class Config(SingletonClass):
 
     def __call__(self, config: str, debug: bool = False) -> None:
         from ignis.log_utils import configure_logger
-        from ignis._deprecation import _enable_deprecation_warnings
         from ignis.config_manager import ConfigManager
         from ignis.client import IgnisClient
 
@@ -112,7 +115,9 @@ class Config(SingletonClass):
 
         config_path = self.get_full_path(config)
 
-        _enable_deprecation_warnings()
+        if debug:
+            from ignis._deprecation import _enable_deprecation_warnings
+            _enable_deprecation_warnings()
         configure_logger(debug)
 
         self.app.connect(

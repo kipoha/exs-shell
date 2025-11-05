@@ -153,7 +153,7 @@ class AnimatedWindowPopup(AnimatedWindow):
         )
 
         key_controller = Gtk.EventControllerKey()
-        key_controller.connect("key-pressed", self.__on_key_press)
+        key_controller.connect("key-pressed", self._on_key_press)
         self.add_controller(key_controller)
 
     def open(self):
@@ -167,7 +167,7 @@ class AnimatedWindowPopup(AnimatedWindow):
         else:
             self.grab_focus()
 
-    def __on_key_press(self, controller, keyval, keycode, state):
+    def _on_key_press(self, controller, keyval, keycode, state):
         if keyval == Gdk.KEY_Escape and self._is_open:
             self.toggle()
             return True

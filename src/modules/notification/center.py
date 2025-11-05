@@ -88,7 +88,7 @@ class NotificationCenter(PartiallyAnimatedWindow, SingletonClass):
 
         self.clear_button = widgets.Button(
             child=widgets.Label(label="󰩹"),
-            on_click=lambda x: notifications.clear_all(),
+            on_click=self.clear_all,
             css_classes=["notification-clear-all"],
         )
 
@@ -165,6 +165,9 @@ class NotificationCenter(PartiallyAnimatedWindow, SingletonClass):
         self.update_dnd_button()
 
         options.notifications.bind("dnd", lambda *_: self.update_dnd_button())
+
+    def clear_all(self, *_):
+        notifications.clear_all()
 
     def toggle_dnd(self):
         options.notifications.set_dnd(not options.notifications.dnd)

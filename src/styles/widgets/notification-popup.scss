@@ -9,11 +9,11 @@
   min-width: 25rem;
   background-color: c.$bg;
   padding: 1rem;
-  border-radius: 1rem;
+  border-radius: 2rem;
 
   & .notification-close {
     background-color: c.$accent;
-    border-radius: 0.5rem;
+    border-radius: 0.8rem;
     color: c.$bg;
   }
 
