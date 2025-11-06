@@ -67,6 +67,10 @@ class UserOptions(OptionsManager):
         ]:
             powermenu_actions.append(i)
 
+    class Weather(OptionsGroup):
+        location: str = "New-York"
+        farenheit: bool = False
+
     class Settings(OptionsGroup):
         last_page: int = 0
 
@@ -89,6 +93,7 @@ class UserOptions(OptionsManager):
     _wallpaper: Wallpaper = Wallpaper()
     _applications: Options.Applications = Options.Applications()
     _notifications: Options.Notifications = Options.Notifications()
+    _weather: Weather = Weather()
 
     @property
     def user_config(self) -> UserConfig:
@@ -113,6 +118,10 @@ class UserOptions(OptionsManager):
     @property
     def bar(self) -> Bar:
         return self._bar
+
+    @property
+    def weather(self) -> Weather:
+        return self._weather
 
 
 options = UserOptions()

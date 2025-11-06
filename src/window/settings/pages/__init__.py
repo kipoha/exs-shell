@@ -5,6 +5,7 @@ from .bar import BarEntry
 from .appearance import AppearanceEntry
 from .wifi import WifiEntry
 from .bluetooth import BluetoothEntry
+from .weather import WeatherEntry
 
 
 __all__ = [
@@ -15,4 +16,5 @@ __all__ = [
     "AppearanceEntry",
     "WifiEntry",
     "BluetoothEntry",
+    "WeatherEntry",
 ]

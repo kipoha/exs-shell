@@ -19,6 +19,7 @@ from window.settings.pages import (
     AppearanceEntry,
     WifiEntry,
     BluetoothEntry,
+    WeatherEntry,
 )
 
 
@@ -129,6 +130,7 @@ class Settings(widgets.RegularWindow, SingletonClass):
         rows = [
             AppearanceEntry(),
             BarEntry(),
+            WeatherEntry(),
             WifiEntry(),
             BluetoothEntry(),
             NotificationsEntry(),

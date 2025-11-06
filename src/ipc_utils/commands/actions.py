@@ -2,11 +2,17 @@ import subprocess
 
 from typing import Any
 
+from modules.dashboard.widget import Dashboard
 from modules.notification.center import NotificationCenter
+
 from utils.notify_system import send_notification
 
 
 class Actions:
+    _dashboard = Dashboard.get_default()
+    _dashboard_pages = _dashboard.pages.pages
+    _notification_center = NotificationCenter.get_default()
+
     @classmethod
     def colorpicker(cls):
         proc = subprocess.run(["hyprpicker"], capture_output=True, text=True)
@@ -20,8 +26,30 @@ class Actions:
 
     @classmethod
     def clear_notifications(cls):
-        center = NotificationCenter.get_default()
-        center.clear_all()
+        cls._notification_center.clear_all()
+
+    @classmethod
+    def _toggle_dashboard(cls, key: str):
+        target_page = cls._dashboard_pages[key].child
+        visible_page = cls._dashboard.pages.stack.get_visible_child()
+
+        if not cls._dashboard.visible or visible_page != target_page:
+            cls._dashboard.open()
+            cls._dashboard.pages.stack.set_visible_child(target_page)
+        else:
+            cls._dashboard.close()
+
+    @classmethod
+    def dashboard_main_open(cls):
+        cls._toggle_dashboard("dashboard")
+
+    @classmethod
+    def dashboard_player_open(cls):
+        cls._toggle_dashboard("player")
+
+    @classmethod
+    def dashboard_metrics_open(cls):
+        cls._toggle_dashboard("metrics")
 
 
 def action_commands() -> dict[str, tuple[object, str, dict[str, Any], str]]:
@@ -32,6 +60,24 @@ def action_commands() -> dict[str, tuple[object, str, dict[str, Any], str]]:
             "clear_notifications",
             {},
             "Clear Notifications",
+        ),
+        "action-dashboard-main-open": (
+            Actions,
+            "dashboard_main_open",
+            {},
+            "Open Dashboard Main",
+        ),
+        "action-dashboard-player-open": (
+            Actions,
+            "dashboard_player_open",
+            {},
+            "Open Dashboard Player",
+        ),
+        "action-dashboard-metrics-open": (
+            Actions,
+            "dashboard_metrics_open",
+            {},
+            "Open Dashboard Metrics",
         ),
     }
 

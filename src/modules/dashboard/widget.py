@@ -4,11 +4,11 @@ from base.window.animated import PartiallyAnimatedWindow, AnimatedWindowPopup
 from base.singleton import SingletonClass
 
 from config import config
+from modules.dashboard.pages.pages import DashboardPages
 
 
 class Dashboard(PartiallyAnimatedWindow, AnimatedWindowPopup, SingletonClass):
-    DASHBOARD_WIDTH = 700
-    DASHBOARD_HEIGHT = 300
+    DASHBOARD_HEIGHT = 350
 
     def __init__(self):
         self.left_corner = widgets.Corner(
@@ -28,14 +28,16 @@ class Dashboard(PartiallyAnimatedWindow, AnimatedWindowPopup, SingletonClass):
             valign="start",
         )
 
-        self._box = widgets.EventBox(
-            vertical=False,
+        self.pages = DashboardPages(
             halign="center",
+        )
+
+        self._box = widgets.EventBox(
+            vertical=True,
             css_classes=["dashboard-window", "hidden"],
-            width_request=self.DASHBOARD_WIDTH,
             height_request=self.DASHBOARD_HEIGHT,
             spacing=10,
-            child=[widgets.Label(label="Dashboard content here")],
+            child=[self.pages],
             on_hover_lost=self._on_mouse_leave,
         )
 

@@ -1,0 +1,53 @@
+@use '../../colors.scss' as c;
+
+.dashboard-widget-mpris {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 15px;
+  padding: 8px;
+  min-width: 300px;
+  min-height: 150px;
+}
+
+.dashboard-widget-mpris-bg {
+  background-color: rgba(255, 255, 255, 0.02);
+  border-radius: 15px;
+}
+
+.dashboard-widget-mpris-content {
+  padding: 8px;
+}
+
+.dashboard-widget-mpris-icon {
+  color: c.$fg;
+}
+
+.dashboard-widget-mpris-title {
+  font-weight: bold;
+  font-size: 12pt;
+  color: c.$fg;
+}
+.dashboard-widget-mpris-artist {
+  font-size: 10pt;
+  color: c.$fg;
+  opacity: 0.7;
+}
+
+.dashboard-widget-mpris-play,
+.dashboard-widget-mpris-prev,
+.dashboard-widget-mpris-next {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 4px;
+  color: c.$fg;
+}
+
+.dashboard-widget-mpris-visual {
+  background-color: transparent;
+}
+
+.dashboard-widget-mpris-bar {
+  background-color: c.$accent;
+  min-width: 4px;
+  min-height: 1px;
+  border-radius: 2px;
+}

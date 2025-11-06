@@ -32,7 +32,8 @@ class CavaManager(SingletonClass):
         self.byte_size = 2
         self.byte_norm = 65535
         self.proc: subprocess.Popen | None = None
-        self._subscribers: list[Callable] = []
+        self._subscribers_text: list[Callable] = []
+        self._subscribers_values: list[Callable] = []
 
         if not os.path.exists(self.fifo_path):
             os.mkfifo(self.fifo_path)
@@ -45,14 +46,28 @@ class CavaManager(SingletonClass):
         self._reader_thread = threading.Thread(target=self._start_reader, daemon=True)
         self._reader_thread.start()
 
-    def subscribe(self, callback: Callable):
-        """Подписка виджета на обновления визуала"""
-        if callback not in self._subscribers:
-            self._subscribers.append(callback)
+    # def subscribe(self, callback: Callable):
+    #     if callback not in self._subscribers:
+    #         self._subscribers.append(callback)
+    #
+    def subscribe_text(self, callback: Callable):
+        if callback not in self._subscribers_text:
+            self._subscribers_text.append(callback)
 
-    def unsubscribe(self, callback: Callable):
-        if callback in self._subscribers:
-            self._subscribers.remove(callback)
+    def subscribe_values(self, callback: Callable):
+        if callback not in self._subscribers_values:
+            self._subscribers_values.append(callback)
+
+    def unsubscribe_text(self, callback: Callable):
+        if callback in self._subscribers_text:
+            self._subscribers_text.remove(callback)
+
+    def unsubscribe_values(self, callback: Callable):
+        if callback in self._subscribers_values:
+            self._subscribers_values.remove(callback)
+    # def unsubscribe(self, callback: Callable):
+    #     if callback in self._subscribers:
+    #         self._subscribers.remove(callback)
 
     def _start_cava(self):
         config = PathUtils.generate_path("config/other/cava/cava.ini")
@@ -93,31 +108,37 @@ class CavaManager(SingletonClass):
             return False
 
         values = struct.unpack(f"{self.bars}H", data)
-        values = [v / self.byte_norm for v in values]
-        visual = self._make_visual(values)
-        GLib.idle_add(self._notify_subscribers, visual)
+        values = [v / self.byte_norm for v in values]  # числа 0..1
+        visual_text = self._make_visual(values)
+
+        GLib.idle_add(self._notify_subscribers_values, values)
+        GLib.idle_add(self._notify_subscribers_text, visual_text)
         return True
 
     def _make_visual(self, values):
-        # blocks = "⣀⣄⣤⣦⣶⣷⣿"
+        blocks = "⣀⣄⣤⣦⣶⣷⣿"
 
-        blocks = "▁▂▃▄▅▆▇█"
+        # blocks = "▁▂▃▄▅▆▇█"
         result = []
         for v in values:
             idx = min(int(v * (len(blocks) - 1)), len(blocks) - 1)
             result.append(blocks[idx])
         return "".join(result)
 
-    def _notify_subscribers(self, visual):
-        for callback in self._subscribers:
+    def _notify_subscribers_text(self, visual):
+        for callback in self._subscribers_text:
             callback(visual)
+
+    def _notify_subscribers_values(self, values):
+        for callback in self._subscribers_values:
+            callback(values)
 
 
 class Cava(widgets.Label):
     def __init__(self, **kwargs):
         super().__init__(label="", css_classes=["cava"], **kwargs)
         manager = CavaManager.get_default()
-        manager.subscribe(self._update_label)
+        manager.subscribe_text(self._update_label)
 
     def _update_label(self, visual):
         self.label = visual

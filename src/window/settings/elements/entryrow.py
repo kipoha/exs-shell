@@ -14,11 +14,11 @@ class EntryRow(SettingsRow):
     ):
         super().__init__(**kwargs)
         self._entry = widgets.Entry(
-            on_change=on_change,
+            on_accept=on_change,
             text=text,
             halign="end",
             valign="center",
-            width_request=width,
+            width_request=width or -1,
             hexpand=True,
             css_classes=["settings-row-entry"],
         )
