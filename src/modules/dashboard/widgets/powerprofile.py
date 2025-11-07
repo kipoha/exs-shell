@@ -19,7 +19,7 @@ class PowerProfile(widgets.Box):
         )
         self.power_save_button = widgets.Button(
             child=widgets.Label(label="󰌪"),
-            on_click=self.set_power_save,
+            on_click=self.set_power_saver,
             css_classes=["dashboard-widget-power-profile-power-save"],
         )
         super().__init__(
@@ -36,20 +36,19 @@ class PowerProfile(widgets.Box):
 
         self.highlight_active_profile()
 
-    def set_performance(self, *_):
-        subprocess.Popen(["powerprofilesctl", "set", "performance"])
-        send_notification("Power Profile", "Set to 󰓅 Performance")
+    def set_profile(self, profile: str, label: str):
+        subprocess.run(["powerprofilesctl", "set", profile])
+        send_notification("Power Profile", f"Set to {label}")
         self.highlight_active_profile()
+
+    def set_performance(self, *_):
+        self.set_profile("performance", "󰓅 Performance")
 
     def set_balanced(self, *_):
-        subprocess.Popen(["powerprofilesctl", "set", "balanced"])
-        send_notification("Power Profile", "Set to  Balanced")
-        self.highlight_active_profile()
+        self.set_profile("balanced", " Balanced")
 
-    def set_power_save(self, *_):
-        subprocess.Popen(["powerprofilesctl", "set", "power-saver"])
-        send_notification("Power Profile", "Set to 󰌪 Power Save")
-        self.highlight_active_profile()
+    def set_power_saver(self, *_):
+        self.set_profile("power-saver", "󰌪 Power Save")
 
     def highlight_active_profile(self):
         for button in [

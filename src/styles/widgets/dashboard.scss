@@ -92,7 +92,10 @@
 
 .dashboard-widget-power-profile-performance,
 .dashboard-widget-power-profile-balanced,
-.dashboard-widget-power-profile-power-save {
+.dashboard-widget-power-profile-power-save,
+.dashboard-widget-actions-settings,
+.dashboard-widget-actions-browser,
+.dashboard-widget-actions-terminal {
   background-color: rgba(255, 255, 255, 0.05);
   border-radius: 15px;
   font-size: 20px;
@@ -116,6 +119,19 @@
 
 .dashboard-widget-power-profile-power-save {
   padding: 4px 14px 4px 9px;
+}
+
+.dashboard-widget-actions-settings {
+  padding: 4px 15px 4px 10px;
+}
+
+.dashboard-widget-actions-browser {
+  padding: 4px 17px 4px 8px;
+
+}
+
+.dashboard-widget-actions-terminal {
+  padding: 4px 14px 4px 11px;
 }
 
 
@@ -207,9 +223,8 @@
 .dashboard-widget-mini-player {
   background-color: rgba(255, 255, 255, 0.05);
   border-radius: 15px;
-  padding: 8px;
-  min-width: 250px;
-  min-height: 165px;
+  padding: 25px 8px;
+  min-width: 300px;
   transition: background-color 0.2s;
 }
 
@@ -268,24 +283,35 @@
 }
 
 .dashboard-widget-weather {
+  min-width: 150px;
   background-color: rgba(255, 255, 255, 0.05);
   border-radius: 12px;
-  min-width: 120px;
-  min-height: 165px;
 }
 
 .dashboard-widget-weather-icon {
   color: rgba(255, 255, 255, 0.1);
-  font-size: 150px;
+  margin-left: 50px;
+  font-size: 75px;
 }
 
 .dashboard-widget-weather-temp {
-  color: #fff;
+  color: c.$fg;
   font-size: 30px;
   font-weight: bold;
 }
 
 .dashboard-widget-weather-bg {
+  background-color: rgba(255, 255, 255, 0.05);
   background-clip: content-box;
   border-radius: 12px;
+}
+
+.dashboard-widget-clock {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  /* min-width: 120px; */
+  padding: 15px;
+  color: c.$fg;
+  font-size: 40px;
+  font-weight: bold;
 }

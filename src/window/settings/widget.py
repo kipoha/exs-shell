@@ -100,6 +100,11 @@ class Settings(widgets.RegularWindow, SingletonClass):
 
         self.connect("notify::visible", self.__on_open)
 
+        options.user_config.connect_option("avatar", self._avatar_set_image)
+
+    def _avatar_set_image(self, *_):
+        self._avatar.set_image(options.user_config.avatar)
+
     async def __change_avatar(self):
         def change(self_, file):
             file_path = file.get_path()
