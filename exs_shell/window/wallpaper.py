@@ -1,0 +1,16 @@
+import asyncio
+
+from ignis import utils
+
+from exs_shell.config.user import options
+
+from exs_shell.base.singleton import SingletonClass
+
+
+class Wallpaper(SingletonClass):
+    def __init__(self):
+        options.wallpaper.connect_option("wallpaper_path", self.__set_wallpaper)
+
+    def __set_wallpaper(self):
+        path = options.wallpaper.wallpaper_path
+        asyncio.create_task(utils.exec_sh_async(f"swww img {path}"))

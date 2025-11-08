@@ -27,8 +27,12 @@ authors = [
 ignis = { git = "https://github.com/ignis-sh/ignis.git" }
 
 [project.scripts]
-exs-shell = "run:main"
-exs-ipc = "ipc:main"
+exs-shell = "exs_shell.shell:main"
+exs-ipc = "exs_shell.ipc:main"
+
+[tool.setuptools]
+include-package-data = true
 
 [tool.setuptools.packages.find]
-where = ["src"]
+where = ["."]
+include = ["exs_shell*"]
