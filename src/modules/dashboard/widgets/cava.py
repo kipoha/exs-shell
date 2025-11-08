@@ -1,5 +1,3 @@
-import re
-
 from math import pi
 
 from gi.repository import Gtk, GLib  # type: ignore
@@ -7,11 +5,9 @@ from gi.repository import Gtk, GLib  # type: ignore
 from ignis import widgets
 
 from modules.bar.childs.cava.widget import CavaManager
+from utils.colors import get_hex_color, hex_to_rgb
 
-from utils.path import PathUtils
 
-
-scss_file = PathUtils.generate_path("colors.scss")
 
 
 class AudioVisualizer(widgets.Box):
@@ -37,26 +33,9 @@ class AudioVisualizer(widgets.Box):
         self.audio_sample = values
         GLib.idle_add(self.area.queue_draw)
 
-    def get_hex_color(self) -> str:
-        variables = {}
-        with open(scss_file, "r") as f:
-            for line in f:
-                m = re.match(r"\s*\$(\w+):\s*(.+?);", line)
-                if m:
-                    var_name, value = m.groups()
-                    variables[var_name] = value
-        return variables["accent"]
-
-    def hex_to_rgb1(self, hex_color: str):
-        hex_color = hex_color.lstrip("#")
-        r = int(hex_color[0:2], 16) / 255
-        g = int(hex_color[2:4], 16) / 255
-        b = int(hex_color[4:6], 16) / 255
-        return r, g, b
-
     def redraw(self, area, cr, width, height):
-        hex_color = self.get_hex_color()
-        accent_r, accent_g, accent_b = self.hex_to_rgb1(hex_color)
+        hex_color = get_hex_color()
+        accent_r, accent_g, accent_b = hex_to_rgb(hex_color)
         cr.set_source_rgb(accent_r, accent_g, accent_b)
         bar_width = width / self.bars
         padding = 2

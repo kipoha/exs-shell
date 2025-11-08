@@ -1,8 +1,11 @@
 import subprocess
+
 from typing import Any
 
 from gi.repository import GLib, GdkPixbuf  # type: ignore
+
 from ignis import widgets
+from ignis.window_manager import WindowManager
 
 from base.singleton import SingletonClass
 from base.window.animated import PartiallyAnimatedWindow, AnimatedWindowPopup
@@ -10,12 +13,14 @@ from base.window.animated import PartiallyAnimatedWindow, AnimatedWindowPopup
 from utils.clipboard import get_clipboard_history
 from config import config
 
+window_manager = WindowManager.get_default()
+
 
 class ClipboardManager(PartiallyAnimatedWindow, AnimatedWindowPopup, SingletonClass):
     def __init__(self):
         self.MAX_ITEMS = 10
 
-        self.current_items = get_clipboard_history()[:self.MAX_ITEMS]
+        self.current_items = get_clipboard_history()[: self.MAX_ITEMS]
 
         self._entry = widgets.Entry(
             hexpand=True,
@@ -156,7 +161,9 @@ class ClipboardManager(PartiallyAnimatedWindow, AnimatedWindowPopup, SingletonCl
                 box = widgets.Box(spacing=6, child=[image], hexpand=True)
             except Exception as e:
                 print(e)
-                box = widgets.Box(spacing=6, child=[widgets.Label(label="[image]")], hexpand=True)
+                box = widgets.Box(
+                    spacing=6, child=[widgets.Label(label="[image]")], hexpand=True
+                )
         else:
             text = raw_text.split("\t")[-1]
             if len(text) > 60:
@@ -180,7 +187,9 @@ class ClipboardManager(PartiallyAnimatedWindow, AnimatedWindowPopup, SingletonCl
         return btn
 
     def open(self):
-        self.current_items = get_clipboard_history()[:self.MAX_ITEMS]
+        window_manager.get_window(f"{config.NAMESPACE}_launcher").close()
+        window_manager.get_window(f"{config.NAMESPACE}_notification").close()
+        self.current_items = get_clipboard_history()[: self.MAX_ITEMS]
         self._populate_box(self.current_items)
         super().open()
         self.__on_open()

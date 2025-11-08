@@ -1,5 +1,6 @@
 from ignis import widgets, utils
 from ignis.services.notifications import Notification, NotificationService
+from ignis.window_manager import WindowManager
 
 from gi.repository import GLib  # type: ignore
 
@@ -13,6 +14,7 @@ from modules.notification.widget import NotificationWidget
 
 
 notifications = NotificationService.get_default()
+window_manager = WindowManager.get_default()
 
 
 class Popup(widgets.Revealer):
@@ -165,6 +167,11 @@ class NotificationCenter(PartiallyAnimatedWindow, SingletonClass):
         self.update_dnd_button()
 
         options.notifications.bind("dnd", lambda *_: self.update_dnd_button())
+
+    def open(self):
+        window_manager.get_window(f"{config.NAMESPACE}_launcher").close()
+        window_manager.get_window(f"{config.NAMESPACE}_clipboard").close()
+        return super().open()
 
     def clear_all(self, *_):
         notifications.clear_all()

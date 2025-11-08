@@ -4,34 +4,34 @@
 .osd-right-corner {
   color: c.$bg;
   transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
-  transform: translateY(70px);
+  transform: translateX(-70px);
 }
 
 .osd-left-corner.visible,
 .osd-right-corner.visible {
-  transform: translateY(0);
+  transform: translateX(0);
 }
 
 .osd-left-corner.hidden,
 .osd-right-corner.hidden {
-  transform: translateY(70px);
+  transform: translateX(-70px);
 }
 
 .osd-container {
   transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
   background-color: c.$bg;
   color: c.$fg;
-  padding: 1rem 2rem;
-  border-radius: 2rem 2rem 0 0;
-  transform: translateY(70px);
+  padding: 2rem 1rem;
+  border-radius: 0 2rem 2rem 0;
+  transform: translateX(-70px);
 }
 
 .osd-container.visible {
-  transform: translateY(0);
+  transform: translateX(0);
 }
 
 .osd-container.hidden {
-  transform: translateY(70px);
+  transform: translateX(-70px);
 }
 
 .volume-icon {
@@ -44,14 +44,15 @@
 
 .volume-bar,
 .brightness-bar {
-  min-width: 200px;
+  min-height: 200px;
   border-radius: 10px;
+  transform: rotate(180deg);
 }
 
 scale trough {
   background-color: rgba(255, 255, 255, 0.2);
   border-radius: 10px;
-  min-height: 8px;
+  min-width: 8px;
 }
 
 scale highlight {

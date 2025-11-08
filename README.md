@@ -1,4 +1,10 @@
 ## Installation
+Installs the package and dependencies globally (the exs-shell command will be available in your PATH):
+```bash
+sudo pip install git+https://github.com/kipoha/exs-shell.git --break-system-packages
+```
+
+## Installation(for development)
 1. Clone the repository:
 ```bash
 git clone https://github.com/kipoha/exs-shell.git

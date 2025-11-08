@@ -1,10 +1,11 @@
 import asyncio
 
-from base.window.animated import PartiallyAnimatedWindow
+
 from gi.repository import GLib  # type: ignore
 
 from ignis import widgets, utils
 
+from base.window.animated import PartiallyAnimatedWindow
 from base.singleton import SingletonClass
 
 from config import config
@@ -12,13 +13,13 @@ from config import config
 
 class OSDProgress(widgets.Box):
     def __init__(self, icon: str, name: str):
-        super().__init__(vertical=False, halign="center", valign="center", spacing=20)
+        super().__init__(vertical=True, halign="center", valign="center", spacing=20)
         self._name = name
         self._icon_active = icon
         self._icon_muted = "" if name == "volume" else icon
         self._label = widgets.Label(label=icon, css_classes=[f"{name}-icon"])
         self._bar = widgets.Scale(
-            orientation="horizontal",
+            orientation="vertical",
             min=0,
             max=100,
             value=0,
@@ -31,8 +32,8 @@ class OSDProgress(widgets.Box):
         self._anim_source = None
         self._muted = False
 
-        self.append(self._label)
         self.append(self._bar)
+        self.append(self._label)
 
     def update(self, value: int):
         self._target_value = max(0, min(100, value))
@@ -54,6 +55,7 @@ class OSDProgress(widgets.Box):
         self._muted = muted
         self._label.set_label(self._icon_muted if muted else self._icon_active)
 
+
 class OSD(PartiallyAnimatedWindow, SingletonClass):
     def __init__(self, **kwargs):
         super().__init__(
@@ -61,7 +63,7 @@ class OSD(PartiallyAnimatedWindow, SingletonClass):
             popup=True,
             layer="overlay",
             visible=False,
-            anchor=["bottom"],
+            anchor=["left"],
             **kwargs,
         )
 
@@ -76,43 +78,47 @@ class OSD(PartiallyAnimatedWindow, SingletonClass):
         self._brightness_widget = OSDProgress("󰃞", "brightness")
 
         self._box = widgets.Box(
-            vertical=True,
+            vertical=False,
             spacing=12,
             halign="center",
             valign="center",
             css_classes=["osd-container", "hidden"],
-            child=[self._brightness_widget, self._volume_widget],
+            child=[
+                self._volume_widget,
+                self._brightness_widget,
+            ],
         )
 
-        self.left_corner = widgets.Corner(
+        self.top_corner = widgets.Corner(
             css_classes=["osd-left-corner", "hidden"],
-            orientation="bottom-right",
-            width_request=50,
+            orientation="bottom-left",
+            width_request=35,
             height_request=50,
-            halign="end",
+            halign="start",
             valign="end",
         )
-        self.right_corner = widgets.Corner(
+        self.bottom_corner = widgets.Corner(
             css_classes=["osd-right-corner", "hidden"],
-            orientation="bottom-left",
-            width_request=50,
+            orientation="top-left",
+            width_request=35,
             height_request=50,
-            halign="end",
+            halign="start",
             valign="end",
         )
 
         self._main_box = widgets.Box(
+            vertical=True,
             css_classes=["osd-block"],
             child=[
-                self.left_corner,
+                self.top_corner,
                 self._box,
-                self.right_corner,
+                self.bottom_corner,
             ],
         )
 
         self.set_child(self._main_box)
 
-        self._animated_parts = [self.left_corner, self._box, self.right_corner]
+        self._animated_parts = [self.top_corner, self._box, self.bottom_corner]
 
         self._volume_widget.update(self._volume_value)
         self._brightness_widget.update(self._brightness_value)

@@ -72,18 +72,13 @@ class LockScreen(widgets.Window):
     def __on_accept(self, *args):
         username = os.getenv("USER") or getpass.getuser()
         password = self._entry.text.strip()
-        print(f"{username}:{password}")
 
         auth = pam.pam()
-        print("AUTHENTICATING")
         authenticated: bool = auth.authenticate(
             username=username,
             password=password,
         )
-        print(authenticated)
         if authenticated:
-            print("AUTHENTICATED")
             self.set_visible(False)
         else:
-            print("EXITING")
             self._entry.set_text("")

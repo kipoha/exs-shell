@@ -1,6 +1,6 @@
 from ignis import widgets
 
-from modules.dashboard.pages.kanban import KanbanPage
+# from modules.dashboard.pages.kanban import KanbanPage
 from modules.dashboard.pages.main import MainPage
 from modules.dashboard.pages.metrics import MetricsPage
 from modules.dashboard.pages.player import PlayerPage
@@ -21,10 +21,10 @@ class DashboardPages(widgets.Box):
                 title="Metrics",
                 child=MetricsPage(),
             ),
-            "kanban": widgets.StackPage(
-                title="Kanban",
-                child=KanbanPage(),
-            )
+            # "kanban": widgets.StackPage(
+            #     title="Kanban",
+            #     child=KanbanPage(),
+            # )
         }
         self.stack = widgets.Stack(
             child=self.pages.values(),

@@ -1,6 +1,8 @@
-from dataclasses import dataclass
 import re
 import asyncio
+
+from dataclasses import dataclass
+
 from typing import Any
 
 from ignis import widgets, utils
@@ -12,7 +14,7 @@ from ignis.services.applications import (
 )
 from ignis.menu_model import IgnisMenuModel, IgnisMenuItem, IgnisMenuSeparator
 
-from gi.repository import Gio, GLib, Gdk  # type: ignore
+from gi.repository import Gio, GLib  # type: ignore
 
 from base.singleton import SingletonClass
 from base.window.animated import AnimatedWindowPopup, PartiallyAnimatedWindow
@@ -277,6 +279,8 @@ class Launcher(PartiallyAnimatedWindow, AnimatedWindowPopup, SingletonClass):
         self.actions = [Action(**action) for action in options.user_config.actions]
 
     def open(self):
+        window_manager.get_window(f"{config.NAMESPACE}_clipboard").close()
+        window_manager.get_window(f"{config.NAMESPACE}_notification").close()
         if not self._is_open:
             super().open()
             self.__on_open()

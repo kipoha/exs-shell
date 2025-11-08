@@ -107,10 +107,11 @@ wheels = [
 
 [[package]]
 name = "exs-shell"
-version = "0.1.5"
+version = "0.1.6"
 source = { editable = "." }
 dependencies = [
     { name = "ignis" },
+    { name = "pam" },
     { name = "pillow" },
     { name = "psutil" },
     { name = "requests" },
@@ -119,6 +120,7 @@ dependencies = [
 [package.metadata]
 requires-dist = [
     { name = "ignis", git = "https://github.com/ignis-sh/ignis.git" },
+    { name = "pam", specifier = ">=0.2.0" },
     { name = "pillow", specifier = ">=12.0.0" },
     { name = "psutil", specifier = ">=7.1.0" },
     { name = "requests", specifier = ">=2.32.5" },
@@ -177,6 +179,17 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/d6/54/cfe61301667036ec958cb99bd3efefba235e65cdeb9c84d24a8293ba1d90/mdurl-0.1.2.tar.gz", hash = "sha256:bb413d29f5eea38f31dd4754dd7377d4465116fb207585f97bf925588687c1ba", size = 8729, upload-time = "2022-08-14T12:40:10.846Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/b3/38/89ba8ad64ae25be8de66a6d463314cf1eb366222074cfda9ee839c56a4b4/mdurl-0.1.2-py3-none-any.whl", hash = "sha256:84008a41e51615a49fc9966191ff91509e3c40b939176e643fd50a5c2196b8f8", size = 9979, upload-time = "2022-08-14T12:40:09.779Z" },
+]
+
+[[package]]
+name = "pam"
+version = "0.2.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "python-pam" },
+]
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/65/25/74fcd42f6a76c7d06ca161c11a2455ddd4f68a76545241f7d3ea3354c6d6/pam-0.2.0-py3-none-any.whl", hash = "sha256:fcec42cee82e164b77fdf70c52117c668645c17d9756b3af66058816a5102401", size = 976, upload-time = "2020-11-11T23:11:01.769Z" },
 ]
 
 [[package]]
@@ -318,6 +331,15 @@ dependencies = [
     { name = "pycairo" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/cf/71/90c0650485f40a684f54f09fd31aa03158af7f72129fd2089b67b4daa6d0/pygobject-3.54.3.tar.gz", hash = "sha256:a8da09134a0f7d56491cf2412145e35aa74e91d760e8f337096a1cda0b92bae7", size = 1272609, upload-time = "2025-09-28T16:16:05.794Z" }
+
+[[package]]
+name = "python-pam"
+version = "2.0.2"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/6a/da/879f1c849e886b783239b8a4710daac73535ba2cfcf672ee4548543e3a74/python-pam-2.0.2.tar.gz", hash = "sha256:97235235ba9b82dbae8068d1099508455949b275f77273ca22fdbd8b1fb5d950", size = 11439, upload-time = "2022-03-18T00:32:09.856Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/9b/2d/9fbb3bd686a474d76fbd0b79abdcc016f3da760b1d1c2048bf4c611a4939/python_pam-2.0.2-py3-none-any.whl", hash = "sha256:4ac51dd8953ac59aa45505882b565eef6a22e0423dcf25d63369902080416c20", size = 10658, upload-time = "2022-03-18T00:32:07.802Z" },
+]
 
 [[package]]
 name = "requests"
