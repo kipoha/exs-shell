@@ -1,8 +1,7 @@
 import asyncio
 from ignis import widgets
-from ignis.services.mpris import MprisService, MprisPlayer
-
-mpris = MprisService.get_default()
+from ignis.services.mpris import MprisPlayer
+from modules.dashboard.widgets.shared.mpris import Player
 
 PLAYER_ICONS = {
     "spotify": "spotify-symbolic",
@@ -12,7 +11,7 @@ PLAYER_ICONS = {
 }
 
 
-class MiniPlayer(widgets.Box):
+class MiniPlayer(widgets.Box, Player):
     def __init__(self, player: MprisPlayer | None = None):
         self._player = player
 
@@ -132,47 +131,47 @@ class MiniPlayer(widgets.Box):
             return PLAYER_ICONS["firefox"]
 
 
-class MiniPlayerManager(widgets.Box):
-    def __init__(self):
-        super().__init__(
-            vertical=True,
-            spacing=5,
-            css_classes=["dashboard-widget-mini-player-manager"],
-        )
-
-        self._placeholder = MiniPlayer(None)
-        self._players_map: dict[MprisPlayer, MiniPlayer] = {}
-
-        for player in mpris.get_players():
-            self._add_player_internal(player)
-
-        if not self._players_map:
-            self.append(self._placeholder)
-
-        mpris.connect("player_added", lambda _, player: self._on_player_added(player))
-
-    def _on_player_added(self, player: MprisPlayer):
-        if self._placeholder in self:
-            self.remove(self._placeholder)
-        self._add_player_internal(player)
-
-    def _add_player_internal(self, player: MprisPlayer):
-        mp = MiniPlayer(player)
-        self.append(mp)
-        self._players_map[player] = mp
-
-        def _on_player_closed(p):
-            self._remove_player_internal(player)
-
-        try:
-            player.connect("closed", lambda p: _on_player_closed(p))
-        except Exception:
-            pass
-
-    def _remove_player_internal(self, player: MprisPlayer):
-        widget = self._players_map.pop(player, None)
-        if widget and widget in self:
-            self.remove(widget)
-
-        if not self._players_map and self._placeholder not in self:
-            self.append(self._placeholder)
+# class MiniPlayerManager(widgets.Box):
+#     def __init__(self):
+#         super().__init__(
+#             vertical=True,
+#             spacing=5,
+#             css_classes=["dashboard-widget-mini-player-manager"],
+#         )
+#
+#         self._placeholder = MiniPlayer(None)
+#         self._players_map: dict[MprisPlayer, MiniPlayer] = {}
+#
+#         for player in mpris.get_players():
+#             self._add_player_internal(player)
+#
+#         if not self._players_map:
+#             self.append(self._placeholder)
+#
+#         mpris.connect("player_added", lambda _, player: self._on_player_added(player))
+#
+#     def _on_player_added(self, player: MprisPlayer):
+#         if self._placeholder in self:
+#             self.remove(self._placeholder)
+#         self._add_player_internal(player)
+#
+#     def _add_player_internal(self, player: MprisPlayer):
+#         mp = MiniPlayer(player)
+#         self.append(mp)
+#         self._players_map[player] = mp
+#
+#         def _on_player_closed(p):
+#             self._remove_player_internal(player)
+#
+#         try:
+#             player.connect("closed", lambda p: _on_player_closed(p))
+#         except Exception:
+#             pass
+#
+#     def _remove_player_internal(self, player: MprisPlayer):
+#         widget = self._players_map.pop(player, None)
+#         if widget and widget in self:
+#             self.remove(widget)
+#
+#         if not self._players_map and self._placeholder not in self:
+#             self.append(self._placeholder)

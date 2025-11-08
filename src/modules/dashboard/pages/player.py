@@ -1,6 +1,7 @@
 from ignis import widgets
 
-from modules.dashboard.widgets.mpris import MprisPlayerManager
+from modules.dashboard.widgets.mpris import MprisPlayerWidget
+from modules.dashboard.widgets.shared.mpris import MprisPlayerManager
 
 
 class PlayerPage(widgets.Box):
@@ -9,6 +10,6 @@ class PlayerPage(widgets.Box):
             spacing=10,
             css_classes=["dashboard-page-player"],
             child=[
-                MprisPlayerManager(),
+                MprisPlayerManager(MprisPlayerWidget, "mpris"),
             ],
         )

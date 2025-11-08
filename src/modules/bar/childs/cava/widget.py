@@ -46,10 +46,6 @@ class CavaManager(SingletonClass):
         self._reader_thread = threading.Thread(target=self._start_reader, daemon=True)
         self._reader_thread.start()
 
-    # def subscribe(self, callback: Callable):
-    #     if callback not in self._subscribers:
-    #         self._subscribers.append(callback)
-    #
     def subscribe_text(self, callback: Callable):
         if callback not in self._subscribers_text:
             self._subscribers_text.append(callback)
@@ -65,9 +61,6 @@ class CavaManager(SingletonClass):
     def unsubscribe_values(self, callback: Callable):
         if callback in self._subscribers_values:
             self._subscribers_values.remove(callback)
-    # def unsubscribe(self, callback: Callable):
-    #     if callback in self._subscribers:
-    #         self._subscribers.remove(callback)
 
     def _start_cava(self):
         config = PathUtils.generate_path("config/other/cava/cava.ini")
@@ -108,7 +101,7 @@ class CavaManager(SingletonClass):
             return False
 
         values = struct.unpack(f"{self.bars}H", data)
-        values = [v / self.byte_norm for v in values]  # числа 0..1
+        values = [v / self.byte_norm for v in values]
         visual_text = self._make_visual(values)
 
         GLib.idle_add(self._notify_subscribers_values, values)

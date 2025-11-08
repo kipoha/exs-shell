@@ -5,7 +5,8 @@ from ignis import widgets
 from modules.dashboard.widgets.actions import Actions
 from modules.dashboard.widgets.clock import Clock
 from modules.dashboard.widgets.powerprofile import PowerProfile
-from modules.dashboard.widgets.mini_player import MiniPlayerManager
+from modules.dashboard.widgets.mini_player import MiniPlayer
+from modules.dashboard.widgets.shared.mpris import MprisPlayerManager
 from modules.dashboard.widgets.profile import UserProfile
 from modules.dashboard.widgets.calendar import Calendar
 from modules.dashboard.widgets.weather import Weather
@@ -36,7 +37,7 @@ class MainPage(widgets.Box):
             css_classes=["dashboard-page-main-weather-mini-player"],
             child=[
                 self._weather__clock_box,
-                MiniPlayerManager(),
+                MprisPlayerManager(MiniPlayer, "mini-player"),
             ],
         )
         self._left_box = widgets.Box(

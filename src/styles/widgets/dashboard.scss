@@ -309,9 +309,83 @@
 .dashboard-widget-clock {
   background-color: rgba(255, 255, 255, 0.05);
   border-radius: 12px;
-  /* min-width: 120px; */
   padding: 15px;
   color: c.$fg;
   font-size: 40px;
   font-weight: bold;
+}
+
+
+
+
+// == Player == //
+.dashboard-widget-mpris {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 15px;
+  padding: 35px 93px;
+  min-width: 580px;
+  transition: background-color 0.2s;
+}
+
+.dashboard-widget-mpris-art {
+  border-radius: 20px;
+  border: 2px solid c.$accent;
+}
+
+
+.dashboard-widget-mpris-icon {
+  color: c.$fg;
+  margin-right: 8px;
+}
+
+.dashboard-widget-mpris-info {
+  background-color: transparent;
+}
+
+.dashboard-widget-mpris-title {
+  font-weight: bold;
+  font-size: 12pt;
+  color: c.$fg;
+}
+
+.dashboard-widget-mpris-artist {
+  font-size: 10pt;
+  color: c.$fg;
+  opacity: 0.7;
+}
+
+.dashboard-widget-mpris-controls {
+  background-color: transparent;
+}
+
+.dashboard-widget-mpris-play,
+.dashboard-widget-mpris-prev,
+.dashboard-widget-mpris-next {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 4px 6px;
+  color: c.$fg;
+  transition: background-color 0.2s, color 0.2s;
+
+  &:hover {
+    background-color: c.$accent;
+    color: c.$bg;
+  }
+
+  &:active {
+    background-color: c.$accent-dark;
+  }
+}
+
+.dashboard-widget-mpris-scale {
+  margin-left: 8px;
+  margin-right: 8px;
+  border-radius: 12px;
+}
+
+
+.dashboard-widget-audio-visualizer {
+  border-radius: 15px;
+  transition: background-color 0.2s;
+  color: c.$accent;
 }
