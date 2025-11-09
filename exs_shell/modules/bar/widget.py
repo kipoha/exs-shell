@@ -49,11 +49,9 @@ class Bar(widgets.Window):
 
     def on_overview_changed(self, niri: NiriService, param):
         active = niri.overview_opened
-        lockscreen = window_manager.get_window(f"{config.NAMESPACE}_lockscreen")
         launcher = window_manager.get_window(f"{config.NAMESPACE}_launcher")
         if (
             active
-            and not lockscreen.visible
             and not launcher.visible
             and (left.child or center.child or right.child)
         ):

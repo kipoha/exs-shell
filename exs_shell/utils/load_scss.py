@@ -1,12 +1,44 @@
 import os
-import subprocess
+import json
+from exs_shell.utils.path import Dirs, PathUtils
 
-def build_scss(input_file, output_file):
-    home = os.path.expanduser("~")
-    cmd = [
-        "sass",
-        f"--load-path={home}/.config/exs-shell/exs_shell",
-        input_file,
-        output_file,
+
+def build_scss() -> str:
+    json_colors_config = PathUtils.generate_path("colors.json", Dirs.CONFIG_DIR)
+    if not os.path.exists(json_colors_config):
+        json_colors_source = PathUtils.generate_path("colors.json", PathUtils.path)
+        with open(json_colors_source, "r") as f:
+            source_colors = json.load(f)
+
+        with open(json_colors_config, "w") as f:
+            json.dump(source_colors, f, indent=2)
+
+    with open(json_colors_config, "r") as f:
+        colors = json.load(f)
+
+    lines = [f"${k}: {v};" for k, v in colors.items()]
+    scss_colors = PathUtils.generate_path("colors.scss", Dirs.CONFIG_DIR)
+    imports = [
+        scss
+        for scss in (PathUtils.path / "styles").glob("**/*.scss")
+        if scss.name not in ("main.scss", "colors.scss")
     ]
-    subprocess.run(cmd, check=True)
+    imports_text = "\n".join(f'@import "{scss}";' for scss in imports)
+
+    with open(scss_colors, "w") as f:
+        f.write("\n".join(lines))
+    main_scss = PathUtils.generate_path("main.scss", Dirs.CONFIG_DIR)
+    with open(main_scss, "w") as f:
+        text = f"""@use \"{scss_colors}\" as c;
+
+{imports_text}
+
+* {{
+  all: unset;
+  font-family: JetBrainsMono;
+  font-weight: bold;
+  transition: background-color 0.1s ease, opacity 0.25s ease, transform 0.25s ease;
+}}"""
+        f.write(text)
+
+    return main_scss

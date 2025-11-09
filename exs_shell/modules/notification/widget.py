@@ -191,15 +191,13 @@ class PopupBox(widgets.Box):
         )
 
     def __on_notified(self, notification: Notification) -> None:
-        lockscreen = window_manager.get_window(f"{config.NAMESPACE}_lockscreen")
-        if not lockscreen.visible:
-            self._window.visible = True
-            popup = Popup(box=self, window=self._window, notification=notification)
-            self.prepend(popup)
-            popup._outer.reveal_child = True
-            utils.Timeout(
-                popup._outer.transition_duration, popup._inner.set_reveal_child, True
-            )
+        self._window.visible = True
+        popup = Popup(box=self, window=self._window, notification=notification)
+        self.prepend(popup)
+        popup._outer.reveal_child = True
+        utils.Timeout(
+            popup._outer.transition_duration, popup._inner.set_reveal_child, True
+        )
 
 
 class NotificationPopup(widgets.Window):

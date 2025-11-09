@@ -1,5 +1,6 @@
 import asyncio
 
+from typing import Callable
 
 from gi.repository import GLib  # type: ignore
 
@@ -11,7 +12,7 @@ from exs_shell.config import config
 
 
 class OSDProgress(widgets.Box):
-    def __init__(self, icon: str, name: str):
+    def __init__(self, icon: str, name: str, on_change_f: Callable[[str, int], int]):
         super().__init__(vertical=True, halign="center", valign="center", spacing=20)
         self._name = name
         self._icon_active = icon
@@ -23,8 +24,8 @@ class OSDProgress(widgets.Box):
             max=100,
             value=0,
             css_classes=[f"{name}-bar"],
+            on_change=lambda x: on_change_f(name, x.value),
         )
-        self._bar.set_sensitive(False)
 
         self._current_value = 0
         self._target_value = 0
@@ -73,8 +74,8 @@ class OSD(PartiallyAnimatedWindow, SingletonClass):
 
         asyncio.create_task(self.async_init())
 
-        self._volume_widget = OSDProgress("", "volume")
-        self._brightness_widget = OSDProgress("󰃞", "brightness")
+        self._volume_widget = OSDProgress("", "volume", self.on_change_scale)
+        self._brightness_widget = OSDProgress("󰃞", "brightness", self.on_change_scale)
 
         self._box = widgets.Box(
             vertical=False,
@@ -105,7 +106,7 @@ class OSD(PartiallyAnimatedWindow, SingletonClass):
             valign="end",
         )
 
-        self._main_box = widgets.Box(
+        self._main_box = widgets.EventBox(
             vertical=True,
             css_classes=["osd-block"],
             child=[
@@ -113,6 +114,7 @@ class OSD(PartiallyAnimatedWindow, SingletonClass):
                 self._box,
                 self.bottom_corner,
             ],
+            on_hover_lost=self._on_mouse_leave,
         )
 
         self.set_child(self._main_box)
@@ -124,11 +126,23 @@ class OSD(PartiallyAnimatedWindow, SingletonClass):
 
         self._start_device_monitor()
 
+    def _on_mouse_leave(self, *_):
+        self.close()
+
     async def async_init(self):
         self._volume_value = await self.get_volume()
         self._brightness_value = await self.get_brightness()
         self._volume_widget.update(self._volume_value)
         self._brightness_widget.update(self._brightness_value)
+
+    def on_change_scale(self, type_: str, value: int):
+        if type_ == "volume":
+            self._volume_value = value
+            asyncio.create_task(self._set_volume_shell())
+        elif type_ == "brightness":
+            self._brightness_value = value
+            asyncio.create_task(self._set_brightness_shell())
+        return value
 
     async def get_volume(self) -> int:
         try:
@@ -237,3 +251,30 @@ class OSD(PartiallyAnimatedWindow, SingletonClass):
             return True
 
         GLib.timeout_add_seconds(2, poll_wrapper)
+
+
+class OSDTrigger(PartiallyAnimatedWindow, SingletonClass):
+    SENSOR_HEIGHT = 300
+    SENSOR_WIDTH = 4
+
+    def __init__(self):
+        self.osd = OSD.get_default()
+
+        trigger_box = widgets.EventBox(
+            vexpand=False,
+            hexpand=True,
+            height_request=self.SENSOR_HEIGHT,
+            width_request=self.SENSOR_WIDTH,
+            on_hover=self._on_hover,
+            css_classes=["osd-trigger"],
+        )
+
+        super().__init__(
+            namespace=f"{config.NAMESPACE}_osd_trigger",
+            anchor=["left"],
+            visible=True,
+            child=trigger_box,
+        )
+
+    def _on_hover(self, *_):
+        self.osd.open()

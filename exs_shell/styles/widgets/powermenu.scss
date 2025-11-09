@@ -1,5 +1,3 @@
-@use '../../colors.scss' as c;
-
 .powermenu-box {
   padding: 1rem;
   background-color: c.$bg;
@@ -74,4 +72,9 @@
 
 .powermenu-action:focus {
   background-color: c.$bg-lighter;
+}
+
+
+.powermenu-trigger {
+  background-color: rgba(0, 0, 0, 0.01);
 }

@@ -1,7 +1,6 @@
 import os
 import asyncio
 
-
 from exs_shell.utils import PathUtils, Dirs, send_notification, kill_process
 from exs_shell.config.log import logger
 from exs_shell.base.singleton import SingletonClass
@@ -54,35 +53,38 @@ class Config(SingletonClass):
         )
 
     def init_css(self) -> None:
-        self.set_css_file("styles/main.scss")
-        # build_scss("colors.scss", "colors.css")
+        scss = build_scss()
+        self.set_css_file(scss)
 
     def init_widgets(self) -> None:
-        from exs_shell.modules.osd import OSD
+        from exs_shell.modules.osd import OSD, OSDTrigger
         from exs_shell.modules.bar import Bar
         from exs_shell.modules.notification import NotificationPopup, NotificationCenter
         from exs_shell.modules.clipboard import ClipboardManager
         from exs_shell.modules.launcher import Launcher
-        from exs_shell.modules.lockscreen import LockScreen
-        from exs_shell.modules.powermenu import PowenMenu
+        from exs_shell.modules.powermenu import PowenMenu, PowerMenuTrigger
         from exs_shell.modules.dashboard import Dashboard, DashboardTrigger
         from exs_shell.window import Settings
         from exs_shell.window.wallpaper import Wallpaper
 
         Launcher.get_default()
         NotificationCenter.get_default()
+
         PowenMenu.get_default()
+        PowerMenuTrigger.get_default()
+
         OSD.get_default()
+        OSDTrigger.get_default()
+
         ClipboardManager.get_default()
 
         Dashboard.get_default()
         DashboardTrigger.get_default()
 
+        Bar()
         for i in range(utils.get_n_monitors()):
-            Bar(i)
             NotificationPopup(i)
 
-        LockScreen()
         Wallpaper.get_default()
         Settings.get_default()
         asyncio.create_task(run_ipc_server())
@@ -117,6 +119,7 @@ class Config(SingletonClass):
 
         if debug:
             from ignis._deprecation import _enable_deprecation_warnings
+
             _enable_deprecation_warnings()
         configure_logger(debug)
 

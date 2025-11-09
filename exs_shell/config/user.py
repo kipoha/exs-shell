@@ -3,7 +3,7 @@ import os
 from ignis.options_manager import OptionsGroup, OptionsManager, TrackedList
 from ignis.options import Options
 
-from exs_shell.utils import Dirs
+from exs_shell.utils import Dirs, PathUtils
 
 
 USER_OPTIONS_FILE = f"{Dirs.DATA_DIR}/user_options.json"
@@ -51,9 +51,9 @@ class UserOptions(OptionsManager):
 
         actions: TrackedList[dict] = TrackedList()
         for i in [
-            {"name": "Lock", "command": "exs-ipc open-lockscreen", "icon": "lock"},
-            {"name": "Clipboard", "command": "exs-ipc toggle-clipboard", "icon": "clipboard"},
-            {"name": "Color Picker", "command": "exs-ipc action-color-picker", "icon": "color-picker"},
+            {"name": "Lock", "command": "exs-ipc open-lockscreen", "icon": PathUtils.generate_path("icons/action/lock_screen.png", PathUtils.assets_path)},
+            {"name": "Clipboard", "command": "exs-ipc toggle-clipboard", "icon": PathUtils.generate_path("icons/action/clipboard.png", PathUtils.assets_path)},
+            {"name": "Color Picker", "command": "exs-ipc action-color-picker", "icon": PathUtils.generate_path("icons/action/color_picker.png", PathUtils.assets_path)},
         ]:
             actions.append(i)
 

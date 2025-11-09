@@ -1,5 +1,3 @@
-@use '../../colors.scss' as c;
-
 .osd-left-corner,
 .osd-right-corner {
   color: c.$bg;
@@ -15,6 +13,10 @@
 .osd-left-corner.hidden,
 .osd-right-corner.hidden {
   transform: translateX(-70px);
+}
+
+.osd-trigger {
+  background-color: rgba(0, 0, 0, 0.01);
 }
 
 .osd-container {
@@ -49,13 +51,34 @@
   transform: rotate(180deg);
 }
 
-scale trough {
+.brightness-bar trough,
+.volume-bar trough {
   background-color: rgba(255, 255, 255, 0.2);
   border-radius: 10px;
   min-width: 8px;
 }
 
-scale highlight {
+.brightness-bar highlight,
+.volume-bar highlight {
   background-color: c.$accent;
   border-radius: 10px;
+}
+
+.brightness-bar slider,
+.volume-bar slider {
+  background-color: c.$accent;
+  border: 2px solid white;
+  border-radius: 50%;
+  min-width: 8px;
+  min-height: 8px;
+  margin-top: -2px;
+  margin-bottom: -2px;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.brightness-bar slider:hover,
+.volume-bar slider:hover {
+  background-color: lighten(c.$accent, 5%);
+  transform: scale(1.1);
 }

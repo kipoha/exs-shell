@@ -1,10 +1,12 @@
-from ignis import widgets
-from datetime import date
 import calendar
+
+from ignis import widgets
+
+from datetime import date
+
 
 class Calendar(widgets.Box):
     def __init__(self, **kwargs):
-
         self.today = date.today()
         self.current_year = self.today.year
         self.current_month = self.today.month
@@ -14,24 +16,28 @@ class Calendar(widgets.Box):
         self.prev_button = widgets.Button(
             child=widgets.Label(label="◀"),
             on_click=self.prev_month,
-            css_classes=["dashboard-widget-prev-month-button"]
+            css_classes=["dashboard-widget-prev-month-button"],
         )
         self.next_button = widgets.Button(
             child=widgets.Label(label="▶"),
             on_click=self.next_month,
-            css_classes=["dashboard-widget-next-month-button"]
+            css_classes=["dashboard-widget-next-month-button"],
         )
-        self.month_label = widgets.Label(label="", css_classes=["dashboard-widget-month-label"])
+        self.month_label = widgets.Label(
+            label="", css_classes=["dashboard-widget-month-label"]
+        )
         self.header = widgets.CenterBox(
-            # halign="center",
             start_widget=self.prev_button,
             center_widget=self.month_label,
             end_widget=self.next_button,
-            # child=[self.prev_button, self.month_label, self.next_button],
-            css_classes=["dashboard-widget-calendar-header"]
+            css_classes=["dashboard-widget-calendar-header"],
         )
 
-        self.weekday_row = widgets.Box(spacing=5, halign="center", css_classes=["dashboard-widget-calendar-weekdays"])
+        self.weekday_row = widgets.Box(
+            spacing=5,
+            halign="center",
+            css_classes=["dashboard-widget-calendar-weekdays"],
+        )
         for d in ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]:
             lbl = widgets.Label(label=d, css_classes=["dashboard-widget-weekday-label"])
             lbl.set_width_request(32)
@@ -40,22 +46,23 @@ class Calendar(widgets.Box):
             lbl.set_halign("center")
             self.weekday_row.append(lbl)
 
-        self.grid = widgets.Box(vertical=True, spacing=4, css_classes=["dashboard-widget-calendar-grid"])
+        self.grid = widgets.Box(
+            vertical=True, spacing=4, css_classes=["dashboard-widget-calendar-grid"]
+        )
 
         super().__init__(
             vertical=True,
             css_classes=["dashboard-widget-calendar"],
-            child=[
-                self.header,
-                self.weekday_row,
-                self.grid
-            ]
+            child=[self.header, self.weekday_row, self.grid],
         )
 
         self.update_calendar()
 
     def update_calendar(self):
-        self.month_label.set_text(f"{calendar.month_name[self.current_month]} {self.current_year}")
+        self.today = date.today()
+        self.month_label.set_text(
+            f"{calendar.month_name[self.current_month]} {self.current_year}"
+        )
 
         self.grid.child = []  # type: ignore
 
@@ -69,9 +76,13 @@ class Calendar(widgets.Box):
             week_row = widgets.Box(spacing=5)
             for day in week:
                 if day == 0:
-                    lbl = widgets.Label(label="", css_classes=["dashboard-widget-day-empty"])
+                    lbl = widgets.Label(
+                        label="", css_classes=["dashboard-widget-day-empty"]
+                    )
                 else:
-                    lbl = widgets.Label(label=str(day), css_classes=["dashboard-widget-day-label"])
+                    lbl = widgets.Label(
+                        label=str(day), css_classes=["dashboard-widget-day-label"]
+                    )
                     if (
                         day == self.current_day
                         and self.current_month == self.today.month

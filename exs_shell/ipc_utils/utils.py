@@ -17,7 +17,6 @@ def include_commands() -> dict[str, tuple[object, str, dict[str, Any], str]]:
     from exs_shell.ipc_utils.commands.powermenu import powermenu_commands
     from exs_shell.ipc_utils.commands.osd import osd_commands
     from exs_shell.ipc_utils.commands.settings import settings_commands
-    from exs_shell.ipc_utils.commands.lockscreen import lockscreen_commands
     from exs_shell.ipc_utils.commands.clipboard import clipboard_commands
     from exs_shell.ipc_utils.commands.actions import action_commands
     from exs_shell.ipc_utils.commands.dashboard import dashboard_commands
@@ -28,7 +27,6 @@ def include_commands() -> dict[str, tuple[object, str, dict[str, Any], str]]:
         notification_commands(),
         powermenu_commands(),
         settings_commands(),
-        lockscreen_commands(),
         clipboard_commands(),
         action_commands(),
         dashboard_commands(),

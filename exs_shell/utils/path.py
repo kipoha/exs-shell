@@ -33,10 +33,11 @@ class Dirs:
         if not is_sphinx_build
         else "$XDG_DATA_HOME/ignis"
     )
+    CONFIG_DIR: Path = Path.home() / ".config/exs-shell"
 
     @classmethod
     def ensure_dirs_exist(cls) -> None:
-        for directory in (cls.TEMP_DIR, cls.CACHE_DIR, cls.DATA_DIR):
+        for directory in (cls.TEMP_DIR, cls.CACHE_DIR, cls.DATA_DIR, cls.CONFIG_DIR):
             try:
                 os.makedirs(directory, exist_ok=True)
             except Exception as e:

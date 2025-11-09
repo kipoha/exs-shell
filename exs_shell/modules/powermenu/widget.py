@@ -78,14 +78,11 @@ class PowenMenu(PartiallyAnimatedWindow, SingletonClass):
             halign="end",
             valign="end",
         )
-        self._main_box = widgets.Box(
+        self._main_box = widgets.EventBox(
             css_classes=["powermenu"],
             vertical=True,
-            child=[
-                self.top_corner,
-                self._box,
-                self.bottom_corner
-            ],
+            child=[self.top_corner, self._box, self.bottom_corner],
+            on_hover_lost=self._on_mouse_leave,
         )
 
         self._animated_parts = [self.top_corner, self.bottom_corner, self._box]
@@ -108,3 +105,33 @@ class PowenMenu(PartiallyAnimatedWindow, SingletonClass):
             PowenMenuButton(**action)
             for action in options.user_config.powermenu_actions
         ]
+    
+    def _on_mouse_leave(self, *_):
+        self.close()
+
+
+class PowerMenuTrigger(PartiallyAnimatedWindow, SingletonClass):
+    SENSOR_HEIGHT = 400
+    SENSOR_WIDTH = 4
+
+    def __init__(self):
+        self.powermenu = PowenMenu.get_default()
+
+        trigger_box = widgets.EventBox(
+            vexpand=False,
+            hexpand=True,
+            height_request=self.SENSOR_HEIGHT,
+            width_request=self.SENSOR_WIDTH,
+            on_hover=self._on_hover,
+            css_classes=["powermenu-trigger"],
+        )
+
+        super().__init__(
+            namespace=f"{config.NAMESPACE}_powermenu_trigger",
+            anchor=["right"],
+            visible=True,
+            child=trigger_box,
+        )
+
+    def _on_hover(self, *_):
+        self.powermenu.open()

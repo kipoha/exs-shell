@@ -1,12 +1,15 @@
+import os
 import re
 
-from exs_shell.utils.path import PathUtils
+from exs_shell.utils.path import PathUtils, Dirs
 
 
-scss_file = PathUtils.generate_path("colors.scss")
 
 
 def get_hex_color() -> str:
+    scss_file = PathUtils.generate_path("colors.scss", Dirs.CONFIG_DIR)
+    if not os.path.exists(scss_file):
+        scss_file = PathUtils.generate_path("styles/colors.scss", PathUtils.path)
     variables = {}
     with open(scss_file, "r") as f:
         for line in f:
