@@ -64,6 +64,7 @@ class Config(SingletonClass):
         from exs_shell.modules.launcher import Launcher
         from exs_shell.modules.powermenu import PowenMenu, PowerMenuTrigger
         from exs_shell.modules.dashboard import Dashboard, DashboardTrigger
+        from exs_shell.modules.lockscreen import LockScreen
         from exs_shell.window import Settings
         from exs_shell.window.wallpaper import Wallpaper
 
@@ -83,6 +84,7 @@ class Config(SingletonClass):
 
         Bar()
         for i in range(utils.get_n_monitors()):
+            LockScreen(i)
             NotificationPopup(i)
 
         Wallpaper.get_default()

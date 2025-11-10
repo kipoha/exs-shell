@@ -2,14 +2,13 @@ from gi.repository import GLib  # type: ignore
 from typing import Any
 from ignis import widgets
 from ignis.services.niri import NiriService
-from ignis.window_manager import WindowManager
 
 from exs_shell.modules.bar import center, left, right
 
 from exs_shell.config import config
 from exs_shell.config.user import options
+from exs_shell.utils.lock import locked
 
-window_manager = WindowManager.get_default()
 
 
 class Bar(widgets.Window):
@@ -49,11 +48,10 @@ class Bar(widgets.Window):
 
     def on_overview_changed(self, niri: NiriService, param):
         active = niri.overview_opened
-        launcher = window_manager.get_window(f"{config.NAMESPACE}_launcher")
         if (
             active
-            and not launcher.visible
             and (left.child or center.child or right.child)
+            and not locked()
         ):
             GLib.idle_add(self._show_bar)
         else:

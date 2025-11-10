@@ -3,8 +3,10 @@ from ignis import widgets
 
 from gi.repository import Gtk, Gdk, GLib  # type: ignore
 
+from exs_shell.utils.lock import locked
 
-class AnimatedWindow(widgets.Window):
+
+class BaseAnimatedWindow(widgets.Window):
     def __init__(
         self,
         namespace: str,
@@ -71,19 +73,27 @@ class AnimatedWindow(widgets.Window):
         else:
             self.close()
 
+
+class AnimatedWindow(BaseAnimatedWindow):
+    def open(self):
+        if not locked():
+            return super().open()
+
+
 class PartiallyAnimatedWindow(AnimatedWindow):
     def open(self):
-        if self._is_open:
-            return
+        if not locked():
+            if self._is_open:
+                return
 
-        self.set_visible(True)
-        self._is_open = True
+            self.set_visible(True)
+            self._is_open = True
 
-        if hasattr(self, "_animated_parts") and self._animated_parts:
-            for widget in self._animated_parts:
-                self._animate_show(widget)
-        else:
-            self._animate_show(self._main_box)
+            if hasattr(self, "_animated_parts") and self._animated_parts:
+                for widget in self._animated_parts:
+                    self._animate_show(widget)
+            else:
+                self._animate_show(self._main_box)
 
     def close(self):
         if not self._is_open:
@@ -157,9 +167,10 @@ class AnimatedWindowPopup(AnimatedWindow):
         self.add_controller(key_controller)
 
     def open(self):
-        if not self._is_open:
-            super().open()
-            self.focus()
+        if not locked():
+            if not self._is_open:
+                super().open()
+                self.focus()
 
     def focus(self):
         if hasattr(self, "_entry"):

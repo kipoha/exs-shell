@@ -1,5 +1,7 @@
 from typing import Any
+
 from ignis.window_manager import WindowManager
+
 from exs_shell.config import config
 
 

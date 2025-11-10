@@ -59,7 +59,7 @@ class UserOptions(OptionsManager):
 
         powermenu_actions: TrackedList[dict] = TrackedList()
         for i in [
-            {"command": "hyprlock", "icon": ""},
+            {"command": "exs-ipc open-lockscreen", "icon": ""},
             {"command": "niri msg action quit --skip-confirmation", "icon": "󰈆"},
             {"command": "systemctl suspend", "icon": "󰤄"},
             {"command": "systemctl reboot", "icon": ""},
