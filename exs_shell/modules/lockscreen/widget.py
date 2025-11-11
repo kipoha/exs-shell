@@ -1,10 +1,11 @@
 import os
 import pam
 import getpass
+import subprocess
 
-from ignis import widgets
+from ignis import utils, widgets
 
-from gi.repository import Gtk  # type: ignore
+from gi.repository import Gtk, GdkPixbuf, Gdk  # type: ignore
 
 from exs_shell.config import config
 from exs_shell.config.user import options
@@ -14,7 +15,6 @@ from exs_shell.base.window.animated import BaseAnimatedWindow
 class LockScreen(BaseAnimatedWindow):
     def __init__(self, monitor: int = 0):
         self._entry = widgets.Entry(
-            placeholder_text="Password",
             hexpand=False,
             visibility=False,
             css_classes=["lockscreen-entry"],
@@ -83,17 +83,18 @@ class LockScreen(BaseAnimatedWindow):
         self._root_overlay = widgets.Overlay(child=self._root_bg)
         self._root_overlay.add_overlay(self._overlay)
 
+        self.__animate_objs = [self._bg_image, self._root_bg]
+
         super().__init__(
             namespace=f"{config.NAMESPACE}_lockscreen_{monitor}",
             monitor=monitor,
             visible=False,
             popup=True,
+            layer="overlay",
             hexpand=True,
             vexpand=True,
             kb_mode="exclusive",
             anchor=["top", "right", "bottom", "left"],
-            # child=self._main_box,
-            # child=self._overlay,
             child=self._root_overlay,
         )
 
@@ -102,24 +103,42 @@ class LockScreen(BaseAnimatedWindow):
         self.add_controller(key_controller)
 
     def open(self):
+        monitor_obj = utils.get_monitor(self.monitor)  # type: ignore
+        monitor_name = monitor_obj.get_connector()  # type: ignore
+        args = ["grim"]
+        if monitor_name:
+            args += ["-o", monitor_name]
+        args.append("-")
+        proc = subprocess.run(args, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
+        screenshot_bytes = proc.stdout
+        if screenshot_bytes:
+            loader = GdkPixbuf.PixbufLoader.new_with_type("png")
+            loader.write(screenshot_bytes)
+            loader.close()
+            pixbuf = loader.get_pixbuf()
+
+            if pixbuf:
+                texture = Gdk.Texture.new_for_pixbuf(pixbuf)
+                self._bg_image.set_paintable(texture)
+                self._root_bg.set_paintable(texture)
+
         self._entry.set_text("")
         self._entry.grab_focus()
-        self._bg_image.add_css_class("visible")
-        self._bg_image.remove_css_class("hidden")
-        self._root_bg.add_css_class("visible")
-        self._root_bg.remove_css_class("hidden")
+        for obj in self.__animate_objs:
+            obj.remove_css_class("hidden")
+            obj.add_css_class("visible")
         return super().open()
 
     def close(self):
-        self._bg_image.add_css_class("hidden")
-        self._bg_image.remove_css_class("visible")
-        self._root_bg.add_css_class("hidden")
-        self._root_bg.remove_css_class("visible")
+        for obj in self.__animate_objs:
+            obj.remove_css_class("visible")
+            obj.add_css_class("hidden")
         return super().close()
 
     def __on_key_press(self, controller, keyval, keycode, state):
         if self._entry.has_focus():
             return False
+        print(controller, keyval, keycode, state)
         return True
 
     def __on_entry_changed(self, entry):

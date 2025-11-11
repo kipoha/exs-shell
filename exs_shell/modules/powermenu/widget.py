@@ -1,6 +1,7 @@
 import asyncio
 
 from dataclasses import dataclass
+from typing import Optional
 
 from ignis import widgets, utils
 from ignis.window_manager import WindowManager
@@ -15,14 +16,15 @@ window_manager = WindowManager.get_default()
 
 
 @dataclass
-class PowenMenuButton:
+class PowerMenuButton:
     command: str
     icon: str
+    in_lock: Optional[bool] = False
 
 
 class PowerMenuItem(widgets.Button):
-    def __init__(self, item: PowenMenuButton, **kwargs):
-        self._action: PowenMenuButton = item
+    def __init__(self, item: PowerMenuButton, **kwargs):
+        self._action: PowerMenuButton = item
 
         super().__init__(
             on_click=lambda x: self.launch(),
@@ -46,13 +48,13 @@ class PowerMenuItem(widgets.Button):
         window.toggle()
 
 
-class PowenMenu(PartiallyAnimatedWindow, SingletonClass):
+class PowerMenu(PartiallyAnimatedWindow, SingletonClass):
     def __init__(
         self,
         **kwargs,
     ):
         self.actions = [
-            PowenMenuButton(**action)
+            PowerMenuButton(**action)
             for action in options.user_config.powermenu_actions
         ]
         self.buttons = widgets.Box(
@@ -102,7 +104,7 @@ class PowenMenu(PartiallyAnimatedWindow, SingletonClass):
 
     def update_actions(self):
         self.actions = [
-            PowenMenuButton(**action)
+            PowerMenuButton(**action)
             for action in options.user_config.powermenu_actions
         ]
     
@@ -115,7 +117,7 @@ class PowerMenuTrigger(PartiallyAnimatedWindow, SingletonClass):
     SENSOR_WIDTH = 4
 
     def __init__(self):
-        self.powermenu = PowenMenu.get_default()
+        self.powermenu = PowerMenu.get_default()
 
         trigger_box = widgets.EventBox(
             vexpand=False,

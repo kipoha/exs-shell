@@ -1,3 +1,3 @@
-from exs_shell.modules.powermenu.widget import PowenMenu, PowerMenuTrigger
+from exs_shell.modules.powermenu.widget import PowerMenu, PowerMenuTrigger
 
-__all__ = ["PowenMenu", "PowerMenuTrigger"]
+__all__ = ["PowerMenu", "PowerMenuTrigger"]

@@ -34,7 +34,6 @@ class UserOptions(OptionsManager):
         avatar: str = ""
         command_prefix: str = ">"
         clock_format: str = "󰥔 %H:%M:%S"
-        notification_dnd: bool = False
         battery: dict = {
             "format": "{icon} {percentage}%",
             "icons": {
@@ -59,11 +58,11 @@ class UserOptions(OptionsManager):
 
         powermenu_actions: TrackedList[dict] = TrackedList()
         for i in [
-            {"command": "exs-ipc open-lockscreen", "icon": ""},
-            {"command": "niri msg action quit --skip-confirmation", "icon": "󰈆"},
-            {"command": "systemctl suspend", "icon": "󰤄"},
-            {"command": "systemctl reboot", "icon": ""},
-            {"command": "systemctl poweroff", "icon": "⏻"},
+            {"command": "exs-ipc open-lockscreen", "icon": "", "in_lock": False},
+            {"command": "niri msg action quit --skip-confirmation", "icon": "󰈆", "in_lock": False},
+            {"command": "systemctl suspend", "icon": "󰤄", "in_lock": True},
+            {"command": "systemctl reboot", "icon": "", "in_lock": True},
+            {"command": "systemctl poweroff", "icon": "⏻", "in_lock": True},
         ]:
             powermenu_actions.append(i)
 

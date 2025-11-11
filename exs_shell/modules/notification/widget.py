@@ -5,6 +5,7 @@ from ignis.window_manager import WindowManager
 from ignis.services.notifications import Notification, NotificationService
 
 from exs_shell.config import config
+from exs_shell.utils.lock import locked
 
 
 notifications = NotificationService.get_default()

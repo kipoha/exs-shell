@@ -89,7 +89,7 @@ class ClipboardManager(PartiallyAnimatedWindow, AnimatedWindowPopup, SingletonCl
         super().__init__(
             namespace=f"{config.NAMESPACE}_clipboard",
             visible=False,
-            kb_mode="exclusive",
+            kb_mode="on_demand",
             anchor=["bottom"],
             child=widgets.Box(
                 css_classes=["launcher-overlay"],

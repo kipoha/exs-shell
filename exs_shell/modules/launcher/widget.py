@@ -261,7 +261,7 @@ class Launcher(PartiallyAnimatedWindow, AnimatedWindowPopup, SingletonClass):
         super().__init__(
             namespace=f"{config.NAMESPACE}_launcher",
             visible=False,
-            kb_mode="exclusive",
+            kb_mode="on_demand",
             anchor=["bottom"],
             child=widgets.Box(
                 css_classes=["launcher-overlay"],

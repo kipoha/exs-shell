@@ -62,7 +62,7 @@ class Config(SingletonClass):
         from exs_shell.modules.notification import NotificationPopup, NotificationCenter
         from exs_shell.modules.clipboard import ClipboardManager
         from exs_shell.modules.launcher import Launcher
-        from exs_shell.modules.powermenu import PowenMenu, PowerMenuTrigger
+        from exs_shell.modules.powermenu import PowerMenu, PowerMenuTrigger
         from exs_shell.modules.dashboard import Dashboard, DashboardTrigger
         from exs_shell.modules.lockscreen import LockScreen
         from exs_shell.window import Settings
@@ -71,7 +71,7 @@ class Config(SingletonClass):
         Launcher.get_default()
         NotificationCenter.get_default()
 
-        PowenMenu.get_default()
+        PowerMenu.get_default()
         PowerMenuTrigger.get_default()
 
         OSD.get_default()
