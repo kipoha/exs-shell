@@ -82,8 +82,8 @@ class Config(SingletonClass):
         Dashboard.get_default()
         DashboardTrigger.get_default()
 
-        Bar()
         for i in range(utils.get_n_monitors()):
+            Bar(i)
             LockScreen(i)
             NotificationPopup(i)
 

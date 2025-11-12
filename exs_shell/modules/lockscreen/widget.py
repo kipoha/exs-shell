@@ -10,10 +10,13 @@ from gi.repository import Gtk, GdkPixbuf, Gdk  # type: ignore
 from exs_shell.config import config
 from exs_shell.config.user import options
 from exs_shell.base.window.animated import BaseAnimatedWindow
+from exs_shell.modules.shared.widgets.top_bar.widget import LockScreenTopBar
+from exs_shell.utils.path import PathUtils
 
 
 class LockScreen(BaseAnimatedWindow):
     def __init__(self, monitor: int = 0):
+        self._top_bar = LockScreenTopBar.get_default()
         self._entry = widgets.Entry(
             hexpand=False,
             visibility=False,
@@ -35,7 +38,7 @@ class LockScreen(BaseAnimatedWindow):
             css_classes=["lockscreen-left-entry-corner"],
             orientation="bottom-right",
             width_request=50,
-            height_request=70,
+            height_request=50,
             halign="end",
             valign="end",
         )
@@ -44,7 +47,7 @@ class LockScreen(BaseAnimatedWindow):
             css_classes=["lockscreen-right-entry-corner"],
             orientation="bottom-left",
             width_request=50,
-            height_request=70,
+            height_request=50,
             halign="start",
             valign="end",
         )
@@ -74,7 +77,25 @@ class LockScreen(BaseAnimatedWindow):
             vertical=True,
             css_classes=["lockscreen-window"],
             child=[
-                widgets.Box(vexpand=True, hexpand=True),
+                self._top_bar,
+                widgets.Box(
+                    vexpand=True,
+                    hexpand=True,
+                    halign="center",
+                    valign="center",
+                    child=[widgets.Box(
+                        css_classes=["lockscreen-lock-logo"],
+                        child=[widgets.Picture(
+                            css_classes=["lockscreen-lock-logo-image"],
+                            content_fit="cover",
+                            image=PathUtils.generate_path(
+                                "icons/action/lock_screen.png", PathUtils.assets_path
+                            ),
+                            width_request=180,
+                            height_request=180,
+                        )]
+                    )],
+                ),
                 self._entry_container,
             ],
         )
@@ -83,7 +104,19 @@ class LockScreen(BaseAnimatedWindow):
         self._root_overlay = widgets.Overlay(child=self._root_bg)
         self._root_overlay.add_overlay(self._overlay)
 
-        self.__animate_objs = [self._bg_image, self._root_bg]
+        self.__animate_objs = [
+            self._bg_image,
+            self._root_bg,
+            self._top_bar.center_box,
+            self._top_bar.left_center_corner,
+            self._top_bar.right_center_corner,
+            self._top_bar.left_right_corner,
+            self._top_bar.right_box,
+            self._top_bar.right_left_corner,
+            self._top_bar.left_box,
+            self._top_bar.cava_left,
+            self._top_bar.cava_right,
+        ]
 
         super().__init__(
             namespace=f"{config.NAMESPACE}_lockscreen_{monitor}",

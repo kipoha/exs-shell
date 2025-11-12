@@ -9,8 +9,8 @@ from exs_shell.utils.colors import get_hex_color, hex_to_rgb
 
 
 class AudioVisualizer(widgets.Box):
-    def __init__(self, width: int = 220, height: int = 30, mirror: bool = False):
-        super().__init__(vertical=False, spacing=2)
+    def __init__(self, width: int = 220, height: int = 30, mirror: bool = False, **kwargs):
+        super().__init__(vertical=False, spacing=2, **kwargs)
         self.width = width
         self.height = height
         self.mirror = mirror
