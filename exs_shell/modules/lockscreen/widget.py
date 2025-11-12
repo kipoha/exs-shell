@@ -191,6 +191,7 @@ class LockScreen(BaseAnimatedWindow):
             self._left_entry_corner.add_css_class("hidden")
             self._right_entry_corner.add_css_class("hidden")
 
+    @utils.run_in_thread
     def __on_accept(self, *args):
         username = os.getenv("USER") or getpass.getuser()
         password = self._entry.text.strip()
