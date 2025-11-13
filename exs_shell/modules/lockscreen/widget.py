@@ -9,9 +9,9 @@ from gi.repository import Gtk, GdkPixbuf, Gdk  # type: ignore
 
 from exs_shell.config import config
 from exs_shell.config.user import options
+from exs_shell.utils.path import PathUtils
 from exs_shell.base.window.animated import BaseAnimatedWindow
 from exs_shell.modules.shared.widgets.top_bar.widget import LockScreenTopBar
-from exs_shell.utils.path import PathUtils
 
 
 class LockScreen(BaseAnimatedWindow):
@@ -160,12 +160,14 @@ class LockScreen(BaseAnimatedWindow):
         for obj in self.__animate_objs:
             obj.remove_css_class("hidden")
             obj.add_css_class("visible")
+
         return super().open()
 
     def close(self):
         for obj in self.__animate_objs:
             obj.remove_css_class("visible")
             obj.add_css_class("hidden")
+
         return super().close()
 
     def __on_key_press(self, controller, keyval, keycode, state):

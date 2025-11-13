@@ -1,12 +1,14 @@
 from gi.repository import GLib, Gdk  # type: ignore
+
 from ignis import widgets
+from ignis.dbus_menu import DBusMenu
 from ignis.services.system_tray import SystemTrayService, SystemTrayItem
 
 
 class SystemTrayItemButton(widgets.Button):
     def __init__(self, item: SystemTrayItem):
         self.item = item
-        self.menu = item.menu.copy() if item.menu else None
+        self.menu: DBusMenu | None = item.menu.copy() if item.menu else None
         box = widgets.EventBox(
             child=[widgets.Icon(image=item.bind("icon"), pixel_size=24)],
             on_hover=lambda btn: GLib.timeout_add(150, lambda: self.popup() or False),
