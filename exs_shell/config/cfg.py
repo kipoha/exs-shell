@@ -52,8 +52,11 @@ class Config(SingletonClass):
             )
         )
 
-    def init_css(self) -> None:
-        scss = build_scss()
+    def init_css(self, debug: bool) -> None:
+        if not debug:
+            scss = build_scss()
+        else:
+            scss = "styles/main.scss"
         self.set_css_file(scss)
 
     def init_widgets(self) -> None:
@@ -100,13 +103,13 @@ class Config(SingletonClass):
 
         kill_process()
         Dirs.ensure_dirs_exist()
-        self.init_css()
         self.init_widgets()
 
     def get_full_path(self, path: str) -> str:
         return os.path.abspath(os.path.expanduser(path))
 
     def __call__(self, config: str, debug: bool = False) -> None:
+        self.init_css(debug)
         from ignis.log_utils import configure_logger
         from ignis.config_manager import ConfigManager
         from ignis.client import IgnisClient

@@ -81,10 +81,96 @@ class Settings(widgets.RegularWindow, SingletonClass):
         navigation_sidebar = widgets.Box(
             vertical=True,
             css_classes=["settings-sidebar"],
+            spacing=10,
             child=[
-                user_profile,
+                widgets.CenterBox(
+                    center_widget=widgets.Box(
+                        child=[
+                            widgets.Corner(
+                                orientation="top-right",
+                                width_request=20,
+                                height_request=20,
+                                halign="start",
+                                valign="start",
+                                css_classes=["settings-sidebar-title-left-corner"],
+                            ),
+                            widgets.Box(
+                                css_classes=["settings-sidebar-title-container"],
+                                child=[
+                                    widgets.Label(
+                                        label="Exs-Shell",
+                                        css_classes=["settings-sidebar-title-text"],
+                                    ),
+                                ],
+                            ),
+                            widgets.Corner(
+                                orientation="top-left",
+                                width_request=20,
+                                height_request=20,
+                                halign="start",
+                                valign="start",
+                                css_classes=["settings-sidebar-title-right-corner"],
+                            ),
+                        ]
+                    )
+                ),
                 self._listbox,
+                widgets.Box(hexpand=True, vexpand=True),
+                widgets.Box(
+                    vertical=True,
+                    child=[
+                        widgets.Corner(
+                            orientation="bottom-left",
+                            width_request=40,
+                            height_request=40,
+                            halign="start",
+                            valign="end",
+                            css_classes=["settings-sidebar-user-bottom-left-corner"],
+                        ),
+                        widgets.Box(
+                            child=[
+                                user_profile,
+                                # widgets.Corner(
+                                #     orientation="bottom-left",
+                                #     width_request=40,
+                                #     height_request=40,
+                                #     halign="start",
+                                #     valign="end",
+                                #     css_classes=[
+                                #         "settings-sidebar-bottom-right-corner"
+                                #     ],
+                                # ),
+                            ],
+                        ),
+                    ],
+                ),
             ],
+        )
+
+        sidebar_corners = widgets.Box(
+            vertical=True,
+            child=[
+                widgets.Corner(
+                    orientation="top-left",
+                    width_request=50,
+                    height_request=50,
+                    halign="start",
+                    valign="start",
+                    css_classes=["settings-sidebar-top-corner"],
+                ),
+                widgets.Box(
+                    hexpand=True,
+                    vexpand=True,
+                ),
+                widgets.Corner(
+                    orientation="bottom-left",
+                    width_request=50,
+                    height_request=50,
+                    halign="start",
+                    valign="end",
+                    css_classes=["settings-sidebar-bottom-corner"],
+                ),
+            ]
         )
 
         super().__init__(
@@ -93,7 +179,7 @@ class Settings(widgets.RegularWindow, SingletonClass):
             resizable=False,
             hide_on_close=True,
             visible=False,
-            child=widgets.Box(child=[navigation_sidebar, content]),
+            child=widgets.Box(child=[navigation_sidebar, sidebar_corners, content]),
             namespace=f"{config.NAMESPACE}_settings",
             css_classes=["settings"],
         )

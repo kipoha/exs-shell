@@ -10,6 +10,8 @@ cfg = str(BASE_DIR / "init.py")
 def main():
     if len(sys.argv) == 1:
         App(cfg)
+    elif len(sys.argv) == 2 and sys.argv[1] == "--debug":
+        App(cfg, debug=True)
     else:
         print("unknown command")
         exit(1)

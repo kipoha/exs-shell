@@ -2,14 +2,18 @@
 .settings-row-switch {
   min-width: 44px;
   min-height: 26px;
-  border-radius: 13px;
-  background-color: c.$bg-darker;
-  border: 0.1rem solid c.$border-light;
+  border-radius: 1.3rem;
+  background-color: lighten(c.$bg-light, 5%);
   transition: background-color 0.25s ease;
 
   &:checked {
-    background-color: c.$accent;
+    background-color: c.$accent-dark;
+
+    & slider {
+      background-color: c.$bg;
+    }
   }
+
 }
 
 .settings-row-switch slider {
@@ -23,33 +27,32 @@
 
 /* === SpinButton === */
 .settings-row-spin-button {
-  background-color: c.$bg-darker;
-  border-radius: 0.5rem;
-  border: 0.1rem solid c.$border-light;
-  padding: 0.5rem;
+  background-color: lighten(c.$bg-light, 5%);
+  border-radius: 1.3rem;
+  padding: 0.3rem 0.7rem;
   color: c.$fg-strong;
   transition: 0.2s ease;
 
   &:hover {
-    background-color: c.$bg-light;
-    border-color: c.$accent;
-    box-shadow: 0 0 6px rgba(c.$accent-light, 0.5);
+    background-color: lighten(c.$bg-light, 10%);
   }
 }
 
 .settings-row-spin-button input {
-  margin: 0 0.5rem;
+  margin: 0 1rem;
 }
 
 .settings-row-spin-button button.up,
 .settings-row-spin-button button.down {
   color: c.$accent;
-  padding: 0.5rem;
+  padding: 0.2rem;
   transition: 0.2s ease;
-  border-radius: 0.5rem;
+  border-radius: 1.3rem;
+  margin: 0 0.3rem;
 
   &:hover {
-    background-color: c.$bg-light;
+    background-color: c.$accent;
+    color: c.$bg-darker;
   }
 }
 
@@ -57,18 +60,15 @@
 
 /* === Dropdown === */
 .settings-row-select {
-  background-color: c.$bg-darker;
-  border-radius: 8px;
+  background-color: lighten(c.$bg-light, 5%);
+  border-radius: 1.3rem;
   padding: 6px 12px;
-  border: 0.1rem solid c.$border-light;
   color: c.$fg-strong;
-  font-size: 14px;
+  font-size: 1rem;
   transition: 0.2s ease;
 
   &:hover {
-    background-color: c.$bg-light;
-    border-color: c.$accent;
-    box-shadow: 0 0 6px rgba(c.$accent-light, 0.5);
+    background-color: lighten(c.$bg-light, 10%);
   }
 }
 
@@ -80,11 +80,14 @@
 }
 
 .settings-row-select row {
-  background-color: c.$surface;
-  border-radius: 0.5rem;
+  background-color: lighten(c.$surface, 15%);
+  border-radius: 1.3rem;
   padding: 0.4rem 0.6rem;
-  border: 1px solid c.$border-light;
-  box-shadow: 0 4px 12px c.$shadow;
+  margin: 0.2rem 0;
+
+  &:hover {
+    background-color: lighten(c.$surface, 20%);
+  }
 }
 
 .settings-row-select row button {
@@ -112,56 +115,50 @@
 
 /* === Entry === */
 .settings-row-entry {
-  background-color: c.$bg-darker;
-  border-radius: 8px;
-  border: 1px solid c.$border-light;
+  background-color: lighten(c.$bg-light, 5%);
+  border-radius: 1.3rem;
   padding: 6px 10px;
   color: c.$fg-strong;
-  font-size: 14px;
+  font-size: 1rem;
   transition: 0.2s ease;
 
   &:hover,
   &:focus {
-    background-color: c.$bg-light;
-    border-color: c.$accent;
-    box-shadow: 0 0 6px rgba(c.$accent-light, 0.5);
+    background-color: lighten(c.$bg-light, 15%);
   }
 }
 
 /* === FileButton === */
 .settings-row-file-button {
-  background-color: c.$bg-light;
-  border-radius: 8px;
-  border: 1px solid c.$border-light;
-  padding: 4px 8px;
+  background-color: lighten(c.$bg-light, 5%);
+  border-radius: 1.3rem;
+  padding: 4px 14px;
   color: c.$fg-strong;
 
   &:hover {
-    background-color: c.$bg-lighter;
+    background-color: lighten(c.$bg-lighter, 15%);
   }
 }
 
 /* === MultiSelectRow === */
 .settings-row-multi-select {
   padding: 0.7rem;
-  background-color: c.$bg-darker;
-  border-radius: 0.5rem;
-  border: 0.1rem solid c.$border-light;
+  background-color: lighten(c.$bg-light, 5%);
+  border-radius: 1.3rem;
   transition: 0.2s ease;
 }
 
 .settings-row-multi-select-item {
-  background-color: c.$bg-light;
-  border-radius: 0.5rem;
+  background-color: lighten(c.$bg-light, 10%);
+  border-radius: 1.3rem;
   padding: 0.3rem 0.7rem;
-  border: 0.1rem solid c.$border-light;
   transition: 0.2s ease;
 }
 
 .settings-row-multi-select-item-del {
   padding: 0.3rem 0.6rem;
-  border-radius: 0.5rem;
-  background-color: c.$bg-darker;
+  border-radius: 1.3rem;
+  background-color: lighten(c.$bg-darker, 5%);
   transition: 0.25s ease;
 
   &:hover {
@@ -179,12 +176,11 @@
 .settings-row-select-button-btn,
 .settings-row-multi-select-button-btn {
   font-size: 1.2rem;
-  background-color: c.$bg-light;
+  background-color: lighten(c.$bg-light, 5%);
   color: c.$fg;
-  border: 1px solid c.$border;
-  border-radius: 6px;
-  padding: 4px 8px;
-  transition: background 0.2s ease, color 0.2s ease;
+  border-radius: 1.3rem;
+  padding: 4px 10px;
+  transition: 0.2s ease;
 }
 
 .settings-row-select-button-btn:hover,
@@ -197,6 +193,7 @@
   background-color: c.$accent;
   color: c.$fg-strong;
   border-color: c.$accent;
+  border-radius: 0.8rem;
 }
 
 .settings-row-select-button-btn.active label,
@@ -241,13 +238,6 @@
 
 
 /* === Page === */
-.settings-page-name {
-  font-size: 2rem;
-  margin-left: 2.5rem;
-  margin-bottom: 2rem;
-  margin-top: 2rem;
-}
-
 .settings-group-name {
   margin-left: 2.5rem;
   color: c.$active;
@@ -281,12 +271,12 @@
   padding: 0.7rem 2.5rem;
   border-radius: 10px;
   transition: 0.2s;
+  margin: 0.3rem 1rem 0.3rem 0.5rem;
 }
 
 .settings-row:hover {
   background-color: c.$bg-light;
   border-radius: 1rem;
-  margin: 0.3rem 0.5rem 0.3rem 1rem;
 }
 
 

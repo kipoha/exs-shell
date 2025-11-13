@@ -1,5 +1,3 @@
-@import "./internal.scss";
-
 .settings {
   background-color: c.$bg;
   color: c.$fg;
@@ -8,15 +6,33 @@
 }
 
 .settings-sidebar {
-  background-color: rgba(255, 255, 255, 0.1);
-  min-width: 300px;
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.settings-page-header,
+.settings-sidebar-title-container {
+  background-color: c.$border-light;
+  padding: 0.4rem 2rem;
+  border-radius: 0 0 1.2rem 1.2rem;
+}
+
+.settings-page-header-left-corner,
+.settings-page-header-right-corner,
+.settings-sidebar-title-left-corner,
+.settings-sidebar-title-right-corner,
+.settings-sidebar-bottom-corner,
+.settings-sidebar-user-bottom-left-corner {
+  color: c.$border-light;
+}
+
+.settings-sidebar-top-corner {
+  color: rgba(255, 255, 255, 0.05);
 }
 
 .settings-sidebar-user {
-  margin: 2rem 1rem 2rem 1rem;
-  background-color: rgba(0, 0, 0, 0.2);
-  border-radius: 1rem;
-  padding: 1rem;
+  background-color: c.$border-light;
+  border-radius: 0 3rem 0 0;
+  padding: 1.2rem;
 }
 
 .settings-sidebar-user-name {
@@ -52,21 +68,20 @@
 
 .settings-sidebar-entry {
   all: unset;
-  /* background-color: c.$bg-light; */
-  padding: 1rem 2rem;
-  padding-left: 0.75rem;
+  padding: 1rem 1.5rem;
+  /* padding-left: 0.75rem; */
   font-size: 1.2rem;
-  transition:  0.2s;
+  transition: 0.2s;
   border-radius: 1rem;
   margin-left: 0.5rem;
+  margin: 0.3rem 0.7rem;
 
   &:hover {
-    margin: 0.3rem 0.5rem 0.3rem 1rem;
     background-color: rgba(0, 0, 0, 0.4);
   }
 
   &:selected {
-    margin: 0.3rem 0.5rem 0.3rem 1rem;
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: c.$accent-dark;
+    color: c.$bg;
   }
 }
