@@ -4,8 +4,6 @@ import re
 from exs_shell.utils.path import PathUtils, Dirs
 
 
-
-
 def get_hex_color() -> str:
     scss_file = PathUtils.generate_path("colors.scss", Dirs.CONFIG_DIR)
     if not os.path.exists(scss_file):
