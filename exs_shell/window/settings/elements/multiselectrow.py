@@ -1,6 +1,8 @@
 from ignis import widgets
-from exs_shell.window.settings.elements.row import SettingsRow
+
 from typing import Callable, Iterable
+
+from exs_shell.window.settings.elements.row import SettingsRow
 
 
 class MultiSelectRow(SettingsRow):
@@ -22,10 +24,22 @@ class MultiSelectRow(SettingsRow):
         self._added_items: list[widgets.Box] = []
 
         self._select = widgets.DropDown(
-            items=["-- Select --"] + self.options,
+            items=self.options,
             hexpand=True,
             halign="end",
             css_classes=["settings-row-select"]
+        )
+
+        self._select_button_clear = widgets.Button(
+            label="",
+            css_classes=["settings-row-one-select-button-clear"],
+            on_click=self._clear_selected,
+        )
+
+        self._select_button_add = widgets.Button(
+            label="",
+            css_classes=["settings-row-one-select-button-add"],
+            on_click=self._make_handler,
         )
 
         self._grid = widgets.Grid(
@@ -37,22 +51,41 @@ class MultiSelectRow(SettingsRow):
             visible=True if self.selected_items else False
         )
 
+        self._select_box = widgets.Box(
+            hexpand=True,
+            halign="end",
+            spacing=5,
+            child=[self._select, self._select_button_clear, self._select_button_add],
+        )
+
         self._box = widgets.Box(
             vertical=True,
             hexpand=True,
             halign="end",
             spacing=10,
-            child=[self._select, self._grid],
+            child=[self._select_box, self._grid],
         )
         self.child.append(self._box)
-
-        self._select.connect("notify::selected-item", self._on_select)
 
         for item in self.selected_items:
             self._add_item_to_grid(item)
 
-    def _on_select(self, widget, _param):
-        value = widget.get_selected()
+    def _make_handler(self, *_):
+        selected = self._select.get_selected()
+        if selected is not None:
+            self._on_select(selected)
+
+    def _clear_selected(self, *_):
+        for c in list(self._added_items):
+            if c.get_parent() is self._grid:
+                c.unparent()
+        self._added_items.clear()
+        self.selected_items.clear()
+        self._grid.set_visible(False)
+        if self.on_change:
+            self.on_change(self.selected_items)
+
+    def _on_select(self, value):
         if not value:
             return
         value = str(value)

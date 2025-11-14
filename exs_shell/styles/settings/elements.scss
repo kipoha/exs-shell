@@ -73,7 +73,7 @@
 }
 
 .settings-row-select>button {
-  background-color: transparent;
+  /* background-color: transparent; */
   border: none;
   color: c.$fg-strong;
   padding: 0 4px;
@@ -165,6 +165,28 @@
     background-color: c.$fg;
     color: c.$bg-darker;
   }
+}
+
+.settings-row-one-select-button-add,
+.settings-row-one-select-button-clear {
+  font-size: 1.5rem;
+  background-color: lighten(c.$bg-light, 5%);
+  color: c.$fg;
+  border-radius: 1.3rem;
+  padding: 0.3rem 1.4rem 0.3rem 1rem;
+  transition: 0.2s ease;
+
+  &:hover {
+    background-color: c.$accent;
+    color: c.$bg;
+  }
+}
+
+.settings-row-selected-item-box {
+  background-color: lighten(c.$bg-light, 10%);
+  border-radius: 1.3rem;
+  padding: 0.3rem 0.7rem;
+  transition: 0.2s ease;
 }
 
 /* === SelectButtonRow / MultiSelectButtonRow === */

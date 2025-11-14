@@ -17,6 +17,7 @@ dependencies = [
     "pam>=0.2.0",
     "pillow>=12.0.0",
     "psutil>=7.1.0",
+    "pygobject>=3.54.3",
     "requests>=2.32.5",
 ]
 authors = [
