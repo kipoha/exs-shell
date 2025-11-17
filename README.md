@@ -1,10 +1,4 @@
 ## Installation
-Installs the package and dependencies globally (the exs-shell command will be available in your PATH):
-```bash
-sudo pip install git+https://github.com/kipoha/exs-shell.git --break-system-packages
-```
-
-## Installation(for development)
 1. Clone the repository:
 ```bash
 git clone https://github.com/kipoha/exs-shell.git
@@ -13,21 +7,10 @@ cd exs-shell
 
 2. Install globally:
 
-Standard installation
-Installs the package and dependencies globally (the exs-shell command will be available in your PATH):
 ```bash
-sudo pip install . --break-system-packages
+chmod +x install.sh
+./install.sh
 ```
-
-Editable installation (for development)
-Allows you to make changes to the source code and see them immediately in the installed version:
-```bash
-sudo pip install -e . --break-system-packages
-```
-
-> [!WARNING]
-> `--break-system-packages` is required on some Linux distributions (e.g., Arch)
-> to allow pip to work with system-wide packages.
 
 3. Verify installation:
 ```bash

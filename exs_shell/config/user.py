@@ -1,5 +1,7 @@
 import os
 
+from materialyoucolor.scheme.variant import Variant
+
 from ignis.options_manager import OptionsGroup, OptionsManager, TrackedList
 from ignis.options import Options
 
@@ -85,6 +87,7 @@ class UserOptions(OptionsManager):
     class Wallpaper(OptionsGroup):
         wallpaper_path: str | None = None
         wallpaper_dir: str | None = None
+        scheme_variant: Variant = Variant.CONTENT
 
     _bar: Bar = Bar()
     _settings: Settings = Settings()

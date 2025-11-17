@@ -7,7 +7,7 @@ from exs_shell.config.user import options
 
 
 def build_scss(wallpaper_path: str | None = options.wallpaper.wallpaper_path) -> str:
-    colors, _ = generate_theme(wallpaper_path)
+    colors, _ = generate_theme(wallpaper_path=wallpaper_path)
     if colors is None:
         json_colors_config = PathUtils.generate_path("colors.json", Dirs.CONFIG_DIR)
         if not os.path.exists(json_colors_config):

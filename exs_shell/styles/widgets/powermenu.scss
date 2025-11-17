@@ -67,11 +67,13 @@
 }
 
 .powermenu-action:hover {
-  background-color: c.$bg-lighter;
+  /* background-color: c.$bg-lighter; */
+  background-color: lighten(c.$bg-light, 5%);
 }
 
 .powermenu-action:focus {
-  background-color: c.$bg-lighter;
+  /* background-color: c.$bg-lighter; */
+  background-color: lighten(c.$bg-light, 5%);
 }
 
 
