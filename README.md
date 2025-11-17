@@ -14,6 +14,11 @@
 
 
 ## Installation
+
+> [!WARNING]
+> This shell working only for **Niri Wayland Compositor**.  
+> And Shell in progress.
+
 ## Dependencies
 ```
 jetbrains mono nerd-font
