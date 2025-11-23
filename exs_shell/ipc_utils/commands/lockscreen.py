@@ -16,7 +16,8 @@ class LockscreenCommands:
             for i in range(utils.get_n_monitors())
         )
         for lockscreen in lockscreens:
-            lockscreen.open()
+            if not lockscreen.visible:
+                lockscreen.open()
 
 
 def lockscreen_commands() -> dict[str, tuple[object, str, dict[str, Any], str]]:
