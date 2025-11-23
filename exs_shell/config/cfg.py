@@ -1,10 +1,10 @@
 import os
 import asyncio
 
-from exs_shell.utils import PathUtils, Dirs, send_notification, kill_process
 from exs_shell.config.log import logger
 from exs_shell.base.singleton import SingletonClass
 from exs_shell.ipc_utils.server import run_ipc_server
+from exs_shell.utils import PathUtils, Dirs, send_notification, kill_process
 from exs_shell.utils.load_scss import build_scss
 
 try:

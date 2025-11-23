@@ -6,7 +6,7 @@ from exs_shell.ipc_utils.client import send_command
 
 def main():
     if len(sys.argv) < 2:
-        print("Usage: python ipc.py <command>")
+        print("Usage: exs-ipc <command>")
         exit(1)
     try:
         asyncio.run(send_command(sys.argv[1]))

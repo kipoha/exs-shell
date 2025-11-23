@@ -12,6 +12,8 @@ from exs_shell.base.singleton import SingletonClass
 
 from gi.repository import GLib  # type: ignore
 
+from exs_shell.utils.proc import set_death_signal  # type: ignore
+
 # blocks = "⠁⠂⠄⡀⣀⣠⣤⣦⣶⣷⣿"
 # blocks = " ▁▂▃▄▅▆▇█"
 # blocks = "🔈🔉🔊"
@@ -69,6 +71,7 @@ class CavaManager(SingletonClass):
                 ["cava", "-p", config],
                 stdout=subprocess.DEVNULL,
                 stderr=subprocess.DEVNULL,
+                preexec_fn=set_death_signal,
             )
             self.proc.wait()
         except Exception:
