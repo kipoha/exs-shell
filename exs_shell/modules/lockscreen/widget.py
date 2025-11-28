@@ -1,4 +1,6 @@
 import os
+from typing import Generator
+from ignis.window_manager import WindowManager
 import pam
 import getpass
 import subprocess
@@ -12,6 +14,8 @@ from exs_shell.config.user import options
 from exs_shell.utils.path import PathUtils
 from exs_shell.base.window.animated import BaseAnimatedWindow
 from exs_shell.modules.shared.widgets.top_bar.widget import LockScreenTopBar
+
+window_manager = WindowManager.get_default()
 
 
 class LockScreen(BaseAnimatedWindow):
@@ -204,7 +208,12 @@ class LockScreen(BaseAnimatedWindow):
             password=password,
         )
         if authenticated:
-            self.close()
+            lockscreens: Generator[LockScreen] = (
+                window_manager.get_window(f"{config.NAMESPACE}_lockscreen_{i}")
+                for i in range(utils.get_n_monitors())
+            )
+            for lockscreen in lockscreens:
+                lockscreen.close()
             self._entry_box.remove_css_class("visible")
             self._entry_box.add_css_class("hidden")
             self._left_entry_corner.remove_css_class("visible")
