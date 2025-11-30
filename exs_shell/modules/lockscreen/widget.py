@@ -1,11 +1,12 @@
 import os
-from typing import Generator
-from ignis.window_manager import WindowManager
 import pam
 import getpass
 import subprocess
 
 from ignis import utils, widgets
+from ignis.window_manager import WindowManager
+
+from typing import Generator
 
 from gi.repository import Gtk, GdkPixbuf, Gdk  # type: ignore
 
@@ -181,8 +182,8 @@ class LockScreen(BaseAnimatedWindow):
         return True
 
     def __on_entry_changed(self, entry):
-        text = entry.get_text().strip()
-        if text:
+        text: str = entry.get_text()
+        if text != "" or text is None:
             self._entry_box.remove_css_class("hidden")
             self._entry_box.add_css_class("visible")
             self._left_entry_corner.remove_css_class("hidden")

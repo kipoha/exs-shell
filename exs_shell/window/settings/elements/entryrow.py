@@ -15,6 +15,7 @@ class EntryRow(SettingsRow):
         super().__init__(**kwargs)
         self._entry = widgets.Entry(
             on_accept=on_change,
+            # on_change=on_change,
             text=text,
             halign="end",
             valign="center",
