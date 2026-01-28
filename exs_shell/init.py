@@ -1,3 +1,3 @@
-from exs_shell.config import config as App
+from exs_shell.app.init import modules
 
-App.init()
+modules.init()

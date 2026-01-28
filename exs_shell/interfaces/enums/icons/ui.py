@@ -1,0 +1,24 @@
+from enum import StrEnum
+
+
+class UIIcons(StrEnum):
+    WINDOW_CLOSE = ""
+    QUESTION = ""
+    HEADSET = "󰋎"
+    HEADPHONES = "󰋋"
+    PHONE = "󰏲"
+    WATCH = ""
+    KEYBOARD = ""
+    MOUSE = ""
+    TV = ""
+    PRINTER = "󰐪"
+    CAMERA = ""
+    SPEAKERS = "󰓃"
+    PACKAGE = ""
+    SEARCH = ""
+    SYSTEM = ""
+    APPEARANCE = "󰏘"
+    BLUETOOTH = "󰂯"
+    SERVICES = ""
+    INFO = ""
+    INTERFACE = ""

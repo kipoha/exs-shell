@@ -1,16 +1,17 @@
 # exs-shell
 
 ## Showcase
-<div align="center">
-<img src="assets/1.png" width="550">
-<img src="assets/2.png" width="550">
-<img src="assets/3.png" width="550">
-<img src="assets/4.png" width="550">
-<img src="assets/5.png" width="550">
-<img src="assets/6.png" width="550">
-<img src="assets/7.png" width="550">
-</div>
-<br /><br />
+no showcase
+<!-- <div align="center"> -->
+<!-- <img src="assets/1.png" width="550"> -->
+<!-- <img src="assets/2.png" width="550"> -->
+<!-- <img src="assets/3.png" width="550"> -->
+<!-- <img src="assets/4.png" width="550"> -->
+<!-- <img src="assets/5.png" width="550"> -->
+<!-- <img src="assets/6.png" width="550"> -->
+<!-- <img src="assets/7.png" width="550"> -->
+<!-- </div> -->
+<!-- <br /><br /> -->
 
 
 ## Installation
@@ -24,6 +25,7 @@
 jetbrains mono nerd-font
 dart-sass
 swww
+dunst
 ```
 1. Installing
 Only one script
