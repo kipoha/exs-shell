@@ -2,13 +2,14 @@ from ignis.widgets import Label, Button, Box
 
 from exs_shell.app.register import register
 from exs_shell.interfaces.enums.gtk.transitions import RevealerTransition
-from exs_shell.ui.widgets.windows import RevealerWindow, Revealer
+from exs_shell.interfaces.schemas.widget.base import WindowParam
+from exs_shell.ui.widgets.base import RevealerBase
 
 
 @register
-class Settings:
-    def __init__(self):
-        self.inner_box = Box(
+class Settings(RevealerBase):
+    def __init__(self) -> None:
+        self._box = Box(
             child=[
                 Label(label="Settings"),
                 Button(
@@ -19,27 +20,16 @@ class Settings:
             homogeneous=True,
             spacing=10,
         )
-        self.revealer = Revealer(
-            self.inner_box,
+        win_param = WindowParam(
+            visible=False,
+            namespace="settings",
+            default_width=800,
+            default_height=800,
+        )
+        super().__init__(
+            child=self._box,
+            window_param=win_param,
             transition_type=RevealerTransition.SWING_UP,
             transition_duration=300,
             reveal_child=True,
         )
-
-        self.box = Box(child=[self.revealer])
-
-        self._main = RevealerWindow(
-            visible=False,
-            revealer=self.revealer,
-            namespace="settings",
-            default_width=800,
-            default_height=800,
-            child=self.box,
-        )
-
-    def set_visible(self, value: bool):
-        self._main.set_visible(value)
-
-    @property
-    def visible(self):
-        return self._main.visible

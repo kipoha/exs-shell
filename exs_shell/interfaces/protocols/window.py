@@ -1,22 +1,37 @@
-from typing import Protocol
+from typing import Protocol, runtime_checkable
 
-from ignis.base_widget import BaseWidget
-from ignis.widgets import Revealer as IgnisRevealer
-
-from exs_shell.ui.widgets.windows import Revealer
+from exs_shell.ui.widgets.windows import Revealer, RevealerWindow, Window
 
 
-class IWindow(Protocol):
+@runtime_checkable
+class SupportsVisibility(Protocol):
     @property
     def visible(self) -> bool: ...
+
     @visible.setter
     def visible(self, value: bool) -> None: ...
+
+    def set_visible(self, value: bool) -> None: ...
+
+
+class HasRevealer(Protocol):
     @property
-    def child(self) -> BaseWidget: ...
-    @child.setter
-    def child(self, value: BaseWidget): ...
-    @property
-    def revealer(self) -> Revealer | IgnisRevealer: ...
+    def revealer(self): ...
     @revealer.setter
-    def revealer(self, value: Revealer | IgnisRevealer): ...
-    def set_visible(self, value: bool): ...
+    def revealer(self, value: Revealer): ...
+
+
+class HasWindow(Protocol):
+    @property
+    def window(self) -> Window | RevealerWindow: ...
+
+
+class IWindow(HasWindow, SupportsVisibility, Protocol): ...
+
+
+class IRevealerWindow(
+    SupportsVisibility,
+    HasRevealer,
+    HasWindow,
+    Protocol,
+): ...
