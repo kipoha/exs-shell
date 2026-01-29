@@ -1,5 +1,6 @@
 import sys
 import asyncio
+import traceback
 
 from loguru import logger
 
@@ -12,9 +13,14 @@ def main():
         logger.error("Usage: exs-ipc <command>")
         exit(1)
     try:
-        asyncio.run(send_command(sys.argv[1]))
+        loop = asyncio.get_event_loop()
+        loop.run_until_complete(send_command(sys.argv[1]))
     except ConnectionRefusedError:
         logger.error(f"{APP_NAME} IPC is not running")
+        exit(1)
+    except Exception:
+        e = traceback.format_exc()
+        logger.error(e)
         exit(1)
 
 

@@ -1,8 +1,10 @@
 import json
 import asyncio
-from typing import Any
+
 from exs_shell.utils import Dirs
-from exs_shell.controllers.commands import commands
+from exs_shell.controllers.commands import include_commands
+from exs_shell.interfaces.schemes.ipc.commands import Command
+from exs_shell.interfaces.types import Commands
 
 
 async def return_error(writer: asyncio.StreamWriter) -> None:
@@ -12,13 +14,8 @@ async def return_error(writer: asyncio.StreamWriter) -> None:
     await writer.wait_closed()
 
 
-async def run_command(
-    writer: asyncio.StreamWriter, cmd_obj: tuple[object, str, dict[str, Any], str]
-) -> None:
-    obj, attr, kwargs, _ = cmd_obj
-
-    getattr(obj, attr)(**kwargs)
-
+async def run_command(writer: asyncio.StreamWriter, cmd: Command) -> None:
+    cmd.call(*cmd.args, **cmd.kwargs)
     writer.write(b"ok\n")
     await writer.drain()
     writer.close()
@@ -27,9 +24,9 @@ async def run_command(
 
 async def help_command(
     writer: asyncio.StreamWriter,
-    commands: dict[str, tuple[object, str, dict[str, Any], str]],
+    commands: Commands,
 ) -> None:
-    help_data = {name: cmd_obj[3] for name, cmd_obj in commands.items()}
+    help_data = {name: cmd_obj.description for name, cmd_obj in commands.items()}
 
     help_text = (
         "\n".join([f"{name}: {description}" for name, description in help_data.items()])
@@ -47,25 +44,22 @@ async def handle_client(
     data = await reader.readline()
     if not data:
         writer.close()
-        await writer.wait_closed()
-        return
+        return await writer.wait_closed()
 
     try:
         msg = json.loads(data.decode())
         cmd = msg.get("cmd")
     except Exception:
         writer.close()
-        await writer.wait_closed()
-        return
+        return await writer.wait_closed()
 
+    commands = include_commands()
     if cmd == "help":
-        await help_command(writer, commands)
-        return
+        return await help_command(writer, commands)
 
     command = commands.get(cmd)
     if not command:
-        await return_error(writer)
-        return
+        return await return_error(writer)
 
     await run_command(writer, command)
 

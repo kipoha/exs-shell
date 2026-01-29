@@ -15,7 +15,7 @@ class Paths:
 
     @classmethod
     def generate_path(
-        cls, path_name: str | list[str], base_path: Path | None = None
+        cls, path_name: str | list[str] | Path, base_path: Path | None = None
     ) -> str:
         base_path = base_path or cls.path
         if isinstance(path_name, list):

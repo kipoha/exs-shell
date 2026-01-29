@@ -1,15 +1,14 @@
-from typing import Any
-
-from ignis.window_manager import WindowManager
-
-from exs_shell.config import config
+from exs_shell.utils import window
+from exs_shell.interfaces.schemes.ipc.commands import Command
 
 
-def settings_commands() -> dict[str, tuple[object, str, dict[str, Any], str]]:
-
-    window_manager = WindowManager.get_default()
-    cmds: dict[str, tuple[object, str, dict[str, Any], str]] = {
-        "toggle-settings": (window_manager, "toggle_window", {"window_name": f"{config.NAMESPACE}_settings"}, "Toggle Settings"),
+def include():
+    settings = window.get("settings")
+    commands = {
+        "toggle-settings": Command(
+            call=settings.set_visible,
+            kwargs={"value": not settings.visible},
+            description="Toggle settings window",
+        ),
     }
-
-    return cmds
+    return commands

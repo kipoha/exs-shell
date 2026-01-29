@@ -7,7 +7,7 @@ from exs_shell.utils.path import Dirs, Paths
 from exs_shell.configs.user import options
 
 
-def build_scss(wallpaper_path: str | None = options.wallpaper.wallpaper_path) -> Path:
+def build_scss(wallpaper_path: str | None = options.appearance.wallpaper_path) -> Path:
     colors, _ = generate_theme(wallpaper_path=wallpaper_path)
     colors = asdict(colors)
 

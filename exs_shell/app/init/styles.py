@@ -1,3 +1,6 @@
+from pathlib import Path
+from typing import Iterable
+
 from loguru import logger
 
 from ignis import utils
@@ -8,15 +11,18 @@ from exs_shell.utils.load_scss import build_scss
 from exs_shell.utils.path import Paths
 
 
-def set_css_file(css_manager: CssManager, css_file_path: str | list[str]) -> None:
-    file = (
-        css_file_path
-        if isinstance(css_file_path, str)
-        else css_file_path[-1]
-        if len(css_file_path) > 0
-        else ""
-    )
-    if file.split(".")[-1] != "scss":
+def set_css_file(css_manager, css_file_path: str | Path | Iterable[str | Path]) -> None:
+    if isinstance(css_file_path, (str, Path)):
+        file = css_file_path
+    else:
+        css_file_path = list(css_file_path)
+        file = css_file_path[-1] if css_file_path else None
+
+    if not file:
+        logger.error("Empty css file path")
+        exit(1)
+
+    if Path(file).suffix != ".scss":
         logger.error("File must be a scss file")
         exit(1)
 
@@ -24,7 +30,7 @@ def set_css_file(css_manager: CssManager, css_file_path: str | list[str]) -> Non
         CssInfoPath(
             name=NAME,
             compiler_function=lambda path: utils.sass_compile(path),
-            path=Paths.generate_path(css_file_path),
+            path=Paths.generate_path(file),
         )
     )
 

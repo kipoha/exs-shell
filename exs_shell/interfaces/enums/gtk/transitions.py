@@ -1,0 +1,42 @@
+from enum import StrEnum
+
+
+class StackTransition(StrEnum):
+    NONE = "none"
+    CROSSFADE = "crossfade"
+    OVER_LEFT = "over_left"
+    OVER_RIGHT = "over_right"
+    OVER_UP = "over_up"
+    OVER_DOWN = "over_down"
+    UNDER_UP = "under_up"
+    UNDER_DOWN = "under_down"
+    UNDER_LEFT = "under_left"
+    UNDER_RIGHT = "under_right"
+    OVER_UP_DOWN = "over_up_down"
+    OVER_DOWN_UP = "over_down_up"
+    OVER_LEFT_RIGHT = "over_left_right"
+    OVER_RIGHT_LEFT = "over_right_left"
+    SLIDE_RIGHT = "slide_right"
+    SLIDE_LEFT = "slide_left"
+    SLIDE_DOWN = "slide_down"
+    SLIDE_UP = "slide_up"
+    SLIDE_LEFT_RIGHT = "slide_left_right"
+    SLIDE_RIGHT_LEFT = "slide_right_left"
+    SLIDE_TOP_DOWN = "slide_top_down"
+    SLIDE_DOWN_TOP = "slide_down_top"
+    ROTATE_LEFT = "rotate_left"
+    ROTATE_RIGHT = "rotate_right"
+    ROTATE_LEFT_RIGHT = "rotate_left_right"
+
+
+class RevealerTransition(StrEnum):
+    NONE = "none"
+    CROSSFADE = "crossfade"
+    SLIDE_LEFT = "slide_left"
+    SLIDE_RIGHT = "slide_right"
+    SLIDE_UP = "slide_up"
+    SLIDE_DOWN = "slide_down"
+    SWING_LEFT = "swing_left"
+    SWING_RIGHT = "swing_right"
+    SWING_UP = "swing_up"
+    SWING_DOWN = "swing_down"

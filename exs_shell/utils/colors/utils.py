@@ -170,7 +170,7 @@ from exs_shell.utils.path import Paths
 
 
 def generate_theme(
-    wallpaper_path: str | None = options.wallpaper.wallpaper_path,
+    wallpaper_path: str | None = options.appearance.wallpaper_path,
 ) -> tuple[ThemeColors, str]:
     def generate_scss_text(scheme: dict[str, Any]) -> str:
         return "\n".join(f"${k}: {v};" for k, v in scheme.items())

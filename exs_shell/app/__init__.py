@@ -1,8 +1,9 @@
+import traceback
+
 from loguru import logger
 
-from exs_shell.app.vars import APP_NAME
-from exs_shell.utils.notify_system import send_notification
 from exs_shell.utils.path import Paths
+from exs_shell.utils.notify_system import send_notification
 
 try:
     from ignis.log_utils import configure_logger
@@ -15,6 +16,9 @@ except ImportError:
     send_notification("Ignis", "Ignis is not installed")
     exit(1)
 
+from exs_shell.app.vars import APP_NAME
+from exs_shell.app.init import system, styles
+
 
 class App:
     _app: IgnisApp = IgnisApp()
@@ -22,6 +26,8 @@ class App:
 
     @classmethod
     def run(cls, config: str, debug: bool = False) -> None:
+        system.init()
+        styles.init(cls._css_manager, debug)
         client = IgnisClient()
 
         if client.has_owner:
@@ -45,3 +51,8 @@ class App:
             cls._app.run(None)
         except KeyboardInterrupt:
             pass
+        except Exception:
+            e = traceback.format_exc()
+            logger.error(e)
+        finally:
+            cls._app.quit()
