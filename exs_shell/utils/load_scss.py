@@ -1,16 +1,21 @@
+import json
 from pathlib import Path
 
 from dataclasses import asdict
 
+from exs_shell.configs.user import options
 from exs_shell.utils.colors.utils import generate_theme
 from exs_shell.utils.path import Dirs, Paths
-from exs_shell.configs.user import options
 
 
 def build_scss(wallpaper_path: str | None = options.appearance.wallpaper_path) -> Path:
     colors, _ = generate_theme(wallpaper_path=wallpaper_path)
     colors = asdict(colors)
 
+    scss_colors_json_file = Dirs.CONFIG_DIR / "colors.json"
+    scss_colors_json_file.write_text(
+        json.dumps(colors, sort_keys=True, indent=2, separators=(",", ": "))
+    )
     lines = [f"${k}: {v};" for k, v in colors.items()]
     scss_colors_file = Dirs.CONFIG_DIR / "colors.scss"
     scss_colors_file.write_text("\n".join(lines))

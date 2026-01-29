@@ -1,6 +1,6 @@
 import subprocess
 
-from exs_shell.interfaces.schemes.utils.clipboard import ClipboardItem
+from exs_shell.interfaces.schemas.utils.clipboard import ClipboardItem
 
 
 def get_clipboard_history(limit: int = 50) -> list[ClipboardItem]:

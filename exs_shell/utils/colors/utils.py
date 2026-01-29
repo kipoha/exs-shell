@@ -165,7 +165,7 @@ from materialyoucolor.scheme.scheme_vibrant import SchemeVibrant
 # from materialyoucolor.palettes.core_palette import CorePalette
 
 from exs_shell.configs.user import options
-from exs_shell.interfaces.schemes.utils.colors import ThemeColors
+from exs_shell.interfaces.schemas.utils.colors import ThemeColors
 from exs_shell.utils.path import Paths
 
 

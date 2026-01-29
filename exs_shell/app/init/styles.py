@@ -39,4 +39,5 @@ def init(css_manager: CssManager, debug: bool) -> None:
     scss = Paths.generate_path("styles/main.scss")
     if not debug:
         scss = build_scss()
+    logger.info(f"Loading css file: {scss}")
     set_css_file(css_manager, scss)

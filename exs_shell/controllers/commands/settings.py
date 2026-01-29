@@ -1,5 +1,5 @@
 from exs_shell.utils import window
-from exs_shell.interfaces.schemes.ipc.commands import Command
+from exs_shell.interfaces.schemas.ipc.commands import Command
 
 
 def include():

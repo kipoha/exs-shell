@@ -5,12 +5,13 @@ from gi.repository import GLib  # type: ignore
 
 
 is_sphinx_build: bool = "sphinx" in sys.modules
-dir_name: str = "exs_shell"
+config_dir_name: str = "exs-shell"
+project_dir_name: str = "exs_shell"
 
 
 class Paths:
     root: Path = Path(__file__).parent.parent.parent
-    path: Path = root / dir_name
+    path: Path = root / project_dir_name
     assets: Path = path / "assets"
 
     @classmethod
@@ -25,20 +26,20 @@ class Paths:
 
 
 class Dirs:
-    TEMP_DIR: Path = Path("/tmp") / dir_name
+    TEMP_DIR: Path = Path("/tmp") / config_dir_name
     CACHE_DIR: Path = (
-        Path(GLib.get_user_cache_dir()) / dir_name
+        Path(GLib.get_user_cache_dir()) / config_dir_name
         if not is_sphinx_build
         else Path(os.environ.get("XDG_CACHE_HOME", str(Path.home() / ".cache")))
-        / dir_name
+        / config_dir_name
     )
     DATA_DIR: Path = (
-        Path(GLib.get_user_data_dir()) / dir_name
+        Path(GLib.get_user_data_dir()) / config_dir_name
         if not is_sphinx_build
         else Path(os.environ.get("XDG_DATA_HOME", str(Path.home() / ".local/share")))
-        / dir_name
+        / config_dir_name
     )
-    CONFIG_DIR: Path = Path.home() / ".config" / dir_name
+    CONFIG_DIR: Path = Path.home() / ".config" / config_dir_name
 
     @classmethod
     def ensure_dirs_exist(cls) -> None:

@@ -3,7 +3,7 @@ import asyncio
 
 from exs_shell.utils import Dirs
 from exs_shell.controllers.commands import include_commands
-from exs_shell.interfaces.schemes.ipc.commands import Command
+from exs_shell.interfaces.schemas.ipc.commands import Command
 from exs_shell.interfaces.types import Commands
 
 
