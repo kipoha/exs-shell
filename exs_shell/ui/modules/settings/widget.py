@@ -2,8 +2,8 @@ from ignis.widgets import Label, Button, Box
 
 from exs_shell.app.register import register
 from exs_shell.interfaces.enums.gtk.transitions import RevealerTransition
-from exs_shell.interfaces.schemas.widget.base import WindowParam
 from exs_shell.ui.widgets.base import RevealerBaseWidget
+from exs_shell.ui.factory import window
 
 
 @register
@@ -20,7 +20,7 @@ class Settings(RevealerBaseWidget):
             homogeneous=True,
             spacing=10,
         )
-        win_param = WindowParam(
+        win_param = window.create(
             visible=False,
             namespace="settings",
             default_width=800,
