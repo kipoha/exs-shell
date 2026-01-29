@@ -37,7 +37,7 @@ class BaseWidget:
         self._main.set_visible(value)
 
 
-class RevealerBase(BaseWidget):
+class RevealerBaseWidget(BaseWidget):
     def __init__(
         self,
         child: Box | CenterBox,
