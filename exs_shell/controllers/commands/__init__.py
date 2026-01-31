@@ -1,5 +1,4 @@
 from exs_shell.interfaces.types import Commands
-
 from exs_shell.controllers.commands import settings
 
 
