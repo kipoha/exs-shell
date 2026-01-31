@@ -7,3 +7,5 @@ class Appearance(OptionsGroup):
     wallpaper_path: str | None = None
     wallpaper_dir: str | None = None
     scheme_variant: str | Variant = Variant.CONTENT
+    dark: bool = True
+    contrast: float = 0

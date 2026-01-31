@@ -68,3 +68,9 @@ class UserOptions(OptionsManager):
 
 
 options = UserOptions()
+user = options.user_config
+notifications = options.notifications
+appearance = options.appearance
+applications = options.applications
+bar = options.bar
+weather = options.weather

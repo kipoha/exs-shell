@@ -1,7 +1,8 @@
 @use './colors.scss' as c;
 
 * {
-  /* all: unset; */
+  all: unset;
   font-family: JetBrainsMono;
   font-weight: bold;
+  transition: background-color 0.1s ease, opacity 0.25s ease, transform 0.25s ease;
 }
