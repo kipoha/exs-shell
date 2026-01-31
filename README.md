@@ -30,7 +30,7 @@ dunst
 1. Installing
 Only one script
 ```bash
-curl -fsSl https://raw.githubusercontent.com/kipoha/exs-shell/refs/heads/main/install.sh | bash
+curl -fsSl https://raw.githubusercontent.com/kipoha/exs-shell/refs/heads/main/scripts/install.sh | bash
 ```
 
 or
@@ -40,16 +40,16 @@ Clone and install
 ```bash
 git clone https://github.com/kipoha/exs-shell.git
 cd exs-shell
-chmod +x install.sh
-./install.sh
+chmod +x scripts/install.sh
+./scripts/install.sh
 ```
 
 or install for development
 ```bash
 git clone https://github.com/kipoha/exs-shell.git
 cd exs-shell
-chmod +x install-dev.sh
-./install-dev.sh
+chmod +x scripts/install-dev.sh
+./scripts/install-dev.sh
 ```
 
 
