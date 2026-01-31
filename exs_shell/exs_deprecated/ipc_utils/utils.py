@@ -12,15 +12,15 @@ def include(
 
 
 def include_commands() -> dict[str, tuple[object, str, dict[str, Any], str]]:
-    from exs_shell.controllers.commands.launcher import launcher_commands
-    from exs_shell.controllers.commands.notification import notification_commands
-    from exs_shell.controllers.commands.powermenu import powermenu_commands
-    from exs_shell.controllers.commands.osd import osd_commands
-    from exs_shell.controllers.commands.settings import settings_commands
-    from exs_shell.controllers.commands.clipboard import clipboard_commands
-    from exs_shell.controllers.commands.actions import action_commands
-    from exs_shell.controllers.commands.dashboard import dashboard_commands
-    from exs_shell.controllers.commands.lockscreen import lockscreen_commands
+    from exs_shell.ipc_utils.commands.launcher import launcher_commands
+    from exs_shell.ipc_utils.commands.notification import notification_commands
+    from exs_shell.ipc_utils.commands.powermenu import powermenu_commands
+    from exs_shell.ipc_utils.commands.osd import osd_commands
+    from exs_shell.ipc_utils.commands.settings import settings_commands
+    from exs_shell.ipc_utils.commands.clipboard import clipboard_commands
+    from exs_shell.ipc_utils.commands.actions import action_commands
+    from exs_shell.ipc_utils.commands.dashboard import dashboard_commands
+    from exs_shell.ipc_utils.commands.lockscreen import lockscreen_commands
 
     return include(
         osd_commands(),

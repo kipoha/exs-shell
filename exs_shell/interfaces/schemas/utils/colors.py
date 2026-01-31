@@ -2,9 +2,12 @@ from dataclasses import dataclass, fields
 from typing import Any, Callable, Self
 
 from materialyoucolor.scheme.dynamic_scheme import DynamicScheme
-from materialyoucolor.dynamiccolor.material_dynamic_colors import MaterialDynamicColors as c
+from materialyoucolor.dynamiccolor.material_dynamic_colors import (
+    MaterialDynamicColors as c,
+)
 
 from exs_shell.interfaces.enums.colorschemes import ColorSchemes
+from exs_shell.interfaces.types import RGB
 
 
 @dataclass(slots=True)
@@ -81,7 +84,9 @@ class MaterialColors:
         )
 
     @classmethod
-    def get_color(cls, scheme: DynamicScheme, converter: Callable[[Any], str], color: str) -> str:
+    def get_color(
+        cls, scheme: DynamicScheme, converter: Callable[[Any], str], color: str
+    ) -> str:
         return converter(getattr(c, color).get_argb(scheme))
 
 
@@ -90,4 +95,4 @@ class GeneratedTheme:
     colors: MaterialColors
     scss: str
     scheme: ColorSchemes
-    seed_rgb: tuple[int, int, int]
+    seed_rgb: RGB

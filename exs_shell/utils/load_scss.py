@@ -3,12 +3,12 @@ from pathlib import Path
 
 from dataclasses import asdict
 
-from exs_shell.configs.user import options
+from exs_shell.configs.user import appearance
 from exs_shell.utils.colorscheme import generate
 from exs_shell.utils.path import Dirs, Paths
 
 
-def build_scss(wallpaper_path: str | None = options.appearance.wallpaper_path) -> Path:
+def build_scss(wallpaper_path: str | None = appearance.wallpaper_path) -> Path:
     theme = generate(wallpaper_path=wallpaper_path)
     colors = asdict(theme.colors)
 
