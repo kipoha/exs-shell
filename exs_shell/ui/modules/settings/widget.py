@@ -1,12 +1,12 @@
 from ignis.widgets import Label, Button, Box
 
-from exs_shell.app.register import register
+from exs_shell import register
 from exs_shell.interfaces.enums.gtk.transitions import RevealerTransition
 from exs_shell.ui.widgets.base import RevealerBaseWidget
 from exs_shell.ui.factory import window
 
 
-@register
+@register.widget
 class Settings(RevealerBaseWidget):
     def __init__(self) -> None:
         self._box = Box(

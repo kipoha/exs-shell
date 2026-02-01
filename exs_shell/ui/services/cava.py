@@ -1,33 +1,19 @@
 import os
 import struct
-import subprocess
 import threading
+import subprocess
+
 from typing import Callable
 
-from ignis import widgets
-
-from exs_shell_deprecated.utils import Dirs, PathUtils
-
-from exs_shell_deprecated.base.singleton import SingletonClass
+from exs_shell import register
+from exs_shell.utils import Dirs, Paths
+from exs_shell.utils.proc import set_death_signal
 
 from gi.repository import GLib  # type: ignore
 
-from exs_shell_deprecated.utils.proc import set_death_signal  # type: ignore
 
-# blocks = "⠁⠂⠄⡀⣀⣠⣤⣦⣶⣷⣿"
-# blocks = " ▁▂▃▄▅▆▇█"
-# blocks = "🔈🔉🔊"
-# blocks = "░▒▓█"
-# blocks = "▏▎▍▌▋▊▉█"
-# blocks = "·•●"
-# blocks = "─═█"
-# blocks = "﹅﹆﹇﹈﹉﹊﹋﹌"
-# blocks = "ᚋᚏᚐᚑᚔᚖᚘᚙ"
-# blocks = ".:*oO8@"
-# blocks = "⣀⣄⣤⣦⣶⣷⣿"
-
-
-class CavaManager(SingletonClass):
+@register.service
+class Cava:
     def __init__(self, fifo_path=f"{Dirs.TEMP_DIR}/cava.fifo", bars=20):
         self.fifo_path = fifo_path
         self.bars = bars
@@ -65,7 +51,7 @@ class CavaManager(SingletonClass):
             self._subscribers_values.remove(callback)
 
     def _start_cava(self):
-        config = PathUtils.generate_path("config/other/cava/cava.ini")
+        config = Paths.generate_path("configs/other/cava/cava.ini")
         try:
             self.proc = subprocess.Popen(
                 ["cava", "-p", config],
@@ -74,6 +60,7 @@ class CavaManager(SingletonClass):
                 preexec_fn=set_death_signal,
             )
             self.proc.wait()
+
         except Exception:
             pass
 
@@ -112,9 +99,9 @@ class CavaManager(SingletonClass):
         return True
 
     def _make_visual(self, values):
-        blocks = "⣀⣄⣤⣦⣶⣷⣿"
+        # blocks = "⣀⣄⣤⣦⣶⣷⣿"
 
-        # blocks = "▁▂▃▄▅▆▇█"
+        blocks = "▁▂▃▄▅▆▇█"
         result = []
         for v in values:
             idx = min(int(v * (len(blocks) - 1)), len(blocks) - 1)
@@ -128,13 +115,3 @@ class CavaManager(SingletonClass):
     def _notify_subscribers_values(self, values):
         for callback in self._subscribers_values:
             callback(values)
-
-
-class Cava(widgets.Label):
-    def __init__(self, **kwargs):
-        super().__init__(label="", css_classes=["cava"], **kwargs)
-        manager = CavaManager.get_default()
-        manager.subscribe_text(self._update_label)
-
-    def _update_label(self, visual):
-        self.label = visual

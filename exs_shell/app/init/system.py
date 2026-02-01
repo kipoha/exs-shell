@@ -1,13 +1,11 @@
 from loguru import logger
 
-from exs_shell.utils import kill_process, Dirs
+from exs_shell.utils import Dirs
 from exs_shell.state import State
 
 
 def init() -> None:
-    if not State.niri.is_available:
+    if not State.services.niri.is_available:
         logger.error("Niri is not available")
         exit(1)
-
-    kill_process()
     Dirs.ensure_dirs_exist()

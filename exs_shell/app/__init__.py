@@ -4,6 +4,7 @@ from loguru import logger
 
 from exs_shell.utils.path import Paths
 from exs_shell.utils.notify_system import send_notification
+from exs_shell.utils.proc import kill_process
 
 try:
     from ignis.log_utils import configure_logger
@@ -26,6 +27,7 @@ class App:
 
     @classmethod
     def run(cls, config: str, debug: bool = False) -> None:
+        kill_process()
         states.init()
         system.init()
         styles.init(cls._css_manager, debug)
@@ -55,5 +57,3 @@ class App:
         except Exception:
             e = traceback.format_exc()
             logger.error(e)
-        finally:
-            cls._app.quit()

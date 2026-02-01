@@ -1,15 +1,26 @@
 from typing import Any
 
 
-class _State:
-    def __init__(self) -> None:
-        self.__dict__["_store"] = {}
+class AttrDict(dict):
+    def __getattr__(self, key: str) -> Any:
+        if key not in self:
+            value = AttrDict()
+            self[key] = value
+            return value
 
-    def __getattr__(self, item: str) -> Any:
-        return self._store.get(item, None)
+        value = self[key]
+        if isinstance(value, dict) and not isinstance(value, AttrDict):
+            value = AttrDict(value)
+            self[key] = value
+
+        return value
 
     def __setattr__(self, key: str, value: Any) -> None:
-        self._store[key] = value
+        self[key] = value
+
+
+class _State(AttrDict):
+    pass
 
 
 State = _State()
