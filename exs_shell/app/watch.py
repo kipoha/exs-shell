@@ -7,7 +7,7 @@ from watchdog.events import DirModifiedEvent, FileModifiedEvent, FileSystemEvent
 
 from exs_shell.utils.path import Paths
 
-IGNORE_PATHS = (".venv", "__pycache__", ".git", "node_modules", "pg_storage")
+IGNORE_PATHS = (".venv", "__pycache__", ".git", "node_modules", "pg_storage", "exs_shell_deprecated")
 
 
 class ReloadHandler(FileSystemEventHandler):
