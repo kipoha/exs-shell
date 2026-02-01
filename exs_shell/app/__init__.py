@@ -76,5 +76,3 @@ class App:
         except Exception:
             e = traceback.format_exc()
             logger.error(e)
-        finally:
-            cls._app.quit()

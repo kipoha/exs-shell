@@ -1,4 +1,6 @@
-from math import pi
+import cairo
+
+from math import pi, cos, sin
 
 from gi.repository import Gtk, GLib  # type: ignore
 
@@ -26,7 +28,7 @@ class AudioVisualizer(widgets.Box):
 
         self.area = Gtk.DrawingArea()
         self.area.set_size_request(self.width, self.height)
-        self.area.set_draw_func(self.build)
+        self.area.set_draw_func(self.redraw)
         self.area.add_css_class("dashboard-widget-audio-visualizer")
         self.append(self.area)
 
@@ -35,7 +37,7 @@ class AudioVisualizer(widgets.Box):
         self.audio_sample = values
         GLib.idle_add(self.area.queue_draw)
 
-    def build(self, area, cr, width, height):
+    def redraw(self, area, cr, width, height):
         hex_color = get_hex_color()
         accent_r, accent_g, accent_b = hex_to_rgb(hex_color)
         cr.set_source_rgb(accent_r, accent_g, accent_b)
@@ -61,3 +63,127 @@ class AudioVisualizer(widgets.Box):
             cr.close_path()
 
         cr.fill()
+
+
+@register.event
+class CircularAudioVisualizer(widgets.Box):
+    MAX_BARS = 28
+
+    def __init__(
+        self,
+        size: int = 200,
+        bars: int = 28,
+        thickness: int | None = None,
+        arc_ratio: float = 0.75,
+        **kwargs,
+    ):
+        super().__init__(**kwargs)
+
+        self.size = size
+        self.radius = size / 2
+        self.bars = min(bars, self.MAX_BARS)
+        self.arc_ratio = arc_ratio
+
+        # если толщину не задали — считаем автоматически
+        self.thickness = thickness
+
+        self.cava: Cava = State.services.cava
+        self.audio_sample = [0.0] * self.bars
+
+        self.area = Gtk.DrawingArea()
+        self.area.set_size_request(size, size)
+        self.area.set_draw_func(self.redraw)
+        self.append(self.area)
+
+    @register.events.cava("values")
+    def update_bars(self, values):
+        self.audio_sample = values[: self.bars]
+        GLib.idle_add(self.area.queue_draw)
+
+    def redraw(self, area, cr, width, height):
+        hex_color = get_hex_color()
+        r, g, b = hex_to_rgb(hex_color)
+
+        cx, cy = width / 2, height / 2
+
+        total_arc = 2 * pi * self.arc_ratio
+        start_angle = -pi / 2 - total_arc / 2
+
+        bars = max(1, len(self.audio_sample))
+        angle_step = total_arc / bars
+
+        gap = angle_step * 0.15
+        bar_angle = angle_step - gap
+
+        thickness = (
+            self.thickness
+            if self.thickness is not None
+            else max(2.0, (self.radius * bar_angle) * 0.5)
+        )
+
+        inner_r = self.radius * 0.55
+        max_len = self.radius * 0.35
+
+        cr.set_line_cap(cairo.LINE_CAP_ROUND)
+        cr.set_line_width(thickness)
+        cr.set_source_rgba(r, g, b, 0.9)
+
+        for i, val in enumerate(self.audio_sample):
+            angle = start_angle + i * angle_step + gap / 2
+            outer_r = inner_r + max(0.05, val) * max_len
+
+            cr.move_to(
+                cx + inner_r * cos(angle),
+                cy + inner_r * sin(angle),
+            )
+            cr.line_to(
+                cx + outer_r * cos(angle),
+                cy + outer_r * sin(angle),
+            )
+            cr.stroke()
+
+    def redraw2(self, area, cr, width, height):
+        hex_color = get_hex_color()
+        r, g, b = hex_to_rgb(hex_color)
+
+        cx, cy = width / 2, height / 2
+
+        total_arc = 2 * pi * self.arc_ratio
+        start_angle = -pi / 2 - total_arc / 2
+
+        bars = max(1, len(self.audio_sample))
+        angle_step = total_arc / bars
+
+        gap = angle_step * 0.15
+        bar_angle = angle_step - gap
+
+        base_thickness = (
+            self.thickness
+            if self.thickness is not None
+            else max(2.0, (self.radius * bar_angle) * 0.5)
+        )
+
+        inner_r = self.radius * 0.55
+        max_len = self.radius * 0.35
+
+        cr.set_line_cap(cairo.LINE_CAP_ROUND)
+        cr.set_source_rgba(r, g, b, 0.9)
+
+        for i, val in enumerate(self.audio_sample):
+            val = max(0.05, val)
+
+            angle = start_angle + i * angle_step + gap / 2
+            outer_r = inner_r + val * max_len
+
+            thickness = base_thickness * (0.7 + val * 1.3)
+            cr.set_line_width(thickness)
+
+            cr.move_to(
+                cx + inner_r * cos(angle),
+                cy + inner_r * sin(angle),
+            )
+            cr.line_to(
+                cx + outer_r * cos(angle),
+                cy + outer_r * sin(angle),
+            )
+            cr.stroke()
