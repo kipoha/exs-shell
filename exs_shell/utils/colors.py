@@ -15,7 +15,7 @@ def get_hex_color() -> str:
             if m:
                 var_name, value = m.groups()
                 variables[var_name] = value
-    return variables["accent"]
+    return variables["primary"]
 
 
 def hex_to_rgb(hex_color: str):

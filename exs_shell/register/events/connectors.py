@@ -1,7 +1,7 @@
-from typing import Literal
 from ignis.options_manager import OptionsGroup, OptionsManager
 
 from exs_shell.register.events.base import _base_connector, EventDeco
+from exs_shell.interfaces.types import CavaOutput
 from exs_shell.state import State
 
 
@@ -29,8 +29,8 @@ def tray(event_name: str) -> EventDeco:
     )
 
 
-def cava(type: Literal["text", "values"]) -> EventDeco:
+def cava(output_type: CavaOutput) -> EventDeco:
     return _base_connector(
         lambda _: State.services.cava,
-        f"subscribe_{type}",
+        f"subscribe_{output_type}",
     )

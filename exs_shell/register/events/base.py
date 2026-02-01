@@ -1,5 +1,5 @@
 from typing import Any, Callable, TypeVar, TypeAlias
-from gi.repository import GLib
+from gi.repository import GLib  # type: ignore
 
 F = TypeVar("F", bound=Callable[..., Any])
 EventDeco: TypeAlias = Callable[[F], F]
@@ -23,20 +23,6 @@ def _base_connector(
     return decorator
 
 
-# def event(cls: type):
-#     original_init = cls.__init__
-#
-#     def new_init(self, *args: Any, **kwargs: Any):
-#         original_init(self, *args, **kwargs)
-#         for attr_name in dir(self):
-#             attr = getattr(self, attr_name)
-#             print(cls.__name__)
-#             print(attr_name)
-#             if callable(attr) and hasattr(attr, "_event_call"):
-#                 attr._event_call(self)  # type: ignore
-#
-#     cls.__init__ = new_init
-#     return cls
 def event(cls: type):
     original_init = cls.__init__
 

@@ -5,27 +5,18 @@ from exs_shell import register
 from exs_shell.interfaces.enums.gtk.transitions import RevealerTransition
 from exs_shell.ui.factory import window
 from exs_shell.ui.widgets.base import RevealerBaseWidget
-
-
-@register.event
-class CavaLabel(Label):
-    def __init__(self, **kwargs):
-        super().__init__(label="", css_classes=["cava"], **kwargs)
-
-    @register.events.cava("text")
-    def _update_label(self, visual: str):
-        self.label = visual
+# from exs_shell.ui.widgets.custom.cava_tui import CavaLabel
+# from exs_shell.ui.widgets.custom.audio_visualizer import AudioVisualizer
 
 
 @register.event
 class BarBase(RevealerBaseWidget):
     def __init__(self, monitor_num: int):
         self.monitor_num = monitor_num
-        self._cava_label = CavaLabel()
         self._box = CenterBox(
             vertical=False,
-            start_widget=Label(label="start"),
-            center_widget=self._cava_label,
+            # start_widget=AudioVisualizer(),
+            # center_widget=CavaLabel(),
             end_widget=Label(label="end"),
         )
         win_param = window.create(
