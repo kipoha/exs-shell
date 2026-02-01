@@ -24,7 +24,7 @@ class AudioVisualizer(widgets.Box):
 
         self.area = Gtk.DrawingArea()
         self.area.set_size_request(self.width, self.height)
-        self.area.set_draw_func(self.redraw)
+        self.area.set_draw_func(self.build)
         self.area.add_css_class("dashboard-widget-audio-visualizer")
         self.append(self.area)
 
