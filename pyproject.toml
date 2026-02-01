@@ -21,6 +21,7 @@ dependencies = [
     "pygobject>=3.54.3",
     "requests>=2.32.5",
     "six>=1.17.0",
+    "watchdog>=6.0.0",
 ]
 authors = [
     { name = "kipoha", email = "kipoha.core@gmail.com" },

@@ -20,7 +20,7 @@ class AudioVisualizer(widgets.Box):
         self.height = height
         self.mirror = mirror
         self.cava: Cava = State.services.cava
-        self.bars = self.cava.bars
+        self.bars = 20
 
         self.audio_sample = [0] * self.bars
 
@@ -29,8 +29,6 @@ class AudioVisualizer(widgets.Box):
         self.area.set_draw_func(self.build)
         self.area.add_css_class("dashboard-widget-audio-visualizer")
         self.append(self.area)
-
-        self.cava.subscribe_values(self.update_bars)
 
     @register.events.cava("values")
     def update_bars(self, values):
