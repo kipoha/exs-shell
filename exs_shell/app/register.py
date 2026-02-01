@@ -15,6 +15,5 @@ def register(cls: type) -> type:
             return
         original_init(self, *args, **kwargs)
         State.widgets[key] = self
-
     cls.__init__ = new_init
     return cls

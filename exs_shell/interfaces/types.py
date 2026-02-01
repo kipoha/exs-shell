@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any, Literal, TYPE_CHECKING
+from typing import Any, Callable, Literal, TYPE_CHECKING
 
 if TYPE_CHECKING:
     from exs_shell.interfaces.schemas.ipc.commands import Command

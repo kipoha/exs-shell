@@ -17,7 +17,7 @@ except ImportError:
     exit(1)
 
 from exs_shell.app.vars import APP_NAME
-from exs_shell.app.init import system, styles
+from exs_shell.app.init import system, styles, states
 
 
 class App:
@@ -26,6 +26,7 @@ class App:
 
     @classmethod
     def run(cls, config: str, debug: bool = False) -> None:
+        states.init()
         system.init()
         styles.init(cls._css_manager, debug)
         client = IgnisClient()
