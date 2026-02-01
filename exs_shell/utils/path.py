@@ -1,6 +1,7 @@
 import os
 import sys
 from pathlib import Path
+from loguru import logger
 from gi.repository import GLib  # type: ignore
 
 
@@ -47,4 +48,4 @@ class Dirs:
             try:
                 directory.mkdir(parents=True, exist_ok=True)
             except Exception as e:
-                print(f"[WARN] Failed to create directory {directory}: {e}")
+                logger.warning(f"Failed to create directory {directory}: {e}")

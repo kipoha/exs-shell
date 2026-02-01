@@ -36,7 +36,7 @@ class BarBase(RevealerBaseWidget):
         )
 
     @events.niri("notify::overview-opened")
-    def overview(self, niri, param):
+    def overview(self, niri, *_):
         logger.info(f"changed Niri overview {niri.overview_opened=}")
 
 
