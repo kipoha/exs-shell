@@ -44,13 +44,13 @@ def notification(signal: str) -> EventDeco:
     )
 
 
-
 def systemd_session(unit: str, signal: str) -> EventDeco:
     return _base_connector(
         lambda _: State.services.systemd_session.get_unit(unit),
         "connect",
         signal,
     )
+
 
 def systemd_system(unit: str, signal: str) -> EventDeco:
     return _base_connector(
