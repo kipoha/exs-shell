@@ -7,6 +7,7 @@ from exs_shell.ui.factory import window
 from exs_shell.ui.widgets.base import RevealerBaseWidget
 from exs_shell.ui.widgets.custom.audio_visualizer import AudioVisualizer, CircularAudioVisualizer
 from exs_shell.ui.widgets.custom.circle import ArcMeter
+from exs_shell.ui.widgets.custom.clock import Clock
 from exs_shell.utils.monitor import get_monitor_size
 
 
@@ -18,12 +19,12 @@ class BarBase(RevealerBaseWidget):
         self.arc_meter = ArcMeter(arc_ratio=0.65)
         self._box = CenterBox(
             vertical=False,
-            start_widget=AudioVisualizer(),
-            center_widget=CircularAudioVisualizer(),
-            end_widget=self.arc_meter,
-            # start_widget=Label(label=f"Monitor {monitor_num}"),
-            # center_widget=Label(label="|"),
-            # end_widget=Label(label="|"),
+            # start_widget=AudioVisualizer(),
+            # center_widget=CircularAudioVisualizer(),
+            # end_widget=self.arc_meter,
+            start_widget=Label(label=f"Monitor {width}x{height}"),
+            center_widget=Label(label=" | "),
+            end_widget=Clock(),
         )
         self.arc_meter.set_value(0.7)
         win_param = window.create(

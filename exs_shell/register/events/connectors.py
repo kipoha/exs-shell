@@ -1,3 +1,4 @@
+from ignis.utils import Poll
 from ignis.options_manager import OptionsGroup, OptionsManager
 
 from exs_shell.register.events.base import _base_connector, EventDeco
@@ -106,3 +107,27 @@ def upower(signal: str) -> EventDeco:
         "connect",
         signal,
     )
+
+
+def poll(
+    interval_ms: int,
+    *,
+    bind: str | None = None,
+):
+    def decorator(func):
+        def _event_call(instance):
+            bound = func.__get__(instance, instance.__class__)
+
+            poll = Poll(interval_ms, lambda _: bound())
+
+            if bind is not None:
+                poll.bind(bind)
+            else:
+                if not hasattr(instance, "_polls"):
+                    instance._polls = []
+                instance._polls.append(poll)
+
+        setattr(func, "_event_call", _event_call)
+        return func
+
+    return decorator

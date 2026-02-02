@@ -1,5 +1,20 @@
 from exs_shell.register.events.base import event
-from exs_shell.register.events.connectors import niri, option, tray, cava
+from exs_shell.register.events.connectors import (
+    niri,
+    option,
+    tray,
+    cava,
+    poll,
+    systemd_session,
+    systemd_system,
+    audio,
+    upower,
+    network,
+    bluetooth,
+    backlight,
+    power_profiles,
+    notification
+)
 
 
 __all__ = [
@@ -7,5 +22,15 @@ __all__ = [
     "niri",
     "option",
     "tray",
-    "cava"
+    "cava",
+    "poll",
+    "systemd_session",
+    "systemd_system",
+    "audio",
+    "upower",
+    "network",
+    "bluetooth",
+    "backlight",
+    "power_profiles",
+    "notification"
 ]
