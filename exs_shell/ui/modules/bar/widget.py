@@ -8,6 +8,7 @@ from exs_shell.ui.widgets.base import RevealerBaseWidget
 from exs_shell.ui.widgets.custom.audio_visualizer import AudioVisualizer, CircularAudioVisualizer
 from exs_shell.ui.widgets.custom.circle import ArcMeter
 from exs_shell.ui.widgets.custom.clock import Clock
+from exs_shell.ui.widgets.custom.battery import Battery
 from exs_shell.utils.monitor import get_monitor_size
 
 
@@ -22,7 +23,8 @@ class BarBase(RevealerBaseWidget):
             # start_widget=AudioVisualizer(),
             # center_widget=CircularAudioVisualizer(),
             # end_widget=self.arc_meter,
-            start_widget=Label(label=f"Monitor {width}x{height}"),
+            # start_widget=Label(label=f"Monitor {width}x{height}"),
+            start_widget=Battery(),
             center_widget=Label(label=" | "),
             end_widget=Clock(),
         )

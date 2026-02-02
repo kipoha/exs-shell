@@ -13,7 +13,8 @@ from exs_shell.register.events.connectors import (
     bluetooth,
     backlight,
     power_profiles,
-    notification
+    notification,
+    battery,
 )
 
 
@@ -32,5 +33,6 @@ __all__ = [
     "bluetooth",
     "backlight",
     "power_profiles",
-    "notification"
+    "notification",
+    "battery",
 ]

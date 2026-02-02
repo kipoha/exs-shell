@@ -15,6 +15,7 @@ class ArcMeter(Gtk.DrawingArea):
         arc_ratio: float = 0.75,
         speed: float = 0.15,
         label: str = "",
+        show_percentage: bool = False,
     ):
         super().__init__()
 
@@ -28,6 +29,7 @@ class ArcMeter(Gtk.DrawingArea):
         self.value = 0.0
         self.target_value = 0.0
         self.percentage = 0
+        self.show_percentage = show_percentage
 
         self.set_size_request(size, size)
         self.set_draw_func(self.redraw)
@@ -70,7 +72,9 @@ class ArcMeter(Gtk.DrawingArea):
         cr.arc(cx, cy, self.radius - self.thickness, start_angle, progress_end)
         cr.stroke()
 
-        text = f"{self.label} {self.percentage}%"
+        text = f"{self.label}"
+        if self.show_percentage:
+            text += f" {self.percentage}%"
         cr.set_font_size(self.radius / 3)
         cr.select_font_face(
             "JetBrainsMono Nerd Font",

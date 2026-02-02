@@ -108,6 +108,22 @@ def upower(signal: str) -> EventDeco:
         signal,
     )
 
+if hasattr(State.services.upower, "batteries"):
+    def battery(signal: str) -> EventDeco:
+        return _base_connector(
+            lambda _: State.services.upower.batteries[0],
+            "connect",
+            signal,
+        )
+else:
+    def battery(signal: str) -> EventDeco:
+        def _event_call(instance):
+            pass
+        def dummy(func):
+            return func
+        setattr(dummy, "_event_call", _event_call)
+        return dummy
+
 
 def poll(
     interval_ms: int,
