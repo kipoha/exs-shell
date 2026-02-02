@@ -42,6 +42,7 @@ class App:
         threading.Thread(target=cls.watch_files).start()
         kill_process()
         before.states.init()
+        before.files.init()
         before.services.init()
         before.system.init()
         before.styles.init(cls._css_manager, debug)

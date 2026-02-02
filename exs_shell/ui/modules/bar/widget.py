@@ -18,12 +18,12 @@ class BarBase(RevealerBaseWidget):
         self.arc_meter = ArcMeter(arc_ratio=0.65)
         self._box = CenterBox(
             vertical=False,
-            # start_widget=AudioVisualizer(),
-            # center_widget=CircularAudioVisualizer(),
-            # end_widget=self.arc_meter,
-            start_widget=Label(label=f"Monitor {monitor_num}"),
-            center_widget=Label(label="|"),
-            end_widget=Label(label="|"),
+            start_widget=AudioVisualizer(),
+            center_widget=CircularAudioVisualizer(),
+            end_widget=self.arc_meter,
+            # start_widget=Label(label=f"Monitor {monitor_num}"),
+            # center_widget=Label(label="|"),
+            # end_widget=Label(label="|"),
         )
         self.arc_meter.set_value(0.7)
         win_param = window.create(

@@ -84,7 +84,6 @@ class CircularAudioVisualizer(widgets.Box):
         self.bars = min(bars, self.MAX_BARS)
         self.arc_ratio = arc_ratio
 
-        # если толщину не задали — считаем автоматически
         self.thickness = thickness
 
         self.cava: Cava = State.services.cava

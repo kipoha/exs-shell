@@ -1,4 +1,4 @@
-from exs_shell.app.init.before import system, services, styles, states
+from exs_shell.app.init.before import system, services, styles, states, files
 
 
 __all__ = [
@@ -6,4 +6,5 @@ __all__ = [
     "services",
     "styles",
     "states",
+    "files",
 ]

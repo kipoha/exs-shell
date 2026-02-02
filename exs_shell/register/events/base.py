@@ -17,7 +17,7 @@ def _base_connector(
             bound = func.__get__(instance, instance.__class__)
             getattr(target, connect_method)(*connect_args, bound, **connect_kwargs)
 
-        func._event_call = _event_call  # type: ignore
+        setattr(func, "_event_call", _event_call)
         return func
 
     return decorator
@@ -30,13 +30,11 @@ def event(cls: type):
         original_init(self, *args, **kwargs)
 
         def setup_events():
-            for attr_name in dir(self):
-                try:
-                    attr = getattr(self, attr_name)
-                except RuntimeError:
-                    continue
-                if callable(attr) and hasattr(attr, "_event_call"):
-                    attr._event_call(self)  # type: ignore
+            for base in type(self).mro():
+                for attr in base.__dict__.values():
+                    if callable(attr) and hasattr(attr, "_event_call"):
+                        method = attr.__get__(self, type(self))
+                        method._event_call(self)
 
         GLib.idle_add(setup_events)
 
