@@ -16,6 +16,7 @@ class ArcMeter(Gtk.DrawingArea):
         speed: float = 0.15,
         label: str = "",
         show_percentage: bool = False,
+        font_size: float | None = None,
     ):
         super().__init__()
 
@@ -30,6 +31,7 @@ class ArcMeter(Gtk.DrawingArea):
         self.target_value = 0.0
         self.percentage = 0
         self.show_percentage = show_percentage
+        self.font_size = font_size
 
         self.set_size_request(size, size)
         self.set_draw_func(self.redraw)
@@ -39,6 +41,7 @@ class ArcMeter(Gtk.DrawingArea):
     def set_value(self, value: float):
         self.target_value = max(0.0, min(1.0, value))
         self.percentage = int(self.target_value * 100)
+        self.queue_draw()
 
     def animate(self):
         if abs(self.value - self.target_value) < 0.001:
@@ -58,8 +61,6 @@ class ArcMeter(Gtk.DrawingArea):
         cr.set_line_cap(cairo.LINE_CAP_ROUND)
 
         total_arc = 2 * pi * self.arc_ratio
-        gap = 2 * pi - total_arc
-
         start_angle = -pi / 2 - total_arc / 2
         end_angle = start_angle + total_arc
 
@@ -75,7 +76,9 @@ class ArcMeter(Gtk.DrawingArea):
         text = f"{self.label}"
         if self.show_percentage:
             text += f" {self.percentage}%"
-        cr.set_font_size(self.radius / 3)
+
+        fs = self.font_size or self.radius / 3
+        cr.set_font_size(fs)
         cr.select_font_face(
             "JetBrainsMono Nerd Font",
             cairo.FONT_SLANT_NORMAL,

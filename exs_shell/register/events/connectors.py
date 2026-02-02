@@ -108,7 +108,9 @@ def upower(signal: str) -> EventDeco:
         signal,
     )
 
+
 if hasattr(State.services.upower, "batteries"):
+
     def battery(signal: str) -> EventDeco:
         return _base_connector(
             lambda _: State.services.upower.batteries[0],
@@ -116,34 +118,36 @@ if hasattr(State.services.upower, "batteries"):
             signal,
         )
 else:
+
     def battery(signal: str) -> EventDeco:
         def _event_call(instance):
             pass
+
         def dummy(func):
             return func
-        setattr(dummy, "_event_call", _event_call)
+
+        if not hasattr(dummy, "_event_calls"):
+            setattr(dummy, "_event_calls", [])
+        getattr(dummy, "_event_calls").append(_event_call)
         return dummy
 
 
-def poll(
-    interval_ms: int,
-    *,
-    bind: str | None = None,
-):
+def poll(interval_ms: int, *, bind: str | None = None) -> EventDeco:
     def decorator(func):
         def _event_call(instance):
-            bound = func.__get__(instance, instance.__class__)
-
-            poll = Poll(interval_ms, lambda _: bound())
+            bound = func.__get__(instance, type(instance))
+            p = Poll(interval_ms, lambda _: bound())
 
             if bind is not None:
-                poll.bind(bind)
+                p.bind(bind)
             else:
                 if not hasattr(instance, "_polls"):
                     instance._polls = []
-                instance._polls.append(poll)
+                instance._polls.append(p)
 
-        setattr(func, "_event_call", _event_call)
+        if not hasattr(func, "_event_calls"):
+            setattr(func, "_event_calls", [])
+        getattr(func, "_event_calls").append((None, None, (), {"_poll": _event_call}))
         return func
 
     return decorator

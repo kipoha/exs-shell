@@ -12,12 +12,11 @@ def _base_connector(
     **connect_kwargs: Any,
 ) -> EventDeco:
     def decorator(func: F) -> F:
-        def _event_call(instance: Any) -> None:
-            target = target_getter(instance)
-            bound = func.__get__(instance, instance.__class__)
-            getattr(target, connect_method)(*connect_args, bound, **connect_kwargs)
-
-        setattr(func, "_event_call", _event_call)
+        if not hasattr(func, "_event_calls"):
+            setattr(func, "_event_calls", [])
+        getattr(func, "_event_calls").append(
+            (target_getter, connect_method, connect_args, connect_kwargs)
+        )
         return func
 
     return decorator
@@ -32,9 +31,16 @@ def event(cls: type):
         def setup_events():
             for base in type(self).mro():
                 for attr in base.__dict__.values():
-                    if callable(attr) and hasattr(attr, "_event_call"):
-                        method = attr.__get__(self, type(self))
-                        method._event_call(self)
+                    if callable(attr) and hasattr(attr, "_event_calls"):
+                        bound = attr.__get__(self, type(self))
+                        for target_getter, connect_method, args, kw in getattr(
+                            attr, "_event_calls"
+                        ):
+                            if target_getter is None and "_poll" in kw:
+                                kw["_poll"](self)
+                            else:
+                                target = target_getter(self)
+                                getattr(target, connect_method)(*args, bound, **kw)
 
         GLib.idle_add(setup_events)
 
