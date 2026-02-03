@@ -1,5 +1,3 @@
-from typing import Any, Callable
-from ignis.services.system_tray import SystemTrayItem
 from ignis.utils import Poll
 from ignis.options_manager import OptionsGroup, OptionsManager
 

@@ -3,4 +3,4 @@ from exs_shell.interfaces.protocols.window import IWindow
 
 
 def get(name: str) -> IWindow:
-    return State.widgets[name]
+    return State.windows[name]

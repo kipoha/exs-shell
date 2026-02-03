@@ -88,5 +88,5 @@ def init_bars():
     for i in range(get_n_monitors()):
         class_name = f"Bar{i}"
         BarClass = type(class_name, (BarBase,), {})
-        register.widget(BarClass)
+        register.window(BarClass)
         BarClass(i)

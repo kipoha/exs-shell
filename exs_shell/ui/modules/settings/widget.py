@@ -6,7 +6,7 @@ from exs_shell.ui.widgets.base import RevealerBaseWidget
 from exs_shell.ui.factory import window
 
 
-@register.widget
+@register.window
 class Settings(RevealerBaseWidget):
     def __init__(self) -> None:
         self._box = Box(

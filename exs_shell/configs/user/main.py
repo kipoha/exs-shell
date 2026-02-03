@@ -8,6 +8,7 @@ class UserConfig(OptionsGroup):
     command_prefix: str = ">"
     clock_format: str = "󰥔 %H:%M:%S"
     critical_percentage: int = 15
+    terminal_format: str = "kitty %command%"
 
     actions: TrackedList[dict] = TrackedList()
     for i in [

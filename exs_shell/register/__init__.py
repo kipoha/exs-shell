@@ -24,6 +24,10 @@ def widget(cls: type) -> type:
     return _register(cls, State.widgets)
 
 
+def window(cls: type) -> type:
+    return _register(cls, State.windows)
+
+
 def service(cls: type) -> type:
     return _register(cls, State.services)
 
@@ -31,6 +35,7 @@ def service(cls: type) -> type:
 __all__ = [
     "widget",
     "service",
+    "window",
     "event",
     "events",
 ]

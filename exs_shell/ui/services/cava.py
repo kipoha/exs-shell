@@ -79,7 +79,7 @@ class Cava:
         except Exception:
             self.fd = None
 
-    def _read_data(self, source, condition):
+    def _read_data(self, source: int, condition: int):
         chunk = self.bars * self.byte_size
         try:
             data = os.read(self.fd, chunk)  # type: ignore
@@ -98,7 +98,7 @@ class Cava:
         GLib.idle_add(self._notify_subscribers_text, visual_text)
         return True
 
-    def _make_visual(self, values):
+    def _make_visual(self, values: list[float]) -> str:
         # blocks = "⣀⣄⣤⣦⣶⣷⣿"
 
         blocks = "▁▂▃▄▅▆▇█"
@@ -108,10 +108,10 @@ class Cava:
             result.append(blocks[idx])
         return "".join(result)
 
-    def _notify_subscribers_text(self, visual):
+    def _notify_subscribers_text(self, visual: str):
         for callback in self._subscribers_text:
             callback(visual)
 
-    def _notify_subscribers_values(self, values):
+    def _notify_subscribers_values(self, values: list[float]):
         for callback in self._subscribers_values:
             callback(values)
