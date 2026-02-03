@@ -1,0 +1,13 @@
+.exs-bar {
+  background-color: c.$background;
+  padding: 0.3rem 0.8rem;
+  border-radius: 1.5rem;
+}
+
+.exs-bar-left,
+.exs-bar-center,
+.exs-bar-right {
+  padding: 0 1rem;
+  background-color: c.$surfaceContainer;
+  border-radius: 1rem;
+}

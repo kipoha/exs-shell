@@ -1,5 +1,9 @@
 @use './colors.scss' as c;
 
+@import './_modules/_bar.scss';
+@import './_modules/_tray.scss';
+@import './_modules/_cava_tui.scss';
+
 * {
   all: unset;
   font-family: JetBrainsMono;

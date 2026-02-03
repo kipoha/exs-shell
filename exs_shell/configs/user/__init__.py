@@ -67,6 +67,7 @@ class UserOptions(OptionsManager):
         return self._weather
 
 
+
 options = UserOptions()
 user = options.user_config
 notifications = options.notifications

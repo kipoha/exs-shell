@@ -1,10 +1,11 @@
 import os
 import re
 
+from exs_shell.interfaces.types import AnyDict
 from exs_shell.utils.path import Paths, Dirs
 
 
-def get_hex_color() -> str:
+def get_hex_color() -> AnyDict:
     scss_file = Paths.generate_path("colors.scss", Dirs.CONFIG_DIR)
     if not os.path.exists(scss_file):
         scss_file = Paths.generate_path("styles/colors.scss", Paths.path)
@@ -15,7 +16,7 @@ def get_hex_color() -> str:
             if m:
                 var_name, value = m.groups()
                 variables[var_name] = value
-    return variables["primary"]
+    return variables
 
 
 def hex_to_rgb(hex_color: str):

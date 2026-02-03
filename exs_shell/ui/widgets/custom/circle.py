@@ -52,7 +52,9 @@ class ArcMeter(Gtk.DrawingArea):
         return True
 
     def redraw(self, area, cr: cairo.Context, width: int, height: int):
-        hex_color = get_hex_color()
+        _colors = get_hex_color()
+        hex_color = _colors["primary"]
+        void = _colors["surfaceBright"]
         r, g, b = hex_to_rgb(hex_color)
 
         cx, cy = width / 2, height / 2
@@ -64,10 +66,12 @@ class ArcMeter(Gtk.DrawingArea):
         start_angle = -pi / 2 - total_arc / 2
         end_angle = start_angle + total_arc
 
-        cr.set_source_rgba(0.2, 0.2, 0.2, 0.4)
+        r_void, g_void, b_void = hex_to_rgb(void)
+        cr.set_source_rgb(r_void, g_void, b_void)
         cr.arc(cx, cy, self.radius - self.thickness, start_angle, end_angle)
         cr.stroke()
 
+        r, g, b = hex_to_rgb(hex_color)
         cr.set_source_rgb(r, g, b)
         progress_end = start_angle + total_arc * self.value
         cr.arc(cx, cy, self.radius - self.thickness, start_angle, progress_end)

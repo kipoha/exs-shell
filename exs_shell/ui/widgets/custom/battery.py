@@ -1,6 +1,7 @@
 from ignis.services.upower import UPowerDevice
 
 from exs_shell import register
+from exs_shell.configs.user import user
 from exs_shell.state import State
 from exs_shell.ui.widgets.custom.circle import ArcMeter
 
@@ -18,10 +19,11 @@ class Battery(ArcMeter):
         font_size: float = 20,
     ):
         self.battery: UPowerDevice = State.services.upower.batteries[0]
-        self.icons = {
+        self.icons: dict[str, str] = {
             "charging": "",
             "discharging": "",
             "full": "",
+            "critical": "",
         }
         super().__init__(
             size, thickness, arc_ratio, speed, label, show_percentage, font_size
@@ -39,6 +41,8 @@ class Battery(ArcMeter):
             self.label = self.icons["full"]
         elif charging:
             self.label = self.icons["charging"]
+        elif perc < user.critical_percentage:
+            self.label = self.icons["critical"]
         else:
             self.label = self.icons["discharging"]
         self.set_value(perc / 100)

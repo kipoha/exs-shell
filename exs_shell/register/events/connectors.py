@@ -1,3 +1,5 @@
+from typing import Any, Callable
+from ignis.services.system_tray import SystemTrayItem
 from ignis.utils import Poll
 from ignis.options_manager import OptionsGroup, OptionsManager
 
@@ -22,9 +24,9 @@ def niri(signal: str) -> EventDeco:
     )
 
 
-def tray(signal: str) -> EventDeco:
+def tray(signal: str, item: bool = False) -> EventDeco:
     return _base_connector(
-        lambda _: State.services.tray,
+        lambda _: _.item if item else State.services.tray,
         "connect",
         signal,
     )

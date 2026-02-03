@@ -7,6 +7,7 @@ class UserConfig(OptionsGroup):
     avatar: str = ""
     command_prefix: str = ">"
     clock_format: str = "󰥔 %H:%M:%S"
+    critical_percentage: int = 15
 
     actions: TrackedList[dict] = TrackedList()
     for i in [

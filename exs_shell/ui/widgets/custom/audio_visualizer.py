@@ -38,7 +38,7 @@ class AudioVisualizer(widgets.Box):
         GLib.idle_add(self.area.queue_draw)
 
     def redraw(self, area, cr, width, height):
-        hex_color = get_hex_color()
+        hex_color = get_hex_color()["primary"]
         accent_r, accent_g, accent_b = hex_to_rgb(hex_color)
         cr.set_source_rgb(accent_r, accent_g, accent_b)
         bar_width = width / self.bars
@@ -100,7 +100,7 @@ class CircularAudioVisualizer(widgets.Box):
         GLib.idle_add(self.area.queue_draw)
 
     def redraw(self, area, cr, width, height):
-        hex_color = get_hex_color()
+        hex_color = get_hex_color()["primary"]
         r, g, b = hex_to_rgb(hex_color)
 
         cx, cy = width / 2, height / 2
@@ -142,7 +142,7 @@ class CircularAudioVisualizer(widgets.Box):
             cr.stroke()
 
     def redraw2(self, area, cr, width, height):
-        hex_color = get_hex_color()
+        hex_color = get_hex_color()["primary"]
         r, g, b = hex_to_rgb(hex_color)
 
         cx, cy = width / 2, height / 2
