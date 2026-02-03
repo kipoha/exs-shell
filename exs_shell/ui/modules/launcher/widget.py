@@ -164,7 +164,7 @@ class SearchWebButton(Button):
 
 
 @register.window
-# @register.event
+@register.event
 class Launcher(RevealerBaseWidget):
     MAX_ITEMS = 5
 

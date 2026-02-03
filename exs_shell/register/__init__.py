@@ -2,21 +2,31 @@ from typing import Any
 
 from exs_shell.state import State
 from exs_shell.interfaces.types import AnyDict
+from exs_shell.register.deco import add_post_init
 from exs_shell.register.events import event
 from exs_shell.register import events
 
 
+# def _register(cls: type, registry: AnyDict) -> type:
+#     original_init = cls.__init__
+#
+#     def new_init(self: type, *args: Any, **kwargs: Any):
+#         key = cls.__name__.lower()
+#         if key in registry:
+#             raise ValueError(f"{key} already registered")
+#         original_init(self, *args, **kwargs)
+#         registry[key] = self
+#
+#     setattr(cls, "__init__", new_init)
+#     return cls
 def _register(cls: type, registry: AnyDict) -> type:
-    original_init = cls.__init__
-
-    def new_init(self, *args: Any, **kwargs: Any):
+    def register(self):
         key = cls.__name__.lower()
         if key in registry:
             raise ValueError(f"{key} already registered")
-        original_init(self, *args, **kwargs)
         registry[key] = self
 
-    cls.__init__ = new_init
+    add_post_init(cls, register)
     return cls
 
 
