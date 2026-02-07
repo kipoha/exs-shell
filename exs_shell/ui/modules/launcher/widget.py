@@ -35,7 +35,6 @@ class Launcher(MonitorRevealerBaseWidget):
         ]
         self.active_index: int = 0
         self.widget_build()
-        # self._entry.set_can_focus(False)
 
         window_param = window_factory.create(
             namespace="launcher",
