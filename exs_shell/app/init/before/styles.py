@@ -22,7 +22,7 @@ def set_css_file(css_manager, css_file_path: str | Path | Iterable[str | Path]) 
         logger.error("Empty css file path")
         exit(1)
 
-    if Path(file).suffix != ".scss":
+    if Path(str(file)).suffix != ".scss":
         logger.error("File must be a scss file")
         exit(1)
 
@@ -30,14 +30,14 @@ def set_css_file(css_manager, css_file_path: str | Path | Iterable[str | Path]) 
         CssInfoPath(
             name=NAME,
             compiler_function=lambda path: utils.sass_compile(path),
-            path=Paths.generate_path(file),
+            path=Paths.generate_path(str(file)),
         )
     )
 
 
-def init(css_manager: CssManager, debug: bool) -> None:
+def init(css_manager: CssManager, dev: bool) -> None:
     scss = Paths.generate_path("styles/main.scss")
-    if not debug:
+    if not dev:
         scss = build_scss()
     logger.info(f"Loading css file: {scss}")
     set_css_file(css_manager, scss)

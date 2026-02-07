@@ -1,15 +1,24 @@
 import sys
+import argparse
 from exs_shell.app import App
 
 
 def main():
-    if len(sys.argv) == 1:
-        App.run()
-    elif len(sys.argv) == 2 and sys.argv[1] == "--debug":
-        App.run(debug=True)
-    else:
-        print("Unknown command")
-        exit(1)
+    parser = argparse.ArgumentParser(description="Run the EXS Shell App")
+    parser.add_argument(
+        "--debug",
+        action="store_true",
+        help="Run the app in debug mode"
+    )
+    parser.add_argument(
+        "--dev",
+        action="store_true",
+        help="Run the app in development mode"
+    )
+
+    args = parser.parse_args()
+
+    App.run(debug=args.debug, dev=args.dev)
 
 
 if __name__ == "__main__":

@@ -175,33 +175,6 @@ class Launcher(MonitorRevealerBaseWidget):
     ) -> None:
         self.applications: ApplicationsService = State.services.applications
         self.current_items = self.applications.apps[: self.MAX_ITEMS]
-        self.widget_build()
-
-        window_param = window_factory.create(
-            namespace="launcher",
-            visible=False,
-            kb_mode=KeyboardMode.ON_DEMAND,
-            anchor=["bottom"],
-            popup=True,
-        )
-        super().__init__(
-            self._box,
-            window_param,
-            RevealerTransition.SLIDE_UP,
-            transition_duration,
-            reveal_child,
-        )
-
-        self._added_items = []
-        self._populate_box(self.current_items)
-
-        self.update_actions()
-
-    @register.events.option(user, "actions")
-    def update_actions(self):
-        self.actions = [Action(**action) for action in user.actions]
-
-    def widget_build(self) -> None:
         self._entry = Entry(
             hexpand=True,
             placeholder_text="Search",
@@ -209,7 +182,7 @@ class Launcher(MonitorRevealerBaseWidget):
             on_change=self.__search,
             on_accept=self.__on_accept,
         )
-        
+
         self._list_box = Box(
             vertical=True,
             spacing=4,
@@ -239,11 +212,11 @@ class Launcher(MonitorRevealerBaseWidget):
             valign="end",
         )
 
-        self._inner_box = Box(
+        self._search_box = Box(
             vertical=True,
             valign="end",
             halign="center",
-            css_classes=["exs-launcher"],
+            css_classes=["exs-launcher-box"],
             spacing=15,
             child=[
                 self._scroll,
@@ -260,25 +233,45 @@ class Launcher(MonitorRevealerBaseWidget):
                 ),
             ],
         )
-        #
+
         self._box = Box(
             child=[
                 self.left_corner,
-                self._inner_box,
+                self._search_box,
                 self.right_corner,
             ],
+            css_classes=["exs-launcher"],
         )
+
+        window_param = window_factory.create(
+            namespace="launcher",
+            visible=False,
+            kb_mode=KeyboardMode.ON_DEMAND,
+            anchor=["bottom"],
+            popup=True,
+        )
+        super().__init__(
+            self._box,
+            window_param,
+            RevealerTransition.SLIDE_UP,
+            transition_duration,
+            reveal_child,
+        )
+
+        self._added_items = []
+        self._populate_box(self.current_items)
+
+        self.update_actions()
+
+    @register.events.option(user, "actions")
+    def update_actions(self):
+        self.actions = [Action(**action) for action in user.actions]
 
     def __on_open(self):
         if not self.visible:
             return
         self._entry.text = ""
         self._entry.grab_focus()
-
-    def set_visible(self, value: bool):
-        if value:
-            self.__on_open()
-        return super().set_visible(value)
 
     def _populate_box(self, items: list[Any]):
         for item in self._added_items:
@@ -298,8 +291,13 @@ class Launcher(MonitorRevealerBaseWidget):
         height = min(len(items) * 75 + 90, 500)
         self._animate_height(height)
 
+    def set_visible(self, value: bool):
+        if value:
+            self.__on_open()
+        return super().set_visible(value)
+
     def _animate_height(self, target_height, duration=0.25):
-        start_height = self._inner_box.get_allocated_height()
+        start_height = self._box.get_allocated_height()
         start_time = GLib.get_monotonic_time()
 
         def update():

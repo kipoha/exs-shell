@@ -15,6 +15,7 @@
 
 .exs-launcher-app-list {
   padding-right: 0.5rem;
+  background-color: c.$surfaceContainer;
 }
 
 .exs-launcher-app {
@@ -60,6 +61,6 @@
 
 .exs-launcher-search-box {
   padding: 1rem;
-  background-color: c.$onBackground;
+  background-color: c.$surfaceContainer;
   border-radius: 2rem;
 }

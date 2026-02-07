@@ -12,7 +12,7 @@ from exs_shell.utils.monitor import get_monitor_scale
 
 
 @register.event
-class BarBase(RevealerBaseWidget):
+class Bar(RevealerBaseWidget):
     def __init__(self, monitor_num: int):
         self.monitor_num = monitor_num
         self.scale = get_monitor_scale(monitor_num)
@@ -82,11 +82,3 @@ class BarBase(RevealerBaseWidget):
         self._main.set_margin_top(margins["margin_top"])
         self._main.set_margin_bottom(margins["margin_bottom"])
         self._main.set_anchor([bar.position])
-
-
-def init_bars():
-    for i in range(get_n_monitors()):
-        class_name = f"Bar{i}"
-        BarClass = type(class_name, (BarBase,), {})
-        register.window(BarClass)
-        BarClass(i)

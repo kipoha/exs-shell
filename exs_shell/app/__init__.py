@@ -19,9 +19,10 @@ try:
     from ignis.css_manager import CssManager
     from ignis.client import IgnisClient
 except ImportError:
-    logger.error("Ignis is not installed")
-    send_notification("Ignis", "Ignis is not installed")
-    exit(1)
+    body = "Ignis is not installed"
+    logger.error(body)
+    send_notification("Ignis", body)
+    raise ImportError(body)
 
 
 class App:
@@ -38,14 +39,14 @@ class App:
         logger.info("Autoreloader started")
 
     @classmethod
-    def before_init(cls, debug: bool) -> None:
+    def before_init(cls, dev: bool) -> None:
         threading.Thread(target=cls.watch_files).start()
         kill_process()
         before.states.init()
         before.files.init()
         before.services.init()
         before.system.init()
-        before.styles.init(cls._css_manager, debug)
+        before.styles.init(cls._css_manager, dev)
 
     @classmethod
     def after_init(cls) -> None:
@@ -54,9 +55,9 @@ class App:
         after.modules.init()
 
     @classmethod
-    def run(cls, debug: bool = False) -> None:
+    def run(cls, dev: bool= False, debug: bool = False) -> None:
         client = IgnisClient()
-        cls.before_init(debug)
+        cls.before_init(dev)
 
         if client.has_owner:
             logger.error(f"{APP_NAME} is already running.")
