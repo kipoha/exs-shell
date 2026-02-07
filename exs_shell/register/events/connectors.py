@@ -1,3 +1,5 @@
+from gi.repository import Gtk  # type: ignore
+
 from ignis.utils import Poll
 from ignis.options_manager import OptionsGroup, OptionsManager
 
@@ -151,3 +153,23 @@ def poll(interval_ms: int, *, bind: str | None = None) -> EventDeco:
         return func
 
     return decorator
+
+
+def applications(signal: str) -> EventDeco:
+    return _base_connector(
+        lambda _: State.services.applications,
+        "connect",
+        signal,
+    )
+
+
+def key_kontroller(signal: str) -> EventDeco:
+    key_controller = Gtk.EventControllerKey()
+    def func(self):
+        self._main.add_controller(key_controller)
+        return key_controller
+    return _base_connector(
+        func,
+        "connect",
+        signal,
+    )

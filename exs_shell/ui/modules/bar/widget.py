@@ -29,7 +29,7 @@ class Bar(RevealerBaseWidget):
         super().__init__(
             self._box,
             win_param,
-            RevealerTransition.CROSSFADE,
+            RevealerTransition.SLIDE_DOWN,
             transition_duration=200,
             reveal_child=True,
         )

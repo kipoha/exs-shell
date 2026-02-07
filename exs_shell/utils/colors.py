@@ -9,7 +9,7 @@ def get_hex_color() -> AnyDict:
     scss_file = Paths.generate_path("colors.scss", Dirs.CONFIG_DIR)
     if not os.path.exists(scss_file):
         scss_file = Paths.generate_path("styles/colors.scss", Paths.path)
-    variables = {}
+    variables: AnyDict = {}
     with open(scss_file, "r") as f:
         for line in f:
             m = re.match(r"\s*\$(\w+):\s*(.+?);", line)
@@ -19,7 +19,7 @@ def get_hex_color() -> AnyDict:
     return variables
 
 
-def hex_to_rgb(hex_color: str):
+def hex_to_rgb(hex_color: str) -> tuple[float, float, float]:
     hex_color = hex_color.lstrip("#")
     r = int(hex_color[0:2], 16) / 255
     g = int(hex_color[2:4], 16) / 255

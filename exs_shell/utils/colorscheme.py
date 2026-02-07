@@ -55,7 +55,7 @@ def generate(
     seed = Hct.from_int(argb)
 
     scheme_cls = ColorSchemeClasses.get(scheme)
-    dyn_scheme = scheme_cls(seed, dark, contrast)
+    dyn_scheme = scheme_cls(seed, dark, contrast)  # type: ignore
     theme = MaterialColors.create(dyn_scheme, to_scss_color)
 
     return GeneratedTheme(
