@@ -1,5 +1,4 @@
 from ignis.widgets import Box, CenterBox
-from ignis.utils import get_n_monitors
 
 from exs_shell import register
 from exs_shell.configs.user import bar

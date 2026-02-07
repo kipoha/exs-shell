@@ -3,6 +3,7 @@ import json
 from ignis.utils import exec_sh, get_monitor, get_n_monitors, get_monitors
 
 from exs_shell import register
+from exs_shell.interfaces.types import AnyDict
 
 BASE_WIDTH = 1920
 BASE_HEIGHT = 1080
@@ -23,7 +24,7 @@ def get_monitor_scale(monitor_id: int) -> float:
 
 def get_active_monitor() -> int:
     monitors = get_monitors()
-    data = json.loads(exec_sh("niri msg --json focused-output").stdout)
+    data: AnyDict = json.loads(exec_sh("niri msg --json focused-output").stdout)
     model = data["model"]
     monitor_id = 0
     for i, monitor in enumerate(monitors):

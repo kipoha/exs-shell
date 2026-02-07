@@ -1,5 +1,6 @@
 from ignis.options_manager import OptionsGroup, TrackedList
 
+from exs_shell.interfaces.schemas.widget.launcher import Action
 from exs_shell.utils.path import Paths
 
 
@@ -10,14 +11,12 @@ class UserConfig(OptionsGroup):
     critical_percentage: int = 15
     terminal_format: str = "kitty %command%"
 
-    actions: TrackedList[dict] = TrackedList()
+    actions: TrackedList[Action] = TrackedList()
     for i in [
         {
             "name": "Lock",
             "command": "exs-ipc open-lockscreen",
-            "icon": Paths.generate_path(
-                "icons/action/lock_screen.png", Paths.assets
-            ),
+            "icon": Paths.generate_path("icons/action/lock_screen.png", Paths.assets),
         },
         {
             "name": "Clipboard",
@@ -27,12 +26,10 @@ class UserConfig(OptionsGroup):
         {
             "name": "Color Picker",
             "command": "exs-ipc action-color-picker",
-            "icon": Paths.generate_path(
-                "icons/action/color_picker.png", Paths.assets
-            ),
+            "icon": Paths.generate_path("icons/action/color_picker.png", Paths.assets),
         },
     ]:
-        actions.append(i)
+        actions.append(Action(**i))
 
     powermenu_actions: TrackedList[dict] = TrackedList()
     for i in [
