@@ -1,11 +1,8 @@
 import json
-from gi.repository import Gdk  # type: ignore
 
-from ignis.services.niri import NiriService
 from ignis.utils import exec_sh, get_monitor, get_n_monitors, get_monitors
 
 from exs_shell import register
-from exs_shell.state import State
 
 BASE_WIDTH = 1920
 BASE_HEIGHT = 1080
