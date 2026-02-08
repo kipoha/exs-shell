@@ -1,5 +1,5 @@
 from exs_shell.interfaces.types import Commands
-from exs_shell.controllers.commands import settings
+from exs_shell.controllers.commands import settings, launcher
 
 
 def include(*args: Commands) -> Commands:
@@ -13,4 +13,5 @@ def include(*args: Commands) -> Commands:
 def include_commands() -> Commands:
     return include(
         settings.include(),
+        launcher.include(),
     )

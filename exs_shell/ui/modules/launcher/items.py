@@ -1,6 +1,7 @@
+import subprocess
 from typing import Any
 
-from gi.repository import Gio  # type: ignore
+from gi.repository import Gio, GdkPixbuf  # type: ignore
 
 from ignis.menu_model import IgnisMenuItem, IgnisMenuModel, IgnisMenuSeparator
 from ignis.services.applications import Application, ApplicationAction
@@ -9,6 +10,7 @@ from ignis.widgets import Box, Button, Icon, Label, Picture, PopoverMenu
 
 from exs_shell import register
 from exs_shell.configs.user import user
+from exs_shell.interfaces.schemas.utils.clipboard import ClipboardItem
 from exs_shell.interfaces.schemas.widget.launcher import Action, WebAction
 from exs_shell.utils import window
 from exs_shell.utils.loop import run_async_task
@@ -16,21 +18,25 @@ from exs_shell.utils.urls import is_url
 
 
 class BaseLauncherItem(Button):
-    def __init__(self, item: Application | Action | WebAction, icon: Icon | Picture):
-        icon.add_css_class("exs-launcher-app-icon")
+    def __init__(
+        self,
+        item: Application | Action | WebAction | None = None,
+        icon: Icon | Picture | None = None,
+    ):
+        if icon:
+            icon.add_css_class("exs-launcher-app-icon")
+        children = [icon] if icon else []
+
+        if item:
+            children.append(
+                Label(label=item.name, css_classes=["exs-launcher-app-label"])
+            )
+        content_box = Box(child=children, spacing=10)
         super().__init__(
+            child=content_box,
             on_click=self.launch,
+            focusable=False,
             css_classes=["exs-launcher-app"],
-            child=Box(
-                child=[
-                    icon,
-                    Label(
-                        label=item.name,
-                        css_classes=["exs-launcher-app-label"],
-                    ),
-                ],
-                spacing=10,
-            ),
         )
 
     def close_launcher(self) -> None:
@@ -43,14 +49,14 @@ class BaseLauncherItem(Button):
 
 class ActionItem(BaseLauncherItem):
     def __init__(self, action: Action, scale: float = 1.0):
-        self._action = action
+        self.action = action
         super().__init__(
             action,
-            Picture(image=self._action.icon, width=48 * scale, height=48 * scale),  # type: ignore
+            Picture(image=self.action.icon, width=48 * scale, height=48 * scale),  # type: ignore
         )
 
     def launch(self, *_: Any) -> None:
-        run_async_task(exec_sh_async(self._action.command))
+        run_async_task(exec_sh_async(self.action.command))
         super().launch(*_)
 
 
@@ -133,3 +139,63 @@ class SearchWebButton(BaseLauncherItem):
     def launch(self, *_: Any) -> None:
         run_async_task(exec_sh_async(f"xdg-open {self.action.url}"))
         super().launch(*_)
+
+
+class ClipboardItemButton(BaseLauncherItem):
+    def __init__(self, clipboard: ClipboardItem, scale: float = 1.0):
+        self.clipboard = clipboard
+        if clipboard.is_binary:
+            try:
+                image_bytes = subprocess.run(
+                    ["cliphist", "decode", clipboard.id], capture_output=True
+                ).stdout
+                loader = GdkPixbuf.PixbufLoader.new()
+                loader.write(image_bytes)
+                loader.close()
+                pixbuf = loader.get_pixbuf()
+                target_height = 80 * scale
+                scale = target_height / pixbuf.get_height()
+                pixbuf = pixbuf.scale_simple(
+                    int(pixbuf.get_width() * scale),
+                    target_height,
+                    GdkPixbuf.InterpType.BILINEAR,
+                )
+                image = Picture(
+                    image=pixbuf,
+                    width=pixbuf.get_width(),
+                    height=target_height,  # type: ignore
+                    content_fit="cover",
+                    css_classes=["exs-clipboard-image"],
+                )
+                box = Box(
+                    spacing=6,
+                    child=[image],
+                    hexpand=True,
+                    css_classes=["exs-clipboard-item"],
+                )
+            except Exception as e:
+                print(e)
+                box = Box(
+                    spacing=6,
+                    child=[Label(label="[image]")],
+                    hexpand=True,
+                    css_classes=["exs-clipboard-item"],
+                )
+        else:
+            text = clipboard.raw.split("\t")[-1]
+            if len(text) > 60:
+                text = text[:57] + "..."
+            label = Label(label=text)
+            box = Box(
+                spacing=6,
+                child=[label],
+                hexpand=True,
+                css_classes=["exs-clipboard-item"],
+            )
+
+        super().__init__()
+        self.set_child(box)
+
+    def launch(self, *_: Any) -> None:
+        super().launch(*_)
+        run_async_task(exec_sh_async(f"cliphist decode {self.clipboard.id} | wl-copy"))

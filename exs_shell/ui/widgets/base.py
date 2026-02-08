@@ -19,7 +19,7 @@ class BaseWidget:
         self._main = Window(**win_dict)
 
     def set_visible(self, value: bool):
-        self._main.set_visible(value)
+        self._main.visible = value
 
     def set_child(self, value: Box | CenterBox) -> None:
         self._box = value
@@ -76,7 +76,7 @@ class RevealerBaseWidget(BaseWidget):
         self._revealer = value
 
 
-class MonitorWidget:
+class MonitorWidget(BaseWidget):
     def __init__(self) -> None:
         self.monitor: int = get_active_monitor()
         self.scale: float = get_monitor_scale(self.monitor)
@@ -84,14 +84,14 @@ class MonitorWidget:
     def rebuild(self) -> None:
         self.monitor = get_active_monitor()
         self.scale = get_monitor_scale(self.monitor)
-        self._main.monitor = self.monitor  # type: ignore
+        self._main.set_monitor(self.monitor)
 
     def widget_build(self) -> None:
         pass
 
     def set_visible(self, value: bool):
         self.rebuild()
-        super().set_visible(value)  # type: ignore
+        super().set_visible(value)
 
 
 class MonitorBaseWidget(MonitorWidget, BaseWidget):

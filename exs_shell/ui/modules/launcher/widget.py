@@ -1,22 +1,25 @@
 from typing import Any
 
-from ignis.widgets import Entry, Scroll, Widget, Corner, Box, Icon
+from ignis.widgets import Entry, Scroll, Corner, Box, Icon
 from ignis.services.applications import ApplicationsService, Application
 
-from gi.repository import GLib, Gdk  # type: ignore
+from gi.repository import GLib, Gdk, GLib  # type: ignore
 
 from exs_shell import register
 from exs_shell.configs.user import user
 from exs_shell.interfaces.enums.gtk.windows import KeyboardMode
 from exs_shell.interfaces.enums.gtk.transitions import RevealerTransition
+from exs_shell.interfaces.enums.modules.launcher import LauncherMode
 from exs_shell.state import State
 from exs_shell.ui.factory import window as window_factory
 from exs_shell.ui.modules.launcher.items import (
     ActionItem,
+    ClipboardItemButton,
     LauncherAppItem,
     SearchWebButton,
 )
 from exs_shell.ui.widgets.base import MonitorRevealerBaseWidget
+from exs_shell.utils.clipboard import get_clipboard_history
 
 
 @register.window
@@ -30,10 +33,9 @@ class Launcher(MonitorRevealerBaseWidget):
         reveal_child: bool = True,
     ) -> None:
         self.applications: ApplicationsService = State.services.applications
-        self.current_items: list[Application | ActionItem] = self.applications.apps[
-            : self.MAX_ITEMS
-        ]
+        self.current_items: list = self.applications.apps[: self.MAX_ITEMS]
         self.active_index: int = 0
+        self.mode = LauncherMode.APPLICATIONS
         self.widget_build()
 
         window_param = window_factory.create(
@@ -41,19 +43,17 @@ class Launcher(MonitorRevealerBaseWidget):
             visible=False,
             kb_mode=KeyboardMode.EXCLUSIVE,
             anchor=["bottom"],
-            popup=True,
         )
         super().__init__(
             self._box,
             window_param,
-            RevealerTransition.SLIDE_UP,
+            RevealerTransition.SLIDE_DOWN,
             transition_duration,
             reveal_child,
         )
 
         self._added_items = []
-        self._populate_box(self.current_items)
-
+        self._refresh_items()
         self.update_actions()
 
     @register.events.option(user, "actions")
@@ -66,7 +66,6 @@ class Launcher(MonitorRevealerBaseWidget):
             placeholder_text="Search",
             css_classes=["exs-launcher-search"],
             on_change=self.__search,
-            on_accept=self.__on_accept,
             can_focus=False,
             focusable=False,
         )
@@ -131,35 +130,57 @@ class Launcher(MonitorRevealerBaseWidget):
     def __on_open(self):
         if not self.visible:
             return
-        self._entry.text = ""
-        GLib.idle_add(self._entry.grab_focus)
+
+    def _refresh_items(self):
+        match self.mode:
+            case LauncherMode.APPLICATIONS:
+                items = self.applications.apps[: self.MAX_ITEMS]
+
+            case LauncherMode.ACTIONS:
+                items = [ActionItem(action, self.scale) for action in self.actions]
+
+            case LauncherMode.CLIPBOARD:
+                items = [
+                    ClipboardItemButton(c, self.scale) for c in get_clipboard_history()
+                ]
+            case _:
+                raise ValueError
+
+        self.current_items = items
+        self._populate_box(
+            items, reset_index=True if self.active_index >= len(items) else False
+        )
 
     @register.events.key_kontroller("key-pressed")
     def __on_key_released(self, controller, keyval, keycode, state):
         match keyval:
             case 65307:  # 65307 = ESC
-                self.set_visible(False)
+                if self.mode != LauncherMode.APPLICATIONS:
+                    self.mode = LauncherMode.APPLICATIONS
+                    self._refresh_items()
+                    self._entry.text = ""
+                else:
+                    self.set_visible(False)
             case 65362:  # 65362 = UP
                 self._move_active(-1)
             case 65364:  # 65364 = DOWN
                 self._move_active(1)
             case 65288:  # 65288 = BACKSPACE
                 self._entry.text = self._entry.text[:-1]
+            case 65293:  # 65293 = ENTER
+                self.__on_accept()
             case _:
                 char = Gdk.keyval_to_unicode(keyval)
                 if char != 0:
                     self._entry.text += chr(char)
 
-
-    def _populate_box(self, items: list[Any]):
+    def _populate_box(self, items: list[Any], reset_index: bool = True):
         for item in self._added_items:
             self._list_box.remove(item)
         self._added_items.clear()
 
         for item in items:
-            if isinstance(item, Widget):
-                widget = item
-            elif isinstance(item, Application):
+            if isinstance(item, Application):
                 widget = LauncherAppItem(item, self.scale)
             else:
                 widget = item
@@ -168,7 +189,9 @@ class Launcher(MonitorRevealerBaseWidget):
 
         height = min(len(items) * 75 + 90, 500) * self.scale
         self._animate_height(height)
-        self.active_index = 0
+
+        if reset_index:
+            self.active_index = 0
         self._update_active_style()
 
     def set_visible(self, value: bool):
@@ -198,8 +221,24 @@ class Launcher(MonitorRevealerBaseWidget):
             return
 
         item = self._added_items[self.active_index]
+        if isinstance(item, ActionItem) and "clipboard" in item.action.name.lower():
+            self.mode = LauncherMode.CLIPBOARD
+            self._entry.text = ""
+            self._refresh_items()
+            return
         if hasattr(item, "launch"):
             item.launch()
+
+        def clear(*_: Any):
+            self._entry.text = ""
+            for item in self._added_items:
+                self._list_box.remove(item)
+            self._added_items.clear()
+            self.current_items.clear()
+            self.mode = LauncherMode.APPLICATIONS
+            self._refresh_items()
+
+        GLib.timeout_add(500, clear)
 
     def _move_active(self, delta: int):
         if not self._added_items:
@@ -210,6 +249,18 @@ class Launcher(MonitorRevealerBaseWidget):
         )
 
         self._update_active_style()
+        self._scroll_to_active()
+
+    def _scroll_to_active(self):
+        if not self._added_items:
+            return
+
+        active_widget = self._added_items[self.active_index]
+        ggtk_scrolled = self._scroll_app
+        vadj = ggtk_scrolled.get_vadjustment()
+        alloc = active_widget.get_allocation()
+        y = alloc.y
+        vadj.set_value(y)
 
     def _update_active_style(self):
         for i, item in enumerate(self._added_items):
@@ -220,27 +271,44 @@ class Launcher(MonitorRevealerBaseWidget):
 
     def __search(self, *_):
         query: str = self._entry.text.lower().strip()
-        if not query:
-            self.current_items = self.applications.apps[: self.MAX_ITEMS]
-            self._populate_box(self.current_items)
-            return
-
         prefix = user.command_prefix
-        if query.startswith(prefix):
-            filtered = [
-                ActionItem(action, self.scale)
-                for action in self.actions
-                if query.replace(prefix, "") in action.name.lower().strip()
-            ]
-            self.current_items = filtered
-            self._populate_box(filtered)
+
+        if not query:
+            self._refresh_items()
             return
 
-        filtered = self.applications.search(self.applications.apps, query)
-        if filtered:
-            self.current_items = filtered[: self.MAX_ITEMS]
-            self._populate_box(filtered[: self.MAX_ITEMS])
-        else:
-            bb = SearchWebButton(query, self.scale)
-            self.current_items = [bb]
-            self._populate_box([bb])
+        if query.startswith(prefix):
+            self.mode = LauncherMode.ACTIONS
+
+        match self.mode:
+            case LauncherMode.APPLICATIONS:
+                filtered = self.applications.search(self.applications.apps, query)
+                if filtered:
+                    self.current_items = filtered[: self.MAX_ITEMS]
+                    self._populate_box(self.current_items)
+                else:
+                    web_btn = SearchWebButton(query, self.scale)
+                    self.current_items = [web_btn]
+                    self._populate_box([web_btn])
+
+            case LauncherMode.ACTIONS:
+                filtered = [
+                    ActionItem(action, self.scale)
+                    for action in self.actions
+                    if query.replace(prefix, "") in action.name.lower().strip()
+                ]
+                self.current_items = filtered
+                self._populate_box(filtered)
+
+            case LauncherMode.CLIPBOARD:
+                clipboard_items = get_clipboard_history()
+                filtered = [
+                    ClipboardItemButton(c, self.scale)
+                    for c in clipboard_items
+                    if query in c.raw.lower()
+                ]
+                self.current_items = filtered
+                self._populate_box(filtered)
+
+            case _:
+                self._refresh_items()
