@@ -272,6 +272,8 @@ class Launcher(MonitorRevealerBaseWidget):
     def __search(self, *_):
         query: str = self._entry.text.lower().strip()
         prefix = user.command_prefix
+        if self.mode not in [LauncherMode.APPLICATIONS, LauncherMode.CLIPBOARD]:
+            self.mode = LauncherMode.APPLICATIONS
 
         if not query:
             self._refresh_items()
