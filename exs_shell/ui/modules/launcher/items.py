@@ -36,6 +36,7 @@ class BaseLauncherItem(Button):
             child=content_box,
             on_click=self.launch,
             focusable=False,
+            can_focus=False,
             css_classes=["exs-launcher-app"],
         )
 

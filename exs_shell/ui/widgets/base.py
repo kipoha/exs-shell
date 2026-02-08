@@ -1,5 +1,6 @@
 from ignis.widgets import CenterBox, Box
 
+from exs_shell import register
 from exs_shell.interfaces.enums.gtk.transitions import RevealerTransition
 from exs_shell.interfaces.schemas.widget.base import WindowEntity
 from exs_shell.ui.widgets.windows import RevealerWindow, Revealer, Window
@@ -38,6 +39,7 @@ class BaseWidget:
         self._main.set_visible(value)
 
 
+@register.event
 class RevealerBaseWidget(BaseWidget):
     def __init__(
         self,
@@ -75,6 +77,10 @@ class RevealerBaseWidget(BaseWidget):
     def revealer(self, value: Revealer) -> None:
         self._revealer = value
 
+    @register.events.window("notify::visible")
+    def _on_revealer(self, *_):
+        self.revealer.set_reveal_child(self.visible)
+
 
 class MonitorWidget(BaseWidget):
     def __init__(self) -> None:
@@ -110,7 +116,7 @@ class MonitorRevealerBaseWidget(MonitorWidget, RevealerBaseWidget):
         reveal_child: bool = False,
     ) -> None:
         MonitorWidget.__init__(self)
-        RevealerBaseWidget.__init__(
+        RevealerBaseWidget.__init__(  # type: ignore
             self,
             child=child,
             window_param=window_param,

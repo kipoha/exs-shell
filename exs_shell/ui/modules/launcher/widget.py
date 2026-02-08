@@ -3,7 +3,7 @@ from typing import Any
 from ignis.widgets import Entry, Scroll, Corner, Box, Icon
 from ignis.services.applications import ApplicationsService, Application
 
-from gi.repository import GLib, Gdk, GLib  # type: ignore
+from gi.repository import GLib, Gdk  # type: ignore
 
 from exs_shell import register
 from exs_shell.configs.user import user
@@ -147,12 +147,10 @@ class Launcher(MonitorRevealerBaseWidget):
                 raise ValueError
 
         self.current_items = items
-        self._populate_box(
-            items, reset_index=True if self.active_index >= len(items) else False
-        )
+        self._populate_box(items, reset_index=True)
 
     @register.events.key_kontroller("key-pressed")
-    def __on_key_released(self, controller, keyval, keycode, state):
+    def __on_key_pressed(self, controller, keyval, keycode, state):
         match keyval:
             case 65307:  # 65307 = ESC
                 if self.mode != LauncherMode.APPLICATIONS:
@@ -173,6 +171,7 @@ class Launcher(MonitorRevealerBaseWidget):
                 char = Gdk.keyval_to_unicode(keyval)
                 if char != 0:
                     self._entry.text += chr(char)
+        return True
 
     def _populate_box(self, items: list[Any], reset_index: bool = True):
         for item in self._added_items:
@@ -180,10 +179,11 @@ class Launcher(MonitorRevealerBaseWidget):
         self._added_items.clear()
 
         for item in items:
-            if isinstance(item, Application):
-                widget = LauncherAppItem(item, self.scale)
-            else:
-                widget = item
+            widget = (
+                LauncherAppItem(item, self.scale)
+                if isinstance(item, Application)
+                else item
+            )
             self._list_box.append(widget)
             self._added_items.append(widget)
 

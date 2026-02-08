@@ -70,10 +70,17 @@ def power_profiles(signal: str) -> EventDeco:
         signal,
     )
 
-
-def audio(signal: str) -> EventDeco:
+def window(signal: str) -> EventDeco:
     return _base_connector(
-        lambda _: State.services.audio,
+        lambda _: _._main,  # any window class
+        "connect",
+        signal,
+    )
+
+
+def audio(signal: str, attr: str | None = None) -> EventDeco:
+    return _base_connector(
+        lambda _: getattr(State.services.audio, attr) if attr else State.services.audio,
         "connect",
         signal,
     )

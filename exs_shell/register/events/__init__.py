@@ -16,7 +16,8 @@ from exs_shell.register.events.connectors import (
     notification,
     battery,
     applications,
-    key_kontroller
+    key_kontroller,
+    window,
 )
 
 
@@ -39,4 +40,5 @@ __all__ = [
     "battery",
     "applications",
     "key_kontroller",
+    "window",
 ]
