@@ -55,15 +55,14 @@ chmod +x scripts/install-dev.sh
 
 2. Verify installation:
 ```bash
-which exs-shell
-which exs-ipc
+which exs
 ```
 
 3. Quick `ipc` command(Optional):
 If you have a separate script for fast commands like brightness control:
 ```bash
-exs-ipc brightness-up
+exs ipc launcher toggle
 ```
 
 Use to see all commands
-```exs-ipc help```
+```exs -h```

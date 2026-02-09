@@ -1,25 +1,13 @@
-import sys
 import argparse
 from exs_shell.app import App
 
 
-def main():
-    parser = argparse.ArgumentParser(description="Run the EXS Shell App")
-    parser.add_argument(
-        "--debug",
-        action="store_true",
-        help="Run the app in debug mode"
-    )
-    parser.add_argument(
-        "--dev",
-        action="store_true",
-        help="Run the app in development mode"
-    )
+def shell_cmd(parser: argparse.ArgumentParser):
+    parser.add_argument("--dev", action="store_true", help="Run the app in development mode")
+    parser.add_argument("--debug", action="store_true", help="Run the app in debug mode")
 
-    args = parser.parse_args()
+    parser.set_defaults(func=run_shell)
 
+
+def run_shell(args: argparse.Namespace):
     App.run(debug=args.debug, dev=args.dev)
-
-
-if __name__ == "__main__":
-    main()

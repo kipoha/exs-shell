@@ -15,5 +15,4 @@ create_symlink() {
     sudo ln -s "$target" "$link"
 }
 
-create_symlink "/opt/exs-shell/bin/exs-shell" "/usr/local/bin/exs-shell"
-create_symlink "/opt/exs-shell/bin/exs-ipc" "/usr/local/bin/exs-ipc"
+create_symlink "/opt/exs-shell/bin/exs" "/usr/local/bin/exs"
