@@ -1,5 +1,5 @@
 import argparse
-
+import sys
 from exs_shell.cli.shell import shell_cmd
 from exs_shell.cli.ipc import ipc_cmd
 from exs_shell.cli.update import update_cmd
@@ -7,10 +7,7 @@ from exs_shell.cli.version import version_cmd
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        prog="exs",
-        description="EXS Shell CLI",
-    )
+    parser = argparse.ArgumentParser(prog="exs", description="EXS Shell CLI")
 
     sub = parser.add_subparsers(dest="command", required=True)
 

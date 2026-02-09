@@ -1,5 +1,6 @@
 import os
 import sys
+import traceback
 
 from loguru import logger
 
@@ -7,7 +8,16 @@ from watchdog.events import DirModifiedEvent, FileModifiedEvent, FileSystemEvent
 
 from exs_shell.utils.path import Paths
 
-IGNORE_PATHS = (".venv", "__pycache__", ".git", "node_modules", "pg_storage", "exs_shell_deprecated")
+IGNORE_PATHS = (
+    ".venv",
+    "__pycache__",
+    ".git",
+    "node_modules",
+    "pg_storage",
+    "exs_shell_deprecated",
+)
+
+
 
 
 class ReloadHandler(FileSystemEventHandler):
@@ -26,4 +36,4 @@ class ReloadHandler(FileSystemEventHandler):
         os.environ["PYTHONPATH"] = root
 
         python = sys.executable
-        os.execv(python, [python, "-m", "exs_shell.cli.shell"] + sys.argv[1:])
+        os.execv(python, [python, "-m", "exs_shell.cli"] + sys.argv[1:])
