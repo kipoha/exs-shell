@@ -1,3 +1,5 @@
+from functools import partial
+
 from typing import Callable
 
 from gi.repository import GLib  # type: ignore
@@ -14,13 +16,14 @@ def commands_predicate(func):
 
 
 def commands_handler(obj, bound):
-    cmd: dict[str, Command] = bound.ipc_command
-    cmd_obj: Command = next(iter(cmd.values()))
-    cmd_obj.kwargs.update({"self": obj})
-    group = cmd_obj.group
-    if group not in State.commands:
-        State.commands.update({group: {}})
-    State.commands[group].update(cmd)
+    cmd_dict: dict[str, Command] = bound.ipc_command
+    for name, cmd in cmd_dict.items():
+        cmd.call = partial(cmd.call, obj)
+
+        if cmd.group not in State.commands:
+            State.commands[cmd.group] = {}
+
+        State.commands[cmd.group][name] = cmd
 
 
 def commands(cls: type) -> type:
