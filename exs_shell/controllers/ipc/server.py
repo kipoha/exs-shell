@@ -24,16 +24,12 @@ async def help_command(
             + "\n"
         )
     else:
-        help_text = (
-            "\n\n".join(
-                [
-                    f"{group}:\n\t{name}: {cmd_obj.description}"
-                    for group, commands in all_commands.items()
-                    for name, cmd_obj in commands.items()
-                ]
-            )
-            + "\n"
-        )
+        help_text = ""
+        for group, commands in all_commands.items():
+            help_text += f"{group}:\n"
+            for name, cmd_obj in commands.items():
+                help_text += f"\t{name}: {cmd_obj.description}\n"
+            help_text += "\n"
     writer.write(help_text.encode("utf-8"))
     await writer.drain()
     writer.close()

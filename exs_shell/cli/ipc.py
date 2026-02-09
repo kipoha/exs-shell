@@ -1,4 +1,3 @@
-import time
 import sys
 import traceback
 
@@ -10,8 +9,6 @@ from exs_shell.utils.loop import run_async
 
 
 def main():
-    tm = time.time()
-    print(tm)
     if len(sys.argv) < 2:
         logger.error("Usage: exs-ipc <command>")
         exit(1)
@@ -24,7 +21,6 @@ def main():
         e = traceback.format_exc()
         logger.error(e)
         exit(1)
-    print(time.time() - tm)
 
 
 if __name__ == "__main__":

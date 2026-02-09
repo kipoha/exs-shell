@@ -185,6 +185,7 @@ class NotificationCenter(MonitorRevealerBaseWidget):
             child=[self.corners, self._inner],
         )
 
+    @register.command(group="notificationCenter", description="Clear all notifications", name="clear")
     def clear_all(self, *_: Any):
         self.notifications.clear_all()
 
