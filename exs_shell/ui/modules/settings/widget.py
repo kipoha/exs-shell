@@ -7,6 +7,7 @@ from exs_shell.ui.factory import window
 
 
 @register.window
+@register.commands
 class Settings(RevealerBaseWidget):
     def __init__(self) -> None:
         self._box = Box(
@@ -33,3 +34,7 @@ class Settings(RevealerBaseWidget):
             transition_duration=300,
             reveal_child=True,
         )
+
+    @register.command(group="settings", description="Toggle settings")
+    def toggle(self):
+        self.set_visible(not self.visible)

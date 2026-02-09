@@ -7,4 +7,5 @@ def init() -> None:
     State.widgets
     State.services
     State.windows
+    State.commands
     State.window_manager = WindowManager()

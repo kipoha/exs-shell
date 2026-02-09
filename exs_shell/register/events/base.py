@@ -1,6 +1,6 @@
 from typing import Any, Callable, TypeVar, TypeAlias
 from gi.repository import GLib  # type: ignore
-from exs_shell.register.deco import add_post_init
+from exs_shell.register.deco import add_post_init, run_method_handler
 
 F = TypeVar("F", bound=Callable[..., Any])
 EventDeco: TypeAlias = Callable[[F], F]
@@ -23,23 +23,22 @@ def _base_connector(
     return decorator
 
 
+def event_predicate(func):
+    return hasattr(func, "_event_calls")
+
+
+def event_handler(obj, bound):
+    for target_getter, connect_method, args, kw in bound._event_calls:
+        if target_getter is None and "_poll" in kw:
+            kw["_poll"](obj)
+        else:
+            target = target_getter(obj)
+            getattr(target, connect_method)(*args, bound, **kw)
+
+
 def event(cls: type) -> type:
     def setup(self):
-        def setup_events():
-            for base in type(self).mro():
-                for attr in base.__dict__.values():
-                    if callable(attr) and hasattr(attr, "_event_calls"):
-                        bound = attr.__get__(self, type(self))
-                        for target_getter, connect_method, args, kw in getattr(
-                            attr, "_event_calls"
-                        ):
-                            if target_getter is None and "_poll" in kw:
-                                kw["_poll"](self)
-                            else:
-                                target = target_getter(self)
-                                getattr(target, connect_method)(*args, bound, **kw)
-
-        GLib.idle_add(setup_events)
+        GLib.idle_add(lambda: run_method_handler(self, event_predicate, event_handler))
 
     add_post_init(cls, setup)
     return cls

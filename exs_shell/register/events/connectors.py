@@ -1,3 +1,5 @@
+from functools import reduce
+
 from gi.repository import Gtk  # type: ignore
 
 from ignis.utils import Poll
@@ -39,9 +41,9 @@ def cava(output_type: CavaOutput) -> EventDeco:
     )
 
 
-def notification(signal: str) -> EventDeco:
+def notifications(signal: str, notification: bool = False) -> EventDeco:
     return _base_connector(
-        lambda _: State.services.notification,
+        lambda _: _.notification if notification else State.services.notifications,
         "connect",
         signal,
     )
@@ -78,9 +80,9 @@ def window(signal: str) -> EventDeco:
     )
 
 
-def audio(signal: str, attr: str | None = None) -> EventDeco:
+def audio(signal: str, *attrs: str) -> EventDeco:
     return _base_connector(
-        lambda _: getattr(State.services.audio, attr) if attr else State.services.audio,
+        lambda _: reduce(getattr, attrs, State.services.audio),
         "connect",
         signal,
     )

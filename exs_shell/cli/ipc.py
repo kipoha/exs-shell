@@ -13,7 +13,7 @@ def main():
         logger.error("Usage: exs-ipc <command>")
         exit(1)
     try:
-        run_async(send_command(sys.argv[1]))
+        run_async(send_command(*sys.argv[1:]))
     except ConnectionRefusedError:
         logger.error(f"{APP_NAME} IPC is not running")
         exit(1)

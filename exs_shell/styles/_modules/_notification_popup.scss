@@ -1,0 +1,33 @@
+.notification-popup-window {
+  margin: 1rem;
+}
+
+.notification-popup {
+  margin-top: 0.5rem;
+  min-width: 25rem;
+  background-color: c.$background;
+  padding: 1rem;
+  border-radius: 2rem;
+
+  & .notification-close {
+    background-color: c.$primary;
+    border-radius: 0.8rem;
+    color: c.$background;
+  }
+
+  & .notification-action {
+    background-color: c.$primary;
+    border-radius: 0.5rem;
+    color: c.$background;
+  }
+
+  & .notification-close:hover {
+    background-color: c.$onPrimary;
+    color: c.$onSurface;
+  }
+
+  & .notification-action:hover {
+    background-color: c.$onPrimary;
+    color: c.$onSurface;
+  }
+}

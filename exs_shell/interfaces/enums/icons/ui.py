@@ -22,3 +22,5 @@ class UIIcons(StrEnum):
     SERVICES = ""
     INFO = ""
     INTERFACE = ""
+    SLINE = ""
+    ARC = ""

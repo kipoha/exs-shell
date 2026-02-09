@@ -1,5 +1,6 @@
 from exs_shell.state import State
 from exs_shell.interfaces.types import AnyDict
+from exs_shell.register.cmd import command, commands
 from exs_shell.register.deco import add_post_init
 from exs_shell.register.events import event
 from exs_shell.register import events
@@ -34,4 +35,6 @@ __all__ = [
     "window",
     "event",
     "events",
+    "command",
+    "commands",
 ]

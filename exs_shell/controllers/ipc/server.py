@@ -1,10 +1,12 @@
 import json
 import asyncio
 
+from exs_shell.state import State
 from exs_shell.utils import Dirs
-from exs_shell.controllers.commands import include_commands
 from exs_shell.interfaces.schemas.ipc.commands import Command
 from exs_shell.interfaces.types import Commands
+
+all_commands: Commands = State.commands
 
 
 async def return_error(writer: asyncio.StreamWriter) -> None:
@@ -24,14 +26,29 @@ async def run_command(writer: asyncio.StreamWriter, cmd: Command) -> None:
 
 async def help_command(
     writer: asyncio.StreamWriter,
-    commands: Commands,
+    group: str | None = None,
 ) -> None:
-    help_data = {name: cmd_obj.description for name, cmd_obj in commands.items()}
-
-    help_text = (
-        "\n".join([f"{name}: {description}" for name, description in help_data.items()])
-        + "\n"
-    )
+    if group in all_commands:
+        help_text = (
+            "\n".join(
+                [
+                    f"{name}: {cmd_obj.description}"
+                    for name, cmd_obj in all_commands[group].items()
+                ]
+            )
+            + "\n"
+        )
+    else:
+        help_text = (
+            "\n\n".join(
+                [
+                    f"{group}:\n\t{name}: {cmd_obj.description}"
+                    for group, commands in all_commands.items()
+                    for name, cmd_obj in commands.items()
+                ]
+            )
+            + "\n"
+        )
     writer.write(help_text.encode("utf-8"))
     await writer.drain()
     writer.close()
@@ -48,16 +65,21 @@ async def handle_client(
 
     try:
         msg = json.loads(data.decode())
-        cmd = msg.get("cmd")
+        cmd: list[str] = msg.get("cmd")
+        if len(cmd) > 2:
+            return await return_error(writer)
     except Exception:
         writer.close()
         return await writer.wait_closed()
 
-    commands = include_commands()
-    if cmd == "help":
-        return await help_command(writer, commands)
+    if cmd[0] in ["help", "-h", "--help"]:
+        return await help_command(writer, cmd[1] if len(cmd) > 1 else None)
 
-    command = commands.get(cmd)
+    command: Command | None = None
+    group, name = cmd[0], cmd[1]
+    if group in all_commands:
+        command = all_commands.get(group, {}).get(name)
+
     if not command:
         return await return_error(writer)
 

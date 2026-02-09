@@ -24,6 +24,7 @@ from exs_shell.utils.clipboard import get_clipboard_history
 
 @register.window
 @register.event
+@register.commands
 class Launcher(MonitorRevealerBaseWidget):
     MAX_ITEMS = 5
 
@@ -43,6 +44,7 @@ class Launcher(MonitorRevealerBaseWidget):
             visible=False,
             kb_mode=KeyboardMode.EXCLUSIVE,
             anchor=["bottom"],
+            dynamic_input_region=True
         )
         super().__init__(
             self._box,
@@ -314,3 +316,7 @@ class Launcher(MonitorRevealerBaseWidget):
 
             case _:
                 self._refresh_items()
+    
+    @register.command("launcher", description="Toggle launcher")
+    def toggle(self):
+        self.set_visible(not self.visible)

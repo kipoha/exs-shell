@@ -1,0 +1,110 @@
+/* window { */
+/*   background-color: c.$onPrimary; */
+/* } */
+.notification-right-corner,
+.notification-left-corner {
+  color: c.$background;
+}
+
+
+.notification-center-window {
+  background-color: c.$background;
+  padding: 1rem;
+}
+
+.notification-center-header {
+  margin-bottom: 1rem;
+}
+
+.notification {
+  background-color: c.$surfaceContainerHigh;
+  border-radius: 1rem;
+  padding: 1rem;
+  margin-top: 1rem;
+}
+
+.notification-count {
+  background-color: c.$surfaceContainerHigh;
+  color: c.$primary;
+  min-width: 2rem;
+  font-size: 1.5rem;
+  border-radius: 2rem;
+  padding: 0 0.1rem;
+}
+
+.notification-header-label {
+  font-size: 1.1rem;
+  margin-left: 0.5rem;
+}
+
+.notification-close {
+  color: c.$surface;
+  border-radius: 1rem;
+  padding: 0.25rem;
+  margin-left: 0.5rem;
+  transition: 0.3s;
+}
+
+.notification-close:hover {
+  background-color: c.$primary;
+  color: c.$background;
+}
+
+.notification-clear-all {
+  transition: 0.3s;
+  border-radius: 1rem;
+  padding: 0.25rem 1rem 0.25rem 0.9rem;
+  font-size: 2rem;
+  background-color: c.$surfaceContainerHigh;
+  color: c.$primary;
+}
+
+.notification-clear-all:hover {
+  background-color: c.$primary;
+  color: c.$background;
+}
+
+.notification-dnd {
+  transition: 0.3s;
+  border-radius: 1rem;
+  padding: 0.25rem 1rem 0.25rem 0.5rem;
+  font-size: 1.5rem;
+  background-color: c.$surfaceContainerHigh;
+  color: c.$primary;
+}
+
+.notification-dnd:hover {
+  background-color: c.$primary;
+  color: c.$background;
+}
+
+.notification-dnd.active {
+  background-color: c.$primary;
+  color: c.$background;
+}
+
+.notification-action {
+  background-color: c.$primary;
+  color: c.$background;
+  border-radius: 0.5rem;
+  padding: 0.25rem 0.25rem;
+  transition: 0.3s;
+}
+
+.notification-action:hover {
+  background-color: c.$onTertiary;
+  color: c.$onSurface;
+}
+
+.notification-screenshot-label {
+  margin-top: 0.5rem;
+  font-size: 1.1rem;
+}
+
+.notification-center-info-label {
+  color: c.$onSurface;
+}
+
+.notification-body {
+  color: c.$onSurface;
+}

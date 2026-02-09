@@ -9,7 +9,7 @@ if TYPE_CHECKING:
 type Anchor = Literal["left", "right", "top", "bottom"]
 type AnyDict = dict[str, Any]
 type AnyList = list[Any]
-type Commands = dict[str, Command]
+type Commands = dict[str, dict[str, Command]]
 type RGB = tuple[int, int, int]
 type RGBA = tuple[int, int, int, int]
 type CavaOutput = Literal["text", "values"]

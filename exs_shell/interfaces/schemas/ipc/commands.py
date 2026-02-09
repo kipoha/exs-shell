@@ -14,3 +14,4 @@ class Command:
     args: AnyList = field(default_factory=list)
     kwargs: AnyDict = field(default_factory=dict)
     description: str = ""
+    group: str = "base"

@@ -17,3 +17,15 @@ def add_post_init(cls: type, hook: Callable[[Any], None]):
 
     setattr(new_init, "_is_wrapped", True)
     cls.__init__ = new_init  # type: ignore
+
+
+def iter_class_methods(obj, predicate: Callable[[Any], bool]):
+    for base in type(obj).mro():
+        for attr in base.__dict__.values():
+            if callable(attr) and predicate(attr):
+                yield attr.__get__(obj, type(obj))
+
+
+def run_method_handler(obj, predicate, handler):
+    for bound in iter_class_methods(obj, predicate):
+        handler(obj, bound)
