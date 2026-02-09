@@ -9,14 +9,7 @@ async def send_command(*cmd: str) -> None:
     writer.write(json.dumps({"cmd": cmd}).encode() + b"\n")
     await writer.drain()
 
-    response = b""
-    while True:
-        line = await reader.readline()
-        if not line:
-            break
-        response += line
-
+    response = await reader.read(4096)
     print(response.decode("utf-8"))
 
     writer.close()
-    await writer.wait_closed()
