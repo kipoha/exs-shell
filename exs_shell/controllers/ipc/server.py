@@ -1,6 +1,5 @@
 import json
 import asyncio
-from pprint import pprint
 
 from exs_shell.state import State
 from exs_shell.utils import Dirs
@@ -59,7 +58,6 @@ async def help_command(
 async def handle_client(
     reader: asyncio.StreamReader, writer: asyncio.StreamWriter
 ) -> None:
-    pprint(all_commands)
     data = await reader.readline()
     if not data:
         writer.close()
@@ -68,7 +66,6 @@ async def handle_client(
     try:
         msg = json.loads(data.decode())
         cmd: list[str] = msg.get("cmd")
-        print(cmd)
         if len(cmd) > 2:
             return await return_error(writer)
     except Exception:
