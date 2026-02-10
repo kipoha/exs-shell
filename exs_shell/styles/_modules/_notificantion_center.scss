@@ -1,8 +1,10 @@
 /* window { */
 /*   background-color: c.$onPrimary; */
 /* } */
-.notification-right-corner,
-.notification-left-corner {
+.exs-corners {
+  /* color: c.$background; */
+}
+.notification-corner {
   color: c.$background;
 }
 

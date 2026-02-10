@@ -2,14 +2,14 @@ from typing import Any
 
 from ignis import utils
 from ignis.services.notifications import Notification, NotificationService
-from ignis.widgets import Box, Button, CenterBox, Corner, Label, Scroll
+from ignis.widgets import Box, Button, CenterBox, Corner, Label, Overlay, Scroll
 
 from gi.repository import GLib  # type: ignore
 
 from exs_shell import register
 from exs_shell.configs.user import notifications
 from exs_shell.interfaces.enums.gtk.transitions import RevealerTransition
-from exs_shell.interfaces.enums.gtk.windows import KeyboardMode
+from exs_shell.interfaces.enums.gtk.windows import Exclusivity, KeyboardMode
 from exs_shell.state import State
 from exs_shell.ui.factory import window
 from exs_shell.ui.modules.notification.shared import NotificationWidget
@@ -19,7 +19,7 @@ from exs_shell.ui.widgets.windows import Revealer
 
 @register.event
 class Popup(Revealer):
-    def __init__(self, notification: Notification, **kwargs):
+    def __init__(self, notification: Notification, **kwargs: Any):
         self.notification = notification
         widget = NotificationWidget(notification)
         super().__init__(
@@ -96,11 +96,12 @@ class NotificationCenter(MonitorRevealerBaseWidget):
         self.widget_build()
         win = window.create(
             "notification_center",
-            # anchor=["bottom", "right", "top"],
             anchor=["top", "bottom", "right"],
             kb_mode=KeyboardMode.ON_DEMAND,
+            # exclusivity=Exclusivity.EXCLUSIVE,
             visible=False,
             popup=True,
+            dynamic_input_region=True,
         )
         super().__init__(
             self._box, win, transition_type, transition_duration, reveal_child
@@ -130,7 +131,7 @@ class NotificationCenter(MonitorRevealerBaseWidget):
         )
 
         self.top_corner = Corner(
-            css_classes=["notification-left-corner"],
+            css_classes=["notification-corner"],
             orientation="top-right",
             width_request=50,
             height_request=70,
@@ -138,14 +139,13 @@ class NotificationCenter(MonitorRevealerBaseWidget):
             valign="end",
         )
         self.bottom_corner = Corner(
-            css_classes=["notification-right-corner"],
+            css_classes=["notification-corner"],
             orientation="bottom-right",
             width_request=50,
             height_request=70,
             halign="end",
             valign="end",
         )
-
         self._inner = Box(
             vertical=True,
             css_classes=["notification-center-window", "hidden"],
@@ -172,12 +172,14 @@ class NotificationCenter(MonitorRevealerBaseWidget):
                 ),
             ],
         )
+
         self.corners = CenterBox(
             css_classes=["notification-center-corners"],
             vertical=True,
+            vexpand=False,
+            hexpand=False,
             start_widget=self.top_corner,
             end_widget=self.bottom_corner,
-            # child=[self.top_corner, Box(vexpand=True), self.bottom_corner],
         )
 
         self._box = Box(
