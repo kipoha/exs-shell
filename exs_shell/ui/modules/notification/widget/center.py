@@ -9,7 +9,7 @@ from gi.repository import GLib  # type: ignore
 from exs_shell import register
 from exs_shell.configs.user import notifications
 from exs_shell.interfaces.enums.gtk.transitions import RevealerTransition
-from exs_shell.interfaces.enums.gtk.windows import KeyboardMode
+from exs_shell.interfaces.enums.gtk.windows import Exclusivity, KeyboardMode
 from exs_shell.state import State
 from exs_shell.ui.factory import window
 from exs_shell.ui.modules.notification.shared import NotificationWidget
@@ -94,13 +94,13 @@ class NotificationCenter(MonitorRevealerBaseWidget):
         win = window.create(
             "notification_center",
             anchor=["top", "bottom", "right"],
-            kb_mode=KeyboardMode.ON_DEMAND,
-            # exclusivity=Exclusivity.EXCLUSIVE,
+            kb_mode=KeyboardMode.NONE,
+            exclusivity=Exclusivity.EXCLUSIVE,
             visible=False,
             popup=True,
             dynamic_input_region=True,
         )
-        super().__init__(self._box, win, [self._rev_corners, self._rev_inner])
+        super().__init__(self._box, win, [self._rev_inner])
         self._inner.set_size_request(400 * self.scale, -1)
 
     def widget_build(self) -> None:
@@ -183,13 +183,14 @@ class NotificationCenter(MonitorRevealerBaseWidget):
             child=self.corners,
         )
         self._rev_inner = Revealer(
-            transition_type=RevealerTransition.SLIDE_LEFT,
+            transition_type=RevealerTransition.CROSSFADE,
             transition_duration=300,
             child=self._inner,
         )
         self._box = Box(
             css_classes=["notification-center"],
-            child=[self._rev_corners, self._rev_inner],
+            # child=[self._rev_corners, self._rev_inner],
+            child=[self._rev_inner],
         )
 
     @register.command(

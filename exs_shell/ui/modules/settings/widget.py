@@ -1,7 +1,6 @@
 from ignis.widgets import Label, Button, Box
 
 from exs_shell import register
-from exs_shell.interfaces.enums.gtk.transitions import RevealerTransition
 from exs_shell.ui.widgets.base import RevealerBaseWidget
 from exs_shell.ui.factory import window
 

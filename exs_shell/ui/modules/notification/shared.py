@@ -183,11 +183,6 @@ class NotificationWidget(Box):
         def update():
             elapsed = time.monotonic() - start_time
             progress = 100 - (elapsed / duration) * 100
-
-            if progress <= 0:
-                notification.close()
-                return False
-
             self._scale.set_value(progress)
             return True
 

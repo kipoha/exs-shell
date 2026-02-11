@@ -3,6 +3,7 @@ from ignis.widgets import Box, CenterBox
 from exs_shell import register
 from exs_shell.configs.user import bar
 from exs_shell.interfaces.enums.gtk.transitions import RevealerTransition
+from exs_shell.interfaces.enums.gtk.windows import Layer
 from exs_shell.interfaces.types import AnyDict
 from exs_shell.ui.factory import window
 from exs_shell.ui.factory.bar_widgets import create_bar_widgets
@@ -21,15 +22,16 @@ class Bar(RevealerBaseWidget):
             self._inner,
             transition_type=RevealerTransition.SLIDE_DOWN,
             transition_duration=200,
+            hexpand=True,
         )
-        self._box = Box(child=[self._rev_inner])
+        self._box = Box(child=[self._rev_inner], hexpand=True)
 
-        self._inner.set_size_request(int(950 * self.scale), int(30 * self.scale))
         win_param = window.create(
             namespace=f"bar{monitor_num}",
             monitor=monitor_num,
-            anchor=[bar.position],  # type: ignore
+            anchor=["left", bar.position, "right"],  # type: ignore
             visible=False,
+            layer=Layer.OVERLAY,
             **self.get_option_margin(),
         )
 
@@ -58,13 +60,15 @@ class Bar(RevealerBaseWidget):
                 css_classes=["exs-bar-right"],
             ),
             css_classes=["exs-bar"],
+            hexpand=True,
         )
 
     def get_option_margin(self) -> AnyDict:
+        m = 490 * self.scale
         if bar.position == "top":
-            return {"margin_top": int(227 * self.scale), "margin_bottom": 0}
+            return {"margin_top": int(227 * self.scale), "margin_bottom": 0, "margin_left": m, "margin_right": m}
         else:
-            return {"margin_bottom": int(227 * self.scale), "margin_top": 0}
+            return {"margin_bottom": int(227 * self.scale), "margin_top": 0, "margin_left": m, "margin_right": m}
 
     @register.events.niri("notify::overview-opened")
     def overview(self, niri, *_):

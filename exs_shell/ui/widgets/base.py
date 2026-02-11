@@ -38,6 +38,10 @@ class BaseWidget:
     def visible(self, value: bool) -> None:
         self._main.set_visible(value)
 
+    @property
+    def width(self) -> int:
+        return self._main.width
+
 
 @register.event
 class RevealerBaseWidget(BaseWidget):

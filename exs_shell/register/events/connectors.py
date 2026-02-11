@@ -72,6 +72,7 @@ def power_profiles(signal: str) -> EventDeco:
         signal,
     )
 
+
 def window(signal: str) -> EventDeco:
     return _base_connector(
         lambda _: _._main,  # any window class
@@ -120,7 +121,7 @@ def upower(signal: str) -> EventDeco:
     )
 
 
-if hasattr(State.services.upower, "batteries"):
+if hasattr(State.services.upower, "batteries") and State.services.upower.batteries:
 
     def battery(signal: str) -> EventDeco:
         return _base_connector(
@@ -174,9 +175,11 @@ def applications(signal: str) -> EventDeco:
 
 def key_kontroller(signal: str) -> EventDeco:
     key_controller = Gtk.EventControllerKey()
+
     def func(self):
         self._main.add_controller(key_controller)
         return key_controller
+
     return _base_connector(
         func,
         "connect",

@@ -1,5 +1,5 @@
 from exs_shell.utils import monitor
-# from exs_shell.ui.modules.corners import Corners
+from exs_shell.ui.modules.corners import Corners
 from exs_shell.ui.modules.bar.widget import Bar
 from exs_shell.ui.modules.notification.widget.center import NotificationCenter
 from exs_shell.ui.modules.notification.widget.popup import NotificationPopup
@@ -15,4 +15,4 @@ def init() -> None:
     NotificationCenter()
     monitor.init_windows(Bar)
     monitor.init_windows(NotificationPopup)
-    # monitor.init_windows(Corners)
+    monitor.init_windows(Corners)

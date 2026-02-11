@@ -1,9 +1,9 @@
 from ignis.widgets import Box, CenterBox, Corner
 
 from exs_shell.interfaces.enums.gtk.transitions import RevealerTransition
-from exs_shell.interfaces.enums.gtk.windows import Exclusivity, Layer
 from exs_shell.ui.widgets.base import MonitorRevealerBaseWidget
 from exs_shell.ui.factory import window
+from exs_shell.ui.widgets.windows import Revealer
 
 
 class TopCorners(MonitorRevealerBaseWidget):
@@ -16,8 +16,7 @@ class TopCorners(MonitorRevealerBaseWidget):
             monitor=monitor_id,
         )
         self.widget_build()
-        super().__init__(self._box, win, RevealerTransition.CROSSFADE, 400, False)
-        self._revealer_box.set_hexpand(True)
+        super().__init__(self._box, win, [self._rev_inner])
 
     def widget_build(self) -> None:
         self.top_left = Corner(
@@ -36,10 +35,20 @@ class TopCorners(MonitorRevealerBaseWidget):
             halign="end",
             valign="start",
         )
-        self._box = CenterBox(
+        self._inner = CenterBox(
             vertical=False,
             start_widget=self.top_left,
             end_widget=self.top_right,
+            hexpand=True,
+        )
+        self._rev_inner = Revealer(
+            child=self._inner,
+            transition_type=RevealerTransition.CROSSFADE,
+            transition_duration=200,
+            hexpand=True
+        )
+        self._box = Box(
+            child=[self._rev_inner],
             hexpand=True,
         )
 
@@ -54,7 +63,7 @@ class BottomCorners(MonitorRevealerBaseWidget):
             monitor=monitor_id,
         )
         self.widget_build()
-        super().__init__(self._box, win, RevealerTransition.CROSSFADE, 400, False)
+        super().__init__(self._box, win, [self._rev_inner])
 
     def widget_build(self) -> None:
         self.bottom_left = Corner(
@@ -73,9 +82,21 @@ class BottomCorners(MonitorRevealerBaseWidget):
             halign="end",
             valign="end",
         )
-        self._box = CenterBox(
+        self._inner = CenterBox(
+            vertical=False,
             start_widget=self.bottom_left,
             end_widget=self.bottom_right,
+            hexpand=True,
+        )
+        self._rev_inner = Revealer(
+            child=self._inner,
+            transition_type=RevealerTransition.CROSSFADE,
+            transition_duration=200,
+            hexpand=True
+        )
+        self._box = Box(
+            child=[self._rev_inner],
+            hexpand=True,
         )
 
 

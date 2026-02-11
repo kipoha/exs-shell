@@ -19,9 +19,13 @@ def commands_handler(obj, bound):
     cmd_dict: dict[str, Command] = bound.ipc_command
     for name, cmd in cmd_dict.items():
         cmd.call = partial(cmd.call, obj)
+        group = cmd.group
 
         if cmd.group not in State.commands:
             State.commands[cmd.group] = {}
+
+        if name in State.commands.get(cmd.group, {}):
+            raise ValueError(f"Command \"{name}\" already exists in group \"{group}\"")
 
         State.commands[cmd.group][name] = cmd
 
