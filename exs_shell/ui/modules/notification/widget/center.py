@@ -95,12 +95,12 @@ class NotificationCenter(MonitorRevealerBaseWidget):
             "notification_center",
             anchor=["top", "bottom", "right"],
             kb_mode=KeyboardMode.NONE,
-            exclusivity=Exclusivity.EXCLUSIVE,
+            # exclusivity=Exclusivity.EXCLUSIVE,
             visible=False,
             popup=True,
             dynamic_input_region=True,
         )
-        super().__init__(self._box, win, [self._rev_inner])
+        super().__init__(self._box, win, [self._rev_corners, self._rev_inner])
         self._inner.set_size_request(400 * self.scale, -1)
 
     def widget_build(self) -> None:
@@ -128,16 +128,16 @@ class NotificationCenter(MonitorRevealerBaseWidget):
         self.top_corner = Corner(
             css_classes=["notification-corner"],
             orientation="top-right",
-            width_request=50,
-            height_request=70,
+            width_request=30,
+            height_request=30,
             halign="end",
             valign="end",
         )
         self.bottom_corner = Corner(
             css_classes=["notification-corner"],
             orientation="bottom-right",
-            width_request=50,
-            height_request=70,
+            width_request=30,
+            height_request=30,
             halign="end",
             valign="end",
         )
@@ -184,13 +184,14 @@ class NotificationCenter(MonitorRevealerBaseWidget):
         )
         self._rev_inner = Revealer(
             transition_type=RevealerTransition.SLIDE_LEFT,
-            transition_duration=300,
+            # transition_type=RevealerTransition.CROSSFADE,
+            transition_duration=200,
             child=self._inner,
         )
         self._box = Box(
             css_classes=["notification-center"],
-            # child=[self._rev_corners, self._rev_inner],
-            child=[self._rev_inner],
+            child=[self._rev_corners, self._rev_inner],
+            # child=[self._rev_inner],
         )
 
     @register.command(

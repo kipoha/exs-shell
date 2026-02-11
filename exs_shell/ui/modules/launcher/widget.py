@@ -106,16 +106,16 @@ class Launcher(MonitorRevealerBaseWidget):
         self.left_corner = Corner(
             css_classes=["exs-launcher-left-corner"],
             orientation="bottom-right",
-            width_request=50,
-            height_request=50,
+            width_request=30,
+            height_request=30,
             halign="end",
             valign="end",
         )
         self.right_corner = Corner(
             css_classes=["exs-launcher-right-corner"],
             orientation="bottom-left",
-            width_request=50,
-            height_request=50,
+            width_request=30,
+            height_request=30,
             halign="end",
             valign="end",
         )
