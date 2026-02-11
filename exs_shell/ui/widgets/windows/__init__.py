@@ -1,10 +1,11 @@
 from typing import Any
 
 from ignis.base_widget import BaseWidget
+from ignis.gobject import IgnisProperty
+from ignis.utils import Timeout
 from ignis.widgets import (
     Window as IgnisWindow,
     Revealer as IgnisRevealer,
-    RevealerWindow as IgnisRevealerWindow,
 )
 
 from exs_shell.app.vars import NAMESPACE
@@ -65,11 +66,57 @@ class Revealer(IgnisRevealer):
         )
 
 
-class RevealerWindow(IgnisRevealerWindow):
+class BaseRevealerWindow(Window):
+    transition_duration: int = 0
+    _revealers: list[Revealer] = []
+
+    def __init__(self, revealers: list[Revealer], **kwargs: Any) -> None:
+        self._revealers = revealers
+        self.transition_duration = max(
+            (r.transition_duration for r in revealers), default=0
+        )
+        super().__init__(**kwargs)
+
+    def set_property(self, prop_name: str, value: Any) -> None:
+        if prop_name == "visible":
+            if value:
+                super().set_property(prop_name, value)
+            else:
+                Timeout(
+                    ms=self.transition_duration,
+                    target=lambda x=super(): x.set_property(prop_name, value),
+                )
+            for revealer in self._revealers:
+                revealer.reveal_child = value
+            self.notify("visible")
+        else:
+            super().set_property(prop_name, value)
+
+    @IgnisProperty
+    def visible(self) -> bool:
+        return any(r.reveal_child for r in self._revealers)
+
+    @visible.setter
+    def visible(self, value: bool) -> None:
+        super().set_visible(value)
+
+    @IgnisProperty
+    def revealers(self) -> list[Revealer]:
+        """
+        An instance of :class:`~ignis.widgets.Revealer`.
+        """
+        return self._revealers
+
+    @revealers.setter
+    def revealer(self, value: Revealer) -> None:
+        self._revealer = value
+
+
+class RevealerWindow(BaseRevealerWindow):
     def __init__(
         self,
         namespace: str,
-        revealer: Revealer,
+        revealers: list[Revealer] = [],
         monitor: int | None = None,
         anchor: list[Anchor] | None = None,
         exclusivity: Exclusivity = Exclusivity.NORMAL,
@@ -84,7 +131,7 @@ class RevealerWindow(IgnisRevealerWindow):
         **kwargs: Any,
     ):
         super().__init__(
-            revealer,
+            revealers,
             namespace=f"{NAMESPACE}_{namespace}",
             monitor=monitor,
             anchor=anchor,

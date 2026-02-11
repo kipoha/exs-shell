@@ -1,13 +1,8 @@
-.notification-popup-window {
-  /* margin: 1rem; */
-  /* background-color: c.$background; */
-}
-
 .notification-popup {
   margin: 0.5rem;
   min-width: 25rem;
   background-color: c.$background;
-  padding: 1rem;
+  padding: 0.1rem 1.2rem 1rem 1.2rem;
   border-radius: 2rem;
 
   & .notification-close {
@@ -31,4 +26,20 @@
     background-color: c.$onPrimary;
     color: c.$onSurface;
   }
+}
+
+.notification-progress {
+  min-height: 0.2rem;
+  border-radius: 1rem;
+}
+
+.notification-progress trough {
+  border-radius: 1rem;
+  min-height: 0.2rem;
+  background-color: c.$background;
+}
+
+.notification-progress highlight {
+  background-color: c.$primary;
+  border-radius: 1rem;
 }

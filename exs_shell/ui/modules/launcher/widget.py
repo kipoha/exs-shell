@@ -19,6 +19,7 @@ from exs_shell.ui.modules.launcher.items import (
     SearchWebButton,
 )
 from exs_shell.ui.widgets.base import MonitorRevealerBaseWidget
+from exs_shell.ui.widgets.windows import Revealer
 from exs_shell.utils.clipboard import get_clipboard_history
 
 
@@ -30,8 +31,6 @@ class Launcher(MonitorRevealerBaseWidget):
 
     def __init__(
         self,
-        transition_duration: int = 300,
-        reveal_child: bool = True,
     ) -> None:
         self.applications: ApplicationsService = State.services.applications
         self.current_items: list = self.applications.apps[: self.MAX_ITEMS]
@@ -49,14 +48,13 @@ class Launcher(MonitorRevealerBaseWidget):
         super().__init__(
             self._box,
             window_param,
-            RevealerTransition.SLIDE_DOWN,
-            transition_duration,
-            reveal_child,
+            [self._rev_left, self._rev_right, self._rev_inner],
         )
 
         self._added_items = []
         self._refresh_items()
         self.update_actions()
+
 
     @register.events.option(user, "actions")
     def update_actions(self):
@@ -109,7 +107,7 @@ class Launcher(MonitorRevealerBaseWidget):
             css_classes=["exs-launcher-left-corner"],
             orientation="bottom-right",
             width_request=50,
-            height_request=70,
+            height_request=50,
             halign="end",
             valign="end",
         )
@@ -117,21 +115,33 @@ class Launcher(MonitorRevealerBaseWidget):
             css_classes=["exs-launcher-right-corner"],
             orientation="bottom-left",
             width_request=50,
-            height_request=70,
+            height_request=50,
             halign="end",
             valign="end",
         )
+
+        self._rev_left = Revealer(
+            self.left_corner, RevealerTransition.SLIDE_LEFT, 300
+        )
+        self._rev_right = Revealer(
+            self.right_corner, RevealerTransition.SLIDE_RIGHT, 300
+        )
+        self._rev_inner = Revealer(
+            self._inner, RevealerTransition.SLIDE_UP, 300
+        )
         self._box = Box(
             child=[
-                self.left_corner,
-                self._inner,
-                self.right_corner,
+                # self.left_corner,
+                self._rev_left,
+                self._rev_inner,
+                self._rev_right,
+                # self.right_corner,
             ],
         )
 
     def __on_open(self):
-        if not self.visible:
-            return
+        self._entry.text = ""
+        self._refresh_items()
 
     def _refresh_items(self):
         match self.mode:
@@ -197,7 +207,7 @@ class Launcher(MonitorRevealerBaseWidget):
         self._update_active_style()
 
     def set_visible(self, value: bool):
-        if value:
+        if value is True:
             self.__on_open()
         return super().set_visible(value)
 

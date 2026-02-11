@@ -2,14 +2,14 @@ from typing import Any
 
 from ignis import utils
 from ignis.services.notifications import Notification, NotificationService
-from ignis.widgets import Box, Button, CenterBox, Corner, Label, Overlay, Scroll
+from ignis.widgets import Box, Button, CenterBox, Corner, Label, Scroll
 
 from gi.repository import GLib  # type: ignore
 
 from exs_shell import register
 from exs_shell.configs.user import notifications
 from exs_shell.interfaces.enums.gtk.transitions import RevealerTransition
-from exs_shell.interfaces.enums.gtk.windows import Exclusivity, KeyboardMode
+from exs_shell.interfaces.enums.gtk.windows import KeyboardMode
 from exs_shell.state import State
 from exs_shell.ui.factory import window
 from exs_shell.ui.modules.notification.shared import NotificationWidget
@@ -88,9 +88,6 @@ class NotificationList(Box):
 class NotificationCenter(MonitorRevealerBaseWidget):
     def __init__(
         self,
-        transition_type: RevealerTransition = RevealerTransition.SLIDE_RIGHT,
-        transition_duration: int = 400,
-        reveal_child: bool = False,
     ) -> None:
         self.notifications: NotificationService = State.services.notifications
         self.widget_build()
@@ -103,9 +100,7 @@ class NotificationCenter(MonitorRevealerBaseWidget):
             popup=True,
             dynamic_input_region=True,
         )
-        super().__init__(
-            self._box, win, transition_type, transition_duration, reveal_child
-        )
+        super().__init__(self._box, win, [self._rev_corners, self._rev_inner])
         self._inner.set_size_request(400 * self.scale, -1)
 
     def widget_build(self) -> None:
@@ -182,12 +177,24 @@ class NotificationCenter(MonitorRevealerBaseWidget):
             end_widget=self.bottom_corner,
         )
 
+        self._rev_corners = Revealer(
+            transition_type=RevealerTransition.SLIDE_LEFT,
+            transition_duration=300,
+            child=self.corners,
+        )
+        self._rev_inner = Revealer(
+            transition_type=RevealerTransition.SLIDE_LEFT,
+            transition_duration=300,
+            child=self._inner,
+        )
         self._box = Box(
             css_classes=["notification-center"],
-            child=[self.corners, self._inner],
+            child=[self._rev_corners, self._rev_inner],
         )
 
-    @register.command(group="notificationCenter", description="Clear all notifications", name="clear")
+    @register.command(
+        group="notificationCenter", description="Clear all notifications", name="clear"
+    )
     def clear_all(self, *_: Any):
         self.notifications.clear_all()
 
@@ -203,6 +210,8 @@ class NotificationCenter(MonitorRevealerBaseWidget):
         else:
             css.remove_class("active")
 
-    @register.command(group="notificationCenter", description="Toggle notification center")
+    @register.command(
+        group="notificationCenter", description="Toggle notification center"
+    )
     def toggle(self):
         self.set_visible(not self.visible)

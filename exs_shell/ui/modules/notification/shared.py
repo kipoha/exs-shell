@@ -1,8 +1,13 @@
-from ignis.widgets import Box, Picture, Button, Icon, Label
+import time
+
+from gi.repository import GLib  # type: ignore
+
+from ignis.widgets import Box, Picture, Button, Icon, Label, Scale
 from ignis.services.notifications import Notification
 from ignis.utils import exec_sh_async
 
 from exs_shell.utils.loop import run_async_task
+from exs_shell.configs.user import notifications
 
 
 class ScreenshotLayout(Box):
@@ -133,7 +138,12 @@ class NormalLayout(Box):
 
 
 class NotificationWidget(Box):
-    def __init__(self, notification: Notification) -> None:
+    def __init__(
+        self,
+        notification: Notification,
+        popup: bool = False,
+        timeout: int = notifications.popup_timeout,
+    ) -> None:
         layout: NormalLayout | ScreenshotLayout
 
         if notification.app_name == "grimblast":
@@ -141,7 +151,44 @@ class NotificationWidget(Box):
         else:
             layout = NormalLayout(notification)
 
-        super().__init__(
-            css_classes=["notification"],
-            child=[layout],
+        self._scale = Scale(
+            vertical=False,
+            min=0,
+            max=100,
+            step=1,
+            value=100,
+            draw_value=False,
+            sensitive=False,
+            css_classes=["notification-progress"],
         )
+        childs = []
+        if popup:
+            childs.append(self._scale)
+        childs.append(layout)
+
+        super().__init__(
+            vertical=True,
+            css_classes=["notification"],
+            child=childs,
+            spacing=7,
+        )
+
+        if popup and timeout > 0:
+            self._start_timeout(notification, timeout)
+
+    def _start_timeout(self, notification: Notification, timeout: int):
+        start_time = time.monotonic()
+        duration = timeout / 1000
+
+        def update():
+            elapsed = time.monotonic() - start_time
+            progress = 100 - (elapsed / duration) * 100
+
+            if progress <= 0:
+                notification.close()
+                return False
+
+            self._scale.set_value(progress)
+            return True
+
+        GLib.timeout_add(16, update)

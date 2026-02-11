@@ -45,41 +45,21 @@ class RevealerBaseWidget(BaseWidget):
         self,
         child: Box | CenterBox,
         window_param: WindowEntity,
-        transition_type: RevealerTransition = RevealerTransition.SLIDE_DOWN,
-        transition_duration: int = 500,
-        reveal_child: bool = False,
+        revealers: list[Revealer] = [],
     ) -> None:
         self._box = child
-        self._revealer = Revealer(
-            child=child,
-            transition_type=transition_type,
-            transition_duration=transition_duration,
-            reveal_child=reveal_child,
-        )
-        self._revealer_box = Box(child=[self._revealer])
         self._main = RevealerWindow(
-            revealer=self._revealer, child=self._revealer_box, **window_param.asdict()
+            child=self._box, revealers=revealers, **window_param.asdict()
         )
-
-    def set_child(self, value: Box | CenterBox) -> None:
-        self._box = value
-        return self._revealer_box.set_child(value)
 
     @property
     def window(self) -> RevealerWindow:
         return self._main
 
-    @property
-    def revealer(self) -> Revealer:
-        return self._revealer
-
-    @revealer.setter
-    def revealer(self, value: Revealer) -> None:
-        self._revealer = value
-
     @register.events.window("notify::visible")
     def _on_revealer(self, *_):
-        self.revealer.set_reveal_child(self.visible)
+        for revealer in self._main.revealers:
+            revealer.set_reveal_child(self.visible)
 
 
 class MonitorWidget(BaseWidget):
@@ -111,16 +91,12 @@ class MonitorRevealerBaseWidget(MonitorWidget, RevealerBaseWidget):
         self,
         child: Box | CenterBox,
         window_param: WindowEntity,
-        transition_type: RevealerTransition = RevealerTransition.SLIDE_DOWN,
-        transition_duration: int = 500,
-        reveal_child: bool = False,
+        revealers: list[Revealer] = [],
     ) -> None:
         MonitorWidget.__init__(self)
         RevealerBaseWidget.__init__(  # type: ignore
             self,
             child=child,
             window_param=window_param,
-            transition_type=transition_type,
-            transition_duration=transition_duration,
-            reveal_child=reveal_child,
+            revealers=revealers,
         )

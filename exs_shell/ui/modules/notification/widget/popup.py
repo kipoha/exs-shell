@@ -24,7 +24,7 @@ class Popup(Box):
         self.notification = notification
         self.notifications: NotificationService = State.services.notifications
 
-        widget = NotificationWidget(notification)
+        widget = NotificationWidget(notification, True)
         widget.css_classes = ["notification-popup"]
 
         self._inner = Revealer(transition_type=RevealerTransition.SLIDE_UP, child=widget, transition_duration=250)
@@ -72,9 +72,6 @@ class NotificationPopup(RevealerBaseWidget):
     def __init__(
         self,
         monitor_id: int,
-        transition_type: RevealerTransition = RevealerTransition.NONE,
-        transition_duration: int = 0,
-        reveal_child: bool = False,
     ) -> None:
         win = window.create(
             anchor=["right", "top", "bottom"],
@@ -88,5 +85,5 @@ class NotificationPopup(RevealerBaseWidget):
         )
         self._box = PopupBox(window=self)
         super().__init__(
-            self._box, win, transition_type, transition_duration, reveal_child
+            self._box, win
         )

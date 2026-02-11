@@ -30,9 +30,6 @@ class Settings(RevealerBaseWidget):
         super().__init__(
             child=self._box,
             window_param=win_param,
-            transition_type=RevealerTransition.SWING_UP,
-            transition_duration=300,
-            reveal_child=True,
         )
 
     @register.command(group="settings", description="Toggle settings")

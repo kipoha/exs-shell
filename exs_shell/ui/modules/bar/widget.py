@@ -7,6 +7,7 @@ from exs_shell.interfaces.types import AnyDict
 from exs_shell.ui.factory import window
 from exs_shell.ui.factory.bar_widgets import create_bar_widgets
 from exs_shell.ui.widgets.base import RevealerBaseWidget
+from exs_shell.ui.widgets.windows import Revealer
 from exs_shell.utils.monitor import get_monitor_scale
 
 
@@ -15,9 +16,15 @@ class Bar(RevealerBaseWidget):
     def __init__(self, monitor_num: int):
         self.monitor_num = monitor_num
         self.scale = get_monitor_scale(monitor_num)
-        self._box = self._widget_factory()
+        self._inner = self._widget_factory()
+        self._rev_inner = Revealer(
+            self._inner,
+            transition_type=RevealerTransition.SLIDE_DOWN,
+            transition_duration=200,
+        )
+        self._box = Box(child=[self._rev_inner])
 
-        self._box.set_size_request(int(950 * self.scale), int(30 * self.scale))
+        self._inner.set_size_request(int(950 * self.scale), int(30 * self.scale))
         win_param = window.create(
             namespace=f"bar{monitor_num}",
             monitor=monitor_num,
@@ -29,9 +36,7 @@ class Bar(RevealerBaseWidget):
         super().__init__(
             self._box,
             win_param,
-            RevealerTransition.SLIDE_DOWN,
-            transition_duration=200,
-            reveal_child=True,
+            [self._rev_inner],
         )
 
     def _widget_factory(self) -> CenterBox:

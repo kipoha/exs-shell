@@ -12,6 +12,7 @@ from exs_shell.interfaces.enums.icons import Icons
 from exs_shell.ui.widgets.base import MonitorRevealerBaseWidget
 from exs_shell.ui.factory import window
 from exs_shell.ui.widgets.custom.circle import ArcMeter
+from exs_shell.ui.widgets.windows import Revealer
 from exs_shell.utils.loop import run_async_task
 
 
@@ -20,8 +21,6 @@ from exs_shell.utils.loop import run_async_task
 class OSD(MonitorRevealerBaseWidget):
     def __init__(
         self,
-        transition_duration: int = 200,
-        reveal_child: bool = False,
     ) -> None:
         self.widget_build()
         self.hide_task = None
@@ -34,9 +33,7 @@ class OSD(MonitorRevealerBaseWidget):
         super().__init__(
             self._box,
             win,
-            RevealerTransition.CROSSFADE,
-            transition_duration,
-            reveal_child,
+            [self._rev_inner],
         )
 
     def volume_map_icon(self, volume: float) -> str:
@@ -88,7 +85,13 @@ class OSD(MonitorRevealerBaseWidget):
 
     def widget_build(self) -> None:
         self.progress = ArcMeter(80, 10, font_size=30)
-        self._box = Box(child=[self.progress], css_classes=["exs-osd"])
+        self.inner = Box(child=[self.progress], css_classes=["exs-osd"])
+        self._rev_inner = Revealer(
+            child=self.inner,
+            transition_type=RevealerTransition.CROSSFADE,
+            transition_duration=200
+        )
+        self._box = Box(child=[self._rev_inner])
 
     def show_osd(self):
         self.set_visible(True)
