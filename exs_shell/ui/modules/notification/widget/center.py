@@ -183,7 +183,7 @@ class NotificationCenter(MonitorRevealerBaseWidget):
             child=self.corners,
         )
         self._rev_inner = Revealer(
-            transition_type=RevealerTransition.CROSSFADE,
+            transition_type=RevealerTransition.SLIDE_LEFT,
             transition_duration=300,
             child=self._inner,
         )
