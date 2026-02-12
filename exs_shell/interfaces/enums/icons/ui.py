@@ -24,3 +24,7 @@ class UIIcons(StrEnum):
     INTERFACE = ""
     SLINE = ""
     ARC = ""
+    UP = ""
+    DOWN = ""
+    LEFT = ""
+    RIGHT = ""

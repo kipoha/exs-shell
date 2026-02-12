@@ -1,91 +1,25 @@
 from typing import Any
 
-from ignis import utils
-from ignis.services.notifications import Notification, NotificationService
+from ignis.services.notifications import NotificationService
 from ignis.widgets import Box, Button, CenterBox, Corner, Label, Scroll
-
-from gi.repository import GLib  # type: ignore
 
 from exs_shell import register
 from exs_shell.configs.user import notifications
 from exs_shell.interfaces.enums.gtk.transitions import RevealerTransition
-from exs_shell.interfaces.enums.gtk.windows import Exclusivity, KeyboardMode
+from exs_shell.interfaces.enums.gtk.windows import KeyboardMode
 from exs_shell.state import State
 from exs_shell.ui.factory import window
-from exs_shell.ui.modules.notification.shared import NotificationWidget
+from exs_shell.ui.modules.control_center.inners.notification import NotificationList
 from exs_shell.ui.widgets.base import MonitorRevealerBaseWidget
 from exs_shell.ui.widgets.windows import Revealer
-
-
-@register.event
-class Popup(Revealer):
-    def __init__(self, notification: Notification, **kwargs: Any):
-        self.notification = notification
-        widget = NotificationWidget(notification)
-        super().__init__(
-            child=widget, transition_type=RevealerTransition.SLIDE_DOWN, **kwargs
-        )
-
-    @register.events.notifications("closed", True)
-    def destroy(self, *_):
-        self.reveal_child = False
-        utils.Timeout(self.transition_duration, self.unparent)
-
-
-@register.event
-class NotificationList(Box):
-    __gtype_name__ = "NotificationList"
-
-    def __init__(self):
-        loading_notifications_label = Label(
-            label="Loading notifications...",
-            valign="center",
-            vexpand=True,
-            css_classes=["notification-center-info-label"],
-        )
-        self.notifications: NotificationService = State.services.notifications
-
-        super().__init__(
-            vertical=True,
-            child=[loading_notifications_label],
-            vexpand=True,
-            css_classes=["rec-unset"],
-        )
-
-        utils.ThreadTask(
-            self.__load_notifications,
-            lambda result: self.set_child(result),
-        ).run()
-
-    @register.events.notifications("notified")
-    def __on_notified(self, _, notification: Notification) -> None:
-        notify = Popup(notification)
-        self.prepend(notify)
-        notify.reveal_child = True
-
-    def __load_notifications(self) -> list[Label | Popup]:  # type: ignore
-        contents: list[Label | Popup] = []  # type: ignore
-        for i in self.notifications.notifications:
-            GLib.idle_add(lambda i=i: contents.append(Popup(i, reveal_child=True)))
-
-        contents.append(
-            Label(
-                label="No notifications",
-                valign="center",
-                vexpand=True,
-                visible=self.notifications.bind(
-                    "notifications", lambda value: len(value) == 0
-                ),
-                css_classes=["notification-center-info-label"],
-            )
-        )
-        return contents
+from exs_shell.ui.modules.control_center.inners.controllers.mpris.controller import MprisController
+from exs_shell.ui.modules.control_center.inners.controllers.mpris.mini import MiniPlayer
 
 
 @register.event
 @register.window
 @register.commands
-class NotificationCenter(MonitorRevealerBaseWidget):
+class ControlCenter(MonitorRevealerBaseWidget):
     def __init__(
         self,
     ) -> None:
@@ -95,7 +29,6 @@ class NotificationCenter(MonitorRevealerBaseWidget):
             "notification_center",
             anchor=["top", "bottom", "right"],
             kb_mode=KeyboardMode.NONE,
-            # exclusivity=Exclusivity.EXCLUSIVE,
             visible=False,
             popup=True,
             dynamic_input_region=True,
@@ -126,7 +59,7 @@ class NotificationCenter(MonitorRevealerBaseWidget):
         )
 
         self.top_corner = Corner(
-            css_classes=["notification-corner"],
+            css_classes=["control-corner"],
             orientation="top-right",
             width_request=30,
             height_request=30,
@@ -134,16 +67,15 @@ class NotificationCenter(MonitorRevealerBaseWidget):
             valign="end",
         )
         self.bottom_corner = Corner(
-            css_classes=["notification-corner"],
+            css_classes=["control-corner"],
             orientation="bottom-right",
             width_request=30,
             height_request=30,
             halign="end",
             valign="end",
         )
-        self._inner = Box(
+        self._notifications = Box(
             vertical=True,
-            css_classes=["notification-center-window", "hidden"],
             child=[
                 Box(
                     css_classes=["notification-center-header"],
@@ -166,10 +98,17 @@ class NotificationCenter(MonitorRevealerBaseWidget):
                     vexpand=True,
                 ),
             ],
+            css_classes=["notification-list"],
+            vexpand=True,
+        )
+        self._inner = Box(
+            vertical=True,
+            child=[self._notifications, MprisController()],
+            vexpand=True,
+            css_classes=["control-center-window"],
         )
 
         self.corners = CenterBox(
-            css_classes=["notification-center-corners"],
             vertical=True,
             vexpand=False,
             hexpand=False,
@@ -184,18 +123,18 @@ class NotificationCenter(MonitorRevealerBaseWidget):
         )
         self._rev_inner = Revealer(
             transition_type=RevealerTransition.SLIDE_LEFT,
-            # transition_type=RevealerTransition.CROSSFADE,
             transition_duration=200,
             child=self._inner,
+            vexpand=True,
         )
         self._box = Box(
             css_classes=["notification-center"],
             child=[self._rev_corners, self._rev_inner],
-            # child=[self._rev_inner],
+            vexpand=True,
         )
 
     @register.command(
-        group="notificationCenter", description="Clear all notifications", name="clear"
+        group="notification", description="Clear all notifications", name="clear"
     )
     def clear_all(self, *_: Any):
         self.notifications.clear_all()
@@ -212,8 +151,6 @@ class NotificationCenter(MonitorRevealerBaseWidget):
         else:
             css.remove_class("active")
 
-    @register.command(
-        group="notificationCenter", description="Toggle notification center"
-    )
+    @register.command(group="controlCenter", description="Toggle the control center")
     def toggle(self):
         self.set_visible(not self.visible)

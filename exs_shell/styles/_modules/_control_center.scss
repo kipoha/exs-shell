@@ -1,0 +1,285 @@
+window {
+  /* background-color: green; */
+}
+
+.exs-corners {
+  color: c.$background;
+}
+
+.control-corner,
+.notification-corner {
+  color: c.$background;
+}
+
+
+.control-center-window {
+  background-color: c.$background;
+  padding: 1rem;
+}
+
+.notification-center-header {
+  margin-bottom: 1rem;
+}
+
+.notification {
+  background-color: c.$surfaceContainerHigh;
+  border-radius: 1rem;
+  padding: 1rem;
+  margin-top: 1rem;
+}
+
+.notification-count {
+  background-color: c.$surfaceContainerHigh;
+  color: c.$primary;
+  min-width: 2rem;
+  font-size: 1.5rem;
+  border-radius: 2rem;
+  padding: 0 0.1rem;
+}
+
+.notification-header-label {
+  font-size: 1.1rem;
+  margin-left: 0.5rem;
+}
+
+.notification-close {
+  color: c.$surface;
+  border-radius: 1rem;
+  padding: 0.25rem;
+  margin-left: 0.5rem;
+  transition: 0.3s;
+}
+
+.notification-close:hover {
+  background-color: c.$primary;
+  color: c.$background;
+}
+
+.notification-clear-all {
+  transition: 0.3s;
+  border-radius: 1rem;
+  padding: 0.25rem 1rem 0.25rem 0.9rem;
+  font-size: 2rem;
+  background-color: c.$surfaceContainerHigh;
+  color: c.$primary;
+}
+
+.notification-clear-all:hover {
+  background-color: c.$primary;
+  color: c.$background;
+}
+
+.notification-dnd {
+  transition: 0.3s;
+  border-radius: 1rem;
+  padding: 0.25rem 1rem 0.25rem 0.5rem;
+  font-size: 1.5rem;
+  background-color: c.$surfaceContainerHigh;
+  color: c.$primary;
+}
+
+.notification-dnd:hover {
+  background-color: c.$primary;
+  color: c.$background;
+}
+
+.notification-dnd.active {
+  background-color: c.$primary;
+  color: c.$background;
+}
+
+.notification-action {
+  background-color: c.$primary;
+  color: c.$background;
+  border-radius: 0.5rem;
+  padding: 0.25rem 0.25rem;
+  transition: 0.3s;
+}
+
+.notification-action:hover {
+  background-color: c.$onTertiary;
+  color: c.$onSurface;
+}
+
+.notification-screenshot-label {
+  margin-top: 0.5rem;
+  font-size: 1.1rem;
+}
+
+.notification-center-info-label {
+  color: c.$onSurface;
+}
+
+.notification-body {
+  color: c.$onSurface;
+}
+
+.notification-list {
+  /* background-color: green; */
+}
+
+.control-center-mpris-art {
+  border-radius: 1rem;
+}
+
+.control-center-mini-player-background {
+  border-radius: 1rem;
+  background-color: rgba(0, 0, 0, 0.8);
+  border: 1px solid c.$onSecondaryFixedVariant;
+}
+
+.control-center-mini-player-controller-info {
+  padding: 0.5rem;
+}
+
+.control-center-mini-player-info {
+  padding: 0.5rem;
+  color: c.$primary;
+  min-width: 18.5rem;
+}
+
+.control-center-mini-player-controller {
+  padding: 0.5rem;
+  margin-right: 1rem;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 1rem;
+
+  button {
+    color: c.$primary;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 1rem;
+
+    &:hover {
+      background-color: c.$primary;
+      color: c.$background;
+    }
+  }
+
+  button:nth-child(1) {
+    padding: 0.3rem 0.8rem 0.3rem 0.4rem;
+  }
+  button:nth-child(2) {
+    padding: 0.3rem 0.6rem;
+  }
+  button:nth-child(3) {
+    padding: 0.3rem 0.7rem 0.3rem 0.5rem;
+  }
+}
+
+.control-center-mini-player-reveal {
+  padding: 0.2rem 0.7rem 0.2rem 0.6rem;
+  margin: 0.5rem 0;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 1rem;
+  color: c.$background;
+
+  &:hover {
+    background-color: c.$primary;
+    color: c.$background;
+  }
+}
+
+.control-center-mpris {
+  /* background-color: green; */
+}
+
+.control-center-player-controller-info {
+  padding: 0.5rem 0.5rem 0 0.5rem;
+}
+
+.control-center-player-info {
+  padding: 0.5rem;
+  color: c.$primary;
+  min-width: 18.5rem;
+}
+
+.control-center-player-controller {
+  padding: 0.5rem;
+  margin-right: 1rem;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 1rem;
+
+  button {
+    color: c.$primary;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 1rem;
+
+    &:hover {
+      background-color: c.$primary;
+      color: c.$background;
+    }
+  }
+
+  button:nth-child(1) {
+    padding: 0.3rem 0.8rem 0.3rem 0.4rem;
+  }
+  button:nth-child(2) {
+    padding: 0.3rem 0.6rem;
+  }
+  button:nth-child(3) {
+    padding: 0.3rem 0.7rem 0.3rem 0.5rem;
+  }
+}
+
+.control-center-player-reveal {
+  padding: 0.2rem 0.7rem 0.2rem 0.6rem;
+  margin: 0.5rem 0;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 1rem;
+  color: c.$background;
+
+  &:hover {
+    background-color: c.$primary;
+    color: c.$background;
+  }
+}
+
+.control-center-player-background {
+  border-radius: 1rem;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid c.$onSecondaryFixedVariant;
+}
+
+.control-center-mpris-art {
+  border-radius: 100%;
+}
+
+.control-center-mpris-art-container {
+  margin: 3.5rem 0;
+}
+
+.control-center-player-scale {
+  margin-left: 8px;
+  margin-right: 8px;
+  border-radius: 12px;
+  margin-top: -1.5rem;
+}
+
+.control-center-player-scale trough {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  min-height: 0.3rem;
+}
+
+.control-center-player-scale highlight {
+  background-color: c.$primary;
+  border-radius: 10px;
+}
+
+
+.control-center-player-scale slider {
+  background-color: c.$primary;
+  border: 2px solid white;
+  border-radius: 30%;
+  min-width: px;
+  min-height: 8px;
+  margin-top: -2px;
+  margin-bottom: -2px;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.control-center-player-scale slider:hover {
+  background-color: lighten(c.$primary, 5%);
+  transform: scale(1.1);
+}

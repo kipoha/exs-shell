@@ -18,6 +18,7 @@ from exs_shell.register.events.connectors import (
     applications,
     key_kontroller,
     window,
+    mpris,
 )
 
 
@@ -41,4 +42,5 @@ __all__ = [
     "applications",
     "key_kontroller",
     "window",
+    "mpris",
 ]

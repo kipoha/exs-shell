@@ -18,6 +18,14 @@ def option(options_group: OptionsManager | OptionsGroup, option: str) -> EventDe
     )
 
 
+def mpris(signal: str, player: bool = False) -> EventDeco:
+    return _base_connector(
+        lambda _: _.player if player else State.services.mpris,
+        "connect",
+        signal,
+    )
+
+
 def niri(signal: str) -> EventDeco:
     return _base_connector(
         lambda _: State.services.niri,

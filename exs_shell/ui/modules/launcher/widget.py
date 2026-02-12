@@ -43,7 +43,7 @@ class Launcher(MonitorRevealerBaseWidget):
             visible=False,
             kb_mode=KeyboardMode.EXCLUSIVE,
             anchor=["bottom"],
-            dynamic_input_region=True
+            dynamic_input_region=True,
         )
         super().__init__(
             self._box,
@@ -54,7 +54,6 @@ class Launcher(MonitorRevealerBaseWidget):
         self._added_items = []
         self._refresh_items()
         self.update_actions()
-
 
     @register.events.option(user, "actions")
     def update_actions(self):
@@ -71,7 +70,7 @@ class Launcher(MonitorRevealerBaseWidget):
         )
         self._list_box = Box(
             vertical=True,
-            spacing=4,
+            spacing=1,
             css_classes=["exs-launcher-app-list"],
         )
         self._scroll_app = Scroll(
@@ -120,15 +119,11 @@ class Launcher(MonitorRevealerBaseWidget):
             valign="end",
         )
 
-        self._rev_left = Revealer(
-            self.left_corner, RevealerTransition.SLIDE_LEFT, 300
-        )
+        self._rev_left = Revealer(self.left_corner, RevealerTransition.SLIDE_LEFT, 300)
         self._rev_right = Revealer(
             self.right_corner, RevealerTransition.SLIDE_RIGHT, 300
         )
-        self._rev_inner = Revealer(
-            self._inner, RevealerTransition.SLIDE_UP, 300
-        )
+        self._rev_inner = Revealer(self._inner, RevealerTransition.SLIDE_UP, 300)
         self._box = Box(
             child=[
                 # self.left_corner,
@@ -326,7 +321,7 @@ class Launcher(MonitorRevealerBaseWidget):
 
             case _:
                 self._refresh_items()
-    
+
     @register.command("launcher", description="Toggle launcher")
     def toggle(self):
         self.set_visible(not self.visible)
