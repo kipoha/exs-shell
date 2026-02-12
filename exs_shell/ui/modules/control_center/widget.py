@@ -34,7 +34,7 @@ class ControlCenter(MonitorRevealerBaseWidget):
             dynamic_input_region=True,
         )
         super().__init__(self._box, win, [self._rev_corners, self._rev_inner])
-        self._inner.set_size_request(400 * self.scale, -1)
+        self._inner.set_size_request(430 * self.scale, -1)
 
     def widget_build(self) -> None:
         self.dnd_button = Button(
