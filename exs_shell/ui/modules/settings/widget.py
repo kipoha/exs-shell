@@ -83,3 +83,20 @@ class Settings(RegularWindow):
     @register.command(group="settings", description="Toggle settings")
     def toggle(self):
         self.set_visible(not self.visible)
+
+    @register.command(group="settings", description="Test")
+    def test(self):
+        from gi.repository import Pango
+
+        def get_icon_width(label: Label):
+            layout = label.get_layout()
+            logical_extents, _ = layout.get_pixel_extents()
+            return logical_extents.width
+
+        icons = ["", "", "", Icons.wifi.CONNECTED]
+        labels = [Label(label=ic) for ic in icons]
+        max_width = max(get_icon_width(lbl) for lbl in labels)
+
+# оборачиваем каждую иконку в Box с шириной max_width
+        icon_boxes = [Box(width=max_width, child=lbl) for lbl in labels]
+        print(icon_boxes)

@@ -1,8 +1,42 @@
 .settings-window {
-  background-color: c.$background;
-}
+  background-color: c.$surfaceContainerLow;
 
-.settings-header-bar {
-  background-color: c.$surfaceContainer;
-  color: c.$onSurface;
+  scrolledwindow viewport {
+    margin: 0;
+    border-radius: 1.5rem;
+    background-color: c.$background;
+  }
+
+  .settings-header-bar {
+    background-color: c.$surfaceContainerLow;
+    color: c.$onSurface;
+    padding: 1rem;
+  }
+
+  .settings-navigation {
+    .settings-navigation-button-label {
+      font-size: 0.8rem;
+    }
+
+    .settings-navigation-button-icon {
+      font-size: 1.3rem;
+    }
+
+    background-color: c.$surfaceContainerLow;
+    color: c.$onSurface;
+    padding: 0.5rem;
+
+    .settings-navigation-button {
+      padding: 0.2rem;
+      border-radius: 1rem;
+
+      &:hover {
+        background-color: c.$secondaryContainer;
+      }
+
+      &.active {
+        background-color: c.$surfaceVariant;
+      }
+    }
+  }
 }

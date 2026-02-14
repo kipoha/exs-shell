@@ -70,6 +70,8 @@ async def handle_client(reader: asyncio.StreamReader, writer: asyncio.StreamWrit
     except ConnectionResetError:
         pass
     except Exception:
+        import traceback
+        traceback.print_exc()
         writer.write(b"error\n")
         await writer.drain()
     finally:
