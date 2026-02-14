@@ -1,4 +1,3 @@
-import asyncio
 from typing import Any, Callable
 
 from ignis.widgets import Box, Button, CenterBox, Label, Overlay, Picture, Scale
@@ -9,6 +8,7 @@ from exs_shell.interfaces.enums.icons import Icons
 from exs_shell.ui.widgets.custom.audio_visualizer import CircularAudioVisualizer
 from exs_shell.ui.widgets.windows import Revealer
 from exs_shell.utils.path import Paths
+from exs_shell.utils.loop import run_async_task
 
 
 class Player(Box):
@@ -57,7 +57,7 @@ class Player(Box):
                 if player
                 else "",
             ),
-            on_click=(lambda _: asyncio.create_task(player.play_pause_async()))
+            on_click=(lambda _: run_async_task(player.play_pause_async()))
             if player
             else None,
             css_classes=["control-center-player-play"],
@@ -65,14 +65,14 @@ class Player(Box):
 
         self.prev_button = Button(
             child=Label(label=Icons.player.PREVIOUS),
-            on_click=(lambda _: asyncio.create_task(player.previous_async()))
+            on_click=(lambda _: run_async_task(player.previous_async()))
             if player
             else None,
             css_classes=["control-center-player-prev"],
         )
         self.next_button = Button(
             child=Label(label=Icons.player.NEXT),
-            on_click=(lambda _: asyncio.create_task(player.next_async()))
+            on_click=(lambda _: run_async_task(player.next_async()))
             if player
             else None,
             css_classes=["control-center-player-next"],
@@ -90,7 +90,7 @@ class Player(Box):
             hexpand=True,
             css_classes=["control-center-player-scale"],
             on_change=(
-                lambda val: asyncio.create_task(player.set_position_async(val.value))
+                lambda val: run_async_task(player.set_position_async(val.value))
             )
             if player
             else None,

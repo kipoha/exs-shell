@@ -1,5 +1,3 @@
-import asyncio
-
 from typing import Any, Callable
 
 from ignis.widgets import Box, Button, CenterBox, Label, Overlay, Picture
@@ -10,6 +8,7 @@ from exs_shell.interfaces.enums.icons import Icons
 from exs_shell.ui.widgets.custom.audio_visualizer import AudioVisualizer
 from exs_shell.ui.widgets.windows import Revealer
 from exs_shell.utils.path import Paths
+from exs_shell.utils.loop import run_async_task
 
 
 class MiniPlayer(Box):
@@ -23,13 +22,13 @@ class MiniPlayer(Box):
         self.title_label = Label(
             label=player.bind("title") if player else "N/A",
             ellipsize="end",
-            max_width_chars=35,
+            max_width_chars=30,
             css_classes=["control-center-mini-player-title"],
         )
         self.artist_label = Label(
             label=player.bind("artist") if player else "N/A",
             ellipsize="end",
-            max_width_chars=35,
+            max_width_chars=30,
             css_classes=["control-center-mini-player-artist"],
         )
 
@@ -69,7 +68,7 @@ class MiniPlayer(Box):
                 if player
                 else "",
             ),
-            on_click=(lambda _: asyncio.create_task(player.play_pause_async()))
+            on_click=(lambda _: run_async_task(player.play_pause_async()))
             if player
             else None,
             css_classes=["control-center-mini-player-play"],
@@ -77,14 +76,14 @@ class MiniPlayer(Box):
 
         self.prev_button = Button(
             child=Label(label=Icons.player.PREVIOUS),
-            on_click=(lambda _: asyncio.create_task(player.previous_async()))
+            on_click=(lambda _: run_async_task(player.previous_async()))
             if player
             else None,
             css_classes=["control-center-mini-player-prev"],
         )
         self.next_button = Button(
             child=Label(label=Icons.player.NEXT),
-            on_click=(lambda _: asyncio.create_task(player.next_async()))
+            on_click=(lambda _: run_async_task(player.next_async()))
             if player
             else None,
             css_classes=["control-center-mini-player-next"],
@@ -137,7 +136,7 @@ class MiniPlayer(Box):
 
         self.revealer = Revealer(
             self.overlay,
-            RevealerTransition.SLIDE_DOWN,
+            RevealerTransition.SLIDE_UP,
             300,
             reveal_child=True,
         )

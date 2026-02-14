@@ -1,7 +1,6 @@
 import subprocess
 
 from exs_shell.interfaces.schemas.utils.clipboard import ClipboardItem
-from exs_shell.interfaces.types import AnyList
 
 
 def get_clipboard_history(limit: int = 50) -> list[ClipboardItem]:
@@ -10,7 +9,7 @@ def get_clipboard_history(limit: int = 50) -> list[ClipboardItem]:
         return []
 
     lines = result.stdout.strip().split("\n")
-    history: AnyList = []
+    history: list[ClipboardItem] = []
     for line in lines[:limit]:
         idx, raw = line.split("\t", 1)
         history.append(

@@ -4,6 +4,7 @@ from exs_shell.interfaces.enums.icons.wifi import WifiIcons
 from exs_shell.interfaces.enums.icons.arrow import ArrowIcons
 from exs_shell.interfaces.enums.icons.backlight import BacklightIcons
 from exs_shell.interfaces.enums.icons.player import PlayerIcons
+from exs_shell.interfaces.enums.icons.power_profiles import PPIcons
 
 
 class Icons:
@@ -13,3 +14,4 @@ class Icons:
     volume = VolumeIcons
     backlight = BacklightIcons
     player = PlayerIcons
+    power_profiles = PPIcons

@@ -4,6 +4,7 @@ from ignis.services.notifications import NotificationService
 from ignis.widgets import Box, Button, CenterBox, Corner, Label, Scroll
 
 from exs_shell import register
+from exs_shell.utils import monitor
 from exs_shell.configs.user import notifications
 from exs_shell.interfaces.enums.gtk.transitions import RevealerTransition
 from exs_shell.interfaces.enums.gtk.windows import KeyboardMode
@@ -12,8 +13,12 @@ from exs_shell.ui.factory import window
 from exs_shell.ui.modules.control_center.inners.notification import NotificationList
 from exs_shell.ui.widgets.base import MonitorRevealerBaseWidget
 from exs_shell.ui.widgets.windows import Revealer
-from exs_shell.ui.modules.control_center.inners.controllers.mpris.controller import MprisController
-from exs_shell.ui.modules.control_center.inners.controllers.mpris.mini import MiniPlayer
+# from exs_shell.ui.modules.control_center.inners.controllers.system.powerprofile import PowerProfile
+from exs_shell.ui.modules.control_center.inners.user import UserWidget
+from exs_shell.ui.modules.control_center.inners.rollers import Rollers
+from exs_shell.ui.modules.control_center.inners.controllers.mpris.controller import (
+    MprisController,
+)
 
 
 @register.event
@@ -24,6 +29,7 @@ class ControlCenter(MonitorRevealerBaseWidget):
         self,
     ) -> None:
         self.notifications: NotificationService = State.services.notifications
+        self.scale = monitor.get_monitor_scale(monitor.get_active_monitor())
         self.widget_build()
         win = window.create(
             "notification_center",
@@ -103,8 +109,15 @@ class ControlCenter(MonitorRevealerBaseWidget):
         )
         self._inner = Box(
             vertical=True,
-            child=[self._notifications, MprisController()],
+            child=[
+                self._notifications,
+                MprisController(),
+                # PowerProfile(self.scale),
+                Rollers(self.scale),
+                UserWidget(self.scale),
+            ],
             vexpand=True,
+            spacing=10 * self.scale,
             css_classes=["control-center-window"],
         )
 

@@ -32,7 +32,7 @@ services = {
 
 def init_services() -> None:
     for name, service in services.items():
-        State.services[name] = service.get_default()
+        State.services[name] = service.get_default()  # type: ignore
     State.services.systemd_system = SystemdService.get_default("system")  # type: ignore
 
 

@@ -1,7 +1,3 @@
-window {
-  /* background-color: green; */
-}
-
 .exs-corners {
   color: c.$background;
 }
@@ -114,12 +110,8 @@ window {
   color: c.$onSurface;
 }
 
-.notification-list {
-  /* background-color: green; */
-}
-
-.control-center-mpris-art {
-  border-radius: 1rem;
+.control-center-mini-player {
+  padding: 0 0.3rem;
 }
 
 .control-center-mini-player-background {
@@ -140,7 +132,7 @@ window {
 
 .control-center-mini-player-controller {
   padding: 0.5rem;
-  margin-right: 1rem;
+  margin-right: 0.5rem;
   background-color: rgba(255, 255, 255, 0.5);
   border-radius: 1rem;
 
@@ -158,9 +150,11 @@ window {
   button:nth-child(1) {
     padding: 0.3rem 0.8rem 0.3rem 0.4rem;
   }
+
   button:nth-child(2) {
     padding: 0.3rem 0.6rem;
   }
+
   button:nth-child(3) {
     padding: 0.3rem 0.7rem 0.3rem 0.5rem;
   }
@@ -179,8 +173,9 @@ window {
   }
 }
 
-.control-center-mpris {
-  /* background-color: green; */
+.control-center-player {
+  margin: 0 0.2rem;
+  padding: 0 0.1rem;
 }
 
 .control-center-player-controller-info {
@@ -213,9 +208,11 @@ window {
   button:nth-child(1) {
     padding: 0.3rem 0.8rem 0.3rem 0.4rem;
   }
+
   button:nth-child(2) {
     padding: 0.3rem 0.6rem;
   }
+
   button:nth-child(3) {
     padding: 0.3rem 0.7rem 0.3rem 0.5rem;
   }
@@ -241,7 +238,7 @@ window {
 }
 
 .control-center-mpris-art {
-  border-radius: 100%;
+  border-radius: 50rem;
 }
 
 .control-center-mpris-art-container {
@@ -270,8 +267,8 @@ window {
 .control-center-player-scale slider {
   background-color: c.$primary;
   border: 2px solid white;
-  border-radius: 30%;
-  min-width: px;
+  border-radius: 0.2rem;
+  min-width: 2px;
   min-height: 8px;
   margin-top: -2px;
   margin-bottom: -2px;
@@ -280,6 +277,91 @@ window {
 }
 
 .control-center-player-scale slider:hover {
-  background-color: lighten(c.$primary, 5%);
+  background-color: c.$primary;
   transform: scale(1.1);
+}
+
+.control-center-user {
+  margin: 0 0.5rem;
+}
+
+.control-center-user-avatar {
+  border-radius: 50rem;
+}
+
+.control-center-user-uptime {
+  font-size: 0.8rem;
+}
+
+.control-center-user-buttons {
+  font-size: 1.8rem;
+
+  button {
+    margin: 0.5rem 0;
+    color: c.$primary;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 50rem;
+  }
+
+  button:hover {
+    background-color: c.$primary;
+    color: c.$background;
+  }
+
+  .control-center-user-buttons-power {
+    padding: 0.3rem 1.1rem 0.3rem 0.7rem;
+  }
+
+  .control-center-user-buttons-settings {
+    padding: 0.3rem 1.1rem 0.3rem 0.6rem;
+  }
+}
+
+.control-center-rollers {
+  margin: 0.1rem 0.5rem;
+  font-size: 1.5rem;
+
+  trough {
+    background-color: c.$onPrimaryFixedVariant;
+    border-radius: 1rem;
+    min-height: 1.4rem;
+  }
+
+  slider {
+    background-color: c.$onSecondaryFixedVariant;
+    border: 2px solid c.$onSurface;
+    border-radius: 0.5rem;
+    min-width: 0.4rem;
+    min-height: 1.4rem;
+    margin-top: -0.3rem;
+    margin-bottom: -0.3rem;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.2s ease, transform 0.2s ease;
+  }
+
+  highlight {
+    background-color: c.$primary;
+    border-radius: 1rem;
+  }
+
+  .control-center-rollers-audio-icon,
+  .control-center-rollers-mic-icon,
+  .control-center-rollers-backlight-icon {
+    border-radius: 50rem;
+    background-color: c.$primary;
+    color: c.$background;
+  }
+
+  .control-center-rollers-audio-icon {
+    padding: 0.2rem 0.7rem 0.2rem 0.5rem;
+  }
+
+  .control-center-rollers-mic-icon {
+    padding: 0.2rem 0.65rem 0.2rem 0.55rem;
+  }
+
+  .control-center-rollers-backlight-icon {
+    padding: 0.2rem 0.85rem 0.2rem 0.335rem;
+  }
+
 }

@@ -28,3 +28,5 @@ class UIIcons(StrEnum):
     DOWN = ""
     LEFT = ""
     RIGHT = ""
+    POWER = ""
+    MIC = ""
