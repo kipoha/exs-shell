@@ -7,6 +7,19 @@ if TYPE_CHECKING:
 
 
 type Anchor = Literal["left", "right", "top", "bottom"]
+type TopBottom = Literal["top", "bottom"]
+type Arrow = Literal[
+    "top",
+    "top_left",
+    "top_right",
+    "bottom_left",
+    "bottom_right",
+    "bottom",
+    "left",
+    "right",
+]
+type Align = Literal["top", "bottom", "left", "right"]
+type OSD = Literal["arc", "scale"]
 type AnyDict = dict[str, Any]
 type AnyList = list[Any]
 type Commands = dict[str, dict[str, Command]]

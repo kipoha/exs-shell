@@ -2,11 +2,12 @@ import asyncio
 
 from typing import Any
 
-from ignis.widgets import Box
+from ignis.widgets import Box, Label, Scale
 from ignis.services.audio import Stream
 from ignis.services.backlight import BacklightService
 
 from exs_shell import register
+from exs_shell.configs.user import osd
 from exs_shell.interfaces.enums.gtk.transitions import RevealerTransition
 from exs_shell.interfaces.enums.icons import Icons
 from exs_shell.ui.widgets.base import MonitorRevealerBaseWidget
@@ -27,8 +28,11 @@ class OSD(MonitorRevealerBaseWidget):
         win = window.create(
             "osd",
             visible=False,
-            anchor=["bottom"],
+            anchor=osd.position.split("_"),  # type: ignore
             margin_bottom=20,
+            margin_left=20,
+            margin_right=20,
+            margin_top=20,
         )
         super().__init__(
             self._box,
@@ -41,25 +45,69 @@ class OSD(MonitorRevealerBaseWidget):
     def __on_volume(self, stream: Stream, *_: Any):
         self.show_osd()
         if stream.is_muted:
-            self.progress.label = Icons.volume.MUTED
-            self.progress.set_value(0)
+            data = {"label": Icons.volume.MUTED, "value": 0}
         else:
-            self.progress.label = Icons.volume.mapping(stream.volume)  # type: ignore
-            self.progress.set_value(stream.volume / 100)  # type: ignore
+            data = {
+                "label": Icons.volume.mapping(stream.volume),  # type: ignore
+                "value": stream.volume / 100,  # type: ignore
+            }
+        self.update_progress(**data)  # type: ignore
 
     @register.events.backlight("notify::brightness")
     def __on_brightness(self, backlight: BacklightService, *_: Any):
         self.show_osd()
-        self.progress.label = Icons.backlight.mapping(backlight.brightness / 1000)  # type: ignore
-        self.progress.set_value(backlight.brightness / backlight.max_brightness)
+        self.update_progress(
+            Icons.backlight.mapping(backlight.brightness / 1000),  # type: ignore
+            backlight.brightness / backlight.max_brightness,
+        )
+
+    @register.events.option(osd, "osd")
+    @register.events.option(osd, "position")
+    def reload(self, *_: Any):
+        self.widget_build()
+        self._main.set_child(self._box)
+        self._main.set_anchor(osd.position.split("_"))
+        self.show_osd()
+
+    def update_progress(self, label: str, value: float):
+        if isinstance(self.progress, ArcMeter):
+            self.progress.label = label
+            self.progress.set_value(value)
+        elif isinstance(self.progress, Scale):
+            self.progress.set_value(value)
+            self.icon.label = label
+        else:
+            raise ValueError
 
     def widget_build(self) -> None:
-        self.progress = ArcMeter(80, 10, font_size=30)
-        self.inner = Box(child=[self.progress], css_classes=["exs-osd"])
+        vertical = osd.position in ["left", "right"]
+        if osd.osd == "arc":
+            self.progress = ArcMeter(80, 10, font_size=30)
+
+            self.inner = Box(child=[self.progress], css_classes=["exs-osd"])
+        else:
+            self.progress = Scale(
+                vertical=vertical,
+                min=0,
+                max=1,
+                value=0.5,
+                step=0.01,
+                css_classes=[
+                    "exs-osd-progress",
+                    "vertical" if vertical else "horizontal",
+                ],
+            )
+            self.icon = Label(css_classes=["exs-osd-icon"])
+            self.inner = Box(
+                child=[self.icon, self.progress],
+                css_classes=["exs-osd"],
+                vertical=vertical,
+                spacing=12,
+            )
         self._rev_inner = Revealer(
             child=self.inner,
             transition_type=RevealerTransition.CROSSFADE,
-            transition_duration=200
+            transition_duration=200,
         )
         self._box = Box(child=[self._rev_inner])
 

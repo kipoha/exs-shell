@@ -3,4 +3,62 @@
   padding: 0.5rem;
   border-radius: 2rem;
   color: c.$surfaceContainer;
+
+  .exs-osd-icon {
+    color: c.$primary;
+    font-size: 2rem;
+    margin: 0.5rem;
+  }
+
+  .exs-osd-progress {
+    margin-right: 0.5rem;
+    trough {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    slider {
+      background-color: c.$primary;
+      border: 0.2rem solid c.$surfaceBright;
+      border-radius: 1rem;
+      min-width: 0.2rem;
+      min-height: 1.6rem;
+      margin-bottom: -0.5rem;
+      margin-top: -0.5rem;
+    }
+
+    highlight {
+      background-color: c.$primary;
+      border-radius: 1rem;
+    }
+  }
+  .vertical {
+    trough {
+      min-height: 15rem;
+      min-width: 0.7rem;
+      border-radius: 0.3rem 0.3rem 1rem 1rem;
+      margin-left: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    slider {
+      min-height: 0.2rem;
+      min-width: 1.6rem;
+      margin-left: -0.5rem;
+      margin-right: -0.5rem;
+    }
+  }
+
+  .horizontal {
+    trough {
+      min-height: 0.7rem;
+      min-width: 15rem;
+      border-radius: 0.3rem 1rem 1rem 0.3rem;
+    }
+    slider {
+      min-width: 0.2rem;
+      min-height: 1.6rem;
+      margin-bottom: -0.5rem;
+      margin-top: -0.5rem;
+    }
+  }
 }

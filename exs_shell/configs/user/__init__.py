@@ -9,6 +9,7 @@ from exs_shell.configs.user.bar import Bar
 from exs_shell.configs.user.main import UserConfig
 from exs_shell.configs.user.notification import Notifications
 from exs_shell.configs.user.weather import Weather
+from exs_shell.configs.user.osd import OSDGroup
 
 
 USER_OPTIONS_FILE = f"{Dirs.DATA_DIR}/user_options.json"
@@ -41,6 +42,7 @@ class UserOptions(OptionsManager):
     _applications: Options.Applications = Options.Applications()
     _notifications: Notifications = Notifications()
     _weather: Weather = Weather()
+    _osd: OSDGroup = OSDGroup()
 
     @property
     def user_config(self) -> UserConfig:
@@ -66,6 +68,9 @@ class UserOptions(OptionsManager):
     def weather(self) -> Weather:
         return self._weather
 
+    @property
+    def osd(self) -> OSDGroup:
+        return self._osd
 
 
 options = UserOptions()
@@ -75,3 +80,4 @@ appearance = options.appearance
 applications = options.applications
 bar = options.bar
 weather = options.weather
+osd = options.osd
