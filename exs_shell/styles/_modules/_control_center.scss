@@ -319,24 +319,22 @@
 
 .control-center-rollers {
   margin: 0.1rem 0.5rem;
-  font-size: 1.5rem;
+  font-size: 1.4rem;
 
   trough {
-    background-color: c.$onPrimaryFixedVariant;
-    border-radius: 1rem;
-    min-height: 1.4rem;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 0.3rem 1rem 1rem 0.3rem;
+    min-height: 0.7rem;
   }
 
   slider {
-    background-color: c.$onSecondaryFixedVariant;
-    border: 2px solid c.$onSurface;
-    border-radius: 0.5rem;
-    min-width: 0.4rem;
-    min-height: 1.4rem;
-    margin-top: -0.3rem;
-    margin-bottom: -0.3rem;
-    box-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
-    transition: background-color 0.2s ease, transform 0.2s ease;
+    background-color: c.$primary;
+    border: 0.2rem solid c.$surfaceBright;
+    border-radius: 1rem;
+    min-width: 0.2rem;
+    min-height: 1.6rem;
+    margin-bottom: -0.5rem;
+    margin-top: -0.5rem;
   }
 
   highlight {
@@ -344,24 +342,147 @@
     border-radius: 1rem;
   }
 
-  .control-center-rollers-audio-icon,
-  .control-center-rollers-mic-icon,
-  .control-center-rollers-backlight-icon {
-    border-radius: 50rem;
-    background-color: c.$primary;
+  .control-center-rollers-audio-container,
+  .control-center-rollers-mic-container,
+  .control-center-rollers-backlight-container {
+    border-radius: 1rem;
+    padding: 0.6rem 1rem;
+    background-color: c.$surfaceBright;
+    border-radius: 1rem;
     color: c.$background;
   }
 
+  .control-center-rollers-audio-container {
+    border-bottom-right-radius: 0.5rem;
+    border-bottom-left-radius: 0.5rem;
+  }
+  .control-center-rollers-mic-container {
+    border-radius: 0.5rem;
+  }
+  .control-center-rollers-backlight-container {
+    border-top-right-radius: 0.5rem;
+    border-top-left-radius: 0.5rem;
+  }
+
+  .control-center-rollers-audio-icon,
+  .control-center-rollers-mic-icon,
+  .control-center-rollers-backlight-icon {
+    border-radius: 1rem 0.3rem 0.3rem 1rem;
+    margin-right: 0.2rem;
+    color: c.$primary;
+  }
+
   .control-center-rollers-audio-icon {
-    padding: 0.2rem 0.7rem 0.2rem 0.5rem;
+    padding: 0 0.7rem 0 0.5rem;
   }
 
   .control-center-rollers-mic-icon {
-    padding: 0.2rem 0.65rem 0.2rem 0.55rem;
+    padding: 0 0.55rem 0 0.6rem;
   }
 
   .control-center-rollers-backlight-icon {
-    padding: 0.2rem 0.85rem 0.2rem 0.335rem;
+    padding: 0 0.85rem 0 0.35rem;
   }
 
+}
+
+.control-center-quick-panel {
+  padding: 0 0.5rem;
+
+  .control-center-quick-panel-power-profile,
+  .control-center-quick-panel-dark,
+  .control-center-quick-panel-bluetooth,
+  .control-center-quick-panel-wifi {
+
+    .control-center-quick-panel-bluetooth-button-open,
+    .control-center-quick-panel-wifi-button-open {
+      border-radius: 0.5rem 1rem 1rem 0.5rem;
+      padding: 0.5rem 1rem 0.5rem 0.5rem;
+      margin-left: 0.3rem;
+      background-color: rgba(255, 255, 255, 0.2);
+
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.3);
+      }
+
+      &.active {
+        background-color: c.$primary;
+        color: c.$background;
+      }
+    }
+
+    .control-center-quick-panel-wifi-icon {
+      margin-right: 0.5rem;
+    }
+
+    .control-center-quick-panel-bluetooth-button-enable,
+    .control-center-quick-panel-wifi-button-enable {
+      border-radius: 1rem 0.5rem 0.5rem 1rem;
+      background-color: rgba(255, 255, 255, 0.2);
+
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.3);
+      }
+
+      &.active {
+        background-color: c.$primary;
+        color: c.$background;
+      }
+    }
+
+    .control-center-quick-panel-bluetooth-button-enable {
+      padding: 0.5rem 3rem;
+    }
+
+    .control-center-quick-panel-wifi-button-enable {
+      padding: 0.5rem 4.3rem;
+    }
+
+    .control-center-quick-panel-dark-button {
+      border-radius: 1rem;
+      padding: 0.5rem 3.9rem;
+      background-color: rgba(255, 255, 255, 0.2);
+
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.3);
+      }
+
+      &.active {
+        background-color: c.$primary;
+        color: c.$background;
+      }
+    }
+
+    .control-center-quick-panel-power-profile-select-power-saver-button,
+    .control-center-quick-panel-power-profile-select-balanced-button,
+    .control-center-quick-panel-power-profile-select-performance-button {
+      font-size: 1.4rem;
+      background-color: rgba(255, 255, 255, 0.2);
+
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.3);
+      }
+
+      &.active {
+        background-color: c.$primary;
+        color: c.$background;
+        border-radius: 1rem;
+      }
+    }
+
+    .control-center-quick-panel-power-profile-select-power-saver-button {
+      padding: 0.3rem 2.1rem 0.3rem 1.7rem;
+      border-radius: 0.5rem 1rem 1rem 0.5rem;
+    }
+
+    .control-center-quick-panel-power-profile-select-balanced-button {
+      padding: 0.3rem 2.4rem 0.3rem 1.6rem;
+      border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
+    }
+
+    .control-center-quick-panel-power-profile-select-performance-button {
+      padding: 0.3rem 1.9rem;
+      border-radius: 1rem 0.5rem 0.5rem 1rem;
+    }
+  }
 }

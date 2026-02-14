@@ -105,9 +105,9 @@ def bluetooth(signal: str) -> EventDeco:
     )
 
 
-def network(signal: str) -> EventDeco:
+def network(signal: str, *attrs: str) -> EventDeco:
     return _base_connector(
-        lambda _: State.services.network,
+        lambda _: reduce(getattr, attrs, State.services.network),
         "connect",
         signal,
     )

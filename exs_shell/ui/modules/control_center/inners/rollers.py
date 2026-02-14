@@ -30,7 +30,6 @@ class Rollers(Box):
         self.audio_space = Box(
             child=[self.audio_icon, self.audio_scale],
             css_classes=["control-center-rollers-audio-container"],
-            spacing=5,
         )
         self.mic_scale = Scale(
             value=self.audio.microphone.volume,  # type: ignore
@@ -47,7 +46,6 @@ class Rollers(Box):
         self.mic_space = Box(
             child=[self.mic_icon, self.mic_scale],
             css_classes=["control-center-rollers-mic-container"],
-            spacing=5,
         )
         self.backlight_scale = Scale(
             value=self.backlight.brightness,
@@ -64,12 +62,11 @@ class Rollers(Box):
         self.backlight_space = Box(
             child=[self.backlight_icon, self.backlight_scale],
             css_classes=["control-center-rollers-backlight-container"],
-            spacing=5,
         )
         super().__init__(
             vertical=True,
             child=[self.audio_space, self.mic_space, self.backlight_space],
-            spacing=5 * self.scale,
+            spacing=3 * self.scale,
             css_classes=["control-center-rollers"],
         )
 

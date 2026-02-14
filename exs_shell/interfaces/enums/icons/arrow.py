@@ -18,3 +18,9 @@ class ArrowIcons(StrEnum):
     # BOTTOM_LEFT = "󰁂"
     # BOTTOM = "󰁅"
     # BOTTOM_RIGHT = "󰁃"
+
+class AlignIcons(StrEnum):
+    TOP = "󱇇"
+    BOTTOM = "󱇅"
+    LEFT = "󱇂"
+    RIGHT = "󱇄"

@@ -13,9 +13,11 @@ from exs_shell.ui.factory import window
 from exs_shell.ui.modules.control_center.inners.notification import NotificationList
 from exs_shell.ui.widgets.base import MonitorRevealerBaseWidget
 from exs_shell.ui.widgets.windows import Revealer
-# from exs_shell.ui.modules.control_center.inners.controllers.system.powerprofile import PowerProfile
 from exs_shell.ui.modules.control_center.inners.user import UserWidget
 from exs_shell.ui.modules.control_center.inners.rollers import Rollers
+from exs_shell.ui.modules.control_center.inners.controllers.quick_panel import (
+    QuickPanel,
+)
 from exs_shell.ui.modules.control_center.inners.controllers.mpris.controller import (
     MprisController,
 )
@@ -112,7 +114,7 @@ class ControlCenter(MonitorRevealerBaseWidget):
             child=[
                 self._notifications,
                 MprisController(),
-                # PowerProfile(self.scale),
+                QuickPanel(self.scale),
                 Rollers(self.scale),
                 UserWidget(self.scale),
             ],

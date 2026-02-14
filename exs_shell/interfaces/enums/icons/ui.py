@@ -30,3 +30,5 @@ class UIIcons(StrEnum):
     RIGHT = ""
     POWER = ""
     MIC = ""
+    OPEN_IN_WINDOW = ""
+    DARK = "󰃜"
