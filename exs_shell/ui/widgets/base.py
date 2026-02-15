@@ -1,7 +1,6 @@
 from ignis.widgets import CenterBox, Box
 
 from exs_shell import register
-from exs_shell.interfaces.enums.gtk.transitions import RevealerTransition
 from exs_shell.interfaces.schemas.widget.base import WindowEntity
 from exs_shell.ui.widgets.windows import RevealerWindow, Revealer, Window
 from exs_shell.utils.monitor import get_active_monitor, get_monitor_scale
@@ -14,10 +13,8 @@ class BaseWidget:
         window_param: WindowEntity,
     ) -> None:
         self._box = child
-        win_dict = window_param.asdict()
-        if "child" not in win_dict:
-            win_dict["child"] = self._box
-        self._main = Window(**win_dict)
+        self.win_dict = window_param.asdict()
+        self._main = Window(child=self._box, **self.win_dict)
 
     def set_visible(self, value: bool):
         self._main.visible = value
@@ -25,6 +22,10 @@ class BaseWidget:
     def set_child(self, value: Box | CenterBox) -> None:
         self._box = value
         self._main.set_child(value)
+
+    def recreate_window(self):
+        self._main.destroy()
+        self._main = Window(child=self._box, **self.win_dict)
 
     @property
     def window(self) -> Window:
@@ -51,9 +52,20 @@ class RevealerBaseWidget(BaseWidget):
         window_param: WindowEntity,
         revealers: list[Revealer] = [],
     ) -> None:
+        self.win_dict = window_param.asdict()
         self._box = child
         self._main = RevealerWindow(
-            child=self._box, revealers=revealers, **window_param.asdict()
+            child=self._box, revealers=revealers, **self.win_dict
+        )
+
+    def set_revealers(self, value: list[Revealer]):
+        self._main.set_revealers(value)
+
+    def recreate_window(self):
+        revealers = self._main.get_revealers()
+        self._main.destroy()
+        self._main = RevealerWindow(
+            child=self._box, revealers=revealers, **self.win_dict
         )
 
     @property
@@ -62,7 +74,7 @@ class RevealerBaseWidget(BaseWidget):
 
     @register.events.window("notify::visible")
     def _on_revealer(self, *_):
-        for revealer in self._main.revealers:
+        for revealer in self._main.get_revealers():
             revealer.set_reveal_child(self.visible)
 
 

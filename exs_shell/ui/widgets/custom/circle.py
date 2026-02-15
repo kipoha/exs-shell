@@ -43,6 +43,9 @@ class ArcMeter(Gtk.DrawingArea):
         self.percentage = int(self.target_value * 100)
         self.queue_draw()
 
+    def get_value(self):
+        return self.value
+
     def animate(self):
         if abs(self.value - self.target_value) < 0.001:
             self.value = self.target_value

@@ -64,10 +64,17 @@ class OSD(MonitorRevealerBaseWidget):
     @register.events.option(osd, "osd")
     @register.events.option(osd, "position")
     def reload(self, *_: Any):
+        if isinstance(self.progress, ArcMeter):
+            i = self.progress.label
+            p = self.progress.get_value()
+        else:
+            i = self.icon.label
+            p = self.progress.get_value()
+
+        self.win_dict["anchor"] = osd.position.split("_")
         self.widget_build()
-        self._main.set_child(self._box)
-        self._main.set_anchor(osd.position.split("_"))
-        self.show_osd()
+        self.set_revealers([self._rev_inner])
+        self.recreate_window()
 
     def update_progress(self, label: str, value: float):
         if isinstance(self.progress, ArcMeter):
@@ -91,13 +98,16 @@ class OSD(MonitorRevealerBaseWidget):
                 min=0,
                 max=1,
                 value=0.5,
+                sensitive=False,
                 step=0.01,
                 css_classes=[
                     "exs-osd-progress",
                     "vertical" if vertical else "horizontal",
                 ],
             )
-            self.icon = Label(css_classes=["exs-osd-icon"])
+            self.icon = Label(
+                css_classes=["exs-osd-icon", "vertical" if vertical else "horizontal"]
+            )
             self.inner = Box(
                 child=[self.icon, self.progress],
                 css_classes=["exs-osd"],
@@ -118,5 +128,8 @@ class OSD(MonitorRevealerBaseWidget):
         self.hide_task = run_async_task(self._hide_osd())
 
     async def _hide_osd(self):
-        await asyncio.sleep(2)
-        self.set_visible(False)
+        try:
+            await asyncio.sleep(2)
+            self.set_visible(False)
+        except asyncio.CancelledError:
+            pass

@@ -7,6 +7,119 @@
     background-color: c.$background;
   }
 
+  .settings-body {
+    padding: 1rem;
+
+    .settings-category {
+      margin: 0;
+      border-radius: 1.5rem;
+      background-color: c.$surfaceContainerLow;
+      padding: 1rem;
+
+      separator {
+        background-color: c.$surfaceVariant;
+        border-radius: 1rem;
+        margin: 0.3rem 0.1rem;
+        min-height: 0.15rem;
+      }
+
+      .settings-category-label {
+        font-size: 1.2rem;
+        margin-bottom: 0.3rem;
+      }
+
+      .settings-row-header {
+
+        .settings-row-title-header {
+          color: c.$onPrimaryContainer;
+        }
+
+        .settings-row-description {
+          color: c.$onSurfaceVariant;
+        }
+      }
+
+      .settings-row-dialog-button {
+        margin: 0.5rem 0;
+        background-color: c.$surfaceBright;
+        border-radius: 1rem;
+        padding: 0.5rem 1rem;
+
+        &:focus,
+        &:hover {
+          background-color: c.$onSurfaceVariant;
+          color: c.$background;
+        }
+      }
+
+      .settings-row-switch {
+        margin: 0.5rem 0;
+        background-color: c.$surfaceContainer;
+        border-radius: 1.5rem;
+        border: 0.2rem solid c.$surfaceVariant;
+
+        &:focus,
+        &:hover {
+          background-color: c.$surfaceContainerLowest;
+        }
+
+        &:checked {
+          background-color: c.$secondary;
+
+          slider {
+            background-color: c.$background;
+          }
+        }
+
+        slider {
+          margin: 0.25rem;
+          min-width: 1.5rem;
+          min-height: 1.5rem;
+          background-color: c.$secondary;
+          border-radius: 1rem;
+        }
+      }
+
+      .settings-row-select {
+        margin: 0.5rem 0;
+
+        .settings-row-select-choice {
+          border-radius: 0.5rem;
+          background-color: c.$secondaryContainer;
+          padding: 0.5rem 2rem;
+
+          &.exs-osd-select-type {
+            padding: 0.5rem 2.5rem 0.5rem 2rem;
+          }
+
+          &.exs-osd-select-arrow {
+            font-size: 1.5rem;
+            padding: 0.3rem 1rem;
+          }
+
+          &:first-child {
+            border-radius: 1.5rem 0.5rem 0.5rem 1.5rem;
+          }
+
+          &:last-child {
+            border-radius: 0.5rem 1.5rem 1.5rem 0.5rem;
+          }
+
+          &:focus,
+          &:hover {
+            background-color: c.$secondary;
+          }
+
+          &.active {
+            background-color: c.$primary;
+            color: c.$background;
+            border-radius: 1.5rem;
+          }
+        }
+      }
+    }
+  }
+
   .settings-header-bar {
     background-color: c.$surfaceContainerLow;
     color: c.$onSurface;
@@ -38,6 +151,7 @@
       background-color: c.$secondaryContainer;
       border-radius: 1rem;
 
+      &:focus,
       &:hover {
         background-color: c.$secondary;
         color: c.$background;
@@ -48,16 +162,13 @@
       padding: 0.2rem;
       border-radius: 1rem;
 
+      &:focus,
       &:hover {
         background-color: c.$secondaryContainer;
       }
 
-      &.disabled {
+      &:disabled {
         color: c.$outline;
-
-        &:hover {
-          background-color: c.$surfaceContainerLow;
-        }
       }
 
       &.active {
@@ -117,6 +228,53 @@
           margin-right: 0.5rem;
         }
       }
+    }
+  }
+}
+
+.settings-dialog-window {
+  background-color: c.$surfaceContainerLow;
+
+  .settings-row-dialog-title {
+    font-size: 1.5rem
+  }
+
+  .settings-row-dialog {
+    margin: 0;
+    border-radius: 1.5rem;
+    background-color: c.$background;
+    padding: 1rem;
+  }
+
+  .settings-row-dialog-entry {
+    margin: 0.5rem 0;
+    background-color: c.$surfaceContainerLow;
+    border-radius: 1rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .settings-row-dialog-button-enter {
+    margin: 0.5rem 0;
+    background-color: c.$secondaryContainer;
+    border-radius: 1rem;
+    padding: 0.5rem 1rem;
+
+    &:focus,
+    &:hover {
+      background-color: c.$secondary;
+      color: c.$background;
+    }
+  }
+
+  .settings-row-dialog-button-cancel {
+    margin: 0.5rem 0;
+    background-color: c.$surfaceContainer;
+    border-radius: 1rem;
+    padding: 0.5rem 1rem;
+
+    &:focus,
+    &:hover {
+      background-color: c.$secondaryContainer;
     }
   }
 }

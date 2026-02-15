@@ -38,12 +38,9 @@ class Navigation(Box):
                     valign="center",
                     spacing=5,
                 ),
-                css_classes=["settings-navigation-button", "disabled"]
-                if key == "lock" and not have_lock
-                else ["settings-navigation-button"],
-                on_click=(lambda *_, key=key: self.select(key))
-                if key != "lock" or have_lock
-                else None,
+                css_classes=["settings-navigation-button"],
+                on_click=(lambda *_, key=key: self.select(key)),
+                sensitive=have_lock if key == "lock" else True,
             )
             self.buttons[key] = btn
             self.append(btn)

@@ -108,8 +108,8 @@ class BaseRevealerWindow(Window):
         return self._revealers
 
     @revealers.setter
-    def revealer(self, value: Revealer) -> None:
-        self._revealer = value
+    def revealers(self, value: list[Revealer]) -> None:
+        self._revealers = value
 
 
 class RevealerWindow(BaseRevealerWindow):

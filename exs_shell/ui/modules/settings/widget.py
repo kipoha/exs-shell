@@ -5,6 +5,16 @@ from exs_shell import register
 from exs_shell.app.vars import NAMESPACE
 from exs_shell.interfaces.enums.icons import Icons
 from exs_shell.ui.factory.navigation import Navigation
+from exs_shell.ui.modules.settings.tabs.main import MainTab
+from exs_shell.ui.modules.settings.tabs.appearance import AppearanceTab
+from exs_shell.ui.modules.settings.tabs.interface import InterfaceTab
+from exs_shell.ui.modules.settings.tabs.lock import LockTab
+from exs_shell.ui.modules.settings.tabs.services import ServicesTab
+from exs_shell.ui.modules.settings.tabs.devices import DevicesTab
+from exs_shell.ui.modules.settings.tabs.network import NetworkTab
+from exs_shell.ui.modules.settings.tabs.bluetooth import BluetoothTab
+from exs_shell.ui.modules.settings.tabs.system import SystemTab
+from exs_shell.ui.modules.settings.tabs.about import AboutTab
 
 
 @register.window
@@ -26,7 +36,7 @@ class Settings(RegularWindow):
         for _ in range(100):
             self._test.append(Label(label="AAA"))
 
-        self.content = Scroll(hexpand=True, halign="fill", child=self._test)
+        self.content = Scroll(hexpand=True, halign="fill", child=self._test, hscrollbar_policy="never")
         self.tabs = {
             "main": (Icons.ui.MAIN, "Main"),
             "appearance": (Icons.ui.PALLETTE, "Appearance"),
@@ -79,7 +89,25 @@ class Settings(RegularWindow):
         tab = None
         match key:
             case "main":
-                tab = self._test
+                tab = MainTab()
+            case "appearance":
+                tab = AppearanceTab()
+            case "interface":
+                tab = InterfaceTab()
+            case "lock":
+                tab = LockTab()
+            case "services":
+                tab = ServicesTab()
+            case "devices":
+                tab = DevicesTab()
+            case "network":
+                tab = NetworkTab()
+            case "bluetooth":
+                tab = BluetoothTab()
+            case "system":
+                tab = SystemTab()
+            case "about":
+                tab = AboutTab()
         if tab:
             self.content.set_child(tab)
 

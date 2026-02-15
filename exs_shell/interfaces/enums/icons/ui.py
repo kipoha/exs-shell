@@ -36,3 +36,5 @@ class UIIcons(StrEnum):
     MIC = ""
     OPEN_IN_WINDOW = ""
     DARK = "󰃜"
+    WEATHER = "󰖑"
+    OSD = ""
