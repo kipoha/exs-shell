@@ -22,6 +22,7 @@
       font-size: 1.3rem;
     }
 
+
     background-color: c.$surfaceContainerLow;
     color: c.$onSurface;
     padding: 0.5rem;
@@ -36,6 +37,54 @@
 
       &.active {
         background-color: c.$surfaceVariant;
+      }
+
+      &:nth-child(1) {
+        .settings-navigation-button-icon {
+          margin-right: 0.55rem;
+        }
+      }
+
+      &:nth-child(2) {
+        .settings-navigation-button-icon {
+          margin-right: 0.2rem;
+        }
+      }
+
+      &:nth-child(3) {
+        .settings-navigation-button-icon {
+          margin-right: 0.2rem;
+        }
+      }
+
+      &:nth-child(4) {
+        .settings-navigation-button-icon {
+          margin-right: 0.2rem;
+        }
+      }
+
+      &:nth-child(5) {
+        .settings-navigation-button-icon {
+          margin-right: 0.5rem;
+        }
+      }
+
+      &:nth-child(6) {
+        .settings-navigation-button-icon {
+          margin-right: 0.55rem;
+        }
+      }
+
+      &:nth-child(8) {
+        .settings-navigation-button-icon {
+          margin-right: 0.5rem;
+        }
+      }
+
+      &:nth-child(9) {
+        .settings-navigation-button-icon {
+          margin-right: 0.5rem;
+        }
       }
     }
   }

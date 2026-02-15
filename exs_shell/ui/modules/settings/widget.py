@@ -47,7 +47,7 @@ class Settings(RegularWindow):
         nav.append(Box(vexpand=True))
         # nav.append(self.reload_button)
 
-        header = Box(css_classes=["settings-header-bar"], spacing=5)
+        header = Box(css_classes=["settings-header-bar"], spacing=10)
         header.append(Label(label=Icons.ui.SYSTEM, css_classes=["settings-header-title-icon"]))
         header.append(Label(label="Exs Settings", css_classes=["settings-header-title"]))
         header.append(Label(label=Icons.ui.RIGHT, css_classes=["settings-breadcrumb-separator"]))
