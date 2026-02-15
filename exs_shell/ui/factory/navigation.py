@@ -1,6 +1,7 @@
 from typing import Callable
 
 from ignis.widgets import Box, Button, Label
+from exs_shell.utils.dependencies import check_lock
 
 
 class Navigation(Box):
@@ -19,20 +20,30 @@ class Navigation(Box):
         self.on_select = on_select
         self.buttons: dict[str, Button] = {}
 
+        have_lock = check_lock()
         for key, (icon, label) in tabs.items():
             btn = Button(
                 child=Box(
                     child=[
-                        Label(label=icon, css_classes=["settings-navigation-button-icon"]),
-                        Label(label=label, css_classes=["settings-navigation-button-label"]),
+                        Label(
+                            label=icon, css_classes=["settings-navigation-button-icon"]
+                        ),
+                        Label(
+                            label=label,
+                            css_classes=["settings-navigation-button-label"],
+                        ),
                     ],
                     vertical=vertical,
                     halign="center",
                     valign="center",
                     spacing=5,
                 ),
-                css_classes=["settings-navigation-button"],
-                on_click=lambda *_, key=key: self.select(key),
+                css_classes=["settings-navigation-button", "disabled"]
+                if key == "lock" and not have_lock
+                else ["settings-navigation-button"],
+                on_click=(lambda *_, key=key: self.select(key))
+                if key != "lock" or have_lock
+                else None,
             )
             self.buttons[key] = btn
             self.append(btn)

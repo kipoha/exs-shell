@@ -10,6 +10,7 @@ class UIIcons(StrEnum):
     WATCH = ""
     KEYBOARD = ""
     MOUSE = ""
+    LOCK = ""
     TV = ""
     MAIN = ""
     PRINTER = "󰐪"

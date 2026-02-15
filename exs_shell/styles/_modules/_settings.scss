@@ -13,7 +13,16 @@
     padding: 1rem;
   }
 
+  .settings-header-title-icon {
+    font-size: 1.5rem;
+    margin-right: 0.5rem;
+  }
+
   .settings-navigation {
+    background-color: c.$surfaceContainerLow;
+    color: c.$onSurface;
+    padding: 0.5rem;
+
     .settings-navigation-button-label {
       font-size: 0.8rem;
     }
@@ -22,10 +31,18 @@
       font-size: 1.3rem;
     }
 
+    .settings-reload-button {
+      font-size: 2rem;
+      margin: 0.5rem;
+      padding: 0.8rem 0.8rem 0.8rem 0.2rem;
+      background-color: c.$secondaryContainer;
+      border-radius: 1rem;
 
-    background-color: c.$surfaceContainerLow;
-    color: c.$onSurface;
-    padding: 0.5rem;
+      &:hover {
+        background-color: c.$secondary;
+        color: c.$background;
+      }
+    }
 
     .settings-navigation-button {
       padding: 0.2rem;
@@ -33,6 +50,14 @@
 
       &:hover {
         background-color: c.$secondaryContainer;
+      }
+
+      &.disabled {
+        color: c.$outline;
+
+        &:hover {
+          background-color: c.$surfaceContainerLow;
+        }
       }
 
       &.active {
@@ -65,23 +90,29 @@
 
       &:nth-child(5) {
         .settings-navigation-button-icon {
-          margin-right: 0.5rem;
+          margin-right: 0.2rem;
         }
       }
 
       &:nth-child(6) {
         .settings-navigation-button-icon {
+          margin-right: 0.5rem;
+        }
+      }
+
+      &:nth-child(7) {
+        .settings-navigation-button-icon {
           margin-right: 0.55rem;
         }
       }
 
-      &:nth-child(8) {
+      &:nth-child(9) {
         .settings-navigation-button-icon {
           margin-right: 0.5rem;
         }
       }
 
-      &:nth-child(9) {
+      &:nth-child(10) {
         .settings-navigation-button-icon {
           margin-right: 0.5rem;
         }

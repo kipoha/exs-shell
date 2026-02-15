@@ -1,6 +1,6 @@
 from typing import Any
 
-from ignis.widgets import Box, Button, CenterBox, Label
+from ignis.widgets import Box, Button, Label
 from ignis.services.network import (
     NetworkService,
     Wifi,
@@ -22,6 +22,7 @@ from ignis.services.network import (
 from exs_shell import register
 from exs_shell.interfaces.enums.icons import Icons
 from exs_shell.state import State
+from exs_shell.utils.commands import run_command
 
 
 @register.event
@@ -52,7 +53,7 @@ class WifiWidget(Box):
         )
         self.button_open = Button(
             child=Label(label=Icons.ui.OPEN_IN_WINDOW),
-            on_click=lambda _: print("DA"),
+            on_click=lambda _: run_command("settings", "wifi"),
             css_classes=["control-center-quick-panel-wifi-button-open"],
         )
         self._box = Box(

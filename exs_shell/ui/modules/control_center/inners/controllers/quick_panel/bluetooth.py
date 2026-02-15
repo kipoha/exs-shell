@@ -1,11 +1,12 @@
 from typing import Any
 
-from ignis.widgets import Box, Button, CenterBox, Label
+from ignis.widgets import Box, Button, Label
 from ignis.services.bluetooth import BluetoothService
 
 from exs_shell import register
 from exs_shell.interfaces.enums.icons import Icons
 from exs_shell.state import State
+from exs_shell.utils.commands import run_command
 
 
 @register.event
@@ -33,7 +34,7 @@ class BluetoothWidget(Box):
         )
         self.button_open = Button(
             child=Label(label=Icons.ui.OPEN_IN_WINDOW),
-            on_click=lambda _: print("DA"),
+            on_click=lambda _: run_command("settings", "bluetooth"),
             css_classes=["control-center-quick-panel-bluetooth-button-open"],
         )
         self._box = Box(
