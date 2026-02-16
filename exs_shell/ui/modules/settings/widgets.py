@@ -189,6 +189,7 @@ def DialogRow(
     def on_cancel() -> None:
         dialog_window.set_visible(False)
         entry.text = value
+        # dialog_window.destroy()
 
     content = Box(
         vertical=True,
@@ -234,6 +235,12 @@ def DialogRow(
     #         case 65307:  # 65307 = ESC
     #             dialog_window.set_visible(False)
     #     return True
+
+    def destroy(*_: Any):
+        if dialog_window.visible:
+            dialog_window.destroy()
+
+    dialog_window.connect("notify::visible", destroy)
 
     dialog_window.child = Box(
         vertical=True,
