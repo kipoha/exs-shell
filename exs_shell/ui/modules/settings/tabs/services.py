@@ -2,6 +2,7 @@ from ignis.widgets import Separator
 
 from exs_shell.configs.user import weather, osd
 from exs_shell.interfaces.enums.configs.position import PositionSide
+from exs_shell.interfaces.enums.configs.osd import osd_type
 from exs_shell.interfaces.enums.icons import Icons
 from exs_shell.ui.modules.settings.tabs.base import BaseTab, BaseCategory
 from exs_shell.ui.modules.settings.widgets import (
@@ -57,7 +58,7 @@ class OSDCategory(BaseCategory):
                     description="Type of OSD",
                     child=[
                         SelectRow(
-                            [(Icons.ui.ARC, "arc"), (Icons.ui.SLINE, "scale")],
+                            osd_type,
                             lambda x: osd.set_osd(x),
                             active=osd.osd,
                             css_classes=["exs-osd-select-type"],

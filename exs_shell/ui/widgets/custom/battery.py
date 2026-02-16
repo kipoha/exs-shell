@@ -8,6 +8,7 @@ from exs_shell.ui.widgets.custom.circle import ArcMeter
 
 
 @register.event
+@register.widget
 class Battery(ArcMeter):
     def __init__(
         self,

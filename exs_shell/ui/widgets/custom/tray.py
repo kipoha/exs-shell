@@ -33,6 +33,7 @@ class SystemTrayItemButton(EventBox):
 
 
 @register.event
+@register.widget
 class SystemTray(Box):
     def __init__(self, scale: float, **kwargs: Any):
         self.scale = scale

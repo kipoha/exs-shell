@@ -9,6 +9,7 @@ from exs_shell.configs.user import user
 
 
 @register.event
+@register.widget
 class Clock(Label):
     def __init__(self, **kwargs: Any):
         self.format = user.clock_format

@@ -1,9 +1,11 @@
 from ignis import widgets
 from ignis.services.niri import NiriService
 
+from exs_shell import register
 from exs_shell.state import State
 
 
+@register.widget
 class KeyboardLayout(widgets.EventBox):
     def __init__(self, **kwargs):
         niri: NiriService = State.services.niri

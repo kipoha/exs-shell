@@ -2,6 +2,7 @@ from ignis.options_manager import OptionsGroup, TrackedList
 
 
 class Bar(OptionsGroup):
+    show: bool = True
     position: str = "top"
     left: TrackedList[str] = TrackedList()
     left.extend(["tray"])

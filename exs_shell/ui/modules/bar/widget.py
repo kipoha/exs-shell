@@ -17,14 +17,7 @@ class Bar(RevealerBaseWidget):
     def __init__(self, monitor_num: int):
         self.monitor_num = monitor_num
         self.scale = get_monitor_scale(monitor_num)
-        self._inner = self._widget_factory()
-        self._rev_inner = Revealer(
-            self._inner,
-            transition_type=RevealerTransition.SLIDE_DOWN,
-            transition_duration=200,
-            hexpand=True,
-        )
-        self._box = Box(child=[self._rev_inner], hexpand=True)
+        self.widger_build()
 
         win_param = window.create(
             namespace=f"bar{monitor_num}",
@@ -63,16 +56,37 @@ class Bar(RevealerBaseWidget):
             hexpand=True,
         )
 
+    def widger_build(self):
+        self._inner = self._widget_factory()
+        self._rev_inner = Revealer(
+            self._inner,
+            transition_type=RevealerTransition.SLIDE_DOWN,
+            transition_duration=200,
+            hexpand=True,
+        )
+        self._box = Box(child=[self._rev_inner], hexpand=True)
+
     def get_option_margin(self) -> AnyDict:
         m = 490 * self.scale
         if bar.position == "top":
-            return {"margin_top": int(227 * self.scale), "margin_bottom": 0, "margin_left": m, "margin_right": m}
+            return {
+                "margin_top": int(227 * self.scale),
+                "margin_bottom": 0,
+                "margin_left": m,
+                "margin_right": m,
+            }
         else:
-            return {"margin_bottom": int(227 * self.scale), "margin_top": 0, "margin_left": m, "margin_right": m}
+            return {
+                "margin_bottom": int(227 * self.scale),
+                "margin_top": 0,
+                "margin_left": m,
+                "margin_right": m,
+            }
 
     @register.events.niri("notify::overview-opened")
     def overview(self, niri, *_):
-        self.set_visible(niri.overview_opened)
+        if bar.show:
+            self.set_visible(niri.overview_opened)
 
     @register.events.option(bar, "left")
     @register.events.option(bar, "left_spacing")
@@ -87,6 +101,13 @@ class Bar(RevealerBaseWidget):
     @register.events.option(bar, "position")
     def _update_margin(self, *_):
         margins = self.get_option_margin()
+        # self._main.set_anchor("left", [bar.position], "right")
+        self.win_dict["anchor"] = ["left", bar.position, "right"]
+        self.widger_build()
+        self.set_revealers([self._rev_inner])
+        self.recreate_window()
         self._main.set_margin_top(margins["margin_top"])
         self._main.set_margin_bottom(margins["margin_bottom"])
-        self._main.set_anchor([bar.position])
+        print(self._inner.start_widget.child)
+        print(self._inner.center_widget.child)
+        print(self._inner.end_widget.child)
