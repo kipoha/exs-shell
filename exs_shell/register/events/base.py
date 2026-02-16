@@ -33,6 +33,8 @@ def event_handler(obj, bound):
             kw["_poll"](obj)
         else:
             target = target_getter(obj)
+            if target is None:
+                continue
             getattr(target, connect_method)(*args, bound, **kw)
 
 

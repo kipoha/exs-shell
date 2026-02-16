@@ -1,5 +1,5 @@
 import argparse
-import sys
+
 from exs_shell.cli.shell import shell_cmd
 from exs_shell.cli.ipc import ipc_cmd
 from exs_shell.cli.update import update_cmd

@@ -129,27 +129,16 @@ def upower(signal: str) -> EventDeco:
     )
 
 
-if hasattr(State.services.upower, "batteries") and State.services.upower.batteries:
-
-    def battery(signal: str) -> EventDeco:
-        return _base_connector(
-            lambda _: State.services.upower.batteries[0],
-            "connect",
-            signal,
-        )
-else:
-
-    def battery(signal: str) -> EventDeco:
-        def _event_call(instance):
-            pass
-
-        def dummy(func):
-            return func
-
-        if not hasattr(dummy, "_event_calls"):
-            setattr(dummy, "_event_calls", [])
-        getattr(dummy, "_event_calls").append(_event_call)
-        return dummy
+def battery(signal: str) -> EventDeco:
+    return _base_connector(
+        lambda _: (
+            State.services.upower.batteries[0]
+            if getattr(State.services.upower, "batteries", [])
+            else None
+        ),
+        "connect",
+        signal,
+    )
 
 
 def poll(interval_ms: int, *, bind: str | None = None) -> EventDeco:
