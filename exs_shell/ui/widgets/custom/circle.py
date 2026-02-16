@@ -57,7 +57,7 @@ class ArcMeter(Gtk.DrawingArea):
     def redraw(self, area, cr: cairo.Context, width: int, height: int):
         _colors = get_hex_color()
         hex_color = _colors["primary"]
-        void = _colors["surfaceBright"]
+        void = _colors["surfaceContainerHighest"]
         r, g, b = hex_to_rgb(hex_color)
 
         cx, cy = width / 2, height / 2

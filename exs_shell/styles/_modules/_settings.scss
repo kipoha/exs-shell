@@ -1,5 +1,6 @@
 .settings-window {
   background-color: c.$surfaceContainerLow;
+  color: c.$onSurface;
 
   scrolledwindow viewport {
     margin: 0;
@@ -15,6 +16,7 @@
       border-radius: 1.5rem;
       background-color: c.$surfaceContainerLow;
       padding: 1rem;
+      color: c.$primary;
 
       separator {
         background-color: c.$surfaceVariant;
@@ -31,7 +33,7 @@
       .settings-row-header {
 
         .settings-row-title-header {
-          color: c.$onPrimaryContainer;
+          color: c.$onSurface;
         }
 
         .settings-row-description {
@@ -41,9 +43,10 @@
 
       .settings-row-dialog-button {
         margin: 0.5rem 0;
-        background-color: c.$surfaceBright;
+        background-color: c.$surfaceContainer;
         border-radius: 1rem;
         padding: 0.5rem 1rem;
+        border: 0.2rem solid c.$surfaceVariant;
 
         &:focus,
         &:hover {
@@ -59,21 +62,24 @@
 
         text {
           border-radius: 1.5rem 0.5rem 0.5rem 1.5rem;
-          background-color: c.$surfaceBright;
+          background-color: c.$surfaceContainer;
           margin-right: 0.2rem;
           padding: 0.5rem 0.5rem 0.5rem 1rem;
+          border: 0.2rem solid c.$surfaceVariant;
         }
 
         button.up,
         button.down {
           margin: 0 0.2rem;
           padding: 0 0.5rem;
-          background-color: c.$surfaceBright;
+          background-color: c.$surfaceContainer;
           border-radius: 0.5rem;
+          border: 0.2rem solid c.$surfaceVariant;
 
           &:first-child {
             margin-left: 0;
           }
+
           &:last-child {
             margin-right: 0;
             border-radius: 0.5rem 1.5rem 1.5rem 0.5rem;
@@ -122,6 +128,7 @@
           border-radius: 0.5rem;
           background-color: c.$secondaryContainer;
           padding: 0.5rem 2rem;
+          border: 0.2rem solid c.$surfaceVariant;
 
           &.exs-osd-select-type {
             padding: 0.5rem 2.5rem 0.5rem 2rem;

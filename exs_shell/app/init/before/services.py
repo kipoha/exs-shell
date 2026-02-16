@@ -13,6 +13,7 @@ from ignis.services.fetch import FetchService
 
 from exs_shell.state import State
 from exs_shell.ui.services.cava import Cava
+from exs_shell.ui.services.appearance import AppearanceService
 
 services = {
     "niri": NiriService,
@@ -27,6 +28,7 @@ services = {
     "applications": ApplicationsService,
     "power_profiles": PowerProfilesService,
     "fetch": FetchService,
+    "appearance": AppearanceService,
 }
 
 

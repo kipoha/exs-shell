@@ -4,12 +4,18 @@ from pathlib import Path
 from dataclasses import asdict
 
 from exs_shell.configs.user import appearance
+from exs_shell.interfaces.enums.colorschemes import ColorSchemes
 from exs_shell.utils.colorscheme import generate
 from exs_shell.utils.path import Dirs, Paths
 
 
 def build_scss(wallpaper_path: str | None = appearance.wallpaper_path) -> Path:
-    theme = generate(wallpaper_path=wallpaper_path)
+    theme = generate(
+        wallpaper_path=wallpaper_path,
+        scheme=ColorSchemes(appearance.scheme_variant),
+        dark=appearance.dark,
+        contrast=appearance.contrast,
+    )
     colors = asdict(theme.colors)
 
     scss_colors_json_file = Dirs.CONFIG_DIR / "colors.json"

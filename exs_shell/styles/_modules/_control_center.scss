@@ -10,6 +10,7 @@
 
 .control-center-window {
   background-color: c.$background;
+  color: c.$onBackground;
   padding: 1rem;
 }
 
@@ -126,19 +127,18 @@
 
 .control-center-mini-player-info {
   padding: 0.5rem;
-  color: c.$primary;
   min-width: 18.5rem;
+  color: white;
 }
 
 .control-center-mini-player-controller {
   padding: 0.5rem;
   margin-right: 0.5rem;
-  background-color: rgba(255, 255, 255, 0.5);
   border-radius: 1rem;
 
   button {
     color: c.$primary;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: c.$surfaceContainerHigh;
     border-radius: 1rem;
 
     &:hover {
@@ -163,9 +163,8 @@
 .control-center-mini-player-reveal {
   padding: 0.2rem 0.7rem 0.2rem 0.6rem;
   margin: 0.5rem 0;
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: c.$surface;
   border-radius: 1rem;
-  color: c.$background;
 
   &:hover {
     background-color: c.$primary;
@@ -184,19 +183,18 @@
 
 .control-center-player-info {
   padding: 0.5rem;
-  color: c.$primary;
   min-width: 18.5rem;
 }
 
 .control-center-player-controller {
   padding: 0.5rem;
   margin-right: 1rem;
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: c.$surfaceContainerHigh;
   border-radius: 1rem;
 
   button {
     color: c.$primary;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: c.$surfaceContainerHigh;
     border-radius: 1rem;
 
     &:hover {
@@ -221,9 +219,8 @@
 .control-center-player-reveal {
   padding: 0.2rem 0.7rem 0.2rem 0.6rem;
   margin: 0.5rem 0;
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: c.$surfaceContainerHigh;
   border-radius: 1rem;
-  color: c.$background;
 
   &:hover {
     background-color: c.$primary;
@@ -233,7 +230,7 @@
 
 .control-center-player-background {
   border-radius: 1rem;
-  background-color: rgba(255, 255, 255, 0.1);
+  /* background-color: rgba(255, 255, 255, 0.1); */
   border: 1px solid c.$onSecondaryFixedVariant;
 }
 
@@ -253,7 +250,7 @@
 }
 
 .control-center-player-scale trough {
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: c.$surfaceContainerHigh;
   border-radius: 10px;
   min-height: 0.3rem;
 }
@@ -266,13 +263,12 @@
 
 .control-center-player-scale slider {
   background-color: c.$primary;
-  border: 2px solid white;
+  border: 0.2rem solid c.$surfaceContainerHigh;
   border-radius: 0.2rem;
   min-width: 2px;
   min-height: 8px;
   margin-top: -2px;
   margin-bottom: -2px;
-  box-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
   transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
@@ -322,14 +318,14 @@
   font-size: 1.4rem;
 
   trough {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: c.$surfaceContainerHighest;
     border-radius: 0.3rem 1rem 1rem 0.3rem;
     min-height: 0.7rem;
   }
 
   slider {
     background-color: c.$primary;
-    border: 0.2rem solid c.$surfaceBright;
+    border: 0.2rem solid c.$surfaceContainer;
     border-radius: 1rem;
     min-width: 0.2rem;
     min-height: 1.6rem;
@@ -347,7 +343,7 @@
   .control-center-rollers-backlight-container {
     border-radius: 1rem;
     padding: 0.6rem 1rem;
-    background-color: c.$surfaceBright;
+    background-color: c.$surfaceContainer;
     border-radius: 1rem;
     color: c.$background;
   }
@@ -399,10 +395,10 @@
       border-radius: 0.5rem 1rem 1rem 0.5rem;
       padding: 0.5rem 1rem 0.5rem 0.5rem;
       margin-left: 0.3rem;
-      background-color: rgba(255, 255, 255, 0.2);
+      background-color: c.$surfaceContainerHighest;
 
       &:hover {
-        background-color: rgba(255, 255, 255, 0.3);
+        background-color: c.$surfaceContainer;
       }
 
       &.active {
@@ -418,10 +414,10 @@
     .control-center-quick-panel-bluetooth-button-enable,
     .control-center-quick-panel-wifi-button-enable {
       border-radius: 1rem 0.5rem 0.5rem 1rem;
-      background-color: rgba(255, 255, 255, 0.2);
+      background-color: c.$surfaceContainerHighest;
 
       &:hover {
-        background-color: rgba(255, 255, 255, 0.3);
+        background-color: c.$surfaceContainer;
       }
 
       &.active {
@@ -441,10 +437,10 @@
     .control-center-quick-panel-dark-button {
       border-radius: 1rem;
       padding: 0.5rem 3.9rem;
-      background-color: rgba(255, 255, 255, 0.2);
+      background-color: c.$surfaceContainerHighest;
 
       &:hover {
-        background-color: rgba(255, 255, 255, 0.3);
+        background-color: c.$surfaceContainer;
       }
 
       &.active {
@@ -457,10 +453,10 @@
     .control-center-quick-panel-power-profile-select-balanced-button,
     .control-center-quick-panel-power-profile-select-performance-button {
       font-size: 1.4rem;
-      background-color: rgba(255, 255, 255, 0.2);
+      background-color: c.$surfaceContainerHighest;
 
       &:hover {
-        background-color: rgba(255, 255, 255, 0.3);
+        background-color: c.$surfaceContainer;
       }
 
       &.active {
