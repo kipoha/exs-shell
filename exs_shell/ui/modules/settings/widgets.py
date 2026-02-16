@@ -1,11 +1,20 @@
 from uuid import uuid4
 
-from typing import Any, Callable, Sequence
-
-# from gi.repository import Gtk  # type: ignore
+from typing import Any, Callable, Protocol, Sequence
 
 from ignis.base_widget import BaseWidget
-from ignis.widgets import Box, Label, Button, Switch, Entry, RegularWindow, SpinButton
+from ignis.widgets import (
+    Box,
+    FileChooserButton,
+    FileDialog,
+    FileFilter,
+    Label,
+    Button,
+    Switch,
+    Entry,
+    RegularWindow,
+    SpinButton,
+)
 
 from exs_shell.app.vars import NAMESPACE
 
@@ -230,12 +239,6 @@ def DialogRow(
         css_classes=["settings-row-dialog-actions"],
     )
 
-    # def on_key_pressed(__, keyval, *_):
-    #     match keyval:
-    #         case 65307:  # 65307 = ESC
-    #             dialog_window.set_visible(False)
-    #     return True
-
     def destroy(*_: Any):
         if dialog_window.visible:
             dialog_window.destroy()
@@ -250,13 +253,40 @@ def DialogRow(
         child=[content, Box(vexpand=True, hexpand=True), actions],
         css_classes=["settings-row-dialog"],
     )
-    # key_controller = Gtk.EventControllerKey()
-    # dialog_window.add_controller(key_controller)
-    # dialog_window.connect("key-pressed", on_key_pressed)
 
     return Button(
         child=Label(label=button_name),
         on_click=lambda _: dialog_window.set_visible(True),
+        **kwargs,
+    )
+
+
+class FileGTKObjProtocol(Protocol):
+    def get_path(self) -> str: ...
+
+
+def FileDialogRow(
+    on_change: Callable[[FileDialog, FileGTKObjProtocol], None],
+    button_name: str = "Change",
+    initial_path: str | None = None,
+    filters: Sequence[FileFilter] | None = None,
+    select_folder: bool = False,
+    **kwargs: Any,
+) -> FileChooserButton:
+    file_dialog = FileDialog(
+        select_folder=select_folder,
+        filters=filters,
+        initial_path=initial_path,
+        on_file_set=on_change,
+    )
+
+    kwargs["css_classes"] = ["settings-row-file-button"] + (
+        kwargs.get("css_classes") or []
+    )
+
+    return FileChooserButton(
+        dialog=file_dialog,
+        label=Label(label=button_name),
         **kwargs,
     )
 

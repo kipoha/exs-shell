@@ -202,7 +202,7 @@ class Settings(widgets.RegularWindow, SingletonClass):
             select_folder=False,
             filters=[
                 widgets.FileFilter(
-                    mime_types=["image/jpeg", "image/png"],
+                    mime_types=["image/jpeg", "image/png", "image/webp", "image/gif"],
                     default=True,
                     name="Images JPEG/PNG",
                 )

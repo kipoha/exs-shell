@@ -11,6 +11,11 @@ from exs_shell.ui.modules.settings.widgets import (
 )
 
 
+class SoonCategory(BaseCategory):
+    def __init__(self):
+        super().__init__(child=[CategoryLabel(title="Soon...")])
+
+
 class MainTab(BaseTab):
     def __init__(self):
-        super().__init__(child=[])
+        super().__init__(child=[SoonCategory()])

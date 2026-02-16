@@ -66,9 +66,7 @@ class WallpaperLayerWindow(Gtk.Window):
     def unrealize(self) -> None:
         self.revealer.set_reveal_child(False)
         GLib.timeout_add(500, self.destroy)
-        print("wallpaper destroyed")
         super().unrealize()
-        print("wallpaper unrealized")
 
 
 @register.event

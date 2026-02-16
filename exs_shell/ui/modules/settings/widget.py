@@ -61,7 +61,7 @@ class Settings(RegularWindow):
 
         header = Box(css_classes=["settings-header-bar"], spacing=10)
         header.append(self.active_tab_label_icon)
-        header.append(Label(label="Exs Settings", css_classes=["settings-header-title"]))
+        header.append(Label(label="Settings", css_classes=["settings-header-title"]))
         header.append(Label(label=Icons.ui.RIGHT, css_classes=["settings-breadcrumb-separator"]))
         header.append(self.active_tab_label)
 

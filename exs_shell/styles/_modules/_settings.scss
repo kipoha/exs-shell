@@ -8,6 +8,45 @@
     background-color: c.$background;
   }
 
+
+  .settings-wallpaper-preview {
+    border-radius: 1rem;
+  }
+
+  .settings-wallpaper-button-overlay {
+    color: transparent;
+    border-radius: 1rem;
+    outline-offset: 0.1rem;
+
+    &:hover {
+      background-color: rgba(c.$surfaceContainer, 0.2);
+    }
+  }
+
+  .settings-wallpaper-filename-label {
+    background-color: c.$surfaceContainer;
+    color: c.$onSurface;
+    padding: 0.3rem 1rem;
+    border-radius: 50rem;
+  }
+
+  .settings-folder-chooser-button {
+    background-color: c.$surfaceContainerHigh;
+    border-radius: 1rem;
+    font-weight: 500;
+    padding: 0.5rem 1.5rem;
+  }
+
+  .settings-wallpaper-gallery-container {
+    padding: 0;
+    border-radius: 1rem;
+
+    .settings-wallpaper-thumbnail {
+      padding: 0;
+      border-radius: 0.5rem;
+    }
+  }
+
   .settings-body {
     padding: 1rem;
 
@@ -46,7 +85,7 @@
         background-color: c.$surfaceContainer;
         border-radius: 1rem;
         padding: 0.5rem 1rem;
-        border: 0.2rem solid c.$surfaceVariant;
+        border: 0.1rem solid c.$surfaceVariant;
 
         &:focus,
         &:hover {
@@ -65,7 +104,7 @@
           background-color: c.$surfaceContainer;
           margin-right: 0.2rem;
           padding: 0.5rem 0.5rem 0.5rem 1rem;
-          border: 0.2rem solid c.$surfaceVariant;
+          border: 0.1rem solid c.$surfaceVariant;
         }
 
         button.up,
@@ -74,7 +113,7 @@
           padding: 0 0.5rem;
           background-color: c.$surfaceContainer;
           border-radius: 0.5rem;
-          border: 0.2rem solid c.$surfaceVariant;
+          border: 0.1rem solid c.$surfaceVariant;
 
           &:first-child {
             margin-left: 0;
@@ -128,7 +167,7 @@
           border-radius: 0.5rem;
           background-color: c.$secondaryContainer;
           padding: 0.5rem 2rem;
-          border: 0.2rem solid c.$surfaceVariant;
+          border: 0.1rem solid c.$surfaceVariant;
 
           &.exs-osd-select-type {
             padding: 0.5rem 2.5rem 0.5rem 2rem;
@@ -276,6 +315,7 @@
 
 .settings-dialog-window {
   background-color: c.$surfaceContainerLow;
+  color: c.$onSurface;
 
   .settings-row-dialog-title {
     font-size: 1.5rem

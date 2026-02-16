@@ -12,6 +12,7 @@ class UIIcons(StrEnum):
     MOUSE = ""
     LOCK = ""
     TV = ""
+    DESKTOP = ""
     MAIN = ""
     PRINTER = "󰐪"
     CAMERA = ""

@@ -10,7 +10,11 @@ from exs_shell.ui.modules.settings.widgets import (
     SwitchRow,
 )
 
+class SoonCategory(BaseCategory):
+    def __init__(self):
+        super().__init__(child=[CategoryLabel(title="Soon...")])
+
 
 class BluetoothTab(BaseTab):
     def __init__(self):
-        super().__init__(child=[])
+        super().__init__(child=[SoonCategory()])
