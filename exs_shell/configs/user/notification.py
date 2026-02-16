@@ -1,8 +1,5 @@
-from ignis.options_manager import OptionsGroup
+from ignis.options import Options
 
 
-class Notifications(OptionsGroup):
-    dnd: bool = False
-    popup_timeout: int = 5000
-    max_popups_count: int = 3
+class Notifications(Options.Notifications):
     popup_position: str = "top"

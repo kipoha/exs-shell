@@ -18,6 +18,7 @@ class BarCategory(BaseCategory):
             child=[
                 CategoryLabel(title="Bar", icon=Icons.ui.INTERFACE),
                 SettingsRow(
+                    Icons.ui.SHOW,
                     title="Show",
                     description="Show bar",
                     child=[
@@ -29,6 +30,7 @@ class BarCategory(BaseCategory):
                 ),
                 Separator(),
                 SettingsRow(
+                    Icons.align.TOP,
                     title="Position",
                     description="Bar position",
                     child=[

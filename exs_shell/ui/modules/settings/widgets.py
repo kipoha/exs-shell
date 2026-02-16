@@ -5,7 +5,7 @@ from typing import Any, Callable, Sequence
 # from gi.repository import Gtk  # type: ignore
 
 from ignis.base_widget import BaseWidget
-from ignis.widgets import Box, Label, Button, Switch, Entry, RegularWindow
+from ignis.widgets import Box, Label, Button, Switch, Entry, RegularWindow, SpinButton
 
 from exs_shell.app.vars import NAMESPACE
 
@@ -115,7 +115,9 @@ def SelectRow(
     vertical: bool = False,
     **kwargs: Any,
 ) -> Box:
-    kwargs["css_classes"] = ["settings-row-select-choice"] + (kwargs.get("css_classes") or [])
+    kwargs["css_classes"] = ["settings-row-select-choice"] + (
+        kwargs.get("css_classes") or []
+    )
     buttons: list[Button] = []
 
     def on_click(_, value: str) -> None:
@@ -260,4 +262,23 @@ def SwitchRow(
     kwargs["css_classes"] = ["settings-row-switch"] + (kwargs.get("css_classes") or [])
     return Switch(
         active=active, on_change=lambda _, active: on_change(active), **kwargs
+    )
+
+
+def SpinRow(
+    on_change: Callable[[int], None],
+    min: int = 1,
+    max: int = 100,
+    step: int = 1,
+    value: int = 0,
+    **kwargs: Any,
+) -> SpinButton:
+    kwargs["css_classes"] = ["settings-row-spin"] + (kwargs.get("css_classes") or [])
+    return SpinButton(
+        min=min,
+        max=max,
+        step=step,
+        value=value,
+        on_change=lambda _, value: on_change(value),
+        **kwargs,
     )

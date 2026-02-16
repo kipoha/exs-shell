@@ -5,6 +5,7 @@ from ignis.services.notifications import Notification, NotificationService
 from ignis.widgets import Box
 
 from exs_shell import register
+from exs_shell.configs.user import notifications
 from exs_shell.interfaces.enums.gtk.transitions import RevealerTransition
 from exs_shell.interfaces.enums.gtk.windows import Layer
 from exs_shell.state import State
@@ -24,7 +25,7 @@ class Popup(Box):
         self.notification = notification
         self.notifications: NotificationService = State.services.notifications
 
-        widget = NotificationWidget(notification, True)
+        widget = NotificationWidget(notification, True, notifications.popup_timeout)
         widget.css_classes = ["notification-popup"]
 
         self._inner = Revealer(transition_type=RevealerTransition.SLIDE_UP, child=widget, transition_duration=250)
