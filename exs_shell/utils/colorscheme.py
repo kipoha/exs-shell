@@ -10,7 +10,12 @@ from materialyoucolor.utils.color_utils import argb_from_rgb
 from exs_shell.utils.path import Paths
 from exs_shell.configs.user import appearance
 from exs_shell.interfaces.enums.colorschemes import ColorSchemeClasses, ColorSchemes
-from exs_shell.interfaces.schemas.utils.colors import GeneratedTheme, MaterialColors
+from exs_shell.interfaces.schemas.utils.colors import (
+    GeneratedPreviewColors,
+    GeneratedTheme,
+    MaterialColors,
+    ColorSchemeList,
+)
 
 
 def to_scss_color(val: int) -> str:
@@ -26,6 +31,14 @@ def to_scss_color(val: int) -> str:
 
 def theme_to_scss(theme: MaterialColors) -> str:
     return "\n".join(f"${key}: {value};" for key, value in asdict(theme).items())
+
+
+def preview_to_scss(scheme_list: dict[str, dict[str, str]]) -> str:
+    return "\n".join(
+        f"$palette_{scheme_name}_{k}: {v};"
+        for scheme_name, colors in scheme_list.items()
+        for k, v in colors.items()
+    )
 
 
 def generate(
@@ -64,3 +77,27 @@ def generate(
         scheme=scheme,
         seed_rgb=(r, g, b),
     )
+
+
+def generate_color_preview(
+    wallpaper_path: str = appearance.wallpaper_path,
+    dark: bool = appearance.dark,
+    contrast: float = appearance.contrast,
+) -> str:
+    img = Image.open(wallpaper_path).convert("RGB")
+    pixels = list(img.getdata())  # type: ignore
+
+    r = sum(p[0] for p in pixels) // len(pixels)
+    g = sum(p[1] for p in pixels) // len(pixels)
+    b = sum(p[2] for p in pixels) // len(pixels)
+
+    argb = argb_from_rgb(r, g, b)
+    colors = {}
+    for scheme in ColorSchemeClasses:
+        scheme_cls = ColorSchemeClasses.get(scheme.name.upper())
+        dyn_scheme = scheme_cls(Hct.from_int(argb), dark, contrast)  # type: ignore
+        theme = GeneratedPreviewColors.create(dyn_scheme, to_scss_color)
+        colors[scheme.name.lower()] = theme
+
+    scheme_list = ColorSchemeList(**colors)
+    return preview_to_scss(scheme_list.asdict())

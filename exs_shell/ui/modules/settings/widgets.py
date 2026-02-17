@@ -3,6 +3,7 @@ from uuid import uuid4
 from typing import Any, Callable, Protocol, Sequence
 
 from ignis.base_widget import BaseWidget
+from ignis.gobject import Binding
 from ignis.widgets import (
     Box,
     FileChooserButton,
@@ -165,7 +166,7 @@ def DialogRow(
     description: str,
     button_name: str = "Change",
     placeholder: str | None = None,
-    value: str | None = None,
+    value: str | Binding| None = None,
     **kwargs: Any,
 ) -> Button:
     kwargs["css_classes"] = ["settings-row-dialog-button"] + (
@@ -273,6 +274,7 @@ def FileDialogRow(
     select_folder: bool = False,
     **kwargs: Any,
 ) -> FileChooserButton:
+    filters = filters or []
     file_dialog = FileDialog(
         select_folder=select_folder,
         filters=filters,
@@ -280,7 +282,7 @@ def FileDialogRow(
         on_file_set=on_change,
     )
 
-    kwargs["css_classes"] = ["settings-row-file-button"] + (
+    kwargs["css_classes"] = ["settings-row-dialog-button"] + (
         kwargs.get("css_classes") or []
     )
 
@@ -292,7 +294,7 @@ def FileDialogRow(
 
 
 def SwitchRow(
-    active: bool,
+    active: bool | Binding,
     on_change: Callable[[bool], None],
     **kwargs: Any,
 ) -> Switch:
@@ -307,7 +309,7 @@ def SpinRow(
     min: int = 1,
     max: int = 100,
     step: int = 1,
-    value: int = 0,
+    value: int | Binding = 0,
     **kwargs: Any,
 ) -> SpinButton:
     kwargs["css_classes"] = ["settings-row-spin"] + (kwargs.get("css_classes") or [])

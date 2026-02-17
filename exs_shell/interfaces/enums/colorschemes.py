@@ -38,5 +38,5 @@ class ColorSchemeClasses(Enum):
     NEUTRAL = SchemeNeutral
     
     @classmethod
-    def get(cls, enum: ColorSchemes) -> ColorSchemeInterface:
+    def get(cls, enum: ColorSchemes | str) -> ColorSchemeInterface:
         return cls[enum].value  # type: ignore

@@ -1,5 +1,6 @@
 import os
 import re
+import sys
 
 from exs_shell.interfaces.types import AnyDict
 from exs_shell.utils.path import Paths, Dirs
@@ -7,7 +8,7 @@ from exs_shell.utils.path import Paths, Dirs
 
 def get_hex_color() -> AnyDict:
     scss_file = Paths.generate_path("colors.scss", Dirs.CONFIG_DIR)
-    if not os.path.exists(scss_file):
+    if not os.path.exists(scss_file) or "--dev" in sys.argv:
         scss_file = Paths.generate_path("styles/colors.scss", Paths.path)
     variables: AnyDict = {}
     with open(scss_file, "r") as f:

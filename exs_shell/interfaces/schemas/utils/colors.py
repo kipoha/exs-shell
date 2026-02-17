@@ -1,4 +1,4 @@
-from dataclasses import dataclass, fields
+from dataclasses import dataclass, fields, asdict
 from typing import Any, Callable, Self
 
 from materialyoucolor.scheme.dynamic_scheme import DynamicScheme
@@ -78,13 +78,13 @@ class MaterialColors:
     def create(cls, scheme: DynamicScheme, converter: Callable[[Any], str]) -> Self:
         return cls(
             **{
-                field.name: cls.get_color(scheme, converter, field.name)
+                field.name: cls._get_color(scheme, converter, field.name)
                 for field in fields(cls)
             }
         )
 
     @classmethod
-    def get_color(
+    def _get_color(
         cls, scheme: DynamicScheme, converter: Callable[[Any], str], color: str
     ) -> str:
         return converter(getattr(c, color).get_argb(scheme))
@@ -96,3 +96,41 @@ class GeneratedTheme:
     scss: str
     scheme: ColorSchemes
     seed_rgb: RGB
+
+
+@dataclass(slots=True)
+class GeneratedPreviewColors:
+    primary: str
+    secondary: str
+    tertiary: str
+
+    @classmethod
+    def create(cls, scheme: DynamicScheme, converter: Callable[[Any], str]) -> Self:
+        return cls(
+            **{
+                field.name: cls._get_color(scheme, converter, field.name)
+                for field in fields(cls)
+            }
+        )
+
+    @classmethod
+    def _get_color(
+        cls, scheme: DynamicScheme, converter: Callable[[Any], str], color: str
+    ) -> str:
+        return converter(getattr(c, color).get_argb(scheme))
+
+
+@dataclass(slots=True)
+class ColorSchemeList:
+    monochrome: GeneratedPreviewColors
+    tonal_spot: GeneratedPreviewColors
+    vibrant: GeneratedPreviewColors
+    expressive: GeneratedPreviewColors
+    fidelity: GeneratedPreviewColors
+    content: GeneratedPreviewColors
+    rainbow: GeneratedPreviewColors
+    fruit_salad: GeneratedPreviewColors
+    neutral: GeneratedPreviewColors
+
+    def asdict(self) -> dict[str, Any]:
+        return asdict(self)

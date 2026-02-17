@@ -19,6 +19,8 @@ class UIIcons(StrEnum):
     SPEAKERS = "󰓃"
     PACKAGE = ""
     SEARCH = ""
+    IMAGE = "󰋩"
+    IMAGE_OFF = "󰋫"
     SYSTEM = ""
     BLUETOOTH = "󰂯"
     INFO = ""

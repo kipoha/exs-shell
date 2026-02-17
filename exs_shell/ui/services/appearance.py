@@ -80,7 +80,7 @@ class AppearanceService(BaseService):
     @register.events.option(appearance, "dark")
     @register.events.option(appearance, "contrast")
     @register.events.option(appearance, "scheme_variant")
-    def __update_dark(self) -> None:
+    def __update(self) -> None:
         if "--dev" in sys.argv or "--debug" in sys.argv:
             return
         build_scss(appearance.wallpaper_path)

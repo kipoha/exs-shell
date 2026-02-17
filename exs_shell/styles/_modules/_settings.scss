@@ -8,9 +8,21 @@
     background-color: c.$background;
   }
 
-
   .settings-wallpaper-preview {
     border-radius: 1rem;
+  }
+
+  .settings-wallpaper-icon {
+    opacity: 0;
+    font-size: 16rem;
+    color: c.$primary;
+    padding: 0.3rem 23.5rem;
+
+    .settings-wallpaper-icon-label {
+      border-radius: 4rem;
+      background-color: c.$surfaceContainer;
+      padding: 0.3rem 7rem 0.3rem 4rem;
+    }
   }
 
   .settings-wallpaper-button-overlay {
@@ -23,28 +35,15 @@
     }
   }
 
+  .settings-wallpaper-overlay:hover .settings-wallpaper-icon {
+    opacity: 1;
+  }
+
   .settings-wallpaper-filename-label {
     background-color: c.$surfaceContainer;
     color: c.$onSurface;
     padding: 0.3rem 1rem;
     border-radius: 50rem;
-  }
-
-  .settings-folder-chooser-button {
-    background-color: c.$surfaceContainerHigh;
-    border-radius: 1rem;
-    font-weight: 500;
-    padding: 0.5rem 1.5rem;
-  }
-
-  .settings-wallpaper-gallery-container {
-    padding: 0;
-    border-radius: 1rem;
-
-    .settings-wallpaper-thumbnail {
-      padding: 0;
-      border-radius: 0.5rem;
-    }
   }
 
   .settings-body {
@@ -62,6 +61,38 @@
         border-radius: 1rem;
         margin: 0.3rem 0.1rem;
         min-height: 0.15rem;
+      }
+
+      .settings-wallpaper-gallery-container {
+        padding: 0;
+        border-radius: 1rem;
+
+        scrolledwindow viewport {
+          border-radius: 0;
+        }
+
+        .settings-wallpaper-thumbnail {
+          padding: 0;
+          border-radius: 1rem;
+
+          .settings-wallpaper-thumbnail-image {
+            border-radius: 1rem;
+          }
+
+          &:focus,
+          &:hover {
+            outline: 2px solid c.$primary;
+            outline-offset: -2px;
+            border-radius: 1rem;
+          }
+
+          &.active {
+            outline: 2px solid c.$primary;
+            outline-offset: -2px;
+            border-radius: 1rem;
+          }
+        }
+
       }
 
       .settings-category-label {
@@ -82,38 +113,38 @@
 
       .settings-row-dialog-button {
         margin: 0.5rem 0;
-        background-color: c.$surfaceContainer;
+        background-color: c.$surfaceContainerHighest;
         border-radius: 1rem;
         padding: 0.5rem 1rem;
-        border: 0.1rem solid c.$surfaceVariant;
 
         &:focus,
         &:hover {
-          background-color: c.$onSurfaceVariant;
-          color: c.$background;
+          background-color: c.$secondaryContainer;
         }
       }
 
       .settings-row-spin {
         margin: 0.5rem 0;
         border-radius: 1.5rem;
-        color: c.$onSurfaceVariant;
 
         text {
           border-radius: 1.5rem 0.5rem 0.5rem 1.5rem;
-          background-color: c.$surfaceContainer;
+          background-color: c.$surfaceContainerHighest;
           margin-right: 0.2rem;
           padding: 0.5rem 0.5rem 0.5rem 1rem;
-          border: 0.1rem solid c.$surfaceVariant;
+
+          &:focus,
+          &:hover {
+            background-color: c.$secondaryContainer;
+          }
         }
 
         button.up,
         button.down {
           margin: 0 0.2rem;
           padding: 0 0.5rem;
-          background-color: c.$surfaceContainer;
+          background-color: c.$surfaceContainerHighest;
           border-radius: 0.5rem;
-          border: 0.1rem solid c.$surfaceVariant;
 
           &:first-child {
             margin-left: 0;
@@ -126,8 +157,7 @@
 
           &:focus,
           &:hover {
-            background-color: c.$onSurfaceVariant;
-            color: c.$background;
+            background-color: c.$secondaryContainer;
           }
         }
       }
@@ -144,7 +174,8 @@
         }
 
         &:checked {
-          background-color: c.$secondary;
+          background-color: c.$primary;
+          border-color: c.$primary;
 
           slider {
             background-color: c.$background;
@@ -155,7 +186,7 @@
           margin: 0.25rem;
           min-width: 1.5rem;
           min-height: 1.5rem;
-          background-color: c.$secondary;
+          background-color: c.$primary;
           border-radius: 1rem;
         }
       }
@@ -165,9 +196,8 @@
 
         .settings-row-select-choice {
           border-radius: 0.5rem;
-          background-color: c.$secondaryContainer;
+          background-color: c.$surfaceContainerHighest;
           padding: 0.5rem 2rem;
-          border: 0.1rem solid c.$surfaceVariant;
 
           &.exs-osd-select-type {
             padding: 0.5rem 2.5rem 0.5rem 2rem;
@@ -188,7 +218,7 @@
 
           &:focus,
           &:hover {
-            background-color: c.$secondary;
+            background-color: c.$secondaryContainer;
           }
 
           &.active {
@@ -196,6 +226,164 @@
             color: c.$background;
             border-radius: 1.5rem;
           }
+        }
+      }
+
+      .settings-row-palette-button {
+        border-radius: 1.5rem;
+        padding: 0.5rem 1.5rem;
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
+        background-color: c.$surfaceContainerHighest;
+
+        .settings-row-palette-button-colors {
+
+          .primary {
+            border-radius: 50rem 50rem 0 0;
+          }
+
+          .secondary {
+            border-bottom-left-radius: 50rem;
+          }
+
+          .tertiary {
+            border-bottom-right-radius: 50rem;
+          }
+
+          &.neutral {
+            .primary {
+              background-color: p.$palette_monochrome_primary;
+            }
+
+            .secondary {
+              background-color: p.$palette_monochrome_secondary;
+            }
+
+            .tertiary {
+              background-color: p.$palette_monochrome_tertiary;
+            }
+          }
+
+          &.fidelity {
+            .primary {
+              background-color: p.$palette_monochrome_primary;
+            }
+
+            .secondary {
+              background-color: p.$palette_monochrome_secondary;
+            }
+
+            .tertiary {
+              background-color: p.$palette_monochrome_tertiary;
+            }
+          }
+
+          &.content {
+            .primary {
+              background-color: p.$palette_tonal_spot_primary;
+            }
+
+            .secondary {
+              background-color: p.$palette_tonal_spot_secondary;
+            }
+
+            .tertiary {
+              background-color: p.$palette_tonal_spot_tertiary;
+            }
+          }
+
+          &.rainbow {
+            .primary {
+              background-color: p.$palette_vibrant_primary;
+            }
+
+            .secondary {
+              background-color: p.$palette_vibrant_secondary;
+            }
+
+            .tertiary {
+              background-color: p.$palette_vibrant_tertiary;
+            }
+          }
+
+          &.fruit_salad {
+            .primary {
+              background-color: p.$palette_expressive_primary;
+            }
+
+            .secondary {
+              background-color: p.$palette_expressive_secondary;
+            }
+
+            .tertiary {
+              background-color: p.$palette_expressive_tertiary;
+            }
+          }
+
+          &.monochrome {
+            .primary {
+              background-color: p.$palette_monochrome_primary;
+            }
+
+            .secondary {
+              background-color: p.$palette_monochrome_secondary;
+            }
+
+            .tertiary {
+              background-color: p.$palette_monochrome_tertiary;
+            }
+          }
+
+          &.tonal_spot {
+            .primary {
+              background-color: p.$palette_tonal_spot_primary;
+            }
+
+            .secondary {
+              background-color: p.$palette_tonal_spot_secondary;
+            }
+
+            .tertiary {
+              background-color: p.$palette_tonal_spot_tertiary;
+            }
+          }
+
+          &.vibrant {
+            .primary {
+              background-color: p.$palette_vibrant_primary;
+            }
+
+            .secondary {
+              background-color: p.$palette_vibrant_secondary;
+            }
+
+            .tertiary {
+              background-color: p.$palette_vibrant_tertiary;
+            }
+          }
+
+          &.expressive {
+            .primary {
+              background-color: p.$palette_expressive_primary;
+            }
+
+            .secondary {
+              background-color: p.$palette_expressive_secondary;
+            }
+
+            .tertiary {
+              background-color: p.$palette_expressive_tertiary;
+            }
+          }
+        }
+
+        &:focus,
+        &:hover {
+          background-color: c.$secondaryContainer;
+        }
+
+        &.active {
+          background-color: c.$onSecondary;
         }
       }
     }
@@ -330,7 +518,7 @@
 
   .settings-row-dialog-entry {
     margin: 0.5rem 0;
-    background-color: c.$surfaceContainerLow;
+    background-color: c.$surfaceContainerHighest;
     border-radius: 1rem;
     padding: 0.5rem 1rem;
   }
