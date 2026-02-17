@@ -1,4 +1,4 @@
-from ignis.widgets import Separator
+from ignis.widgets import Label, Separator
 
 from exs_shell.configs.user import weather
 from exs_shell.interfaces.enums.icons import Icons
@@ -10,11 +10,6 @@ from exs_shell.ui.modules.settings.widgets import (
     SwitchRow,
 )
 
-class SoonCategory(BaseCategory):
-    def __init__(self):
-        super().__init__(child=[CategoryLabel(title="Soon...")])
-
-
 class DevicesTab(BaseTab):
     def __init__(self):
-        super().__init__(child=[SoonCategory()])
+        super().__init__(child=[Label(label="Soon...")])
