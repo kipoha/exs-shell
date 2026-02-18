@@ -1,11 +1,12 @@
-from ignis.widgets import Separator
+from ignis.widgets import Entry, Separator
 
-from exs_shell.configs.user import bar
+from exs_shell.configs.user import bar, user
 from exs_shell.interfaces.enums.configs.position import TopBottom
 from exs_shell.interfaces.enums.icons import Icons
 from exs_shell.ui.modules.settings.tabs.base import BaseTab, BaseCategory
 from exs_shell.ui.modules.settings.widgets import (
     CategoryLabel,
+    DialogRow,
     SettingsRow,
     SelectRow,
     SwitchRow,

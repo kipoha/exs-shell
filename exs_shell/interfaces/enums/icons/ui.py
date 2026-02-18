@@ -20,6 +20,7 @@ class UIIcons(StrEnum):
     PACKAGE = ""
     SEARCH = ""
     IMAGE = "󰋩"
+    LAUNCHER = "󱓞"
     IMAGE_OFF = "󰋫"
     SYSTEM = ""
     BLUETOOTH = "󰂯"

@@ -244,7 +244,7 @@ class WallpaperQuickControl(BaseCategory):
                             lambda _, path: appearance.set_wallpaper_dir(
                                 path.get_path()
                             ),
-                            initial_path=appearance.wallpaper_dir,
+                            initial_path=appearance.bind("wallpaper_dir"),
                             select_folder=True,
                         )
                     ],
@@ -257,8 +257,7 @@ class WallpaperQuickControl(BaseCategory):
 
     @register.events.option(appearance, "wallpaper_dir")
     def _update_gallery(self):
-        loading_label = Label(label="Loading wallpapers...")
-        self.gallery_content_container.set_child(loading_label)
+        self.gallery_content_container.set_child([])
         self._find_and_create_gallery_async()
 
     def _find_and_create_gallery_async(self):
@@ -328,8 +327,8 @@ class WallpaperQuickControl(BaseCategory):
                 temp_thumbnails.append(btn)
 
             gallery_scroll = Scroll(
-                width_request=600,
-                height_request=300,
+                width_request=300,
+                height_request=150,
             )
             gallery_scroll.set_child(gallery_grid)
             GLib.idle_add(

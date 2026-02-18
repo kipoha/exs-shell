@@ -160,18 +160,24 @@ def SelectRow(
     )
 
 
-def DialogRow(
-    on_change: Callable[[str], None],
-    title: str,
-    description: str,
+def DialogRow[_T](
     button_name: str = "Change",
-    placeholder: str | None = None,
-    value: str | Binding| None = None,
+    title: str | None = None,
+    description: str | None = None,
+    child: list[BaseWidget] | None = None,
+    value_getter: Callable[[], _T] = lambda: None,
+    on_change: Callable[[_T], None] = lambda _: None,
+    clear_on_cancel: Callable[[], None] = lambda: None,
     **kwargs: Any,
 ) -> Button:
     kwargs["css_classes"] = ["settings-row-dialog-button"] + (
         kwargs.get("css_classes") or []
     )
+    child = child or []
+
+    for c in child:
+        if isinstance(c, Entry):
+            c.set_on_accept(lambda _: on_accept_in())
 
     dialog_window = RegularWindow(
         f"{NAMESPACE}_dialog_window_{uuid4()}",
@@ -179,32 +185,14 @@ def DialogRow(
         visible=False,
         default_height=200,
         default_width=300,
-        resizable=False,
         hide_on_close=True,
     )
-
-    def on_accept(text: str) -> None:
-        dialog_window.set_visible(False)
-        on_change(text)
-
-    entry = Entry(
-        hexpand=True,
-        halign="fill",
-        placeholder_text=placeholder,
-        text=value,
-        on_accept=lambda _: on_accept(_.text),
-        css_classes=["settings-row-dialog-entry"],
-    )
-
-    def on_cancel() -> None:
-        dialog_window.set_visible(False)
-        entry.text = value
-        # dialog_window.destroy()
 
     content = Box(
         vertical=True,
         hexpand=True,
         halign="fill",
+        css_classes=["settings-row-dialog-content"],
         child=[
             Label(
                 label=title,
@@ -216,18 +204,25 @@ def DialogRow(
                 css_classes=["settings-row-dialog-description"],
                 halign="start",
             ),
-            entry,
+            *child,
         ],
     )
 
+    def on_accept_in() -> None:
+        on_change(value_getter())
+        dialog_window.set_visible(False)
+
+    def on_cancel_in() -> None:
+        dialog_window.set_visible(False)
+
     apply = Button(
         label="Apply",
-        on_click=lambda _: on_accept(entry.text),
+        on_click=lambda _: on_accept_in(),
         css_classes=["settings-row-dialog-button-enter"],
     )
     cancel = Button(
         label="Cancel",
-        on_click=lambda _: on_cancel(),
+        on_click=lambda _: on_cancel_in(),
         css_classes=["settings-row-dialog-button-cancel"],
     )
 
@@ -241,8 +236,9 @@ def DialogRow(
     )
 
     def destroy(*_: Any):
-        if dialog_window.visible:
+        if not dialog_window.visible:
             dialog_window.destroy()
+        clear_on_cancel()
 
     dialog_window.connect("notify::visible", destroy)
 
@@ -255,9 +251,16 @@ def DialogRow(
         css_classes=["settings-row-dialog"],
     )
 
+    def on_click(_):
+        root = _.get_root()
+        if root:
+            dialog_window.set_modal(True)
+            dialog_window.set_transient_for(root)
+        dialog_window.set_visible(True)
+
     return Button(
         child=Label(label=button_name),
-        on_click=lambda _: dialog_window.set_visible(True),
+        on_click=on_click,
         **kwargs,
     )
 
@@ -269,7 +272,7 @@ class FileGTKObjProtocol(Protocol):
 def FileDialogRow(
     on_change: Callable[[FileDialog, FileGTKObjProtocol], None],
     button_name: str = "Change",
-    initial_path: str | None = None,
+    initial_path: str | None | Binding = None,
     filters: Sequence[FileFilter] | None = None,
     select_folder: bool = False,
     **kwargs: Any,

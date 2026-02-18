@@ -19,6 +19,7 @@ from exs_shell.utils.loop import run_async_task
 
 @register.window
 @register.event
+@register.commands
 class OSD(MonitorRevealerBaseWidget):
     def __init__(
         self,
@@ -133,3 +134,7 @@ class OSD(MonitorRevealerBaseWidget):
             self.set_visible(False)
         except asyncio.CancelledError:
             pass
+
+    @register.command(group="osd", name="show", description="Show OSD")
+    def toggle(self):
+        self.show_osd()
