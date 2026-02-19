@@ -16,6 +16,7 @@ from exs_shell.configs.user import appearance
 from exs_shell.interfaces.enums.gtk.transitions import RevealerTransition
 from exs_shell.ui.widgets.windows import Revealer
 from exs_shell.utils.load_scss import build_scss
+from exs_shell.utils.loop import run_in_thread
 from exs_shell.utils.path import Dirs
 
 CACHE_WALLPAPER_PATH = f"{Dirs.DATA_DIR}/wallpaper"

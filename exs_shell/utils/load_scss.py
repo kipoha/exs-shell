@@ -1,15 +1,16 @@
 import json
-from pathlib import Path
 
 from dataclasses import asdict
 
 from exs_shell.configs.user import appearance
 from exs_shell.interfaces.enums.colorschemes import ColorSchemes
 from exs_shell.utils.colorscheme import generate, generate_color_preview
+from exs_shell.utils.loop import run_in_thread
 from exs_shell.utils.path import Dirs, Paths
 
 
-def build_scss(wallpaper_path: str | None = appearance.wallpaper_path) -> Path:
+@run_in_thread
+def build_scss(wallpaper_path: str | None = appearance.wallpaper_path):
     theme = generate(
         wallpaper_path=wallpaper_path,
         scheme=ColorSchemes(appearance.scheme_variant),
@@ -18,7 +19,9 @@ def build_scss(wallpaper_path: str | None = appearance.wallpaper_path) -> Path:
     )
     colors = asdict(theme.colors)
     preview = generate_color_preview(
-        wallpaper_path, appearance.dark, appearance.contrast  # type: ignore
+        wallpaper_path,  # type: ignore
+        appearance.dark,
+        appearance.contrast,
     )
 
     scss_colors_json_file = Dirs.CONFIG_DIR / "colors.json"
@@ -49,5 +52,3 @@ def build_scss(wallpaper_path: str | None = appearance.wallpaper_path) -> Path:
   font-weight: bold;
   transition: all 0.2s ease;
 }}""")
-
-    return main_scss_file

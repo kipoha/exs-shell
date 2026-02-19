@@ -8,7 +8,7 @@ from ignis.css_manager import CssInfoPath, CssManager
 
 from exs_shell.app.vars import NAME
 from exs_shell.utils.load_scss import build_scss
-from exs_shell.utils.path import Paths
+from exs_shell.utils.path import Dirs, Paths
 
 
 def set_css_file(css_manager, css_file_path: str | Path | Iterable[str | Path]) -> None:
@@ -38,6 +38,9 @@ def set_css_file(css_manager, css_file_path: str | Path | Iterable[str | Path]) 
 def init(css_manager: CssManager, dev: bool) -> None:
     scss = Paths.generate_path("styles/main.scss")
     if not dev:
-        scss = build_scss()
+        build_scss()
+        scss = Dirs.CONFIG_DIR / "main.scss"
+        scss.touch(exist_ok=True)
+
     logger.info(f"Loading css file: {scss}")
     set_css_file(css_manager, scss)

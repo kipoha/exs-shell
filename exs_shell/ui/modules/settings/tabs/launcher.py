@@ -1,4 +1,4 @@
-from ignis.widgets import Entry, Label, Separator
+from ignis.widgets import Entry, Separator
 
 from exs_shell.configs.user import user
 from exs_shell.interfaces.enums.icons import Icons

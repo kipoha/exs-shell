@@ -40,3 +40,14 @@ class ColorSchemeClasses(Enum):
     @classmethod
     def get(cls, enum: ColorSchemes | str) -> ColorSchemeInterface:
         return cls[enum].value  # type: ignore
+
+
+class ColorSchemes2(StrEnum):
+    CONTENT = "content"
+    EXPRESSIVE = "expressive"
+    FIDELITY = "fidelity"
+    FRUIT_SALAD = "fruit-salad"
+    MONOCHROME = "monochrome"
+    NEUTRAL = "neutral"
+    RAINBOW = "rainbow"
+    TONAL_SPOT = "tonal-spot"

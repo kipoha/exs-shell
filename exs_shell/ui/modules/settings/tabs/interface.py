@@ -32,7 +32,7 @@ class BarCategory(BaseCategory):
                     description="Show bar",
                     child=[
                         SwitchRow(
-                            active=bar.bind("show"),  # type: ignore
+                            active=bar.bind("show"),
                             on_change=lambda active: bar.set_show(active),
                         )
                     ],
