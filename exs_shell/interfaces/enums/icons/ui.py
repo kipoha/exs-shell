@@ -6,6 +6,8 @@ class UIIcons(StrEnum):
     QUESTION = ""
     HEADSET = "󰋎"
     HEADPHONES = "󰋋"
+    CLOCK = ""
+    CLOCK_ALARM = "󰥔"
     PHONE = "󰏲"
     WATCH = ""
     KEYBOARD = ""

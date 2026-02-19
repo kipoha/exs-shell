@@ -9,6 +9,13 @@ class Action:
 
 
 @dataclass
+class PowerMenuAction:
+    icon: str
+    name: str
+    command: str
+
+
+@dataclass
 class WebAction:
     name: str
     url: str

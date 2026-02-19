@@ -137,4 +137,5 @@ class OSD(MonitorRevealerBaseWidget):
 
     @register.command(group="osd", name="show", description="Show OSD")
     def toggle(self):
+        self.update_progress(Icons.volume.MUTED, 0)
         self.show_osd()

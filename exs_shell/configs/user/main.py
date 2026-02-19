@@ -1,6 +1,6 @@
 from ignis.options_manager import OptionsGroup, TrackedList
 
-from exs_shell.interfaces.schemas.widget.launcher import Action
+from exs_shell.interfaces.schemas.widget.launcher import Action, PowerMenuAction
 from exs_shell.utils.path import Paths
 
 
@@ -31,16 +31,12 @@ class UserConfig(OptionsGroup):
     ]:
         actions.append(Action(**i))
 
-    powermenu_actions: TrackedList[dict] = TrackedList()
+    powermenu_actions: TrackedList[PowerMenuAction] = TrackedList()
     for i in [
-        {"command": "exs-ipc open-lockscreen", "icon": "", "in_lock": False},
-        {
-            "command": "niri msg action quit --skip-confirmation",
-            "icon": "󰈆",
-            "in_lock": False,
-        },
-        {"command": "systemctl suspend", "icon": "󰤄", "in_lock": True},
-        {"command": "systemctl reboot", "icon": "", "in_lock": True},
-        {"command": "systemctl poweroff", "icon": "⏻", "in_lock": True},
+        {"name": "Lock", "command": "exs-ipc open-lockscreen", "icon": ""},
+        {"name": "Exit", "command": "niri msg action quit --skip-confirmation", "icon": "󰈆"},
+        {"name": "Suspend", "command": "systemctl suspend", "icon": "󰤄"},
+        {"name": "Reboot", "command": "systemctl reboot", "icon": ""},
+        {"name": "Shutdown", "command": "systemctl poweroff", "icon": "⏻"},
     ]:
-        powermenu_actions.append(i)
+        powermenu_actions.append(PowerMenuAction(**i))
