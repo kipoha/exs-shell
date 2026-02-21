@@ -27,4 +27,32 @@ def build_scss():
   font-family: JetBrainsMono;
   font-weight: bold;
   transition: all 0.2s ease;
+}}
+
+.icon {{
+  font-family: "Material Symbols Rounded", "Material Icons Rounded";
+
+  &.xs {{
+    font-size: 0.8rem;
+  }}
+
+  &.s {{
+    font-size: 1rem;
+  }}
+
+  &.m {{
+    font-size: 1.5rem;
+  }}
+
+  &.l {{
+    font-size: 2rem;
+  }}
+
+  &.xl {{
+    font-size: 2.5rem;
+  }}
+
+  &.xxl {{
+    font-size: 3rem;
+  }}
 }}""")

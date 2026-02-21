@@ -16,7 +16,7 @@ class Battery(ArcMeter):
         thickness: int = 7,
         arc_ratio: float = 0.75,
         speed: float = 0.15,
-        label: str = "",
+        label: str = Icons.battery.FULL,
         show_percentage: bool = False,
         font_size: float = 20,
     ):

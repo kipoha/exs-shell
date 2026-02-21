@@ -29,7 +29,8 @@ def set_css_file(css_manager: CssManager, css_file_path: str | Path | Iterable[s
     css_manager.apply_css(
         CssInfoPath(
             name=NAME,
-            compiler_function=lambda path: utils.sass_compile(path, compiler="grass"),
+            compiler_function=lambda path: utils.sass_compile(path, compiler="sass"),
+            # compiler_function=lambda path: utils.sass_compile(path, compiler="grass"),
             path=Paths.generate_path(str(file)),
         )
     )

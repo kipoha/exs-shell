@@ -382,11 +382,6 @@
     padding: 1rem;
   }
 
-  .settings-header-title-icon {
-    font-size: 1.5rem;
-    margin-right: 0.5rem;
-  }
-
   .settings-navigation {
     background-color: c.$surface_container_low;
     color: c.$on_surface;
@@ -403,7 +398,7 @@
     .settings-reload-button {
       font-size: 2rem;
       margin: 0.5rem;
-      padding: 0.8rem 0.8rem 0.8rem 0.2rem;
+      padding: 0.8rem 0.3rem;
       background-color: c.$secondary_container;
       border-radius: 1rem;
 
@@ -429,60 +424,6 @@
 
       &.active {
         background-color: c.$surface_variant;
-      }
-
-      &:nth-child(1) {
-        .settings-navigation-button-icon {
-          margin-right: 0.55rem;
-        }
-      }
-
-      &:nth-child(2) {
-        .settings-navigation-button-icon {
-          margin-right: 0.2rem;
-        }
-      }
-
-      &:nth-child(3) {
-        .settings-navigation-button-icon {
-          margin-right: 0.2rem;
-        }
-      }
-
-      &:nth-child(4) {
-        .settings-navigation-button-icon {
-          margin-right: 0.2rem;
-        }
-      }
-
-      &:nth-child(5) {
-        .settings-navigation-button-icon {
-          margin-right: 0.2rem;
-        }
-      }
-
-      &:nth-child(6) {
-        .settings-navigation-button-icon {
-          margin-right: 0.5rem;
-        }
-      }
-
-      &:nth-child(7) {
-        .settings-navigation-button-icon {
-          margin-right: 0.55rem;
-        }
-      }
-
-      &:nth-child(9) {
-        .settings-navigation-button-icon {
-          margin-right: 0.5rem;
-        }
-      }
-
-      &:nth-child(10) {
-        .settings-navigation-button-icon {
-          margin-right: 0.5rem;
-        }
       }
     }
   }

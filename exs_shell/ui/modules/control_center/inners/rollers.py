@@ -7,6 +7,7 @@ from ignis.services.backlight import BacklightService
 from exs_shell import register
 from exs_shell.interfaces.enums.icons import Icons
 from exs_shell.state import State
+from exs_shell.ui.widgets.custom.icon import Icon
 
 
 @register.event
@@ -23,12 +24,12 @@ class Rollers(Box):
             css_classes=["control-center-rollers-audio-scale"],
             hexpand=True,
         )
-        self.audio_icon = Label(
-            label=Icons.volume.mapping(self.audio.speaker.volume),  # type: ignore
-            css_classes=["control-center-rollers-audio-icon"],
+        self.audio_icon = Icon(
+            label=Icons.volume.mapping(self.audio.speaker.volume), size="m"  # type: ignore
         )
         self.audio_space = Box(
             child=[self.audio_icon, self.audio_scale],
+            spacing=5 * self.scale,
             css_classes=["control-center-rollers-audio-container"],
         )
         self.mic_scale = Scale(
@@ -39,12 +40,10 @@ class Rollers(Box):
             css_classes=["control-center-rollers-mic-scale"],
             hexpand=True,
         )
-        self.mic_icon = Label(
-            label=Icons.ui.MIC,
-            css_classes=["control-center-rollers-mic-icon"],
-        )
+        self.mic_icon = Icon(label=Icons.ui.MIC, size="m")
         self.mic_space = Box(
             child=[self.mic_icon, self.mic_scale],
+            spacing=5 * self.scale,
             css_classes=["control-center-rollers-mic-container"],
         )
         self.backlight_scale = Scale(
@@ -55,12 +54,12 @@ class Rollers(Box):
             css_classes=["control-center-rollers-backlight-scale"],
             hexpand=True,
         )
-        self.backlight_icon = Label(
-            label=Icons.backlight.mapping(self.backlight.brightness),  # type: ignore
-            css_classes=["control-center-rollers-backlight-icon"],
+        self.backlight_icon = Icon(
+            label=Icons.backlight.mapping(self.backlight.brightness), size="m"  # type: ignore
         )
         self.backlight_space = Box(
             child=[self.backlight_icon, self.backlight_scale],
+            spacing=5 * self.scale,
             css_classes=["control-center-rollers-backlight-container"],
         )
         super().__init__(

@@ -2,11 +2,16 @@ from enum import StrEnum
 
 
 class VolumeIcons(StrEnum):
-    OVERAMPLIFIED = "󰕾"
-    HIGH = "󰕾"
-    MEDIUM = "󰖀"
-    LOW = "󰕿"
-    MUTED = "󰝟"
+    OVERAMPLIFIED = "volume_up"
+    HIGH = "volume_up"
+    MEDIUM = "volume_down"
+    LOW = "volume_mute"
+    MUTED = "volume_off"
+    # OVERAMPLIFIED = "󰕾"
+    # HIGH = "󰕾"
+    # MEDIUM = "󰖀"
+    # LOW = "󰕿"
+    # MUTED = "󰝟"
 
     @classmethod
     def mapping(cls, volume: float) -> str:

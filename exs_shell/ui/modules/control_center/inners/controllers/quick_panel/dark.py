@@ -5,6 +5,7 @@ from ignis.widgets import Box, Button, Label
 from exs_shell import register
 from exs_shell.configs.user import appearance
 from exs_shell.interfaces.enums.icons import Icons
+from exs_shell.ui.widgets.custom.icon import Icon
 
 
 @register.event
@@ -12,9 +13,10 @@ class DarkTheme(Box):
     def __init__(self, scale: float = 1.0, **kwargs: Any):
         self.scale = scale
         self.button = Button(
-            child=Box(child=[Label(label=Icons.ui.DARK), Label(label="Dark Theme")], spacing=5 * self.scale, hexpand=True),
+            child=Box(child=[Icon(label=Icons.ui.DARK, size="m"), Label(label="Dark Theme")], spacing=5 * self.scale, hexpand=True),
             on_click=lambda _: appearance.set_dark(not appearance.dark),
             css_classes=["control-center-quick-panel-dark-button", "active" if appearance.dark else ""],
+            halign="fill",
         )
         self._box = Box(
             css_classes=["control-center-quick-panel-dark"],

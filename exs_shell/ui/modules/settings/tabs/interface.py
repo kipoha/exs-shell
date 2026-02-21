@@ -15,6 +15,7 @@ from exs_shell.ui.modules.settings.widgets import (
     SwitchRow,
     SpinRow,
 )
+from exs_shell.ui.widgets.custom.icon import Icon
 
 
 class BarCategory(BaseCategory):
@@ -183,7 +184,7 @@ class LauncherCategory(BaseCategory):
                             width_request=250,
                         ),
                         Button(
-                            label=Icons.ui.WINDOW_CLOSE,
+                            child=Icon(label=Icons.ui.WINDOW_CLOSE, size="m"),
                             on_click=lambda _: _.parent.unparent(),
                             css_classes=["settings-row-dialog-button"],
                         ),
@@ -200,7 +201,7 @@ class LauncherCategory(BaseCategory):
             hexpand=True,
         )
         self.action_button_add = Button(
-            label=Icons.ui.ADD,
+            child=Icon(label=Icons.ui.ADD, size="m"),
             halign="fill",
             css_classes=["settings-row-dialog-button-enter"],
             on_click=lambda _: self.action_list.append(
@@ -222,7 +223,7 @@ class LauncherCategory(BaseCategory):
                             width_request=250,
                         ),
                         Button(
-                            label=Icons.ui.WINDOW_CLOSE,
+                            child=Icon(label=Icons.ui.WINDOW_CLOSE, size="m"),
                             on_click=lambda _: _.parent.unparent(),
                             css_classes=["settings-row-dialog-button"],
                         ),
@@ -244,6 +245,7 @@ class LauncherCategory(BaseCategory):
             child=[
                 CategoryLabel(title="Launcher", icon=Icons.ui.LAUNCHER),
                 SettingsRow(
+                    icon=Icons.ui.COMMAND,
                     title="Actions Command Prefix",
                     description="Set actions command prefix",
                     child=[
@@ -262,6 +264,7 @@ class LauncherCategory(BaseCategory):
                 ),
                 Separator(),
                 SettingsRow(
+                    icon=Icons.ui.TERM,
                     title="Terminal Format",
                     description="Set terminal format",
                     child=[
@@ -279,6 +282,7 @@ class LauncherCategory(BaseCategory):
                 ),
                 Separator(),
                 SettingsRow(
+                    icon=Icons.ui.LAUNCHER,
                     title="Actions",
                     description="Set actions",
                     child=[
@@ -334,7 +338,160 @@ class LauncherCategory(BaseCategory):
                             width_request=250,
                         ),
                         Button(
-                            label=Icons.ui.WINDOW_CLOSE,
+                            child=Icon(label=Icons.ui.WINDOW_CLOSE, size="m"),
+                            on_click=lambda _: _.parent.unparent(),
+                            css_classes=["settings-row-dialog-button"],
+                        ),
+                    ],
+                    spacing=10,
+                    css_classes=["settings-row-list-obj"],
+                )
+            )
+
+
+class PowerMenuCategory(BaseCategory):
+    def __init__(self):
+        action_children = []
+        for i in user.get_powermenu_actions_objs():
+            action_children.append(
+                Box(
+                    child=[
+                        Entry(
+                            text=i.name,
+                            css_classes=["settings-row-dialog-entry"],
+                            width_request=150,
+                        ),
+                        Entry(
+                            text=i.command,
+                            placeholder_text="Example: {terminal_format} tmux",
+                            css_classes=["settings-row-dialog-entry"],
+                            width_request=250,
+                        ),
+                        Entry(
+                            text=i.icon,
+                            css_classes=["settings-row-dialog-entry"],
+                            width_request=250,
+                        ),
+                        Button(
+                            child=Icon(label=Icons.ui.WINDOW_CLOSE, size="m"),
+                            on_click=lambda _: _.parent.unparent(),
+                            css_classes=["settings-row-dialog-button"],
+                        ),
+                    ],
+                    spacing=10,
+                    css_classes=["settings-row-list-obj"],
+                )
+            )
+        self.action_list = Box(
+            vertical=True,
+            css_classes=["settings-row-list-objs"],
+            child=action_children,
+            halign="fill",
+            hexpand=True,
+        )
+        self.action_button_add = Button(
+            child=Icon(label=Icons.ui.ADD, size="m"),
+            halign="fill",
+            css_classes=["settings-row-dialog-button-enter"],
+            on_click=lambda _: self.action_list.append(
+                Box(
+                    child=[
+                        Entry(
+                            text="",
+                            css_classes=["settings-row-dialog-entry"],
+                            width_request=150,
+                        ),
+                        Entry(
+                            text="",
+                            css_classes=["settings-row-dialog-entry"],
+                            width_request=250,
+                        ),
+                        Entry(
+                            text="",
+                            css_classes=["settings-row-dialog-entry"],
+                            width_request=250,
+                        ),
+                        Button(
+                            child=Icon(label=Icons.ui.WINDOW_CLOSE, size="m"),
+                            on_click=lambda _: _.parent.unparent(),
+                            css_classes=["settings-row-dialog-button"],
+                        ),
+                    ],
+                    spacing=10,
+                    css_classes=["settings-row-list-obj"],
+                )
+            ),
+        )
+        self.actions_box = Box(
+            vertical=True,
+            css_classes=["settings-row-list-edit"],
+            child=[
+                self.action_list,
+                self.action_button_add,
+            ],
+        )
+
+        super().__init__(
+            child=[
+                CategoryLabel(title="Power Menu", icon=Icons.ui.POWER),
+                SettingsRow(
+                    icon=Icons.ui.POWER,
+                    title="Actions",
+                    description="Set actions",
+                    child=[
+                        DialogRow(
+                            title="Actions",
+                            description="Actions power menu",
+                            child=[self.actions_box],
+                            value_getter=self.get_actions,
+                            on_change=lambda x: user.set_powermenu_actions(x),
+                            clear_on_cancel=self.clear_on_cancel_actions,
+                        ),
+                    ],
+                ),
+            ]
+        )
+
+    def get_actions(self) -> list[AnyDict]:
+        child = self.action_list.get_child()
+        actions = []
+        for c in child:
+            sub_child = c.get_child()
+            name, command, icon = (
+                sub_child[0].get_text(),
+                sub_child[1].get_text(),
+                sub_child[2].get_text(),
+            )
+            actions.append({"name": name, "command": command, "icon": icon})
+        return actions
+
+    def on_change_actions(self, actions: list[AnyDict]):
+        user.powermenu_actions.clear()
+        user.powermenu_actions.extend(actions)
+
+    def clear_on_cancel_actions(self):
+        self.action_list.set_child([])
+        for a in user.get_powermenu_actions_objs():
+            self.action_list.append(
+                Box(
+                    child=[
+                        Entry(
+                            text=a.name,
+                            css_classes=["settings-row-dialog-entry"],
+                            width_request=150,
+                        ),
+                        Entry(
+                            text=a.command,
+                            css_classes=["settings-row-dialog-entry"],
+                            width_request=250,
+                        ),
+                        Entry(
+                            text=a.icon,
+                            css_classes=["settings-row-dialog-entry"],
+                            width_request=250,
+                        ),
+                        Button(
+                            child=Icon(label=Icons.ui.WINDOW_CLOSE, size="m"),
                             on_click=lambda _: _.parent.unparent(),
                             css_classes=["settings-row-dialog-button"],
                         ),
@@ -351,5 +508,6 @@ class InterfaceTab(BaseTab):
             child=[
                 BarCategory(),
                 LauncherCategory(),
+                PowerMenuCategory(),
             ]
         )

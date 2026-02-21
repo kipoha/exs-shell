@@ -2,7 +2,7 @@ import cairo
 
 from math import pi
 
-from gi.repository import Gtk, GLib  # type: ignore
+from gi.repository import Gtk, GLib, Pango, PangoCairo  # type: ignore
 
 from exs_shell.utils.colors import get_hex_color, hex_to_rgb
 
@@ -17,8 +17,9 @@ class ArcMeter(Gtk.DrawingArea):
         label: str = "",
         show_percentage: bool = False,
         font_size: float | None = None,
+        css_classes: list[str] | None = None,
     ):
-        super().__init__()
+        Gtk.DrawingArea.__init__(self)
 
         self.size = size
         self.radius = size / 2
@@ -35,6 +36,10 @@ class ArcMeter(Gtk.DrawingArea):
 
         self.set_size_request(size, size)
         self.set_draw_func(self.redraw)
+
+        if css_classes:
+            for css_class in css_classes:
+                self.add_css_class(css_class)
 
         GLib.timeout_add(30, self.animate)
 
@@ -57,8 +62,7 @@ class ArcMeter(Gtk.DrawingArea):
     def redraw(self, area, cr: cairo.Context, width: int, height: int):
         _colors = get_hex_color()
         hex_color = _colors["primary"]
-        void = _colors["surface_container_highest"]
-        r, g, b = hex_to_rgb(hex_color)
+        void_color = _colors["surface_container_highest"]
 
         cx, cy = width / 2, height / 2
 
@@ -69,13 +73,14 @@ class ArcMeter(Gtk.DrawingArea):
         start_angle = -pi / 2 - total_arc / 2
         end_angle = start_angle + total_arc
 
-        r_void, g_void, b_void = hex_to_rgb(void)
+        r_void, g_void, b_void = hex_to_rgb(void_color)
         cr.set_source_rgb(r_void, g_void, b_void)
         cr.arc(cx, cy, self.radius - self.thickness, start_angle, end_angle)
         cr.stroke()
 
         r, g, b = hex_to_rgb(hex_color)
         cr.set_source_rgb(r, g, b)
+
         progress_end = start_angle + total_arc * self.value
         cr.arc(cx, cy, self.radius - self.thickness, start_angle, progress_end)
         cr.stroke()
@@ -84,14 +89,25 @@ class ArcMeter(Gtk.DrawingArea):
         if self.show_percentage:
             text += f" {self.percentage}%"
 
-        fs = self.font_size or self.radius / 3
-        cr.set_font_size(fs)
-        cr.select_font_face(
-            "JetBrainsMono Nerd Font",
-            cairo.FONT_SLANT_NORMAL,
-            cairo.FONT_WEIGHT_BOLD,
+        layout = PangoCairo.create_layout(cr)
+        layout.set_text(text, -1)
+
+        font_desc = Pango.FontDescription()
+
+        font_desc.set_family(
+            "Material Symbols Rounded, Material Icons Rounded, JetBrainsMono"
         )
 
-        xb, yb, tw, th, *_ = cr.text_extents(text)
-        cr.move_to(cx - tw / 2 - xb, cy - th / 2 - yb)
-        cr.show_text(text)
+        font_desc.set_weight(Pango.Weight.BOLD)
+
+        font_size = self.font_size or self.radius / 3
+        font_desc.set_absolute_size(font_size * Pango.SCALE)
+
+        layout.set_font_description(font_desc)
+
+        # Центрирование
+        tw, th = layout.get_pixel_size()
+
+        cr.set_source_rgb(r, g, b)
+        cr.move_to(cx - tw / 2, cy - th / 2)
+        PangoCairo.show_layout(cr, layout)

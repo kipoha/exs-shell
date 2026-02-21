@@ -6,6 +6,7 @@ from ignis.services.power_profiles import PowerProfilesService
 from exs_shell import register
 from exs_shell.interfaces.enums.icons import Icons
 from exs_shell.state import State
+from exs_shell.ui.widgets.custom.icon import Icon
 
 
 @register.event
@@ -22,12 +23,10 @@ class PowerProfile(Box):
                         f"control-center-quick-panel-power-profile-select-{key}-box"
                     ],
                     child=[
-                        Label(
+                        Icon(
                             label=icon_str,
-                            css_classes=[
-                                f"control-center-quick-panel-power-profile-select-icon-{key}"
-                            ],
-                        ),
+                            size="m",
+                        )
                     ],
                     spacing=3 * self.scale,
                     hexpand=True,
@@ -37,6 +36,7 @@ class PowerProfile(Box):
                     "active" if key == active else "",
                 ],
                 on_click=lambda _, k=key: self.power_profiles.set_active_profile(k),
+                halign="fill",
             )
             for key, (icon_str, _) in Icons.power_profiles.raw.items()
         ]

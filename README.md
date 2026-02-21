@@ -24,8 +24,10 @@ no showcase
 ```
 jetbrains mono nerd-font
 dart-sass
-swww
 dunst
+matugen
+gtk3
+gtk4
 ```
 1. Installing
 Only one script

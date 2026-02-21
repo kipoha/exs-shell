@@ -6,6 +6,7 @@ from ignis.services.bluetooth import BluetoothService
 from exs_shell import register
 from exs_shell.interfaces.enums.icons import Icons
 from exs_shell.state import State
+from exs_shell.ui.widgets.custom.icon import Icon
 from exs_shell.utils.commands import run_command
 
 
@@ -14,9 +15,9 @@ class BluetoothWidget(Box):
     def __init__(self, scale: float = 1.0, **kwargs: Any):
         self.bluetooth: BluetoothService = State.services.bluetooth
         self.scale = scale
-        self.icon = Label(
+        self.icon = Icon(
             label=Icons.ui.BLUETOOTH,
-            css_classes=["control-center-quick-panel-bluetooth-icon"],
+            size="m",
         )
         self.label = Label(
             label="Bluetooth",
@@ -31,9 +32,10 @@ class BluetoothWidget(Box):
                 "control-center-quick-panel-bluetooth-button-enable",
                 "active" if self.bluetooth.powered else "",
             ],
+            halign="fill",
         )
         self.button_open = Button(
-            child=Label(label=Icons.ui.OPEN_IN_WINDOW),
+            child=Icon(label=Icons.ui.OPEN_IN_WINDOW, size="m"),
             on_click=lambda _: run_command("settings", "bluetooth"),
             css_classes=["control-center-quick-panel-bluetooth-button-open"],
         )

@@ -6,6 +6,7 @@ from ignis.services.mpris import MprisPlayer
 from exs_shell.interfaces.enums.gtk.transitions import RevealerTransition
 from exs_shell.interfaces.enums.icons import Icons
 from exs_shell.ui.widgets.custom.audio_visualizer import AudioVisualizer
+from exs_shell.ui.widgets.custom.icon import Icon
 from exs_shell.ui.widgets.windows import Revealer
 from exs_shell.utils.path import Paths
 from exs_shell.utils.loop import run_async_task
@@ -58,7 +59,7 @@ class MiniPlayer(Box):
         )
 
         self.play_button = Button(
-            child=Label(
+            child=Icon(
                 label=player.bind(
                     "playback_status",
                     lambda val: (
@@ -67,6 +68,7 @@ class MiniPlayer(Box):
                 )
                 if player
                 else "",
+                size="s",
             ),
             on_click=(lambda _: run_async_task(player.play_pause_async()))
             if player
@@ -75,14 +77,14 @@ class MiniPlayer(Box):
         )
 
         self.prev_button = Button(
-            child=Label(label=Icons.player.PREVIOUS),
+            child=Icon(label=Icons.player.PREVIOUS, size="s"),
             on_click=(lambda _: run_async_task(player.previous_async()))
             if player
             else None,
             css_classes=["control-center-mini-player-prev"],
         )
         self.next_button = Button(
-            child=Label(label=Icons.player.NEXT),
+            child=Icon(label=Icons.player.NEXT, size="s"),
             on_click=(lambda _: run_async_task(player.next_async()))
             if player
             else None,
@@ -90,7 +92,7 @@ class MiniPlayer(Box):
         )
 
         self.reveal_button = Button(
-            child=Label(label=Icons.ui.UP),
+            child=Icon(label=Icons.ui.UP, size="s"),
             on_click=on_toggle,
             css_classes=["control-center-mini-player-reveal"],
         )

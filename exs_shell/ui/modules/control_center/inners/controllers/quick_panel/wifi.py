@@ -22,6 +22,7 @@ from ignis.services.network import (
 from exs_shell import register
 from exs_shell.interfaces.enums.icons import Icons
 from exs_shell.state import State
+from exs_shell.ui.widgets.custom.icon import Icon
 from exs_shell.utils.commands import run_command
 
 
@@ -30,11 +31,11 @@ class WifiWidget(Box):
     def __init__(self, scale: float = 1.0, **kwargs: Any):
         self.network: NetworkService = State.services.network
         self.scale = scale
-        self.icon = Label(
+        self.icon = Icon(
             label=Icons.wifi.DISABLED
             if not self.network.wifi.enabled
             else Icons.wifi.CONNECTED,
-            css_classes=["control-center-quick-panel-wifi-icon"],
+            size="m",
         )
         self.label = Label(
             label="Wifi", css_classes=["control-center-quick-panel-wifi-label"]
@@ -50,11 +51,13 @@ class WifiWidget(Box):
                 "control-center-quick-panel-wifi-button-enable",
                 "active" if self.network.wifi.enabled else "",
             ],
+            halign="fill",
         )
         self.button_open = Button(
-            child=Label(label=Icons.ui.OPEN_IN_WINDOW),
+            child=Icon(label=Icons.ui.OPEN_IN_WINDOW, size="m"),
             on_click=lambda _: run_command("settings", "wifi"),
             css_classes=["control-center-quick-panel-wifi-button-open"],
+            halign="end",
         )
         self._box = Box(
             css_classes=["control-center-quick-panel-wifi"],

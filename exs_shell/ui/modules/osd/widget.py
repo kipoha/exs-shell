@@ -13,6 +13,7 @@ from exs_shell.interfaces.enums.icons import Icons
 from exs_shell.ui.widgets.base import MonitorRevealerBaseWidget
 from exs_shell.ui.factory import window
 from exs_shell.ui.widgets.custom.circle import ArcMeter
+from exs_shell.ui.widgets.custom.icon import Icon
 from exs_shell.ui.widgets.windows import Revealer
 from exs_shell.utils.loop import run_async_task
 
@@ -106,14 +107,16 @@ class OSD(MonitorRevealerBaseWidget):
                     "vertical" if vertical else "horizontal",
                 ],
             )
-            self.icon = Label(
-                css_classes=["exs-osd-icon", "vertical" if vertical else "horizontal"]
+            self.icon = Icon(
+                label=Icons.volume.MUTED,
+                size="l",
+                css_classes=["vertical" if vertical else "horizontal"]
             )
             self.inner = Box(
                 child=[self.icon, self.progress],
                 css_classes=["exs-osd"],
                 vertical=vertical,
-                spacing=12,
+                spacing=5,
             )
         self._rev_inner = Revealer(
             child=self.inner,

@@ -2,11 +2,13 @@ from enum import StrEnum
 
 from exs_shell.core.py import classproperty
 
-
 class PPIcons(StrEnum):
-    PERFORMANCE = "󱐋"
-    BALANCED = ""
-    POWER_SAVER = "󰌪"
+    PERFORMANCE = "electric_bolt"
+    BALANCED = "balance"
+    POWER_SAVER = "energy_savings_leaf"
+    # PERFORMANCE = "󱐋"
+    # BALANCED = ""
+    # POWER_SAVER = "󰌪"
 
     __mappings__: dict[str, tuple[str, str]] = {
         "performance": (PERFORMANCE, "Performance"),

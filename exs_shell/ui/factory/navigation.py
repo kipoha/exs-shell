@@ -1,6 +1,7 @@
 from typing import Callable
 
 from ignis.widgets import Box, Button, Label
+from exs_shell.ui.widgets.custom.icon import Icon
 from exs_shell.utils.dependencies import check_lock
 
 
@@ -25,9 +26,7 @@ class Navigation(Box):
             btn = Button(
                 child=Box(
                     child=[
-                        Label(
-                            label=icon, css_classes=["settings-navigation-button-icon"]
-                        ),
+                        Icon(label=icon, size="s"),
                         Label(
                             label=label,
                             css_classes=["settings-navigation-button-label"],

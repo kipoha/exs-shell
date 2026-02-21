@@ -54,10 +54,15 @@ class Launcher(MonitorRevealerBaseWidget):
         self._added_items = []
         self._refresh_items()
         self.update_actions()
+        self.update_powermenu_actions()
 
     @register.events.option(user, "actions")
     def update_actions(self):
         self.actions = user.get_actions_objs()
+
+    @register.events.option(user, "powermenu_actions")
+    def update_powermenu_actions(self):
+        self.powermenu_actions = user.get_powermenu_actions_objs()
 
     def widget_build(self) -> None:
         self._entry = Entry(
@@ -150,6 +155,8 @@ class Launcher(MonitorRevealerBaseWidget):
                 items = [
                     ClipboardItemButton(c, self.scale) for c in get_clipboard_history()
                 ]
+            case LauncherMode.POWER_MENU:
+                items = [ActionItem(action, self.scale) for action in self.powermenu_actions]
             case _:
                 raise ValueError
 
@@ -233,6 +240,11 @@ class Launcher(MonitorRevealerBaseWidget):
             self._entry.text = ""
             self._refresh_items()
             return
+        if isinstance(item, ActionItem) and "power menu" in item.action.name.lower():
+            self.mode = LauncherMode.POWER_MENU
+            self._entry.text = ""
+            self._refresh_items()
+            return
         if hasattr(item, "launch"):
             item.launch()
 
@@ -279,7 +291,7 @@ class Launcher(MonitorRevealerBaseWidget):
     def __search(self, *_):
         query: str = self._entry.text.lower().strip()
         prefix = user.command_prefix
-        if self.mode not in [LauncherMode.APPLICATIONS, LauncherMode.CLIPBOARD]:
+        if self.mode not in [LauncherMode.APPLICATIONS, LauncherMode.CLIPBOARD, LauncherMode.POWER_MENU]:
             self.mode = LauncherMode.APPLICATIONS
 
         if not query:
@@ -319,9 +331,23 @@ class Launcher(MonitorRevealerBaseWidget):
                 self.current_items = filtered
                 self._populate_box(filtered)
 
+            case LauncherMode.POWER_MENU:
+                filtered = [
+                    ActionItem(action, self.scale)
+                    for action in self.powermenu_actions
+                    if query.replace(prefix, "") in action.name.lower().strip()
+                ]
+                self.current_items = filtered
+                self._populate_box(filtered)
+
             case _:
                 self._refresh_items()
 
     @register.command("launcher", description="Toggle launcher")
     def toggle(self):
         self.set_visible(not self.visible)
+
+    @register.command("launcher", description="Toggle Power Menu")
+    def powermenu(self):
+        self.mode = LauncherMode.POWER_MENU
+        self.set_visible(True)

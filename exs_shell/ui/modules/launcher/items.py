@@ -11,7 +11,11 @@ from ignis.widgets import Box, Button, Icon, Label, Picture, PopoverMenu
 from exs_shell import register
 from exs_shell.configs.user import user
 from exs_shell.interfaces.schemas.utils.clipboard import ClipboardItem
-from exs_shell.interfaces.schemas.widget.launcher import Action, WebAction
+from exs_shell.interfaces.schemas.widget.launcher import (
+    Action,
+    PowerMenuAction,
+    WebAction,
+)
 from exs_shell.utils import window
 from exs_shell.utils.loop import run_async_task
 from exs_shell.utils.urls import is_url
@@ -20,7 +24,7 @@ from exs_shell.utils.urls import is_url
 class BaseLauncherItem(Button):
     def __init__(
         self,
-        item: Application | Action | WebAction | None = None,
+        item: Application | Action | WebAction | PowerMenuAction | None = None,
         icon: Icon | Picture | None = None,
     ):
         if icon:
@@ -49,11 +53,11 @@ class BaseLauncherItem(Button):
 
 
 class ActionItem(BaseLauncherItem):
-    def __init__(self, action: Action, scale: float = 1.0):
+    def __init__(self, action: Action | PowerMenuAction, scale: float = 1.0):
         self.action = action
         super().__init__(
             action,
-            Picture(image=self.action.icon, width=48 * scale, height=48 * scale),  # type: ignore
+            Icon(image=self.action.icon, pixel_size=48 * scale),  # type: ignore
         )
 
     def launch(self, *_: Any) -> None:
@@ -61,7 +65,6 @@ class ActionItem(BaseLauncherItem):
         if "{terminal_format}" in cmd:
             inner = cmd.replace("{terminal_format}", "").strip()
             cmd = user.terminal_format.replace("%command%", inner)
-        print(cmd)
         run_async_task(exec_sh_async(cmd))
         super().launch(*_)
 

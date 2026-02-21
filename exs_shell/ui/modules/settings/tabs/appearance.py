@@ -27,6 +27,7 @@ from exs_shell.ui.modules.settings.widgets import (
     SpinRow,
     SwitchRow,
 )
+from exs_shell.ui.widgets.custom.icon import Icon  # noqa: F401
 
 
 class WallpaperCategory(BaseCategory):
@@ -86,12 +87,13 @@ class WallpaperCategory(BaseCategory):
             halign="fill",
             css_classes=["settings-wallpaper-icon"],
             child=[
-                Label(
-                    label=Icons.ui.IMAGE,
-                    halign="center",
-                    valign="center",
-                    css_classes=["settings-wallpaper-icon-label"],
-                )
+                # Icon(
+                #     label=Icons.ui.IMAGE,
+                #     size="xxl",
+                #     halign="center",
+                #     valign="center",
+                #     css_classes=["settings-wallpaper-icon-label"],
+                # )
             ],
             can_target=False,
         )

@@ -5,6 +5,7 @@ from exs_shell import register
 from exs_shell.app.vars import NAMESPACE
 from exs_shell.interfaces.enums.icons import Icons
 from exs_shell.ui.factory.navigation import Navigation
+from exs_shell.ui.widgets.custom.icon import Icon
 from exs_shell.ui.modules.settings.tabs.base import BaseTab
 from exs_shell.ui.modules.settings.tabs.main import MainTab
 from exs_shell.ui.modules.settings.tabs.appearance import AppearanceTab
@@ -26,7 +27,7 @@ class Settings(RegularWindow):
             vertical=True, vexpand=True, valign="fill", css_classes=["settings"]
         )
         self.reload_button = Button(
-            child=Label(label=Icons.ui.REFRESH),
+            child=Icon(label=Icons.ui.REFRESH, size="l"),
             on_click=lambda _: IgnisApp.get_initialized().reload(),
             css_classes=["settings-reload-button"],
         )
@@ -70,9 +71,7 @@ class Settings(RegularWindow):
         self.active_tab_label = Label(
             label="", css_classes=["settings-active-tab-label"]
         )
-        self.active_tab_label_icon = Label(
-            label=Icons.ui.MAIN, css_classes=["settings-header-title-icon"]
-        )
+        self.active_tab_label_icon = Icon(label=Icons.ui.MAIN, size="m")
         self.nav = Navigation(self.tabs, on_select=self.on_select, default="main")
         self.nav.vexpand = True
         self.nav.append(Box(vexpand=True))
@@ -82,7 +81,7 @@ class Settings(RegularWindow):
         header.append(self.active_tab_label_icon)
         header.append(Label(label="Settings", css_classes=["settings-header-title"]))
         header.append(
-            Label(label=Icons.ui.RIGHT, css_classes=["settings-breadcrumb-separator"])
+            Label(label="chevron_right", css_classes=["icon"])
         )
         header.append(self.active_tab_label)
 

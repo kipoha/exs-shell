@@ -2,14 +2,22 @@ from enum import StrEnum
 
 
 class BacklightIcons(StrEnum):
-    B1 = "󰃚"
-    B2 = "󰃛"
-    B3 = "󰃜"
-    B4 = "󰃝"
-    B5 = "󰃞"
-    B6 = "󰃟"
-    B7 = "󰃠"
-    AUTO = "󰃡"
+    B1 = "brightness_1"
+    B2 = "brightness_2"
+    B3 = "brightness_3"
+    B4 = "brightness_4"
+    B5 = "brightness_5"
+    B6 = "brightness_6"
+    B7 = "brightness_7"
+    AUTO = "brightness_auto"
+    # B1 = "󰃚"
+    # B2 = "󰃛"
+    # B3 = "󰃜"
+    # B4 = "󰃝"
+    # B5 = "󰃞"
+    # B6 = "󰃟"
+    # B7 = "󰃠"
+    # AUTO = "󰃡"
 
     @classmethod
     def mapping(cls, brightness: int) -> str:

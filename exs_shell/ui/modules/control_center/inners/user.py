@@ -7,7 +7,9 @@ from ignis.widgets import Box, Button, CenterBox, Label, Picture
 from ignis.services.fetch import FetchService
 
 from exs_shell import register
+from exs_shell.ui.widgets.custom.icon import Icon
 from exs_shell.utils import window as win_utils
+from exs_shell.utils.commands import run_command
 from exs_shell.interfaces.enums.icons import Icons
 from exs_shell.state import State
 from exs_shell.configs.user import user
@@ -47,15 +49,18 @@ class UserWidget(CenterBox):
             spacing=5 * self.scale,
         )
         self.settings = Button(
-            child=Label(label=Icons.ui.SYSTEM),
+            # child=Label(label=Icons.ui.SYSTEM),
+            child=Icon(label=Icons.ui.SYSTEM, size="l"),
             css_classes=["control-center-user-buttons-settings"],
             on_click=lambda _: self.toggle_window("settings"),
             can_focus=False,
             focusable=False,
         )
         self.power_button = Button(
-            child=Label(label=Icons.ui.POWER),
+            # child=Label(label=Icons.ui.POWER),
+            child=Icon(label=Icons.ui.POWER, size="l"),
             css_classes=["control-center-user-buttons-power"],
+            on_click=lambda _: run_command("launcher", "powermenu"),
             can_focus=False,
             focusable=False,
         )

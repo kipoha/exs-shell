@@ -21,6 +21,7 @@ from ignis.widgets import (
 )
 
 from exs_shell.app.vars import NAMESPACE
+from exs_shell.ui.widgets.custom.icon import Icon
 
 
 class CategoryLabel(Box):
@@ -28,12 +29,12 @@ class CategoryLabel(Box):
         child = []
         if icon:
             child.append(
-                Label(
+                Icon(
                     label=icon,
-                    css_classes=["settings-category-icon"],
+                    size="m",
                     halign="start",
                     justify="left",
-                )
+                ),
             )
         child.append(
             Label(
@@ -64,9 +65,7 @@ class SettingsRow(Box):
         header = []
         title_header = []
         if icon:
-            title_header.append(
-                Label(label=icon, css_classes=["settings-row-icon"], halign="start")
-            )
+            title_header.append(Icon(label=icon, size="s", halign="start"))
         if title:
             title_header.append(
                 Label(label=title, css_classes=["settings-row-title"], halign="start")
@@ -141,9 +140,7 @@ def SelectRow(
 
     for icon, value in selects:
         button = Button(
-            child=Label(
-                label=icon, halign="center", css_classes=["settings-row-select-icon"]
-            ),
+            child=Icon(label=icon, size="m", halign="center"),
             on_click=lambda _, v=value: on_click(_, v),
             **kwargs,
         )
@@ -432,6 +429,7 @@ class DnDBox(Box):
             self.items_widgets.append(label)
 
         self._reorder_grid()
+
     def _reorder_inside(self, widget: Label, x: int, y: int):
         width = self.items_grid.get_allocated_width()
         column_width = width / self.max_columns
@@ -451,6 +449,7 @@ class DnDBox(Box):
         self.items_widgets.insert(new_index, widget)
 
         self._reorder_grid()
+
 
 def make_draggable(widget: Label):
     drag_source = Gtk.DragSource()

@@ -6,6 +6,7 @@ from ignis.services.mpris import MprisPlayer
 from exs_shell.interfaces.enums.gtk.transitions import RevealerTransition
 from exs_shell.interfaces.enums.icons import Icons
 from exs_shell.ui.widgets.custom.audio_visualizer import CircularAudioVisualizer
+from exs_shell.ui.widgets.custom.icon import Icon
 from exs_shell.ui.widgets.windows import Revealer
 from exs_shell.utils.path import Paths
 from exs_shell.utils.loop import run_async_task
@@ -47,7 +48,7 @@ class Player(Box):
         )
 
         self.play_button = Button(
-            child=Label(
+            child=Icon(
                 label=player.bind(
                     "playback_status",
                     lambda val: (
@@ -56,6 +57,7 @@ class Player(Box):
                 )
                 if player
                 else "",
+                size="s",
             ),
             on_click=(lambda _: run_async_task(player.play_pause_async()))
             if player
@@ -64,14 +66,14 @@ class Player(Box):
         )
 
         self.prev_button = Button(
-            child=Label(label=Icons.player.PREVIOUS),
+            child=Icon(label=Icons.player.PREVIOUS, size="s"),
             on_click=(lambda _: run_async_task(player.previous_async()))
             if player
             else None,
             css_classes=["control-center-player-prev"],
         )
         self.next_button = Button(
-            child=Label(label=Icons.player.NEXT),
+            child=Icon(label=Icons.player.NEXT, size="s"),
             on_click=(lambda _: run_async_task(player.next_async()))
             if player
             else None,
@@ -79,7 +81,7 @@ class Player(Box):
         )
 
         self.reveal_button = Button(
-            child=Label(label=Icons.ui.DOWN),
+            child=Icon(label=Icons.ui.DOWN, size="s"),
             on_click=on_toggle,
             css_classes=["control-center-player-reveal"],
         )
@@ -89,9 +91,7 @@ class Player(Box):
             max=player.bind("length") if player else 1,
             hexpand=True,
             css_classes=["control-center-player-scale"],
-            on_change=(
-                lambda val: run_async_task(player.set_position_async(val.value))
-            )
+            on_change=(lambda val: run_async_task(player.set_position_async(val.value)))
             if player
             else None,
         )
