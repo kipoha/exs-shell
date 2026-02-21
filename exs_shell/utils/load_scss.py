@@ -55,4 +55,18 @@ def build_scss():
   &.xxl {{
     font-size: 3rem;
   }}
+
+  &.xxxl {{
+    font-size: 3.5rem;
+  }}
+}}
+
+entry {{
+    background-color: c.$surface_container_low;
+    color: c.$on_surface;
+}}
+
+entry selection {{
+    background-color: c.$primary;
+    color: c.$background;
 }}""")

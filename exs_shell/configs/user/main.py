@@ -1,7 +1,7 @@
 from ignis.options_manager import OptionsGroup, TrackedList
 
+from exs_shell.interfaces.enums.icons import Icons
 from exs_shell.interfaces.schemas.widget.launcher import Action, PowerMenuAction
-from exs_shell.utils.path import Paths
 
 
 class UserConfig(OptionsGroup):
@@ -16,18 +16,18 @@ class UserConfig(OptionsGroup):
         {
             "name": "Clipboard",
             "command": "",
-            "icon": "clipboard-symbolic",
+            "icon": Icons.ui.CLIPBOARD,
         },
         {
             "name": "Color Picker",
             "command": "hyprpicker -a | wl-copy",
-            "icon": "palette-symbolic",
+            "icon": Icons.ui.COLOR_PICKER,
         },
         {
             "name": "Power Menu",
             "command": "",
-            "icon": "system-shutdown-symbolic",
-        }
+            "icon": Icons.ui.SYSTEM_POWER,
+        },
     ]:
         actions.append(i)
 
@@ -36,11 +36,31 @@ class UserConfig(OptionsGroup):
 
     powermenu_actions: TrackedList[dict] = TrackedList()
     for i in [
-        {"name": "Lock", "command": "sleep 0.5 && hyprlock", "icon": "lock-symbolic"},
-        {"name": "Exit", "command": "niri msg action quit --skip-confirmation", "icon": "exit-symbolic"},
-        {"name": "Suspend", "command": "systemctl suspend", "icon": "system-suspend-symbolic"},
-        {"name": "Reboot", "command": "systemctl reboot", "icon": "system-reboot-symbolic"},
-        {"name": "Shutdown", "command": "systemctl poweroff", "icon": "system-shutdown-symbolic"},
+        {
+            "name": "Lock",
+            "command": "sleep 0.5 && hyprlock",
+            "icon": Icons.ui.LOCK,
+        },
+        {
+            "name": "Exit",
+            "command": "niri msg action quit --skip-confirmation",
+            "icon": Icons.ui.EXIT,
+        },
+        {
+            "name": "Suspend",
+            "command": "systemctl suspend",
+            "icon": Icons.ui.SUSPEND,
+        },
+        {
+            "name": "Reboot",
+            "command": "systemctl reboot",
+            "icon": Icons.ui.REBOOT,
+        },
+        {
+            "name": "Shutdown",
+            "command": "systemctl poweroff",
+            "icon": Icons.ui.POWER,
+        },
     ]:
         powermenu_actions.append(i)
 

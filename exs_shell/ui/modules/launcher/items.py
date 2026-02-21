@@ -6,10 +6,11 @@ from gi.repository import Gio, GdkPixbuf  # type: ignore
 from ignis.menu_model import IgnisMenuItem, IgnisMenuModel, IgnisMenuSeparator
 from ignis.services.applications import Application, ApplicationAction
 from ignis.utils import exec_sh, exec_sh_async
-from ignis.widgets import Box, Button, Icon, Label, Picture, PopoverMenu
+from ignis.widgets import Box, Button, Icon as IgnisIcon, Label, Picture, PopoverMenu
 
 from exs_shell import register
 from exs_shell.configs.user import user
+from exs_shell.ui.widgets.custom.icon import Icon
 from exs_shell.interfaces.schemas.utils.clipboard import ClipboardItem
 from exs_shell.interfaces.schemas.widget.launcher import (
     Action,
@@ -25,7 +26,7 @@ class BaseLauncherItem(Button):
     def __init__(
         self,
         item: Application | Action | WebAction | PowerMenuAction | None = None,
-        icon: Icon | Picture | None = None,
+        icon: IgnisIcon | Picture | Icon | None = None,
     ):
         if icon:
             icon.add_css_class("exs-launcher-app-icon")
@@ -57,7 +58,7 @@ class ActionItem(BaseLauncherItem):
         self.action = action
         super().__init__(
             action,
-            Icon(image=self.action.icon, pixel_size=48 * scale),  # type: ignore
+            Icon(label=self.action.icon, size="xxl"),
         )
 
     def launch(self, *_: Any) -> None:
@@ -77,7 +78,7 @@ class LauncherAppItem(BaseLauncherItem):
         self._application = application
         super().__init__(
             application,
-            Icon(image=application.icon, pixel_size=48 * scale),  # type: ignore
+            IgnisIcon(image=application.icon, pixel_size=48 * scale),  # type: ignore
         )
         self.__sync_menu()
 
@@ -142,7 +143,7 @@ class SearchWebButton(BaseLauncherItem):
 
         super().__init__(
             self.action,
-            Icon(image=icon_name, pixel_size=48 * scale),  # type: ignore
+            IgnisIcon(image=icon_name, pixel_size=48 * scale),  # type: ignore
         )
 
     def launch(self, *_: Any) -> None:

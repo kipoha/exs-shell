@@ -13,6 +13,7 @@ class Icon(Label):
             "l": ["large", "l"],
             "xl": ["extra-large", "xl"],
             "xxl": ["extra-extra-large", "xxl"],
+            "xxxl": ["extra-extra-extra-large", "xxxl"],
         }
         kwargs["css_classes"] = ["icon", *sizes[size]]
         super().__init__(label=label, **kwargs)

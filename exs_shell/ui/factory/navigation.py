@@ -50,7 +50,7 @@ class Navigation(Box):
     def select(self, key: str):
         for name, btn in self.buttons.items():
             if name == key:
-                btn.add_css_class("active")
+                btn.child.child[0].add_css_class("active")
             else:
-                btn.remove_css_class("active")
+                btn.child.child[0].remove_css_class("active")
         self.on_select(key)

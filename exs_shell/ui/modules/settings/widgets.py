@@ -140,7 +140,7 @@ def SelectRow(
 
     for icon, value in selects:
         button = Button(
-            child=Icon(label=icon, size="m", halign="center"),
+            child=Icon(label=icon, size="s", halign="center"),
             on_click=lambda _, v=value: on_click(_, v),
             **kwargs,
         )

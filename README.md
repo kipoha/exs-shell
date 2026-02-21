@@ -22,12 +22,14 @@ no showcase
 
 ## Dependencies
 ```
-jetbrains mono nerd-font
+jetbrains-mono-nerd-font
+ttf-material-symbols
 dart-sass
 dunst
 matugen
 gtk3
 gtk4
+power-profiles-daemon 
 ```
 1. Installing
 Only one script

@@ -80,9 +80,7 @@ class Settings(RegularWindow):
         header = Box(css_classes=["settings-header-bar"], spacing=10)
         header.append(self.active_tab_label_icon)
         header.append(Label(label="Settings", css_classes=["settings-header-title"]))
-        header.append(
-            Label(label="chevron_right", css_classes=["icon"])
-        )
+        header.append(Icon(label=Icons.ui.RIGHT, size="m"))
         header.append(self.active_tab_label)
 
         content_box = Box(vexpand=True)
