@@ -66,10 +66,10 @@ class BarCategory(BaseCategory):
                 SettingsRow(
                     Icons.ui.WIDGET,
                     title="Widgets",
-                    description="Widgets2",
+                    description="Replace widgets on bar",
                     child=[
                         DialogRow(
-                            title="Widgets3",
+                            title="Bar widgets",
                             description="Widgets on bar",
                             child=[
                                 self.available_widgets,
