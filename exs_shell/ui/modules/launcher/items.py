@@ -57,7 +57,12 @@ class ActionItem(BaseLauncherItem):
         )
 
     def launch(self, *_: Any) -> None:
-        run_async_task(exec_sh_async(self.action.command))
+        cmd = self.action.command
+        if "{terminal_format}" in cmd:
+            inner = cmd.replace("{terminal_format}", "").strip()
+            cmd = user.terminal_format.replace("%command%", inner)
+        print(cmd)
+        run_async_task(exec_sh_async(cmd))
         super().launch(*_)
 
 

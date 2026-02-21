@@ -3,6 +3,7 @@ from enum import StrEnum
 
 class UIIcons(StrEnum):
     WINDOW_CLOSE = ""
+    WIDGET = "󰜬"
     QUESTION = ""
     HEADSET = "󰋎"
     HEADPHONES = "󰋋"
@@ -36,6 +37,7 @@ class UIIcons(StrEnum):
     TEMPERATURE = ""
     SERVICES = ""
     NOTIFICATIONS = "󰂚"
+    ADD = ""
     ARC = ""
     UP = ""
     DEVICES = ""

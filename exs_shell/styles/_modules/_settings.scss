@@ -463,29 +463,23 @@
 
       &:nth-child(6) {
         .settings-navigation-button-icon {
-          margin-right: 0.2rem;
+          margin-right: 0.5rem;
         }
       }
 
       &:nth-child(7) {
         .settings-navigation-button-icon {
-          margin-right: 0.5rem;
-        }
-      }
-
-      &:nth-child(8) {
-        .settings-navigation-button-icon {
           margin-right: 0.55rem;
         }
       }
 
-      &:nth-child(10) {
+      &:nth-child(9) {
         .settings-navigation-button-icon {
           margin-right: 0.5rem;
         }
       }
 
-      &:nth-child(11) {
+      &:nth-child(10) {
         .settings-navigation-button-icon {
           margin-right: 0.5rem;
         }
@@ -497,6 +491,13 @@
 .settings-dialog-window {
   background-color: c.$surface_container_low;
   color: c.$on_surface;
+
+  separator {
+    background-color: c.$surface_variant;
+    border-radius: 1rem;
+    margin: 0.3rem 0.05rem;
+    min-height: 0.15rem;
+  }
 
   .settings-row-dialog-title {
     font-size: 1.5rem
@@ -529,6 +530,7 @@
     }
   }
 
+  .settings-row-dialog-button,
   .settings-row-dialog-button-cancel {
     margin: 0.5rem 0;
     background-color: c.$surface_container;
@@ -540,4 +542,29 @@
       background-color: c.$secondary_container;
     }
   }
+
+  .settings-row-drag-title {
+    margin-top: 1rem;
+  }
+
+  .settings-row-drag-grid {
+    min-height: 2.1rem;
+    min-width: 30rem;
+    border-radius: 1rem;
+    background-color: c.$surface_container_high;
+    margin: 0.2rem 0 0.5rem 0;
+    padding: 0.5rem 1rem;
+
+    .settings-row-drag-item {
+      border-radius: 1rem;
+      background-color: c.$surface_container_highest;
+      padding: 0.5rem 1rem;
+
+      &:focus,
+      &:hover {
+        background-color: c.$secondary_container;
+      }
+    }
+  }
+
 }

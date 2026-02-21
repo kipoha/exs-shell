@@ -97,6 +97,7 @@ class Bar(RevealerBaseWidget):
     def _update(self, *_):
         self._box = self._widget_factory()
         self._main.set_child(self._box)
+        self._update_margin()
 
     @register.events.option(bar, "position")
     def _update_margin(self, *_):
@@ -108,6 +109,3 @@ class Bar(RevealerBaseWidget):
         self.recreate_window()
         self._main.set_margin_top(margins["margin_top"])
         self._main.set_margin_bottom(margins["margin_bottom"])
-        print(self._inner.start_widget.child)
-        print(self._inner.center_widget.child)
-        print(self._inner.end_widget.child)

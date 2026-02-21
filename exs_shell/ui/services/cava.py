@@ -1,6 +1,5 @@
 import os
 import struct
-import threading
 import subprocess
 
 from typing import Callable
@@ -8,6 +7,7 @@ from typing import Callable
 from exs_shell import register
 from exs_shell.utils import Dirs, Paths
 from exs_shell.utils.proc import set_death_signal
+from exs_shell.utils.loop import run_in_thread
 
 from gi.repository import GLib  # type: ignore
 
@@ -28,11 +28,8 @@ class Cava:
 
         self._running = True
 
-        self._cava_thread = threading.Thread(target=self._start_cava, daemon=True)
-        self._cava_thread.start()
-
-        self._reader_thread = threading.Thread(target=self._start_reader, daemon=True)
-        self._reader_thread.start()
+        self._start_cava()
+        self._start_reader()
 
     def subscribe_text(self, callback: Callable):
         if callback not in self._subscribers_text:
@@ -50,6 +47,7 @@ class Cava:
         if callback in self._subscribers_values:
             self._subscribers_values.remove(callback)
 
+    @run_in_thread
     def _start_cava(self):
         config = Paths.generate_path("configs/other/cava/cava.ini")
         try:
@@ -69,6 +67,7 @@ class Cava:
         if self.proc and self.proc.poll() is None:
             self.proc.terminate()
 
+    @run_in_thread
     def _start_reader(self):
         while not os.path.exists(self.fifo_path) and self._running:
             GLib.usleep(100_000)

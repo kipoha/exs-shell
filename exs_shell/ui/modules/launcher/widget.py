@@ -57,7 +57,7 @@ class Launcher(MonitorRevealerBaseWidget):
 
     @register.events.option(user, "actions")
     def update_actions(self):
-        self.actions = user.actions
+        self.actions = user.get_actions_objs()
 
     def widget_build(self) -> None:
         self._entry = Entry(

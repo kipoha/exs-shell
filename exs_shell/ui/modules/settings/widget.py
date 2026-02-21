@@ -6,7 +6,6 @@ from exs_shell.app.vars import NAMESPACE
 from exs_shell.interfaces.enums.icons import Icons
 from exs_shell.ui.factory.navigation import Navigation
 from exs_shell.ui.modules.settings.tabs.base import BaseTab
-from exs_shell.ui.modules.settings.tabs.launcher import LauncherTab
 from exs_shell.ui.modules.settings.tabs.main import MainTab
 from exs_shell.ui.modules.settings.tabs.appearance import AppearanceTab
 from exs_shell.ui.modules.settings.tabs.interface import InterfaceTab
@@ -47,7 +46,6 @@ class Settings(RegularWindow):
             "main": (Icons.ui.MAIN, "Main"),
             "appearance": (Icons.ui.PALLETTE, "Appearance"),
             "interface": (Icons.ui.INTERFACE, "Interface"),
-            "launcher": (Icons.ui.LAUNCHER, "Launcher"),
             "lock": (Icons.ui.LOCK, "Lock"),
             "services": (Icons.ui.SERVICES, "Services"),
             "devices": (Icons.ui.DEVICES, "Devices"),
@@ -67,7 +65,6 @@ class Settings(RegularWindow):
             "bluetooth": BluetoothTab(),
             "system": SystemTab(),
             "about": AboutTab(),
-            "launcher": LauncherTab(),
         }
 
         self.active_tab_label = Label(

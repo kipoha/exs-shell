@@ -11,7 +11,7 @@ class UserConfig(OptionsGroup):
     critical_percentage: int = 15
     terminal_format: str = "kitty %command%"
 
-    actions: TrackedList[Action] = TrackedList()
+    actions: TrackedList[dict] = TrackedList()
     for i in [
         {
             "name": "Lock",
@@ -29,9 +29,12 @@ class UserConfig(OptionsGroup):
             "icon": Paths.generate_path("icons/action/color_picker.png", Paths.assets),
         },
     ]:
-        actions.append(Action(**i))
+        actions.append(i)
 
-    powermenu_actions: TrackedList[PowerMenuAction] = TrackedList()
+    def get_actions_objs(self) -> list[Action]:
+        return [Action(**i) for i in self.actions]
+
+    powermenu_actions: TrackedList[dict] = TrackedList()
     for i in [
         {"name": "Lock", "command": "exs-ipc open-lockscreen", "icon": ""},
         {"name": "Exit", "command": "niri msg action quit --skip-confirmation", "icon": "󰈆"},
@@ -39,4 +42,7 @@ class UserConfig(OptionsGroup):
         {"name": "Reboot", "command": "systemctl reboot", "icon": ""},
         {"name": "Shutdown", "command": "systemctl poweroff", "icon": "⏻"},
     ]:
-        powermenu_actions.append(PowerMenuAction(**i))
+        powermenu_actions.append(i)
+
+    def get_powermenu_actions(self) -> list[PowerMenuAction]:
+        return [PowerMenuAction(**i) for i in self.powermenu_actions]
