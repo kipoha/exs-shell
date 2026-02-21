@@ -105,7 +105,6 @@ class ArcMeter(Gtk.DrawingArea):
 
         layout.set_font_description(font_desc)
 
-        # Центрирование
         tw, th = layout.get_pixel_size()
 
         cr.set_source_rgb(r, g, b)
