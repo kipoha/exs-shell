@@ -13,8 +13,7 @@ from exs_shell.utils.loop import run_async_task
 from exs_shell.utils.path import Dirs
 from exs_shell.utils.other import SCB
 from exs_shell.configs.user import appearance
-from exs_shell.interfaces.enums.colorschemes import ColorSchemes2 as ColorSchemes
-
+from exs_shell.interfaces.enums.colorschemes import ColorSchemes
 
 
 class Matugen:
@@ -23,9 +22,14 @@ class Matugen:
         scheme = (
             "tonal-spot" if appearance.scheme not in ColorSchemes else appearance.scheme
         )
-        cmd = SCB.matugen(appearance.wallpaper_path, scheme, appearance.dark)
-        run_async_task(exec_sh_async(cmd))
-        Timeout(ms=3000, target=Matugen.reload_css)
+        cmds: list[str] = [
+            SCB.matugen(appearance.wallpaper_path, scheme, appearance.dark, appearance.contrast),
+            SCB.gsettings(appearance.dark),
+        ]
+        for cmd in cmds:
+            run_async_task(exec_sh_async(cmd))
+        Matugen.update_previews()
+        Matugen.reload_css()
 
     @staticmethod
     def update_previews() -> None:
@@ -42,6 +46,7 @@ class Matugen:
                     appearance.wallpaper_path,
                     scheme,
                     appearance.dark,
+                    appearance.contrast,
                     "--json",
                     "hex",
                     "--dry-run",
@@ -60,10 +65,16 @@ class Matugen:
                         scss += f"$palette_{prefix.replace('-', '_')}_{key}: {value['default']};\n"
                 scss += "\n"
 
-            scss_file = Dirs.CONFIG_DIR / "exs-shell" / "palettes.scss"
+            scss_file = Dirs.CONFIG_DIR / "palettes.scss"
             scss_file.write_text(scss)
+
+        run_async_task(do())
+        Matugen.reload_css()
 
     @staticmethod
     def reload_css():
-        css_manager = CssManager.get_default()
-        css_manager.reload_all_css()
+        def do():
+            css_manager = CssManager.get_default()
+            css_manager.reload_all_css()
+
+        Timeout(ms=3000, target=do)

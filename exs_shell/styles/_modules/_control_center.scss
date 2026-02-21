@@ -1,5 +1,5 @@
 .exs-corners {
-  color: c.$background;
+  color: black;
 }
 
 .control-corner,
@@ -10,7 +10,7 @@
 
 .control-center-window {
   background-color: c.$background;
-  color: c.$onBackground;
+  color: c.$on_background;
   padding: 1rem;
 }
 
@@ -19,14 +19,14 @@
 }
 
 .notification {
-  background-color: c.$surfaceContainerHigh;
+  background-color: c.$surface_container_high;
   border-radius: 1rem;
   padding: 1rem;
   margin-top: 1rem;
 }
 
 .notification-count {
-  background-color: c.$surfaceContainerHigh;
+  background-color: c.$surface_container_high;
   color: c.$primary;
   min-width: 2rem;
   font-size: 1.5rem;
@@ -57,7 +57,7 @@
   border-radius: 1rem;
   padding: 0.25rem 1rem 0.25rem 0.9rem;
   font-size: 2rem;
-  background-color: c.$surfaceContainerHigh;
+  background-color: c.$surface_container_high;
   color: c.$primary;
 }
 
@@ -71,7 +71,7 @@
   border-radius: 1rem;
   padding: 0.25rem 1rem 0.25rem 0.5rem;
   font-size: 1.5rem;
-  background-color: c.$surfaceContainerHigh;
+  background-color: c.$surface_container_high;
   color: c.$primary;
 }
 
@@ -94,8 +94,8 @@
 }
 
 .notification-action:hover {
-  background-color: c.$onTertiary;
-  color: c.$onSurface;
+  background-color: c.$on_tertiary;
+  color: c.$on_surface;
 }
 
 .notification-screenshot-label {
@@ -104,11 +104,11 @@
 }
 
 .notification-center-info-label {
-  color: c.$onSurface;
+  color: c.$on_surface;
 }
 
 .notification-body {
-  color: c.$onSurface;
+  color: c.$on_surface;
 }
 
 .control-center-mini-player {
@@ -118,7 +118,7 @@
 .control-center-mini-player-background {
   border-radius: 1rem;
   background-color: rgba(0, 0, 0, 0.8);
-  border: 1px solid c.$onSecondaryFixedVariant;
+  border: 1px solid c.$on_secondary_fixed_variant;
 }
 
 .control-center-mini-player-controller-info {
@@ -138,7 +138,7 @@
 
   button {
     color: c.$primary;
-    background-color: c.$surfaceContainerHigh;
+    background-color: c.$surface_container_high;
     border-radius: 1rem;
 
     &:hover {
@@ -189,12 +189,12 @@
 .control-center-player-controller {
   padding: 0.5rem;
   margin-right: 1rem;
-  background-color: c.$surfaceContainerHigh;
+  background-color: c.$surface_container_high;
   border-radius: 1rem;
 
   button {
     color: c.$primary;
-    background-color: c.$surfaceContainerHigh;
+    background-color: c.$surface_container_high;
     border-radius: 1rem;
 
     &:hover {
@@ -219,7 +219,7 @@
 .control-center-player-reveal {
   padding: 0.2rem 0.7rem 0.2rem 0.6rem;
   margin: 0.5rem 0;
-  background-color: c.$surfaceContainerHigh;
+  background-color: c.$surface_container_high;
   border-radius: 1rem;
 
   &:hover {
@@ -231,7 +231,7 @@
 .control-center-player-background {
   border-radius: 1rem;
   /* background-color: rgba(255, 255, 255, 0.1); */
-  border: 1px solid c.$onSecondaryFixedVariant;
+  border: 1px solid c.$on_secondary_fixed_variant;
 }
 
 .control-center-mpris-art {
@@ -250,7 +250,7 @@
 }
 
 .control-center-player-scale trough {
-  background-color: c.$surfaceContainerHigh;
+  background-color: c.$surface_container_high;
   border-radius: 10px;
   min-height: 0.3rem;
 }
@@ -263,7 +263,7 @@
 
 .control-center-player-scale slider {
   background-color: c.$primary;
-  border: 0.2rem solid c.$surfaceContainerHigh;
+  border: 0.2rem solid c.$surface_container_high;
   border-radius: 0.2rem;
   min-width: 2px;
   min-height: 8px;
@@ -318,14 +318,14 @@
   font-size: 1.4rem;
 
   trough {
-    background-color: c.$surfaceContainerHighest;
+    background-color: c.$surface_container_highest;
     border-radius: 0.3rem 1rem 1rem 0.3rem;
     min-height: 0.7rem;
   }
 
   slider {
     background-color: c.$primary;
-    border: 0.2rem solid c.$surfaceContainer;
+    border: 0.2rem solid c.$surface_container;
     border-radius: 1rem;
     min-width: 0.2rem;
     min-height: 1.6rem;
@@ -343,7 +343,7 @@
   .control-center-rollers-backlight-container {
     border-radius: 1rem;
     padding: 0.6rem 1rem;
-    background-color: c.$surfaceContainer;
+    background-color: c.$surface_container;
     border-radius: 1rem;
     color: c.$background;
   }
@@ -395,10 +395,10 @@
       border-radius: 0.5rem 1rem 1rem 0.5rem;
       padding: 0.5rem 1rem 0.5rem 0.5rem;
       margin-left: 0.3rem;
-      background-color: c.$surfaceContainerHighest;
+      background-color: c.$surface_container_highest;
 
       &:hover {
-        background-color: c.$surfaceContainer;
+        background-color: c.$surface_container;
       }
 
       &.active {
@@ -414,10 +414,10 @@
     .control-center-quick-panel-bluetooth-button-enable,
     .control-center-quick-panel-wifi-button-enable {
       border-radius: 1rem 0.5rem 0.5rem 1rem;
-      background-color: c.$surfaceContainerHighest;
+      background-color: c.$surface_container_highest;
 
       &:hover {
-        background-color: c.$surfaceContainer;
+        background-color: c.$surface_container;
       }
 
       &.active {
@@ -437,10 +437,10 @@
     .control-center-quick-panel-dark-button {
       border-radius: 1rem;
       padding: 0.5rem 3.9rem;
-      background-color: c.$surfaceContainerHighest;
+      background-color: c.$surface_container_highest;
 
       &:hover {
-        background-color: c.$surfaceContainer;
+        background-color: c.$surface_container;
       }
 
       &.active {
@@ -453,10 +453,10 @@
     .control-center-quick-panel-power-profile-select-balanced-button,
     .control-center-quick-panel-power-profile-select-performance-button {
       font-size: 1.4rem;
-      background-color: c.$surfaceContainerHighest;
+      background-color: c.$surface_container_highest;
 
       &:hover {
-        background-color: c.$surfaceContainer;
+        background-color: c.$surface_container;
       }
 
       &.active {

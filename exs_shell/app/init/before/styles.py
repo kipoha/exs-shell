@@ -11,7 +11,7 @@ from exs_shell.utils.load_scss import build_scss
 from exs_shell.utils.path import Dirs, Paths
 
 
-def set_css_file(css_manager, css_file_path: str | Path | Iterable[str | Path]) -> None:
+def set_css_file(css_manager: CssManager, css_file_path: str | Path | Iterable[str | Path]) -> None:
     if isinstance(css_file_path, (str, Path)):
         file = css_file_path
     else:
@@ -29,7 +29,7 @@ def set_css_file(css_manager, css_file_path: str | Path | Iterable[str | Path]) 
     css_manager.apply_css(
         CssInfoPath(
             name=NAME,
-            compiler_function=lambda path: utils.sass_compile(path),
+            compiler_function=lambda path: utils.sass_compile(path, compiler="grass"),
             path=Paths.generate_path(str(file)),
         )
     )
@@ -40,7 +40,6 @@ def init(css_manager: CssManager, dev: bool) -> None:
     if not dev:
         build_scss()
         scss = Dirs.CONFIG_DIR / "main.scss"
-        scss.touch(exist_ok=True)
 
     logger.info(f"Loading css file: {scss}")
     set_css_file(css_manager, scss)

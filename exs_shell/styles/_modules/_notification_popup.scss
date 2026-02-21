@@ -2,7 +2,7 @@
   margin: 0.5rem;
   min-width: 25rem;
   background-color: c.$background;
-  color: c.$onBackground;
+  color: c.$on_background;
   padding: 0.1rem 1.2rem 1rem 1.2rem;
   border-radius: 2rem;
 
@@ -19,13 +19,13 @@
   }
 
   & .notification-close:hover {
-    background-color: c.$onPrimary;
-    color: c.$onSurface;
+    background-color: c.$on_primary;
+    color: c.$on_surface;
   }
 
   & .notification-action:hover {
-    background-color: c.$onPrimary;
-    color: c.$onSurface;
+    background-color: c.$on_primary;
+    color: c.$on_surface;
   }
 }
 

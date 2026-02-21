@@ -11,7 +11,7 @@
   padding: 1rem 2rem;
   background-color: c.$background;
   border-radius: 2rem 2rem 0 0;
-  color: c.$onBackground;
+  color: c.$on_background;
 }
 
 .exs-launcher-app-list {
@@ -27,7 +27,7 @@
 
   &.active,
   &:hover {
-    background-color: c.$surfaceContainer;
+    background-color: c.$surface_container;
   }
   .exs-launcher-app-icon {
     border-radius: 1.5rem;
@@ -57,6 +57,6 @@
 
 .exs-launcher-search-box {
   padding: 1rem;
-  background-color: c.$surfaceContainer;
+  background-color: c.$surface_container;
   border-radius: 2rem;
 }

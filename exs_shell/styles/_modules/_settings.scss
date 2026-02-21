@@ -1,6 +1,6 @@
 .settings-window {
-  background-color: c.$surfaceContainerLow;
-  color: c.$onSurface;
+  background-color: c.$surface_container_low;
+  color: c.$on_surface;
 
   scrolledwindow viewport {
     margin: 0;
@@ -20,7 +20,7 @@
 
     .settings-wallpaper-icon-label {
       border-radius: 4rem;
-      background-color: c.$surfaceContainer;
+      background-color: c.$surface_container;
       padding: 0.3rem 7rem 0.3rem 4rem;
     }
   }
@@ -31,7 +31,7 @@
     outline-offset: 0.1rem;
 
     &:hover {
-      background-color: rgba(c.$surfaceContainer, 0.2);
+      background-color: rgba(c.$surface_container, 0.2);
     }
   }
 
@@ -40,8 +40,8 @@
   }
 
   .settings-wallpaper-filename-label {
-    background-color: c.$surfaceContainer;
-    color: c.$onSurface;
+    background-color: c.$surface_container;
+    color: c.$on_surface;
     padding: 0.3rem 1rem;
     border-radius: 50rem;
   }
@@ -52,12 +52,12 @@
     .settings-category {
       margin: 0;
       border-radius: 1.5rem;
-      background-color: c.$surfaceContainerLow;
+      background-color: c.$surface_container_low;
       padding: 1rem;
       color: c.$primary;
 
       separator {
-        background-color: c.$surfaceVariant;
+        background-color: c.$surface_variant;
         border-radius: 1rem;
         margin: 0.3rem 0.1rem;
         min-height: 0.15rem;
@@ -103,24 +103,24 @@
       .settings-row-header {
 
         .settings-row-title-header {
-          color: c.$onSurface;
+          color: c.$on_surface;
         }
 
         .settings-row-description {
-          color: c.$onSurfaceVariant;
+          color: c.$on_surface_variant;
         }
       }
 
       .settings-row-button,
       .settings-row-dialog-button {
         margin: 0.5rem 0;
-        background-color: c.$surfaceContainerHighest;
+        background-color: c.$surface_container_highest;
         border-radius: 1rem;
         padding: 0.5rem 1rem;
 
         &:focus,
         &:hover {
-          background-color: c.$secondaryContainer;
+          background-color: c.$secondary_container;
         }
       }
 
@@ -130,13 +130,13 @@
 
         text {
           border-radius: 1.5rem 0.5rem 0.5rem 1.5rem;
-          background-color: c.$surfaceContainerHighest;
+          background-color: c.$surface_container_highest;
           margin-right: 0.2rem;
           padding: 0.5rem 0.5rem 0.5rem 1rem;
 
           &:focus,
           &:hover {
-            background-color: c.$secondaryContainer;
+            background-color: c.$secondary_container;
           }
         }
 
@@ -144,7 +144,7 @@
         button.down {
           margin: 0 0.2rem;
           padding: 0 0.5rem;
-          background-color: c.$surfaceContainerHighest;
+          background-color: c.$surface_container_highest;
           border-radius: 0.5rem;
 
           &:first-child {
@@ -158,20 +158,20 @@
 
           &:focus,
           &:hover {
-            background-color: c.$secondaryContainer;
+            background-color: c.$secondary_container;
           }
         }
       }
 
       .settings-row-switch {
         margin: 0.5rem 0;
-        background-color: c.$surfaceContainer;
+        background-color: c.$surface_container;
         border-radius: 1.5rem;
-        border: 0.2rem solid c.$surfaceVariant;
+        border: 0.2rem solid c.$surface_variant;
 
         &:focus,
         &:hover {
-          background-color: c.$surfaceContainerLowest;
+          background-color: c.$surface_container_lowest;
         }
 
         &:checked {
@@ -197,7 +197,7 @@
 
         .settings-row-select-choice {
           border-radius: 0.5rem;
-          background-color: c.$surfaceContainerHighest;
+          background-color: c.$surface_container_highest;
           padding: 0.5rem 2rem;
 
           &.exs-osd-select-type {
@@ -219,7 +219,7 @@
 
           &:focus,
           &:hover {
-            background-color: c.$secondaryContainer;
+            background-color: c.$secondary_container;
           }
 
           &.active {
@@ -235,7 +235,7 @@
         padding: 0.5rem 1.5rem;
         margin-top: 0.5rem;
         margin-bottom: 0.5rem;
-        background-color: c.$surfaceContainerHighest;
+        background-color: c.$surface_container_highest;
 
         .settings-row-palette-button-colors {
 
@@ -253,71 +253,71 @@
 
           &.neutral {
             .primary {
-              background-color: p.$palette_monochrome_primary;
+              background-color: p.$palette_neutral_primary;
             }
 
             .secondary {
-              background-color: p.$palette_monochrome_secondary;
+              background-color: p.$palette_neutral_secondary;
             }
 
             .tertiary {
-              background-color: p.$palette_monochrome_tertiary;
+              background-color: p.$palette_neutral_tertiary;
             }
           }
 
           &.fidelity {
             .primary {
-              background-color: p.$palette_monochrome_primary;
+              background-color: p.$palette_fidelity_primary;
             }
 
             .secondary {
-              background-color: p.$palette_monochrome_secondary;
+              background-color: p.$palette_fidelity_secondary;
             }
 
             .tertiary {
-              background-color: p.$palette_monochrome_tertiary;
+              background-color: p.$palette_fidelity_tertiary;
             }
           }
 
           &.content {
             .primary {
-              background-color: p.$palette_tonal_spot_primary;
+              background-color: p.$palette_content_primary;
             }
 
             .secondary {
-              background-color: p.$palette_tonal_spot_secondary;
+              background-color: p.$palette_content_secondary;
             }
 
             .tertiary {
-              background-color: p.$palette_tonal_spot_tertiary;
+              background-color: p.$palette_content_tertiary;
             }
           }
 
           &.rainbow {
             .primary {
-              background-color: p.$palette_vibrant_primary;
+              background-color: p.$palette_rainbow_primary;
             }
 
             .secondary {
-              background-color: p.$palette_vibrant_secondary;
+              background-color: p.$palette_rainbow_secondary;
             }
 
             .tertiary {
-              background-color: p.$palette_vibrant_tertiary;
+              background-color: p.$palette_rainbow_tertiary;
             }
           }
 
           &.fruit_salad {
             .primary {
-              background-color: p.$palette_expressive_primary;
+              background-color: p.$palette_fruit_salad_primary;
             }
 
             .secondary {
-              background-color: p.$palette_expressive_secondary;
+              background-color: p.$palette_fruit_salad_secondary;
             }
 
             .tertiary {
-              background-color: p.$palette_expressive_tertiary;
+              background-color: p.$palette_fruit_salad_tertiary;
             }
           }
 
@@ -349,20 +349,6 @@
             }
           }
 
-          &.vibrant {
-            .primary {
-              background-color: p.$palette_vibrant_primary;
-            }
-
-            .secondary {
-              background-color: p.$palette_vibrant_secondary;
-            }
-
-            .tertiary {
-              background-color: p.$palette_vibrant_tertiary;
-            }
-          }
-
           &.expressive {
             .primary {
               background-color: p.$palette_expressive_primary;
@@ -380,19 +366,19 @@
 
         &:focus,
         &:hover {
-          background-color: c.$secondaryContainer;
+          background-color: c.$secondary_container;
         }
 
         &.active {
-          background-color: c.$onSecondary;
+          background-color: c.$on_secondary;
         }
       }
     }
   }
 
   .settings-header-bar {
-    background-color: c.$surfaceContainerLow;
-    color: c.$onSurface;
+    background-color: c.$surface_container_low;
+    color: c.$on_surface;
     padding: 1rem;
   }
 
@@ -402,8 +388,8 @@
   }
 
   .settings-navigation {
-    background-color: c.$surfaceContainerLow;
-    color: c.$onSurface;
+    background-color: c.$surface_container_low;
+    color: c.$on_surface;
     padding: 0.5rem;
 
     .settings-navigation-button-label {
@@ -418,7 +404,7 @@
       font-size: 2rem;
       margin: 0.5rem;
       padding: 0.8rem 0.8rem 0.8rem 0.2rem;
-      background-color: c.$secondaryContainer;
+      background-color: c.$secondary_container;
       border-radius: 1rem;
 
       &:focus,
@@ -434,7 +420,7 @@
 
       &:focus,
       &:hover {
-        background-color: c.$secondaryContainer;
+        background-color: c.$secondary_container;
       }
 
       &:disabled {
@@ -442,7 +428,7 @@
       }
 
       &.active {
-        background-color: c.$surfaceVariant;
+        background-color: c.$surface_variant;
       }
 
       &:nth-child(1) {
@@ -509,8 +495,8 @@
 }
 
 .settings-dialog-window {
-  background-color: c.$surfaceContainerLow;
-  color: c.$onSurface;
+  background-color: c.$surface_container_low;
+  color: c.$on_surface;
 
   .settings-row-dialog-title {
     font-size: 1.5rem
@@ -525,14 +511,14 @@
 
   .settings-row-dialog-entry {
     margin: 0.5rem 0;
-    background-color: c.$surfaceContainerHighest;
+    background-color: c.$surface_container_highest;
     border-radius: 1rem;
     padding: 0.5rem 1rem;
   }
 
   .settings-row-dialog-button-enter {
     margin: 0.5rem 0;
-    background-color: c.$secondaryContainer;
+    background-color: c.$secondary_container;
     border-radius: 1rem;
     padding: 0.5rem 1rem;
 
@@ -545,13 +531,13 @@
 
   .settings-row-dialog-button-cancel {
     margin: 0.5rem 0;
-    background-color: c.$surfaceContainer;
+    background-color: c.$surface_container;
     border-radius: 1rem;
     padding: 0.5rem 1rem;
 
     &:focus,
     &:hover {
-      background-color: c.$secondaryContainer;
+      background-color: c.$secondary_container;
     }
   }
 }

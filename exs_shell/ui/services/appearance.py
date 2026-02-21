@@ -15,8 +15,7 @@ from exs_shell.app.vars import NAMESPACE
 from exs_shell.configs.user import appearance
 from exs_shell.interfaces.enums.gtk.transitions import RevealerTransition
 from exs_shell.ui.widgets.windows import Revealer
-from exs_shell.utils.load_scss import build_scss
-from exs_shell.utils.loop import run_in_thread
+from exs_shell.utils.matugen import Matugen
 from exs_shell.utils.path import Dirs
 
 CACHE_WALLPAPER_PATH = f"{Dirs.DATA_DIR}/wallpaper"
@@ -80,11 +79,11 @@ class AppearanceService(BaseService):
 
     @register.events.option(appearance, "dark")
     @register.events.option(appearance, "contrast")
-    @register.events.option(appearance, "scheme_variant")
+    @register.events.option(appearance, "scheme")
     def __update(self) -> None:
         if "--dev" in sys.argv or "--debug" in sys.argv:
             return
-        build_scss(appearance.wallpaper_path)
+        Matugen.update()
 
     @register.events.option(appearance, "wallpaper_path")
     def __update_wallpaper(self) -> None:
@@ -93,8 +92,7 @@ class AppearanceService(BaseService):
                 shutil.copyfile(appearance.wallpaper_path, CACHE_WALLPAPER_PATH)
         except shutil.SameFileError:
             return
-
-        build_scss(appearance.wallpaper_path)
+        Matugen.update()
 
         self.__sync()
 

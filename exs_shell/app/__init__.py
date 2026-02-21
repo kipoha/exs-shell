@@ -1,28 +1,28 @@
 import traceback
-import threading
 
 from loguru import logger
 
 from watchdog.observers import Observer
 from watchdog.observers.api import BaseObserver
 
-from exs_shell.utils.notify_system import send_notification
-from exs_shell.utils.path import Paths
-from exs_shell.utils.proc import kill_process
 from exs_shell.app.watch import ReloadHandler
 from exs_shell.app.vars import APP_NAME
 from exs_shell.app.init import before, after
+from exs_shell.utils.loop import run_in_thread
+from exs_shell.utils.notify_system import send_notification
+from exs_shell.utils.path import Paths
+from exs_shell.utils.proc import kill_process
 
 try:
     from ignis.app import IgnisApp
-    from ignis.log_utils import configure_logger
-    from ignis.css_manager import CssManager
     from ignis.client import IgnisClient
+    from ignis.css_manager import CssManager
+    from ignis.log_utils import configure_logger
 except ImportError:
     body = "Ignis is not installed"
     logger.error(body)
     send_notification("Ignis", body)
-    raise ImportError(body)
+    raise ImportError(body, name="ignis")
 
 
 class App:
@@ -31,6 +31,7 @@ class App:
     _watcher: BaseObserver | None = None
 
     @classmethod
+    @run_in_thread
     def watch_files(cls) -> None:
         handler = ReloadHandler()
         cls._watcher = Observer()
@@ -39,8 +40,9 @@ class App:
         logger.info("Autoreloader started")
 
     @classmethod
-    def before_init(cls, dev: bool) -> None:
-        threading.Thread(target=cls.watch_files).start()
+    def before_init(cls, dev: bool, reload: bool = False) -> None:
+        if reload:
+            cls.watch_files()
         kill_process()
         before.states.init()
         before.files.init()
@@ -55,9 +57,9 @@ class App:
         after.modules.init()
 
     @classmethod
-    def run(cls, dev: bool= False, debug: bool = False) -> None:
+    def run(cls, dev: bool = False, debug: bool = False, reload: bool = False) -> None:
         client = IgnisClient()
-        cls.before_init(dev)
+        cls.before_init(dev, reload)
 
         if client.has_owner:
             logger.error(f"{APP_NAME} is already running.")

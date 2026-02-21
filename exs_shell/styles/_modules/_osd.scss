@@ -2,7 +2,7 @@
   background-color: c.$background;
   padding: 0.5rem;
   border-radius: 2rem;
-  color: c.$onSurface;
+  color: c.$on_surface;
 
   .exs-osd-icon {
     color: c.$primary;
@@ -18,12 +18,12 @@
     margin-right: 0.5rem;
 
     trough {
-      background-color: c.$surfaceContainerHighest;
+      background-color: c.$surface_container_highest;
     }
 
     slider {
       background-color: c.$primary;
-      border: 0.2rem solid c.$surfaceBright;
+      border: 0.2rem solid c.$surface_bright;
       border-radius: 1rem;
       min-width: 0.2rem;
       min-height: 1.6rem;

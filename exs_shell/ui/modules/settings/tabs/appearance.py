@@ -17,7 +17,7 @@ from ignis.widgets import (
 
 from exs_shell import register
 from exs_shell.configs.user import appearance
-from exs_shell.interfaces.enums.colorschemes import ColorSchemeClasses
+from exs_shell.interfaces.enums.colorschemes import ColorSchemes
 from exs_shell.interfaces.enums.icons import Icons
 from exs_shell.ui.modules.settings.tabs.base import BaseTab, BaseCategory
 from exs_shell.ui.modules.settings.widgets import (
@@ -127,14 +127,15 @@ class ThemeCategory(BaseCategory):
                         Box(
                             css_classes=["settings-row-palette"],
                             halign="fill",
+                            valign="center",
                             spacing=10,
                             child=[
                                 Button(
                                     css_classes=[
                                         "settings-row-palette-button",
                                         "active"
-                                        if scheme.name.upper()
-                                        == appearance.scheme_variant
+                                        if scheme.value
+                                        == appearance.scheme
                                         else "",
                                     ],
                                     on_click=lambda _, s=scheme: self.on_palette_change(
@@ -179,7 +180,7 @@ class ThemeCategory(BaseCategory):
                                         ],
                                     ),
                                 )
-                                for scheme in ColorSchemeClasses
+                                for scheme in ColorSchemes
                             ],
                         )
                     ],
@@ -211,8 +212,8 @@ class ThemeCategory(BaseCategory):
             ],
         )
 
-    def on_palette_change(self, _, scheme: ColorSchemeClasses):
-        appearance.set_scheme_variant(scheme.name)
+    def on_palette_change(self, _, scheme: ColorSchemes):
+        appearance.set_scheme(scheme.value)
         buttons = self.get_child()[1].get_child()[1]
         for button in buttons:
             button.remove_css_class("active")
@@ -327,8 +328,8 @@ class WallpaperQuickControl(BaseCategory):
                 temp_thumbnails.append(btn)
 
             gallery_scroll = Scroll(
-                width_request=300,
-                height_request=150,
+                width_request=600,
+                height_request=300,
             )
             gallery_scroll.set_child(gallery_grid)
             GLib.idle_add(
