@@ -1,6 +1,7 @@
 # exs-shell
 
 ## Showcase
+<!-- no showcase -->
 <div align="center">
 <img src="assets/1.png" width="550">
 <img src="assets/2.png" width="550">
@@ -21,14 +22,19 @@
 
 ## Dependencies
 ```
-jetbrains mono nerd-font
+jetbrains-mono-nerd-font
+ttf-material-symbols
 dart-sass
-swww
+dunst
+matugen
+gtk3
+gtk4
+power-profiles-daemon 
 ```
 1. Installing
 Only one script
 ```bash
-curl -fsSl https://raw.githubusercontent.com/kipoha/exs-shell/refs/heads/main/install.sh | bash
+curl -fsSl https://raw.githubusercontent.com/kipoha/exs-shell/refs/heads/main/scripts/install.sh | bash
 ```
 
 or
@@ -38,30 +44,38 @@ Clone and install
 ```bash
 git clone https://github.com/kipoha/exs-shell.git
 cd exs-shell
-chmod +x install.sh
-./install.sh
+chmod +x scripts/install.sh
+./scripts/install.sh
 ```
 
 or install for development
 ```bash
 git clone https://github.com/kipoha/exs-shell.git
 cd exs-shell
-chmod +x install-dev.sh
-./install-dev.sh
+chmod +x scripts/install-dev.sh
+./scripts/install-dev.sh
 ```
 
 
 2. Verify installation:
 ```bash
-which exs-shell
-which exs-ipc
+which exs
 ```
 
 3. Quick `ipc` command(Optional):
 If you have a separate script for fast commands like brightness control:
 ```bash
-exs-ipc brightness-up
+exs ipc launcher toggle
 ```
 
 Use to see all commands
-```exs-ipc help```
+```exs -h```
+
+
+## Uninstall
+```bash
+curl -fsSl https://raw.githubusercontent.com/kipoha/exs-shell/refs/heads/main/scripts/unstall.sh | bash
+```
+
+
+[Discord](https://discord.com/invite/FbdqgpnY9P)

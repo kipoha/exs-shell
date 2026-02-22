@@ -1,21 +1,93 @@
 @use './colors.scss' as c;
+@use './palettes.scss' as p;
 
-@import "./widgets/bar.scss";
-@import "./widgets/tray.scss";
-@import "./widgets/launcher.scss";
-@import "./widgets/lockscreen.scss";
-@import "./widgets/notification-popup.scss";
-@import "./widgets/notification-center.scss";
-@import "./widgets/osd.scss";
-@import "./widgets/cava.scss";
-@import "./widgets/powermenu.scss";
-@import "./widgets/dashboard.scss";
-@import "./settings/elements.scss";
-@import "./settings/core.scss";
+@import './_modules/_bar.scss';
+@import './_modules/_tray.scss';
+@import './_modules/_settings.scss';
+@import './_modules/_cava_tui.scss';
+@import './_modules/_launcher.scss';
+@import './_modules/_osd.scss';
+@import './_modules/_notification_popup.scss';
+@import './_modules/_control_center.scss';
 
 * {
   all: unset;
   font-family: JetBrainsMono;
   font-weight: bold;
-  transition: background-color 0.1s ease, opacity 0.25s ease, transform 0.25s ease;
+  transition: all 0.2s ease;
+}
+
+.icon {
+  font-family: "Material Symbols Rounded", "Material Icons Rounded";
+  font-variation-settings:
+    "FILL" 0,
+    "wght" 700,
+    "GRAD" 0,
+    "opsz" 48;
+
+  &.rounded {
+    font-family: "Material Symbols Rounded", "Material Icons Rounded";
+  }
+
+  &.outlined {
+    font-family: "Material Symbols Outlined", "Material Icons Outlined";
+  }
+
+  &.sharp {
+    font-family: "Material Symbols Sharp", "Material Icons Sharp";
+  }
+
+  &.active {
+    font-variation-settings:
+      "FILL" 1,
+      "wght" 700,
+      "GRAD" 0,
+      "opsz" 48;
+  }
+
+  &.xs {
+    font-size: 0.8rem;
+  }
+
+  &.s {
+    font-size: 1rem;
+  }
+
+  &.m {
+    font-size: 1.5rem;
+  }
+
+  &.l {
+    font-size: 2rem;
+  }
+
+  &.xl {
+    font-size: 2.5rem;
+  }
+
+  &.xxl {
+    font-size: 3rem;
+  }
+
+  &.xxxl {
+    font-size: 3.5rem;
+  }
+}
+
+.icon.active,
+.active .icon {
+  font-variation-settings:
+    "FILL" 1,
+    "wght" 700,
+    "GRAD" 0,
+    "opsz" 48;
+}
+
+entry {
+  color: c.$on_surface;
+}
+
+entry selection {
+  background-color: c.$primary;
+  color: c.$background;
 }

@@ -1,0 +1,49 @@
+.tray-item {
+  all: unset;
+}
+
+popover.menu {
+  contents {
+    background-color: c.$background;
+    padding: 0.35rem;
+    border-radius: 1rem;
+    color: c.$on_background;
+
+    modelbutton {
+      transition: 0.3s;
+      border-radius: 0.5rem;
+      padding: 0.25rem 1rem;
+    }
+
+    modelbutton:hover {
+      background-color: mix(c.$background, c.$outline, 80%);
+    }
+
+    separator {
+      background-color: mix(c.$background, c.$outline, 90%);
+      min-height: 0.1rem;
+      margin: 0.5rem 0;
+    }
+
+    label:disabled {
+      color: c.$outline;
+    }
+
+    arrow {
+      opacity: 0.3;
+
+      &:hover {
+        background: none;
+      }
+
+      &.left {
+        -gtk-icon-source: -gtk-icontheme("go-previous-symbolic");
+      }
+
+      &.right {
+        -gtk-icon-source: -gtk-icontheme("go-next-symbolic");
+      }
+    }
+
+  }
+}

@@ -1,0 +1,528 @@
+.settings-window {
+  background-color: c.$surface_container_low;
+  color: c.$on_surface;
+
+  scrolledwindow viewport {
+    margin: 0;
+    border-radius: 1.5rem;
+    background-color: c.$background;
+  }
+
+  .settings-wallpaper-preview {
+    border-radius: 1rem;
+  }
+
+  .settings-wallpaper-icon {
+    opacity: 0;
+    font-size: 16rem;
+    color: c.$primary;
+    padding: 0.3rem 23.5rem;
+
+    .settings-wallpaper-icon-label {
+      border-radius: 4rem;
+      background-color: c.$surface_container;
+      padding: 0.3rem 7rem 0.3rem 4rem;
+    }
+  }
+
+  .settings-wallpaper-button-overlay {
+    color: transparent;
+    border-radius: 1rem;
+    outline-offset: 0.1rem;
+
+    &:hover {
+      background-color: rgba(c.$surface_container, 0.2);
+    }
+  }
+
+  .settings-wallpaper-overlay:hover .settings-wallpaper-icon {
+    opacity: 1;
+  }
+
+  .settings-wallpaper-filename-label {
+    background-color: c.$surface_container;
+    color: c.$on_surface;
+    padding: 0.3rem 1rem;
+    border-radius: 50rem;
+  }
+
+  .settings-body {
+    padding: 1rem;
+
+    .settings-category {
+      margin: 0;
+      border-radius: 1.5rem;
+      background-color: c.$surface_container_low;
+      padding: 1rem;
+      color: c.$primary;
+
+      separator {
+        background-color: c.$surface_variant;
+        border-radius: 1rem;
+        margin: 0.3rem 0.1rem;
+        min-height: 0.15rem;
+      }
+
+      .settings-wallpaper-gallery-container {
+        padding: 0;
+        border-radius: 1rem;
+
+        scrolledwindow viewport {
+          border-radius: 0;
+        }
+
+        .settings-wallpaper-thumbnail {
+          padding: 0;
+          border-radius: 1rem;
+
+          .settings-wallpaper-thumbnail-image {
+            border-radius: 1rem;
+          }
+
+          &:focus,
+          &:hover {
+            outline: 2px solid c.$primary;
+            outline-offset: -2px;
+            border-radius: 1rem;
+          }
+
+          &.active {
+            outline: 2px solid c.$primary;
+            outline-offset: -2px;
+            border-radius: 1rem;
+          }
+        }
+
+      }
+
+      .settings-category-label {
+        font-size: 1.5rem;
+        margin-bottom: 0.3rem;
+      }
+
+      .settings-row-header {
+
+        .settings-row-title-header {
+          color: c.$on_surface;
+        }
+
+        .settings-row-description {
+          color: c.$on_surface_variant;
+        }
+      }
+
+      .settings-row-button,
+      .settings-row-dialog-button {
+        margin: 0.5rem 0;
+        background-color: c.$surface_container_highest;
+        border-radius: 1rem;
+        padding: 0.5rem 1rem;
+
+        &:focus,
+        &:hover {
+          background-color: c.$secondary_container;
+        }
+      }
+
+      .settings-row-spin {
+        margin: 0.5rem 0;
+        border-radius: 1.5rem;
+
+        text {
+          border-radius: 1.5rem 0.5rem 0.5rem 1.5rem;
+          background-color: c.$surface_container_highest;
+          margin-right: 0.2rem;
+          padding: 0.5rem 0.5rem 0.5rem 1rem;
+
+          &:focus,
+          &:hover {
+            background-color: c.$secondary_container;
+          }
+        }
+
+        button.up,
+        button.down {
+          margin: 0 0.2rem;
+          padding: 0 0.5rem;
+          background-color: c.$surface_container_highest;
+          border-radius: 0.5rem;
+
+          &:first-child {
+            margin-left: 0;
+          }
+
+          &:last-child {
+            margin-right: 0;
+            border-radius: 0.5rem 1.5rem 1.5rem 0.5rem;
+          }
+
+          &:focus,
+          &:hover {
+            background-color: c.$secondary_container;
+          }
+        }
+      }
+
+      .settings-row-switch {
+        margin: 0.5rem 0;
+        background-color: c.$surface_container;
+        border-radius: 1.5rem;
+        border: 0.2rem solid c.$surface_variant;
+
+        &:focus,
+        &:hover {
+          background-color: c.$surface_container_lowest;
+        }
+
+        &:checked {
+          background-color: c.$primary;
+          border-color: c.$primary;
+
+          slider {
+            background-color: c.$background;
+          }
+        }
+
+        slider {
+          margin: 0.25rem;
+          min-width: 1.5rem;
+          min-height: 1.5rem;
+          background-color: c.$primary;
+          border-radius: 1rem;
+        }
+      }
+
+      .settings-row-select {
+        margin: 0.5rem 0;
+
+        .settings-row-select-choice {
+          border-radius: 0.5rem;
+          background-color: c.$surface_container_highest;
+          padding: 0.5rem 2rem;
+
+          &:first-child {
+            border-radius: 1.5rem 0.5rem 0.5rem 1.5rem;
+          }
+
+          &:last-child {
+            border-radius: 0.5rem 1.5rem 1.5rem 0.5rem;
+          }
+
+          &:focus,
+          &:hover {
+            background-color: c.$secondary_container;
+          }
+
+          &.active {
+            background-color: c.$primary;
+            color: c.$background;
+            border-radius: 1.5rem;
+          }
+        }
+      }
+
+      .settings-row-palette-button {
+        border-radius: 1.5rem;
+        padding: 0.5rem 1.5rem;
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
+        background-color: c.$surface_container_highest;
+
+        .settings-row-palette-button-colors {
+
+          .primary {
+            border-radius: 50rem 50rem 0 0;
+          }
+
+          .secondary {
+            border-bottom-left-radius: 50rem;
+          }
+
+          .tertiary {
+            border-bottom-right-radius: 50rem;
+          }
+
+          &.neutral {
+            .primary {
+              background-color: p.$palette_neutral_primary;
+            }
+
+            .secondary {
+              background-color: p.$palette_neutral_secondary;
+            }
+
+            .tertiary {
+              background-color: p.$palette_neutral_tertiary;
+            }
+          }
+
+          &.fidelity {
+            .primary {
+              background-color: p.$palette_fidelity_primary;
+            }
+
+            .secondary {
+              background-color: p.$palette_fidelity_secondary;
+            }
+
+            .tertiary {
+              background-color: p.$palette_fidelity_tertiary;
+            }
+          }
+
+          &.content {
+            .primary {
+              background-color: p.$palette_content_primary;
+            }
+
+            .secondary {
+              background-color: p.$palette_content_secondary;
+            }
+
+            .tertiary {
+              background-color: p.$palette_content_tertiary;
+            }
+          }
+
+          &.rainbow {
+            .primary {
+              background-color: p.$palette_rainbow_primary;
+            }
+
+            .secondary {
+              background-color: p.$palette_rainbow_secondary;
+            }
+
+            .tertiary {
+              background-color: p.$palette_rainbow_tertiary;
+            }
+          }
+
+          &.fruit_salad {
+            .primary {
+              background-color: p.$palette_fruit_salad_primary;
+            }
+
+            .secondary {
+              background-color: p.$palette_fruit_salad_secondary;
+            }
+
+            .tertiary {
+              background-color: p.$palette_fruit_salad_tertiary;
+            }
+          }
+
+          &.monochrome {
+            .primary {
+              background-color: p.$palette_monochrome_primary;
+            }
+
+            .secondary {
+              background-color: p.$palette_monochrome_secondary;
+            }
+
+            .tertiary {
+              background-color: p.$palette_monochrome_tertiary;
+            }
+          }
+
+          &.tonal_spot {
+            .primary {
+              background-color: p.$palette_tonal_spot_primary;
+            }
+
+            .secondary {
+              background-color: p.$palette_tonal_spot_secondary;
+            }
+
+            .tertiary {
+              background-color: p.$palette_tonal_spot_tertiary;
+            }
+          }
+
+          &.expressive {
+            .primary {
+              background-color: p.$palette_expressive_primary;
+            }
+
+            .secondary {
+              background-color: p.$palette_expressive_secondary;
+            }
+
+            .tertiary {
+              background-color: p.$palette_expressive_tertiary;
+            }
+          }
+        }
+
+        &:focus,
+        &:hover {
+          background-color: c.$secondary_container;
+        }
+
+        &.active {
+          background-color: c.$on_secondary;
+        }
+      }
+    }
+  }
+
+  .settings-header-bar {
+    background-color: c.$surface_container_low;
+    color: c.$on_surface;
+    padding: 1rem;
+  }
+
+  .settings-navigation {
+    background-color: c.$surface_container_low;
+    color: c.$on_surface;
+    padding: 0.5rem;
+
+    .settings-navigation-button-label {
+      font-size: 0.8rem;
+    }
+
+    .settings-navigation-button-icon {
+      font-size: 1.3rem;
+    }
+
+    .settings-reload-button {
+      font-size: 2rem;
+      margin: 0.5rem;
+      padding: 0.8rem 0.3rem;
+      background-color: c.$secondary_container;
+      border-radius: 1rem;
+
+      &:focus,
+      &:hover {
+        background-color: c.$secondary;
+        color: c.$background;
+      }
+    }
+
+    .settings-navigation-button {
+      padding: 0.2rem;
+      border-radius: 1rem;
+
+      &:focus,
+      &:hover {
+        background-color: c.$secondary_container;
+      }
+
+      &:disabled {
+        color: c.$outline;
+      }
+
+      &.active {
+        background-color: c.$surface_variant;
+      }
+    }
+  }
+
+  .settings-user {
+    margin: 0 0.5rem;
+  }
+
+  .settings-user-data {
+    margin-left: .5rem;
+  }
+
+  .settings-user-uptime {
+    font-size: 1rem;
+  }
+
+  .settings-user-avatar {
+    border-radius: 50rem;
+    border: 0.2rem solid c.$background;
+
+    &:focus,
+    &:hover {
+      border-color: c.$primary;
+    }
+  }
+
+  .settings-about-logo {
+    border-radius: 1rem;
+  }
+}
+
+.settings-dialog-window {
+  background-color: c.$surface_container_low;
+  color: c.$on_surface;
+
+  separator {
+    background-color: c.$surface_variant;
+    border-radius: 1rem;
+    margin: 0.3rem 0.05rem;
+    min-height: 0.15rem;
+  }
+
+  .settings-row-dialog-title {
+    font-size: 1.5rem
+  }
+
+  .settings-row-dialog {
+    margin: 0;
+    border-radius: 1.5rem;
+    background-color: c.$background;
+    padding: 1rem;
+  }
+
+  .settings-row-dialog-entry {
+    margin: 0.5rem 0;
+    background-color: c.$surface_container_highest;
+    border-radius: 1rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .settings-row-dialog-button-enter {
+    margin: 0.5rem 0;
+    background-color: c.$secondary_container;
+    border-radius: 1rem;
+    padding: 0.5rem 1rem;
+
+    &:focus,
+    &:hover {
+      background-color: c.$secondary;
+      color: c.$background;
+    }
+  }
+
+  .settings-row-dialog-button,
+  .settings-row-dialog-button-cancel {
+    margin: 0.5rem 0;
+    background-color: c.$surface_container;
+    border-radius: 1rem;
+    padding: 0.5rem 1rem;
+
+    &:focus,
+    &:hover {
+      background-color: c.$secondary_container;
+    }
+  }
+
+  .settings-row-drag-title {
+    margin-top: 1rem;
+  }
+
+  .settings-row-drag-grid {
+    min-height: 2.1rem;
+    min-width: 30rem;
+    border-radius: 1rem;
+    background-color: c.$surface_container_high;
+    margin: 0.2rem 0 0.5rem 0;
+    padding: 0.5rem 1rem;
+
+    .settings-row-drag-item {
+      border-radius: 1rem;
+      background-color: c.$surface_container_highest;
+      padding: 0.5rem 1rem;
+
+      &:focus,
+      &:hover {
+        background-color: c.$secondary_container;
+      }
+    }
+  }
+
+}

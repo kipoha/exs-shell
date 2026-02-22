@@ -18,7 +18,6 @@ def kill_process():
                     child.wait(timeout=1)
                 except psutil.TimeoutExpired:
                     child.kill()
-
                     child.wait(timeout=1)
         except Exception:
             pass

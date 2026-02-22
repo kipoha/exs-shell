@@ -1,36 +1,55 @@
-// === Base colors ===
-$bg: #1a1112;
-$bg-light: #261d1e;
-$fg: #f0dedf;
+/*
+* Css Colors
+* Generated with Matugen
+*/
 
-$active: #ffb2bc;
-$unactive: #d7c1c3;
-
-// === Background variants ===
-$bg-dark: #120b0c;
-$bg-darker: #0c0708;
-$bg-lighter: #3a2e2f;
-$surface: #2e2324;
-$surface-light: #3b2f30;
-
-// === Foreground variants ===
-$fg-strong: #ffffff;
-$fg-muted: #bba9ab;
-$fg-disabled: #8b7678;
-
-// === Accent system ===
-$accent: #ffb2bc;
-$accent-light: #ffc6cf;
-$accent-dark: #cc8a94;
-$accent-muted: #eaa1aa;
-
-// === Border and shadow ===
-$border: #37292b;
-$border-light: #4d3a3c;
-$shadow: rgba(0, 0, 0, 0.4);
-
-// === State colors ===
-$success: #a3f7b5;
-$warning: #f7e3a3;
-$error: #f28b82;
-$info: #a3d9f7;
+$background: #1a1111;
+$error: #ffb4ab;
+$error_container: #93000a;
+$inverse_on_surface: #382e2d;
+$inverse_primary: #904a48;
+$inverse_surface: #f0dedd;
+$on_background: #f0dedd;
+$on_error: #690005;
+$on_error_container: #ffdad6;
+$on_primary: #571d1d;
+$on_primary_container: #ffdad8;
+$on_primary_fixed: #3b080a;
+$on_primary_fixed_variant: #733332;
+$on_secondary: #442928;
+$on_secondary_container: #ffdad8;
+$on_secondary_fixed: #2c1514;
+$on_secondary_fixed_variant: #5d3f3e;
+$on_surface: #f0dedd;
+$on_surface_variant: #d7c1c0;
+$on_tertiary: #412d05;
+$on_tertiary_container: #ffdea9;
+$on_tertiary_fixed: #271900;
+$on_tertiary_fixed_variant: #594319;
+$outline: #a08c8b;
+$outline_variant: #534342;
+$primary: #ffb3af;
+$primary_container: #733332;
+$primary_fixed: #ffdad8;
+$primary_fixed_dim: #ffb3af;
+$scrim: #000000;
+$secondary: #e7bdba;
+$secondary_container: #5d3f3e;
+$secondary_fixed: #ffdad8;
+$secondary_fixed_dim: #e7bdba;
+$shadow: #000000;
+$source_color: #d27471;
+$surface: #1a1111;
+$surface_bright: #423736;
+$surface_container: #271d1d;
+$surface_container_high: #322827;
+$surface_container_highest: #3d3232;
+$surface_container_low: #231919;
+$surface_container_lowest: #140c0c;
+$surface_dim: #1a1111;
+$surface_tint: #ffb3af;
+$surface_variant: #534342;
+$tertiary: #e3c28c;
+$tertiary_container: #594319;
+$tertiary_fixed: #ffdea9;
+$tertiary_fixed_dim: #e3c28c;

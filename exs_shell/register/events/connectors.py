@@ -1,0 +1,184 @@
+from functools import reduce
+
+from gi.repository import Gtk  # type: ignore
+
+from ignis.utils import Poll
+from ignis.options_manager import OptionsGroup, OptionsManager
+
+from exs_shell.register.events.base import _base_connector, EventDeco
+from exs_shell.interfaces.types import CavaOutput
+from exs_shell.state import State
+
+
+def option(options_group: OptionsManager | OptionsGroup, option: str) -> EventDeco:
+    return _base_connector(
+        lambda _: options_group,
+        "connect_option",
+        option,
+    )
+
+
+def mpris(signal: str, player: bool = False) -> EventDeco:
+    return _base_connector(
+        lambda _: _.player if player else State.services.mpris,
+        "connect",
+        signal,
+    )
+
+
+def niri(signal: str) -> EventDeco:
+    return _base_connector(
+        lambda _: State.services.niri,
+        "connect",
+        signal,
+    )
+
+
+def tray(signal: str, item: bool = False) -> EventDeco:
+    return _base_connector(
+        lambda _: _.item if item else State.services.tray,
+        "connect",
+        signal,
+    )
+
+
+def cava(output_type: CavaOutput) -> EventDeco:
+    return _base_connector(
+        lambda _: State.services.cava,
+        f"subscribe_{output_type}",
+    )
+
+
+def notifications(signal: str, notification: bool = False) -> EventDeco:
+    return _base_connector(
+        lambda _: _.notification if notification else State.services.notifications,
+        "connect",
+        signal,
+    )
+
+
+def systemd_session(unit: str, signal: str) -> EventDeco:
+    return _base_connector(
+        lambda _: State.services.systemd_session.get_unit(unit),
+        "connect",
+        signal,
+    )
+
+
+def systemd_system(unit: str, signal: str) -> EventDeco:
+    return _base_connector(
+        lambda _: State.services.systemd_system.get_unit(unit),
+        "connect",
+        signal,
+    )
+
+
+def power_profiles(signal: str) -> EventDeco:
+    return _base_connector(
+        lambda _: State.services.power_profiles,
+        "connect",
+        signal,
+    )
+
+
+def window(signal: str) -> EventDeco:
+    return _base_connector(
+        lambda _: _._main,  # any window class
+        "connect",
+        signal,
+    )
+
+
+def audio(signal: str, *attrs: str) -> EventDeco:
+    return _base_connector(
+        lambda _: reduce(getattr, attrs, State.services.audio),
+        "connect",
+        signal,
+    )
+
+
+def bluetooth(signal: str) -> EventDeco:
+    return _base_connector(
+        lambda _: State.services.bluetooth,
+        "connect",
+        signal,
+    )
+
+
+def network(signal: str, *attrs: str) -> EventDeco:
+    return _base_connector(
+        lambda _: reduce(getattr, attrs, State.services.network),
+        "connect",
+        signal,
+    )
+
+
+def backlight(signal: str) -> EventDeco:
+    return _base_connector(
+        lambda _: State.services.backlight,
+        "connect",
+        signal,
+    )
+
+
+def upower(signal: str) -> EventDeco:
+    return _base_connector(
+        lambda _: State.services.upower,
+        "connect",
+        signal,
+    )
+
+
+def battery(signal: str) -> EventDeco:
+    return _base_connector(
+        lambda _: (
+            State.services.upower.batteries[0]
+            if getattr(State.services.upower, "batteries", [])
+            else None
+        ),
+        "connect",
+        signal,
+    )
+
+
+def poll(interval_ms: int, *, bind: str | None = None) -> EventDeco:
+    def decorator(func):
+        def _event_call(instance):
+            bound = func.__get__(instance, type(instance))
+            p = Poll(interval_ms, lambda _: bound())
+
+            if bind is not None:
+                p.bind(bind)
+            else:
+                if not hasattr(instance, "_polls"):
+                    instance._polls = []
+                instance._polls.append(p)
+
+        if not hasattr(func, "_event_calls"):
+            setattr(func, "_event_calls", [])
+        getattr(func, "_event_calls").append((None, None, (), {"_poll": _event_call}))
+        return func
+
+    return decorator
+
+
+def applications(signal: str) -> EventDeco:
+    return _base_connector(
+        lambda _: State.services.applications,
+        "connect",
+        signal,
+    )
+
+
+def key_kontroller(signal: str) -> EventDeco:
+    key_controller = Gtk.EventControllerKey()
+
+    def func(self):
+        self._main.add_controller(key_controller)
+        return key_controller
+
+    return _base_connector(
+        func,
+        "connect",
+        signal,
+    )

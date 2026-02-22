@@ -1,40 +1,24 @@
-import os
-import json
-
-from exs_shell.colors.utils import generate_theme
-from exs_shell.utils.path import Dirs, PathUtils
-from exs_shell.config.user import options
+from exs_shell.utils.path import Dirs, Paths
 
 
-def build_scss(wallpaper_path: str | None = options.wallpaper.wallpaper_path) -> str:
-    colors, _ = generate_theme(wallpaper_path=wallpaper_path)
-    if colors is None:
-        json_colors_config = PathUtils.generate_path("colors.json", Dirs.CONFIG_DIR)
-        if not os.path.exists(json_colors_config):
-            json_colors_source = PathUtils.generate_path("colors.json", PathUtils.path)
-            with open(json_colors_source, "r") as f:
-                source_colors = json.load(f)
+def build_scss():
+    scss_colors_file = Dirs.CONFIG_DIR / "colors.scss"
+    scss_palettes_file = Dirs.CONFIG_DIR / "palettes.scss"
+    main_scss_file = Dirs.CONFIG_DIR / "main.scss"
 
-            with open(json_colors_config, "w") as f:
-                json.dump(source_colors, f, indent=2)
+    scss_colors_file.touch()
+    scss_palettes_file.touch()
+    main_scss_file.touch()
 
-        with open(json_colors_config, "r") as f:
-            colors = json.load(f)
-
-    lines = [f"${k}: {v};" for k, v in colors.items()]
-    scss_colors = PathUtils.generate_path("colors.scss", Dirs.CONFIG_DIR)
     imports = [
         scss
-        for scss in (PathUtils.path / "styles").glob("**/*.scss")
-        if scss.name not in ("main.scss", "colors.scss")
+        for scss in (Paths.path / "styles").glob("**/*.scss")
+        if scss.name not in ("main.scss", "colors.scss", "palettes.scss")
     ]
     imports_text = "\n".join(f'@import "{scss}";' for scss in imports)
 
-    with open(scss_colors, "w") as f:
-        f.write("\n".join(lines))
-    main_scss = PathUtils.generate_path("main.scss", Dirs.CONFIG_DIR)
-    with open(main_scss, "w") as f:
-        text = f"""@use \"{scss_colors}\" as c;
+    main_scss_file.write_text(f"""@use \"{scss_colors_file}\" as c;
+@use \"{scss_palettes_file}\" as p;
 
 {imports_text}
 
@@ -42,7 +26,80 @@ def build_scss(wallpaper_path: str | None = options.wallpaper.wallpaper_path) ->
   all: unset;
   font-family: JetBrainsMono;
   font-weight: bold;
-  transition: background-color 0.1s ease, opacity 0.25s ease, transform 0.25s ease;
-}}"""
-        f.write(text)
-    return main_scss
+  transition: all 0.2s ease;
+}}
+
+.icon {{
+  font-family: "Material Symbols Rounded", "Material Icons Rounded";
+  font-variation-settings:
+    "FILL" 0,
+    "wght" 700,
+    "GRAD" 0,
+    "opsz" 48;
+
+  &.rounded {{
+    font-family: "Material Symbols Rounded", "Material Icons Rounded";
+  }}
+
+  &.outlined {{
+    font-family: "Material Symbols Outlined", "Material Icons Outlined";
+  }}
+
+  &.sharp {{
+    font-family: "Material Symbols Sharp", "Material Icons Sharp";
+  }}
+
+  &.active {{
+    font-variation-settings:
+      "FILL" 1,
+      "wght" 700,
+      "GRAD" 0,
+      "opsz" 48;
+  }}
+
+  &.xs {{
+    font-size: 0.8rem;
+  }}
+
+  &.s {{
+    font-size: 1rem;
+  }}
+
+  &.m {{
+    font-size: 1.5rem;
+  }}
+
+  &.l {{
+    font-size: 2rem;
+  }}
+
+  &.xl {{
+    font-size: 2.5rem;
+  }}
+
+  &.xxl {{
+    font-size: 3rem;
+  }}
+
+  &.xxxl {{
+    font-size: 3.5rem;
+  }}
+}}
+
+.icon.active,
+.active .icon {{
+  font-variation-settings:
+    "FILL" 1,
+    "wght" 700,
+    "GRAD" 0,
+    "opsz" 48;
+}}
+
+entry {{
+    color: c.$on_surface;
+}}
+
+entry selection {{
+    background-color: c.$primary;
+    color: c.$background;
+}}""")

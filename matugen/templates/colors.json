@@ -1,0 +1,4 @@
+{<* for name, value in colors *>
+  "{{ name }}": "{{ value.default.hex }}",<* endfor *>
+  "_end": "remove"
+}

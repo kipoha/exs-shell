@@ -1,0 +1,21 @@
+@use './colors.scss' as c;
+
+@import "./widgets/bar.scss";
+@import "./widgets/tray.scss";
+@import "./widgets/launcher.scss";
+@import "./widgets/lockscreen.scss";
+@import "./widgets/notification-popup.scss";
+@import "./widgets/notification-center.scss";
+@import "./widgets/osd.scss";
+@import "./widgets/cava.scss";
+@import "./widgets/powermenu.scss";
+@import "./widgets/dashboard.scss";
+@import "./settings/elements.scss";
+@import "./settings/core.scss";
+
+* {
+  all: unset;
+  font-family: JetBrainsMono;
+  font-weight: bold;
+  transition: background-color 0.1s ease, opacity 0.25s ease, transform 0.25s ease;
+}

@@ -1,0 +1,436 @@
+.exs-corners {
+  color: black;
+}
+
+.control-corner,
+.notification-corner {
+  color: c.$background;
+}
+
+
+.control-center-window {
+  background-color: c.$background;
+  color: c.$on_background;
+  padding: 1rem;
+}
+
+.notification-center-header {
+  margin-bottom: 1rem;
+}
+
+.notification {
+  background-color: c.$surface_container_high;
+  border-radius: 1rem;
+  padding: 1rem;
+  margin-top: 1rem;
+}
+
+.notification-count {
+  background-color: c.$surface_container_high;
+  color: c.$primary;
+  min-width: 2rem;
+  font-size: 1.5rem;
+  border-radius: 2rem;
+  padding: 0 0.1rem;
+}
+
+.notification-header-label {
+  font-size: 1.1rem;
+  margin-left: 0.5rem;
+}
+
+.notification-close {
+  color: c.$surface;
+  border-radius: 1rem;
+  padding: 0.25rem;
+  margin-left: 0.5rem;
+  transition: 0.3s;
+}
+
+.notification-close:hover {
+  background-color: c.$primary;
+  color: c.$background;
+}
+
+.notification-clear-all {
+  transition: 0.3s;
+  border-radius: 1rem;
+  padding: .25rem .5rem;
+  font-size: 2rem;
+  background-color: c.$surface_container_high;
+  color: c.$primary;
+}
+
+.notification-clear-all:hover {
+  background-color: c.$primary;
+  color: c.$background;
+}
+
+.notification-dnd {
+  transition: 0.3s;
+  border-radius: 1rem;
+  padding: 0.25rem .5rem;
+  font-size: 1.5rem;
+  background-color: c.$surface_container_high;
+  color: c.$primary;
+}
+
+.notification-dnd:hover {
+  background-color: c.$primary;
+  color: c.$background;
+}
+
+.notification-dnd.active {
+  background-color: c.$primary;
+  color: c.$background;
+}
+
+.notification-action {
+  background-color: c.$primary;
+  color: c.$background;
+  border-radius: 0.5rem;
+  padding: 0.25rem 0.25rem;
+  transition: 0.3s;
+}
+
+.notification-action:hover {
+  background-color: c.$on_tertiary;
+  color: c.$on_surface;
+}
+
+.notification-screenshot-label {
+  margin-top: 0.5rem;
+  font-size: 1.1rem;
+}
+
+.notification-center-info-label {
+  color: c.$on_surface;
+}
+
+.notification-body {
+  color: c.$on_surface;
+}
+
+.control-center-mini-player {
+  padding: 0 0.3rem;
+}
+
+.control-center-mini-player-background {
+  border-radius: 1rem;
+  background-color: rgba(0, 0, 0, 0.8);
+  border: 1px solid c.$on_secondary_fixed_variant;
+}
+
+.control-center-mini-player-controller-info {
+  padding: 0.5rem;
+}
+
+.control-center-mini-player-info {
+  padding: 0.5rem;
+  min-width: 17rem;
+  color: white;
+}
+
+.control-center-mini-player-controller {
+  padding: 0.5rem;
+  margin-right: 0.2rem;
+  border-radius: 1rem;
+
+  button {
+    color: c.$primary;
+    background-color: c.$surface_container_high;
+    border-radius: 1rem;
+    padding: 0.3rem 0.6rem;
+
+    &:hover {
+      background-color: c.$primary;
+      color: c.$background;
+    }
+  }
+
+}
+
+.control-center-mini-player-reveal {
+  padding: 0.2rem 0.5rem;
+  margin: 0.6rem 0;
+  background-color: c.$surface;
+  border-radius: 1rem;
+
+  &:hover {
+    background-color: c.$primary;
+    color: c.$background;
+  }
+}
+
+.control-center-player {
+  margin: 0 0.2rem;
+  padding: 0 0.1rem;
+}
+
+.control-center-player-controller-info {
+  padding: 0.5rem 0.5rem 0 0.5rem;
+}
+
+.control-center-player-info {
+  padding: 0.5rem;
+  min-width: 15rem;
+}
+
+.control-center-player-controller {
+  padding: 0.3rem;
+  margin-right: 0.2rem;
+  background-color: c.$surface_container_high;
+  border-radius: 1rem;
+
+  button {
+    color: c.$primary;
+    background-color: c.$surface_container_high;
+    border-radius: 1rem;
+    padding: 0.3rem 0.6rem;
+
+    &:hover {
+      background-color: c.$primary;
+      color: c.$background;
+    }
+  }
+}
+
+.control-center-player-reveal {
+  padding: 0.2rem 0.5rem;
+  margin: 0.6rem 0;
+  background-color: c.$surface_container_high;
+  border-radius: 1rem;
+
+  &:hover {
+    background-color: c.$primary;
+    color: c.$background;
+  }
+}
+
+.control-center-player-background {
+  border-radius: 1rem;
+  /* background-color: rgba(255, 255, 255, 0.1); */
+  border: 1px solid c.$on_secondary_fixed_variant;
+}
+
+.control-center-mpris-art {
+  border-radius: 50rem;
+}
+
+.control-center-mpris-art-container {
+  margin: 3.5rem 0;
+}
+
+.control-center-player-scale {
+  margin-left: 8px;
+  margin-right: 8px;
+  border-radius: 12px;
+  margin-top: -1.5rem;
+}
+
+.control-center-player-scale trough {
+  background-color: c.$surface_container_high;
+  border-radius: 10px;
+  min-height: 0.3rem;
+}
+
+.control-center-player-scale highlight {
+  background-color: c.$primary;
+  border-radius: 10px;
+}
+
+
+.control-center-player-scale slider {
+  background-color: c.$primary;
+  border: 0.2rem solid c.$surface_container_high;
+  border-radius: 0.2rem;
+  min-width: 2px;
+  min-height: 8px;
+  margin-top: -2px;
+  margin-bottom: -2px;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.control-center-player-scale slider:hover {
+  background-color: c.$primary;
+  transform: scale(1.1);
+}
+
+.control-center-user {
+  margin: 0 0.5rem;
+}
+
+.control-center-user-avatar {
+  border-radius: 50rem;
+}
+
+.control-center-user-uptime {
+  font-size: 0.8rem;
+}
+
+.control-center-user-buttons {
+  font-size: 1.8rem;
+
+  button {
+    margin: 0.5rem 0;
+    color: c.$primary;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 50rem;
+  }
+
+  button:hover {
+    background-color: c.$primary;
+    color: c.$background;
+  }
+
+  .control-center-user-buttons-power {
+    padding: 0.3rem 0.7rem;
+  }
+
+  .control-center-user-buttons-settings {
+    padding: 0.3rem 0.7rem;
+  }
+}
+
+.control-center-rollers {
+  margin: 0.1rem 0.5rem;
+  font-size: 1.4rem;
+
+  trough {
+    background-color: c.$surface_container_highest;
+    border-radius: 0.3rem 1rem 1rem 0.3rem;
+    min-height: 0.7rem;
+  }
+
+  slider {
+    background-color: c.$primary;
+    border: 0.2rem solid c.$surface_container;
+    border-radius: 1rem;
+    min-width: 0.2rem;
+    min-height: 1.6rem;
+    margin-bottom: -0.5rem;
+    margin-top: -0.5rem;
+  }
+
+  highlight {
+    background-color: c.$primary;
+    border-radius: 1rem;
+  }
+
+  .control-center-rollers-audio-container,
+  .control-center-rollers-mic-container,
+  .control-center-rollers-backlight-container {
+    border-radius: 1rem;
+    padding: 0.6rem 1rem;
+    background-color: c.$surface_container;
+    border-radius: 1rem;
+    /* color: c.$background; */
+    color: c.$primary;
+  }
+
+  .control-center-rollers-audio-container {
+    border-bottom-right-radius: 0.5rem;
+    border-bottom-left-radius: 0.5rem;
+  }
+  .control-center-rollers-mic-container {
+    border-radius: 0.5rem;
+  }
+  .control-center-rollers-backlight-container {
+    border-top-right-radius: 0.5rem;
+    border-top-left-radius: 0.5rem;
+  }
+}
+
+.control-center-quick-panel {
+  padding: 0 0.5rem;
+
+  .control-center-quick-panel-power-profile,
+  .control-center-quick-panel-dark,
+  .control-center-quick-panel-bluetooth,
+  .control-center-quick-panel-wifi {
+
+    .control-center-quick-panel-bluetooth-button-open,
+    .control-center-quick-panel-wifi-button-open {
+      border-radius: 0.5rem 1rem 1rem 0.5rem;
+      padding: 0.5rem 0.7rem;
+      margin-left: 0.3rem;
+      background-color: c.$surface_container_highest;
+
+      &:hover {
+        background-color: c.$surface_container;
+      }
+
+      &.active {
+        background-color: c.$primary;
+        color: c.$background;
+      }
+    }
+
+    .control-center-quick-panel-bluetooth-button-enable,
+    .control-center-quick-panel-wifi-button-enable {
+      border-radius: 1rem 0.5rem 0.5rem 1rem;
+      background-color: c.$surface_container_highest;
+
+      &:hover {
+        background-color: c.$surface_container;
+      }
+
+      &.active {
+        background-color: c.$primary;
+        color: c.$background;
+      }
+    }
+
+    .control-center-quick-panel-bluetooth-button-enable {
+      padding: 0.5rem 2rem;
+    }
+
+    .control-center-quick-panel-wifi-button-enable {
+      padding: 0.5rem 3.5rem;
+    }
+
+    .control-center-quick-panel-dark-button {
+      border-radius: 1rem;
+      padding: 0.5rem 3.6rem;
+      background-color: c.$surface_container_highest;
+
+      &:hover {
+        background-color: c.$surface_container;
+      }
+
+      &.active {
+        background-color: c.$primary;
+        color: c.$background;
+      }
+    }
+
+    .control-center-quick-panel-power-profile-select-power-saver-button,
+    .control-center-quick-panel-power-profile-select-balanced-button,
+    .control-center-quick-panel-power-profile-select-performance-button {
+      background-color: c.$surface_container_highest;
+      padding: 0.5rem 1.65rem;
+
+      &:hover {
+        background-color: c.$surface_container;
+      }
+
+      &.active {
+        background-color: c.$primary;
+        color: c.$background;
+        border-radius: 1rem;
+      }
+    }
+
+    .control-center-quick-panel-power-profile-select-power-saver-button {
+      border-radius: 0.5rem 1rem 1rem 0.5rem;
+    }
+
+    .control-center-quick-panel-power-profile-select-balanced-button {
+      border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
+    }
+
+    .control-center-quick-panel-power-profile-select-performance-button {
+      border-radius: 1rem 0.5rem 0.5rem 1rem;
+    }
+  }
+}
