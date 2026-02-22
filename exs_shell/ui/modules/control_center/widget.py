@@ -4,6 +4,8 @@ from ignis.services.notifications import NotificationService
 from ignis.widgets import Box, Button, CenterBox, Corner, Label, Scroll
 
 from exs_shell import register
+from exs_shell.interfaces.enums.icons import Icons
+from exs_shell.ui.widgets.custom.icon import Icon
 from exs_shell.utils import monitor
 from exs_shell.configs.user import notifications
 from exs_shell.interfaces.enums.gtk.transitions import RevealerTransition
@@ -46,14 +48,14 @@ class ControlCenter(MonitorRevealerBaseWidget):
 
     def widget_build(self) -> None:
         self.dnd_button = Button(
-            child=Label(label=""),
+            child=Icon(label=Icons.ui.DND, size="m"),
             on_click=self.toggle_dnd,
             css_classes=["notification-dnd"],
             can_focus=False,
             focusable=False,
         )
         self.clear_button = Button(
-            child=Label(label="󰩹"),
+            child=Icon(label=Icons.ui.TRASH, size="m"),
             on_click=self.clear_all,
             css_classes=["notification-clear-all"],
         )

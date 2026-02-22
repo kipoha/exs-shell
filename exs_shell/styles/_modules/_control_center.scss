@@ -55,7 +55,7 @@
 .notification-clear-all {
   transition: 0.3s;
   border-radius: 1rem;
-  padding: 0.25rem 1rem 0.25rem 0.9rem;
+  padding: .25rem .5rem;
   font-size: 2rem;
   background-color: c.$surface_container_high;
   color: c.$primary;
@@ -69,7 +69,7 @@
 .notification-dnd {
   transition: 0.3s;
   border-radius: 1rem;
-  padding: 0.25rem 1rem 0.25rem 0.5rem;
+  padding: 0.25rem .5rem;
   font-size: 1.5rem;
   background-color: c.$surface_container_high;
   color: c.$primary;
