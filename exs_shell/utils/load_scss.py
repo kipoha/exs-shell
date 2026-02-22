@@ -2,6 +2,8 @@ from exs_shell.utils.path import Dirs, Paths
 
 
 def build_scss():
+    palettes = Paths.path / "styles" / "palettes.scss"
+    palettes_data = palettes.read_text()
     scss_colors_file = Dirs.CONFIG_DIR / "colors.scss"
     scss_palettes_file = Dirs.CONFIG_DIR / "palettes.scss"
     main_scss_file = Dirs.CONFIG_DIR / "main.scss"
@@ -17,6 +19,7 @@ def build_scss():
     ]
     imports_text = "\n".join(f'@import "{scss}";' for scss in imports)
 
+    scss_palettes_file.write_text(palettes_data)
     main_scss_file.write_text(f"""@use \"{scss_colors_file}\" as c;
 @use \"{scss_palettes_file}\" as p;
 

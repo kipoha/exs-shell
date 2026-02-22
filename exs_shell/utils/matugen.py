@@ -23,7 +23,9 @@ class Matugen:
             "tonal-spot" if appearance.scheme not in ColorSchemes else appearance.scheme
         )
         cmds: list[str] = [
-            SCB.matugen(appearance.wallpaper_path, scheme, appearance.dark, appearance.contrast),
+            SCB.matugen(
+                appearance.wallpaper_path, scheme, appearance.dark, appearance.contrast
+            ),
             SCB.gsettings(appearance.dark),
         ]
         for cmd in cmds:
@@ -55,6 +57,12 @@ class Matugen:
 
             results = await gather(*tasks)
             for i, result in enumerate(results):
+                print(f"Scheme {schemes[i]}")
+                print("RETURN:", result.returncode)
+                print("STDOUT:", result.stdout)
+                print("STDERR:", result.stderr)
+
+            for i, result in enumerate(results):
                 prefix = schemes[i]
                 scss += f"/* {prefix} */\n"
                 colors = (
@@ -64,7 +72,6 @@ class Matugen:
                     for key, value in colors.items():
                         scss += f"$palette_{prefix.replace('-', '_')}_{key}: {value['default']};\n"
                 scss += "\n"
-
             scss_file = Dirs.CONFIG_DIR / "palettes.scss"
             scss_file.write_text(scss)
 

@@ -8,7 +8,7 @@ local_scheme = "node-and-date"
 
 [project]
 name = "exs-shell"
-version = "0.2.0"
+version = "0.2.2"
 description = "Just Desktop for Niri Wayland Compositor"
 readme = "README.md"
 requires-python = ">=3.12"
@@ -36,5 +36,10 @@ exs = "exs_shell.cli:main"
 include-package-data = true
 
 [tool.setuptools.packages.find]
-where = ["."]
-include = ["exs_shell*"]
+include = ["exs_shell", "exs_shell.matugen"]
+
+[tool.setuptools.package-data]
+"exs_shell.matugen" = [
+    "config.toml",
+    "templates/*",
+]
