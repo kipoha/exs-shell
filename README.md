@@ -72,4 +72,10 @@ Use to see all commands
 ```exs -h```
 
 
+## Uninstall
+```bash
+curl -fsSl https://raw.githubusercontent.com/kipoha/exs-shell/refs/heads/main/scripts/unstall.sh | bash
+```
+
+
 [Discord](https://discord.com/invite/FbdqgpnY9P)

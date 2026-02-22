@@ -1,18 +1,24 @@
 #!/bin/bash
 
-sudo mkdir -p /opt/exs-shell
-sudo python -m venv /opt/exs-shell
-sudo /opt/exs-shell/bin/pip install .
+if [ "$(id -u)" -ne 0 ]; then
+    echo "This script must be run as root"
+    exit 1
+fi
+
+mkdir -p /opt/exs-shell
+python -m venv /opt/exs-shell
+/opt/exs-shell/bin/pip install .
+
 
 create_symlink() {
     local target="$1"
     local link="$2"
 
     if [ -L "$link" ] || [ -e "$link" ]; then
-        sudo rm -f "$link"
+        rm -f "$link"
     fi
 
-    sudo ln -s "$target" "$link"
+    ln -s "$target" "$link"
 }
 
 create_symlink "/opt/exs-shell/bin/exs" "/usr/local/bin/exs"
