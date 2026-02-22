@@ -2,11 +2,11 @@ from enum import StrEnum
 
 
 class WifiIcons(StrEnum):
-    CONNECTED = "wifi_tethering"
-    DISCONNECTED = "wifi_tethering_error"
+    CONNECTED = "network_wifi"
+    DISCONNECTED = "signal_wifi_off"
     CONNECTING = "signal_wifi_4_bar_lock"
-    DISABLED = "portable_wifi_off"
-    GENERIC = "wifi_lock"
+    DISABLED = "signal_wifi_off"
+    GENERIC = "network_wifi_locked"
     STRENGTH_0 = "signal_wifi_0_bar"
     STRENGTH_1 = "network_wifi_1_bar"
     STRENGTH_2 = "network_wifi_2_bar"

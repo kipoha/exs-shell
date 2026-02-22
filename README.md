@@ -1,17 +1,17 @@
 # exs-shell
 
 ## Showcase
-no showcase
-<!-- <div align="center"> -->
-<!-- <img src="assets/1.png" width="550"> -->
-<!-- <img src="assets/2.png" width="550"> -->
-<!-- <img src="assets/3.png" width="550"> -->
-<!-- <img src="assets/4.png" width="550"> -->
-<!-- <img src="assets/5.png" width="550"> -->
-<!-- <img src="assets/6.png" width="550"> -->
-<!-- <img src="assets/7.png" width="550"> -->
-<!-- </div> -->
-<!-- <br /><br /> -->
+<!-- no showcase -->
+<div align="center">
+<img src="assets/1.png" width="550">
+<img src="assets/2.png" width="550">
+<img src="assets/3.png" width="550">
+<img src="assets/4.png" width="550">
+<img src="assets/5.png" width="550">
+<img src="assets/6.png" width="550">
+<img src="assets/7.png" width="550">
+</div>
+<br /><br />
 
 
 ## Installation
@@ -70,3 +70,6 @@ exs ipc launcher toggle
 
 Use to see all commands
 ```exs -h```
+
+
+[Discord](https://discord.com/invite/FbdqgpnY9P)

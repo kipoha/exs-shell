@@ -288,7 +288,7 @@ class LauncherCategory(BaseCategory):
                     child=[
                         DialogRow(
                             title="Actions",
-                            description="Actions commands",
+                            description="Actions commands\n\nCommand Names: Clipboard, Power Menu",
                             child=[self.actions_box],
                             value_getter=self.get_actions,
                             on_change=lambda x: user.set_actions(x),

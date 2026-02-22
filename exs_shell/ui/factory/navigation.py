@@ -26,7 +26,7 @@ class Navigation(Box):
             btn = Button(
                 child=Box(
                     child=[
-                        Icon(label=icon, size="s"),
+                        Icon(label=icon, size="m"),
                         Label(
                             label=label,
                             css_classes=["settings-navigation-button-label"],

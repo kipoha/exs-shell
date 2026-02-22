@@ -40,6 +40,8 @@ class UIIcons(StrEnum):
     TEMPERATURE = "device_thermostat"
     SERVICES = "grid_view"
     NOTIFICATIONS = "notifications"
+    DND = "do_not_disturb_off"
+    TRASH = "delete"
     ADD = "add"
     ARC = "donut_large"
     CLIPBOARD = "content_paste" #assignment

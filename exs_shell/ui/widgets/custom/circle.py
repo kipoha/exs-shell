@@ -4,6 +4,7 @@ from math import pi
 
 from gi.repository import Gtk, GLib, Pango, PangoCairo  # type: ignore
 
+from exs_shell.interfaces.types import IconType
 from exs_shell.utils.colors import get_hex_color, hex_to_rgb
 
 
@@ -18,6 +19,7 @@ class ArcMeter(Gtk.DrawingArea):
         show_percentage: bool = False,
         font_size: float | None = None,
         css_classes: list[str] | None = None,
+        icon_type: IconType = "Rounded",
     ):
         Gtk.DrawingArea.__init__(self)
 
@@ -27,6 +29,7 @@ class ArcMeter(Gtk.DrawingArea):
         self.arc_ratio = arc_ratio
         self.speed = speed
         self.label = label
+        self.icon_type = icon_type
 
         self.value = 0.0
         self.target_value = 0.0
@@ -95,7 +98,7 @@ class ArcMeter(Gtk.DrawingArea):
         font_desc = Pango.FontDescription()
 
         font_desc.set_family(
-            "Material Symbols Rounded, Material Icons Rounded, JetBrainsMono"
+            f"Material Symbols {self.icon_type}, Material Icons {self.icon_type}, JetBrainsMono"
         )
 
         font_desc.set_weight(Pango.Weight.BOLD)

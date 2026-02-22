@@ -31,6 +31,31 @@ def build_scss():
 
 .icon {{
   font-family: "Material Symbols Rounded", "Material Icons Rounded";
+  font-variation-settings:
+    "FILL" 0,
+    "wght" 700,
+    "GRAD" 0,
+    "opsz" 48;
+
+  &.rounded {{
+    font-family: "Material Symbols Rounded", "Material Icons Rounded";
+  }}
+
+  &.outlined {{
+    font-family: "Material Symbols Outlined", "Material Icons Outlined";
+  }}
+
+  &.sharp {{
+    font-family: "Material Symbols Sharp", "Material Icons Sharp";
+  }}
+
+  &.active {{
+    font-variation-settings:
+      "FILL" 1,
+      "wght" 700,
+      "GRAD" 0,
+      "opsz" 48;
+  }}
 
   &.xs {{
     font-size: 0.8rem;
@@ -61,8 +86,16 @@ def build_scss():
   }}
 }}
 
+.icon.active,
+.active .icon {{
+  font-variation-settings:
+    "FILL" 1,
+    "wght" 700,
+    "GRAD" 0,
+    "opsz" 48;
+}}
+
 entry {{
-    background-color: c.$surface_container_low;
     color: c.$on_surface;
 }}
 

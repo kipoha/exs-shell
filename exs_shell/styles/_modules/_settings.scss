@@ -424,17 +424,26 @@
   }
 
   .settings-user-data {
-    font-size: 2rem;
-  }
-
-  .settings-user-avatar {
-    border-radius: 50rem;
+    margin-left: .5rem;
   }
 
   .settings-user-uptime {
     font-size: 1rem;
   }
 
+  .settings-user-avatar {
+    border-radius: 50rem;
+    border: 0.2rem solid c.$background;
+
+    &:focus,
+    &:hover {
+      border-color: c.$primary;
+    }
+  }
+
+  .settings-about-logo {
+    border-radius: 1rem;
+  }
 }
 
 .settings-dialog-window {

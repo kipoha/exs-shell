@@ -1,6 +1,6 @@
 from typing import Any
 
-from ignis.widgets import Box, Button, Label
+from ignis.widgets import Box, Button
 from ignis.services.power_profiles import PowerProfilesService
 
 from exs_shell import register
