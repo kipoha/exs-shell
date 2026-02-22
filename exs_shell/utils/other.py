@@ -6,7 +6,8 @@ class ShellCommandBuilder:
     def matugen(image_path: str, scheme: str, dark: bool, contrast: int, *args: str) -> str:
         config_file = Dirs.CONFIG_DIR / "exs-shell" / "matugen" / "config.toml"
         if not config_file.exists():
-            config_file = Paths.root / "matugen" / "config.toml"
+            config_file = Paths.path / "matugen" / "config.toml"
+        print(config_file)
         mode = "dark" if dark else "light"
         other_param = " ".join(args)
         return (
