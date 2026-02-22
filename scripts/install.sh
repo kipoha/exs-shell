@@ -1,49 +1,42 @@
 #!/bin/bash
-
-if [ "$(id -u)" -ne 0 ]; then
-    echo "This script must be run as root"
-    exit 1
-fi
+set -e
 
 REPO="kipoha/exs-shell"
-echo "Fetching releases..."
-RELEASES=$(curl -s "https://api.github.com/repos/$REPO/releases" | \
-           grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
 
-if [ -z "$RELEASES" ]; then
-    echo "Failed to fetch releases"
+echo "Fetching releases..."
+
+mapfile -t TAGS < <(
+    curl -s "https://api.github.com/repos/$REPO/releases" |
+    grep '"tag_name":' |
+    sed -E 's/.*"([^"]+)".*/\1/'
+)
+
+if [ ${#TAGS[@]} -eq 0 ]; then
+    echo "No releases found"
     exit 1
 fi
 
-i=1
-declare -a TAGS
 echo "Available releases:"
-while read -r tag; do
-    echo "[$i] $tag"
-    TAGS[$i]="$tag"
-    i=$((i+1))
-done <<< "$RELEASES"
+for i in "${!TAGS[@]}"; do
+    printf "[%d] %s\n" "$((i+1))" "${TAGS[$i]}"
+done
 
-read -p "Enter the number of the version to install (default latest = 1): " choice
+read -r -p "Select version [1]: " choice
 choice=${choice:-1}
-VERSION="${TAGS[$choice]}"
+
+# Проверка что введено число
+if ! [[ "$choice" =~ ^[0-9]+$ ]]; then
+    echo "Invalid selection"
+    exit 1
+fi
+
+index=$((choice-1))
+
+if [ "$index" -ge "${#TAGS[@]}" ]; then
+    echo "Selection out of range"
+    exit 1
+fi
+
+VERSION="${TAGS[$index]}"
+
 echo "Selected version: $VERSION"
-
-mkdir -p /opt/exs-shell
-python -m venv /opt/exs-shell
-/opt/exs-shell/bin/pip install --upgrade "git+https://github.com/$REPO.git@$VERSION"
-
-create_symlink() {
-    local target="$1"
-    local link="$2"
-
-    if [ -L "$link" ] || [ -e "$link" ]; then
-        rm -f "$link"
-    fi
-
-    ln -s "$target" "$link"
-}
-
-create_symlink "/opt/exs-shell/bin/exs" "/usr/local/bin/exs"
-
-echo "Installation complete!"
