@@ -24,7 +24,6 @@ done
 read -r -p "Select version [1]: " choice < /dev/tty
 choice=${choice:-1}
 
-# Проверка что введено число
 if ! [[ "$choice" =~ ^[0-9]+$ ]]; then
     echo "Invalid selection"
     exit 1
