@@ -25,7 +25,7 @@ Version: v{exs_shell.__version__}
 class AboutCategory(BaseCategory):
     def __init__(self):
         self.logo = Picture(
-            image=str(Paths.root / "default" / "logo.png"),
+            image=str(Paths.assets / "default" / "logo.png"),
             width=100,
             height=100,
             css_classes=["settings-about-logo"],
