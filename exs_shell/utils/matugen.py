@@ -56,11 +56,6 @@ class Matugen:
                 tasks.append(exec_sh_async(cmd))
 
             results = await gather(*tasks)
-            for i, result in enumerate(results):
-                print(f"Scheme {schemes[i]}")
-                print("RETURN:", result.returncode)
-                print("STDOUT:", result.stdout)
-                print("STDERR:", result.stderr)
 
             for i, result in enumerate(results):
                 prefix = schemes[i]
