@@ -34,7 +34,7 @@ power-profiles-daemon
 1. Installing
 Only one script
 ```bash
-curl -fsSl https://raw.githubusercontent.com/kipoha/exs-shell/refs/heads/main/scripts/install.sh | bash
+curl -fsSl https://raw.githubusercontent.com/kipoha/exs-shell/refs/heads/main/scripts/install.sh | sudo bash
 ```
 
 or
@@ -74,7 +74,7 @@ Use to see all commands
 
 ## Uninstall
 ```bash
-curl -fsSl https://raw.githubusercontent.com/kipoha/exs-shell/refs/heads/main/scripts/unstall.sh | bash
+curl -fsSl https://raw.githubusercontent.com/kipoha/exs-shell/refs/heads/main/scripts/unstall.sh | sudo bash
 ```
 
 

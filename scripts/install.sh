@@ -21,7 +21,7 @@ for i in "${!TAGS[@]}"; do
     printf "[%d] %s\n" "$((i+1))" "${TAGS[$i]}"
 done
 
-read -r -p "Select version [1]: " choice
+read -r -p "Select version [1]: " choice < /dev/tty
 choice=${choice:-1}
 
 # Проверка что введено число
