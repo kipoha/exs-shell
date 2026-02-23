@@ -1,6 +1,8 @@
 import subprocess
 from typing import Any
 
+from loguru import logger
+
 from gi.repository import Gio, GdkPixbuf  # type: ignore
 
 from ignis.menu_model import IgnisMenuItem, IgnisMenuModel, IgnisMenuSeparator
@@ -183,8 +185,10 @@ class ClipboardItemButton(BaseLauncherItem):
                     hexpand=True,
                     css_classes=["exs-clipboard-item"],
                 )
-            except Exception as e:
-                print(e)
+            except Exception:
+                import traceback
+
+                logger.error(traceback.format_exc())
                 box = Box(
                     spacing=6,
                     child=[Label(label="[image]")],

@@ -132,7 +132,7 @@ class RevealerWindow(BaseRevealerWindow):
     ):
         super().__init__(
             revealers,
-            namespace=f"{NAMESPACE}_{namespace}",
+            namespace=namespace,
             monitor=monitor,
             anchor=anchor,
             exclusivity=exclusivity,

@@ -7,18 +7,6 @@ from ignis.services.network import (
     Ethernet,
 )
 
-# from ignis.services.network import (
-#     NetworkService,
-#     Wifi,
-#     WifiDevice,
-#     WifiAccessPoint,
-#     WifiConnectDialog,
-#     Ethernet,
-#     EthernetDevice,
-#     ActiveAccessPoint,
-#     STATE,
-# )
-
 from exs_shell import register
 from exs_shell.interfaces.enums.icons import Icons
 from exs_shell.state import State

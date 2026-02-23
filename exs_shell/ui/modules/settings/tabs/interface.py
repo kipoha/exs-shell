@@ -128,7 +128,6 @@ class BarCategory(BaseCategory):
         )
 
     def update_widgets(self, widgets: tuple[list[str], list[str], list[str]]):
-        print(widgets)
         left, center, right = widgets
         bar.set_center(center)
         bar.set_left(left)

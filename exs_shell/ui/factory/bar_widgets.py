@@ -42,6 +42,9 @@ def create_bar_widgets(widgets: list[str], scale: float) -> Sequence[BaseWidget]
         "cava_tui": {
             "css_classes": ["exs-cava-tui"],
         },
+        "weather": {
+            "css_classes": ["exs-weather"],
+        },
     }
     return [
         get_or_create_widget(

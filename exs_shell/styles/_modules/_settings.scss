@@ -441,6 +441,16 @@
     }
   }
 
+  .settings-about-description {
+    link {
+      color: c.$on_surface;
+
+      &:visited {
+        color: c.$on_tertiary_container;
+      }
+    }
+  }
+
   .settings-about-logo {
     border-radius: 1rem;
   }

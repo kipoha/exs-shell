@@ -1,6 +1,7 @@
 from ignis.widgets import Box, Label, Picture
 
 import exs_shell
+from exs_shell import __author__, __version__
 from exs_shell.interfaces.enums.icons import Icons
 from exs_shell.ui.modules.settings.tabs.base import BaseTab, BaseCategory
 from exs_shell.ui.modules.settings.widgets import (
@@ -8,19 +9,20 @@ from exs_shell.ui.modules.settings.widgets import (
 )
 from exs_shell.utils.path import Paths
 
+authors = __author__.split(",")
+author_text = ", ".join([f'<a href="https://github.com/{author}">{author}</a>' for author in authors])
 
 description = f"""
 Just Shell For Niri Wayland Compositor
 
-Toolkit: GTK3 / GTK4
-Framework: Ignis
-Author: Kipoha
+Toolkit: <a href="https://www.gtk.org/">GTK3 / GTK4</a>
+Framework: <a href="https://ignis-sh.github.io/ignis/stable/index.html">Ignis</a>
+Author: {author_text}
 License: GNU GENERAL PUBLIC LICENSE
-GitHub: https://github.com/kipoha/exs-shell
-Discord: https://discord.com/invite/FbdqgpnY9P
-Version: v{exs_shell.__version__}
+GitHub: <a href="https://github.com/kipoha/exs-shell">GitHub Repository</a>
+Discord: <a href="https://discord.com/invite/FbdqgpnY9P">Join Discord</a>
+Version: v{__version__}
 """
-
 
 class AboutCategory(BaseCategory):
     def __init__(self):
@@ -39,6 +41,7 @@ class AboutCategory(BaseCategory):
             label=description,
             css_classes=["settings-about-description"],
             halign="center",
+            use_markup=True,
         )
         super().__init__(
             child=[
