@@ -12,7 +12,6 @@ from exs_shell.ui.modules.settings.tabs.appearance import AppearanceTab
 from exs_shell.ui.modules.settings.tabs.interface import InterfaceTab
 from exs_shell.ui.modules.settings.tabs.lock import LockTab
 from exs_shell.ui.modules.settings.tabs.services import ServicesTab
-from exs_shell.ui.modules.settings.tabs.devices import DevicesTab
 from exs_shell.ui.modules.settings.tabs.network import NetworkTab
 from exs_shell.ui.modules.settings.tabs.bluetooth import BluetoothTab
 from exs_shell.ui.modules.settings.tabs.system import SystemTab
@@ -49,7 +48,6 @@ class Settings(RegularWindow):
             "interface": (Icons.ui.INTERFACE, "Interface"),
             "lock": (Icons.ui.LOCK, "Lock"),
             "services": (Icons.ui.SERVICES, "Services"),
-            "devices": (Icons.ui.DEVICES, "Devices"),
             "network": (Icons.wifi.CONNECTED, "Network"),
             "bluetooth": (Icons.ui.BLUETOOTH, "Bluetooth"),
             "system": (Icons.ui.SYSTEM, "System"),
@@ -61,7 +59,6 @@ class Settings(RegularWindow):
             "interface": InterfaceTab(),
             "lock": LockTab(),
             "services": ServicesTab(),
-            "devices": DevicesTab(),
             "network": NetworkTab(),
             "bluetooth": BluetoothTab(),
             "system": SystemTab(),

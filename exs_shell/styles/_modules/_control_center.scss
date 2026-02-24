@@ -20,9 +20,14 @@
 
 .notification {
   background-color: c.$surface_container_high;
-  border-radius: 1rem;
+  border-radius: 2rem;
   padding: 1rem;
   margin-top: 1rem;
+}
+
+.notification-screenshot {
+  border-radius: 1rem;
+  background-color: black;
 }
 
 .notification-count {
@@ -40,9 +45,9 @@
 }
 
 .notification-close {
-  color: c.$surface;
+  color: c.$on_surface;
   border-radius: 1rem;
-  padding: 0.25rem;
+  padding: 0.25rem 0.5rem;
   margin-left: 0.5rem;
   transition: 0.3s;
 }
@@ -88,7 +93,7 @@
 .notification-action {
   background-color: c.$primary;
   color: c.$background;
-  border-radius: 0.5rem;
+  border-radius: 1rem;
   padding: 0.25rem 0.25rem;
   transition: 0.3s;
 }
@@ -332,9 +337,11 @@
     border-bottom-right-radius: 0.5rem;
     border-bottom-left-radius: 0.5rem;
   }
+
   .control-center-rollers-mic-container {
     border-radius: 0.5rem;
   }
+
   .control-center-rollers-backlight-container {
     border-top-right-radius: 0.5rem;
     border-top-left-radius: 0.5rem;

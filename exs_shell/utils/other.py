@@ -3,10 +3,12 @@ from exs_shell.utils.path import Paths, Dirs
 
 class ShellCommandBuilder:
     @staticmethod
-    def matugen(image_path: str, scheme: str, dark: bool, contrast: int, *args: str) -> str:
+    def matugen(
+        image_path: str, scheme: str, dark: bool, contrast: int, *args: str
+    ) -> str:
         config_file = Dirs.CONFIG_DIR / "exs-shell" / "matugen" / "config.toml"
         if not config_file.exists():
-            config_file = Paths.path / "matugen" / "config.toml"
+            config_file = Paths.path / "configs" / "other" / "matugen" / "config.toml"
         mode = "dark" if dark else "light"
         other_param = " ".join(args)
         return (

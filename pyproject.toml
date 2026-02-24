@@ -36,10 +36,10 @@ exs = "exs_shell.cli:main"
 include-package-data = true
 
 [tool.setuptools.packages.find]
-include = ["exs_shell", "exs_shell.matugen"]
+include = ["exs_shell", "exs_shell.configs.other.matugen"]
 
 [tool.setuptools.package-data]
-"exs_shell.matugen" = [
+"exs_shell.configs.other.matugen" = [
     "config.toml",
     "templates/*",
 ]

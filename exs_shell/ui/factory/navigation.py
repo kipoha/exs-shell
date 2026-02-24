@@ -1,6 +1,7 @@
 from typing import Callable
 
 from ignis.widgets import Box, Button, Label
+
 from exs_shell.ui.widgets.custom.icon import Icon
 from exs_shell.utils.dependencies import check_lock
 

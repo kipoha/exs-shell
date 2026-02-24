@@ -6,15 +6,20 @@
   padding: 0.1rem 1.2rem 1rem 1.2rem;
   border-radius: 2rem;
 
+  .notification-screenshot {
+    border-radius: 1rem;
+    background-color: black;
+  }
+
   & .notification-close {
     background-color: c.$primary;
-    border-radius: 0.8rem;
+    border-radius: 1.5rem;
     color: c.$background;
   }
 
   & .notification-action {
     background-color: c.$primary;
-    border-radius: 0.5rem;
+    border-radius: 1rem;
     color: c.$background;
   }
 
@@ -27,20 +32,22 @@
     background-color: c.$on_primary;
     color: c.$on_surface;
   }
-}
 
-.notification-progress {
-  min-height: 0.2rem;
-  border-radius: 1rem;
-}
+  .notification-progress {
+    /* margin-top: -0.5rem; */
+    min-height: 0.2rem;
+    border-radius: 1rem;
+    margin-bottom: 0.2rem;
+  }
 
-.notification-progress trough {
-  border-radius: 1rem;
-  min-height: 0.2rem;
-  background-color: c.$background;
-}
+  .notification-progress trough {
+    border-radius: 1rem;
+    min-height: 0.2rem;
+    background-color: c.$background;
+  }
 
-.notification-progress highlight {
-  background-color: c.$primary;
-  border-radius: 1rem;
+  .notification-progress highlight {
+    background-color: c.$primary;
+    border-radius: 1rem;
+  }
 }
