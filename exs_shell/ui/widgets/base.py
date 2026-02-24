@@ -107,9 +107,10 @@ class MonitorRevealerBaseWidget(MonitorWidget, RevealerBaseWidget):
         self,
         child: Box | CenterBox,
         window_param: WindowEntity,
-        revealers: list[Revealer] = [],
+        revealers: list[Revealer] | None = None,
     ) -> None:
         MonitorWidget.__init__(self)
+        revealers = revealers or []
         RevealerBaseWidget.__init__(  # type: ignore
             self,
             child=child,
