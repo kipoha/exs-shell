@@ -382,19 +382,16 @@ class DnDBox(Box):
             column = i % self.max_columns
             self.items_grid.attach(label, column, row, 1, 1)
 
-        # Принудительная перерисовка
         self.items_grid.queue_allocate()
         self.items_grid.queue_draw()
 
     def _on_drop(self, _, widget: Label, x: int, y: int):
         old_parent = widget.get_parent()
 
-        # если виджет уже в этом же боксе → это reorder
         if old_parent is self.items_grid:
             self._reorder_inside(widget, x, y)
             return True
 
-        # если пришёл из другого DnDBox
         if old_parent:
             old_box = old_parent.get_parent()
             if isinstance(old_box, DnDBox):

@@ -5,6 +5,7 @@ from ignis.services.network import (
     NetworkService,
     Wifi,
     Ethernet,
+    WifiAccessPoint,
 )
 
 from exs_shell import register
@@ -62,10 +63,3 @@ class WifiWidget(Box):
         else:
             self.icon.set_label(Icons.wifi.DISABLED)
             self.button_enable.remove_css_class("active")
-
-    @register.events.network("notify::is-connected", "ethernet")
-    def __connected(self, ethernet: Ethernet, *_: Any):
-        if ethernet.is_connected:
-            self.icon.set_label(Icons.wifi.CONNECTED)
-        else:
-            self.icon.set_label(Icons.wifi.DISCONNECTED)

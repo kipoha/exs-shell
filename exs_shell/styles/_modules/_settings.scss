@@ -122,6 +122,11 @@
         &:hover {
           background-color: c.$secondary_container;
         }
+
+        &:disabled {
+          background-color: c.$surface_container_high;
+          color: c.$on_surface_variant;
+        }
       }
 
       .settings-row-spin {
@@ -453,6 +458,48 @@
 
   .settings-about-logo {
     border-radius: 1rem;
+  }
+
+  .settings-bluetooth-device-list-container,
+  .settings-network-list-container {
+    background-color: c.$surface_container_high;
+    color: c.$on_surface;
+    padding: 0.4rem;
+    border-radius: 1.5rem;
+
+    .settings-bluetooth-row,
+    .settings-network-row {
+      margin: 0.1rem 0;
+      border-radius: .5rem;
+      padding: 0.5rem 1rem;
+
+      &:first-child {
+        border-radius: 1rem 1rem .5rem .5rem;
+      }
+
+      &:last-child {
+        border-radius: .5rem .5rem 1rem 1rem;
+      }
+
+      &:focus,
+      &:hover {
+        background-color: c.$secondary_container;
+      }
+    }
+
+    .settings-bluetooth-not-connected-status-label,
+    .settings-bluetooth-connected-status-label,
+    .settings-network-connected-status-label {
+      background-color: c.$surface_container_highest;
+      padding: 0.2rem 0.5rem;
+      border-radius: 1rem;
+    }
+
+    .settings-network-entry {
+      border-radius: 1rem;
+      background-color: c.$surface_container_highest;
+      padding: 0.2rem 1rem;
+    }
   }
 }
 
