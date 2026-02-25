@@ -1,3 +1,4 @@
+import gi
 import ignis
 from ignis.widgets import Picture, Separator
 from ignis.services.fetch import FetchService
@@ -61,6 +62,11 @@ class SoftwareCategory(BaseCategory):
                     title="Ignis version",
                     description=ignis.__version__,
                 ),
+                Separator(),
+                SettingsRow(
+                    title="PyGObject version",
+                    description=gi.__version__,
+                )
             ]
         )
 

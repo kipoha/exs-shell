@@ -16,7 +16,7 @@ description = f"""
 Just Shell For Niri Wayland Compositor
 
 Toolkit: <a href="https://www.gtk.org/">GTK3 / GTK4</a>
-Framework: <a href="https://ignis-sh.github.io/ignis/stable/index.html">Ignis</a>
+Framework: <a href="https://ignis-sh.github.io/ignis/stable/index.html">Ignis</a> / <a href="https://pygobject.gnome.org/">PyGObject</a>
 Author: {author_text}
 License: GNU GENERAL PUBLIC LICENSE
 GitHub: <a href="https://github.com/kipoha/exs-shell">GitHub Repository</a>

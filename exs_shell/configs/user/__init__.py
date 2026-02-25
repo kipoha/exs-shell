@@ -12,8 +12,8 @@ from exs_shell.configs.user.weather import Weather
 from exs_shell.configs.user.osd import OSDGroup
 
 
-USER_OPTIONS_FILE = f"{Dirs.DATA_DIR}/user_options.json"
-OLD_USER_OPTIONS_FILE = f"{Dirs.CACHE_DIR}/user_options.json"
+USER_OPTIONS_FILE = f"{Dirs.CONFIG_DIR}/config.jsonc"
+OLD_USER_OPTIONS_FILE = f"{Dirs.CACHE_DIR}/config.jsonc"
 
 
 def _migrate_old_options_file() -> None:

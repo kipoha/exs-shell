@@ -7,6 +7,10 @@ set = true
 input_path = './templates/colors.scss'
 output_path = '~/.config/exs-shell/colors.scss'
 
+[templates.exs_lock]
+input_path = './templates/lock_colors.css'
+output_path = '~/.config/exs-shell/lock_colors.css'
+
 [templates.exs_json]
 input_path = './templates/colors.json'
 output_path = '~/.config/exs-shell/colors.json'
