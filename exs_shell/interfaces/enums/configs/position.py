@@ -16,6 +16,7 @@ class P(StrEnum):
     BOTTOM_LEFT = "BOTTOM_LEFT"
     BOTTOM = "BOTTOM"
     BOTTOM_RIGHT = "BOTTOM_RIGHT"
+    CENTER = "CENTER"
 
 
 def iterate(cls1: type[StrEnum], cls2: type[StrEnum]) -> list[tuple[str, str]]:
@@ -74,3 +75,9 @@ class PositionSide(PositionMixin, StrEnum):
     BOTTOM_LEFT = P.BOTTOM_LEFT
     BOTTOM = P.BOTTOM
     BOTTOM_RIGHT = P.BOTTOM_RIGHT
+
+
+class LockEntryPosition(PositionMixin, StrEnum):
+    TOP = P.TOP
+    CENTER = P.CENTER
+    BOTTOM = P.BOTTOM

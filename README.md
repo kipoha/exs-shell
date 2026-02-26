@@ -1,75 +1,79 @@
 # exs-shell
 
+A modern GTK4-based shell for the Niri Wayland compositor.
+Highly customizable, lightweight and integrated with dynamic theming.
+
 ## Showcase
-<!-- no showcase -->
 <div align="center">
-<img src="assets/1.png" width="550">
-<img src="assets/2.png" width="550">
-<img src="assets/3.png" width="550">
-<img src="assets/4.png" width="550">
-<img src="assets/5.png" width="550">
-<img src="assets/6.png" width="550">
-<img src="assets/7.png" width="550">
+    <img src="assets/1.png" width="550">
+    <img src="assets/2.png" width="550">
+    <img src="assets/3.png" width="550">
+    <img src="assets/4.png" width="550">
+    <img src="assets/5.png" width="550">
+    <img src="assets/6.png" width="550">
+    <img src="assets/7.png" width="550">
 </div>
 <br /><br />
 
 
-## Installation
-
 > [!WARNING]
-> This shell working only for **Niri Wayland Compositor**.  
-> And Shell in progress.
+> This shell currently works **only with the Niri Wayland compositor**.  
+> The project is still under active development.
+---
 
 ## Dependencies
-```
-jetbrains-mono-nerd-font
-ttf-material-symbols
-dart-sass
-dunst
-matugen
-gtk3
-gtk4
-power-profiles-daemon 
-```
-1. Installing
-Only one script
+
+Make sure the following packages are installed:
+
+- jetbrains-mono-nerd-font
+- ttf-material-symbols
+- dart-sass
+- dunst
+- matugen
+- gtk3
+- power-profiles-daemon
+
+---
+## Installation
+
+### Quick install (recommended)
 ```bash
 curl -fsSl https://raw.githubusercontent.com/kipoha/exs-shell/refs/heads/main/scripts/install.sh | sudo bash
 ```
-
-or
-
-
-Clone and install
+### Manual install
 ```bash
 git clone https://github.com/kipoha/exs-shell.git
 cd exs-shell
-chmod +x scripts/install.sh
-./scripts/install.sh
+chmod +x scripts/install-local.sh
+sudo ./scripts/install.sh
 ```
 
-or install for development
+### Development install
 ```bash
 git clone https://github.com/kipoha/exs-shell.git
 cd exs-shell
 chmod +x scripts/install-dev.sh
-./scripts/install-dev.sh
+sudo ./scripts/install-dev.sh
 ```
+---
 
-
-2. Verify installation:
+### Verify installation:
 ```bash
 which exs
 ```
 
-3. Quick `ipc` command(Optional):
-If you have a separate script for fast commands like brightness control:
+### IPC commands (optional)
+
+Example:
+
 ```bash
 exs ipc launcher toggle
 ```
 
-Use to see all commands
-```exs -h```
+### Use to see all commands
+```
+exs -h
+```
 
 
 ## Uninstall

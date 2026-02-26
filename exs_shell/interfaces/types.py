@@ -8,6 +8,7 @@ if TYPE_CHECKING:
 
 type Anchor = Literal["left", "right", "top", "bottom"]
 type TopBottom = Literal["top", "bottom"]
+type EntryPosition = Literal["top", "center", "bottom"]
 type Arrow = Literal[
     "top",
     "top_left",
