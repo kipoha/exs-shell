@@ -205,11 +205,15 @@
           background-color: c.$surface_container_highest;
           padding: 0.5rem 2rem;
 
-          &:first-child {
+          &:only-child {
+            border-radius: 1.5rem;
+          }
+
+          &:first-child:not(:only-child) {
             border-radius: 1.5rem 0.5rem 0.5rem 1.5rem;
           }
 
-          &:last-child {
+          &:last-child:not(:only-child) {
             border-radius: 0.5rem 1.5rem 1.5rem 0.5rem;
           }
 
@@ -473,11 +477,13 @@
       border-radius: .5rem;
       padding: 0.5rem 1rem;
 
-      &:first-child {
+      &:only-child {
+        border-radius: 1rem;
+      }
+      &:first-child:not(:only-child) {
         border-radius: 1rem 1rem .5rem .5rem;
       }
-
-      &:last-child {
+      &:last-child:not(:only-child) {
         border-radius: .5rem .5rem 1rem 1rem;
       }
 

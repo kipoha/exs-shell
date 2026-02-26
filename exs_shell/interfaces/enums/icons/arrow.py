@@ -33,6 +33,7 @@ class AlignIcons(StrEnum):
     BOTTOM = "align_vertical_bottom"
     LEFT = "align_horizontal_left"
     RIGHT = "align_horizontal_right"
+    CENTER = "align_vertical_center"
     # TOP = "󱇇"
     # BOTTOM = "󱇅"
     # LEFT = "󱇂"

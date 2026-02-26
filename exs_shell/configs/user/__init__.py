@@ -3,6 +3,7 @@ import os
 from ignis.options_manager import OptionsManager
 from ignis.options import Options
 
+from exs_shell.configs.user.lock import LockGroup
 from exs_shell.utils.path import Dirs
 from exs_shell.configs.user.appearence import Appearance
 from exs_shell.configs.user.bar import Bar
@@ -12,8 +13,8 @@ from exs_shell.configs.user.weather import Weather
 from exs_shell.configs.user.osd import OSDGroup
 
 
-USER_OPTIONS_FILE = f"{Dirs.DATA_DIR}/user_options.json"
-OLD_USER_OPTIONS_FILE = f"{Dirs.CACHE_DIR}/user_options.json"
+USER_OPTIONS_FILE = f"{Dirs.CONFIG_DIR}/config.jsonc"
+OLD_USER_OPTIONS_FILE = f"{Dirs.CACHE_DIR}/config.jsonc"
 
 
 def _migrate_old_options_file() -> None:
@@ -43,6 +44,7 @@ class UserOptions(OptionsManager):
     _notifications: Notifications = Notifications()
     _weather: Weather = Weather()
     _osd: OSDGroup = OSDGroup()
+    _lock: LockGroup = LockGroup()
 
     @property
     def user_config(self) -> UserConfig:
@@ -71,6 +73,10 @@ class UserOptions(OptionsManager):
     @property
     def osd(self) -> OSDGroup:
         return self._osd
+    
+    @property
+    def lock(self) -> LockGroup:
+        return self._lock
 
 
 options = UserOptions()
@@ -81,3 +87,4 @@ applications = options.applications
 bar = options.bar
 weather = options.weather
 osd = options.osd
+lock = options.lock
