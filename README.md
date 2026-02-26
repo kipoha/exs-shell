@@ -30,7 +30,7 @@ Make sure the following packages are installed:
 - dart-sass
 - dunst
 - matugen
-- gtk3
+- gtk4
 - power-profiles-daemon
 
 ---
@@ -81,5 +81,6 @@ exs -h
 curl -fsSl https://raw.githubusercontent.com/kipoha/exs-shell/refs/heads/main/scripts/unstall.sh | sudo bash
 ```
 
+---
 
 [Discord](https://discord.com/invite/FbdqgpnY9P)
