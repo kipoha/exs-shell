@@ -6,7 +6,7 @@ REPO="kipoha/exs-shell"
 echo "Fetching releases..."
 
 mapfile -t TAGS < <(
-    curl -s "https://api.github.com/repos/$REPO/releases" |
+    curl -s "https://api.github.com/repos/$REPO/releases?per_page=20" |
     grep '"tag_name":' |
     sed -E 's/.*"([^"]+)".*/\1/'
 )
