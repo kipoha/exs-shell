@@ -8,7 +8,7 @@ local_scheme = "node-and-date"
 
 [project]
 name = "exs-shell"
-version = "0.2.7"
+version = "0.2.8"
 description = "Just Desktop for Niri Wayland Compositor"
 readme = "README.md"
 requires-python = ">=3.12"
