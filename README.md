@@ -84,3 +84,11 @@ curl -fsSl https://raw.githubusercontent.com/kipoha/exs-shell/refs/heads/main/sc
 ---
 
 [Discord](https://discord.com/invite/FbdqgpnY9P)
+
+---
+
+## Related Projects
+
+These projects are related to **exs-shell** and can enhance its functionality:
+
+- [exs-lock](https://github.com/kipoha/exs-lock) – Screen locker designed to work with exs-shell.  

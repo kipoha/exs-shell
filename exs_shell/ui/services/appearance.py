@@ -5,10 +5,10 @@ import sys
 from gi.repository import Gtk, Gdk, GLib, Gtk4LayerShell as GtkLayerShell  # type: ignore
 
 from ignis import utils
+from ignis.app import IgnisApp
 from ignis.base_service import BaseService
 from ignis.exceptions import LayerShellNotSupportedError
 from ignis.widgets.picture import Picture
-from ignis.app import IgnisApp
 
 from exs_shell import register
 from exs_shell.app.vars import NAMESPACE

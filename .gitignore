@@ -64,3 +64,5 @@ test_html
 
 *.log
 .tmp/
+
+wl_idle_helper

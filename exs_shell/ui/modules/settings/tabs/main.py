@@ -26,6 +26,7 @@ from exs_shell.ui.modules.settings.widgets import (
     CategoryLabel,
     SettingsRow,
     SelectRow,
+    SpinRow,
     SwitchRow,
     FileDialogRow,
 )
@@ -247,6 +248,28 @@ class BarCategory(BaseCategory):
         )
 
 
+class BatteryTrackerCategory(BaseCategory):
+    def __init__(self):
+        super().__init__(
+            [
+                CategoryLabel(title="Battery Tracker", icon=Icons.battery.CHARGING),
+                SettingsRow(
+                    title="Battery Critical Percentage",
+                    description="Set the battery critical percentage",
+                    child=[
+                        SpinRow(
+                            min=0,
+                            max=100,
+                            step=1,
+                            value=user.bind("critical_percentage"),
+                            on_change=lambda x: user.set_critical_percentage(x),
+                        )
+                    ],
+                ),
+            ]
+        )
+
+
 class MainTab(BaseTab):
     def __init__(self):
         super().__init__(
@@ -255,5 +278,6 @@ class MainTab(BaseTab):
                 UserCategory(),
                 NotificationsCategory(),
                 BarCategory(),
+                BatteryTrackerCategory(),
             ]
         )

@@ -1,6 +1,7 @@
 from ignis.options_manager import OptionsGroup, TrackedList
 
 from exs_shell.interfaces.enums.icons import Icons
+from exs_shell.interfaces.schemas import IdleAction
 from exs_shell.interfaces.schemas.widget.launcher import Action, PowerMenuAction
 
 
@@ -66,3 +67,16 @@ class UserConfig(OptionsGroup):
 
     def get_powermenu_actions_objs(self) -> list[PowerMenuAction]:
         return [PowerMenuAction(**i) for i in self.powermenu_actions]
+    
+    idle_actions: TrackedList[dict] = TrackedList()
+    for i in [
+        {
+            "timeout_seconds": 600,
+            "on_timeout": "hyprlock",
+            "on_resume": None
+        },
+    ]:
+        idle_actions.append(i)
+
+    def get_idle_actions_objs(self) -> list[IdleAction]:
+        return [IdleAction(**i) for i in self.idle_actions]
