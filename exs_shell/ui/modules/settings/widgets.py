@@ -21,6 +21,7 @@ from ignis.widgets import (
 )
 
 from exs_shell.app.vars import NAMESPACE
+from exs_shell.interfaces.enums.icons import Icons
 from exs_shell.ui.widgets.custom.icon import Icon
 
 
@@ -297,8 +298,8 @@ def FileDialogRow(
 
 
 def SwitchRow(
-    active: bool | Binding,
-    on_change: Callable[[bool], None],
+    active: bool | Binding = False,
+    on_change: Callable[[bool], None] = lambda _: None,
     **kwargs: Any,
 ) -> Switch:
     kwargs["css_classes"] = ["settings-row-switch"] + (kwargs.get("css_classes") or [])
@@ -308,7 +309,7 @@ def SwitchRow(
 
 
 def SpinRow(
-    on_change: Callable[[int], None],
+    on_change: Callable[[int], None] = lambda _: None,
     min: int = 1,
     max: int = 100,
     step: int = 1,
@@ -432,7 +433,7 @@ class DnDBox(Box):
         column_width = width / self.max_columns
 
         target_column = int(x // column_width)
-        target_row = int(y // 30)  # 30 — примерная высота label
+        target_row = int(y // 30)
 
         new_index = target_row * self.max_columns + target_column
         new_index = max(0, min(new_index, len(self.items_widgets) - 1))
@@ -466,3 +467,162 @@ def make_draggable(widget: Label):
     drag_source.connect("drag-end", on_drag_end)
 
     widget.add_controller(drag_source)
+
+
+class DynamicTable[_T](Box):
+    def __init__(
+        self,
+        column_names: list[str],
+        column_types: list[type[BaseWidget]],
+        row_datas: list[list[Any]] | None = None,
+        data_builder: Callable[[list[list[Any]]], list[_T]] | None = None,
+        entry_width: int = 250,
+    ):
+        super().__init__(vertical=True)
+        self.column_names = column_names
+        self.column_types = column_types
+        self.rows: list[tuple[list[BaseWidget], Button]] = []
+        self.data_builder = data_builder
+        self.entry_width = entry_width
+        self.row_datas = row_datas or []
+
+        self.grid = Grid(
+            column_spacing=10,
+            row_spacing=5,
+            hexpand=True,
+            halign="fill",
+            css_classes=["settings-row-list-edit"],
+        )
+        self.append(self.grid)
+
+        for col, name in enumerate(self.column_names):
+            lbl = Label(label=name, css_classes=["settings-row-list-header-label"])
+            lbl.set_hexpand(True)
+            lbl.set_halign("fill")
+            self.grid.attach(lbl, col, 0, 1, 1)
+
+        empty = Label(label="")
+        self.grid.attach(empty, len(self.column_names), 0, 1, 1)
+
+        self.btn_add = Button(
+            child=Icon(label=Icons.ui.ADD, size="m"),
+            on_click=lambda _: self.add_row(),
+            css_classes=["settings-row-dialog-button-enter"],
+        )
+        self.append(self.btn_add)
+
+        for data in self.row_datas:
+            self.add_row(data)
+
+    def add_row(self, data: list[Any] | None = None):
+        data = (data or []) + [None] * len(self.column_types)
+        data = data[:len(self.column_types)]
+
+        widgets: list[BaseWidget] = []
+        row_index = len(self.rows) + 1
+
+        for col, value in enumerate(data):
+            col_type = self.column_types[col]
+
+            if col_type is Entry:
+                w = Entry(
+                    text=str(value) if value is not None else "",
+                    css_classes=["settings-row-dialog-entry"],
+                )
+                w.set_hexpand(True)
+                w.set_halign("fill")
+                w.set_width_request(self.entry_width)
+            elif col_type is SpinButton:
+                w = SpinRow(max=10_000)
+                if value is not None:
+                    w.set_value(value)
+            elif col_type is Switch:
+                w = SwitchRow()
+                if value is not None:
+                    w.set_active(bool(value))
+            else:
+                raise TypeError(f"Unsupported column type: {col_type}")
+
+            self.grid.attach(w, col, row_index, 1, 1)
+            widgets.append(w)
+
+        remove_btn = Button(
+            child=Icon(label=Icons.ui.WINDOW_CLOSE, size="m"),
+            on_click=lambda _, ws=widgets: self.remove_row(ws),
+            css_classes=["settings-row-dialog-button"],
+        )
+        self.grid.attach(remove_btn, len(self.column_names), row_index, 1, 1)
+
+        self.rows.append((widgets, remove_btn))
+
+    def remove_row(self, widgets: list[BaseWidget]):
+        for i, (ws, btn) in enumerate(self.rows):
+            if ws == widgets:
+                break
+        else:
+            return
+
+        ws, btn = self.rows.pop(i)
+        for w in ws:
+            parent = w.get_parent()
+            if parent:
+                parent.remove(w)
+        parent = btn.get_parent()
+        if parent:
+            parent.remove(btn)
+
+        self._rebuild_rows()
+
+    def _rebuild_rows(self):
+        for child in list(self.grid.get_child()):
+            _, y, _, _ = self.grid.query_child(child)
+            if y > 0:
+                self.grid.remove(child)
+
+        for row_i, (widgets, remove_btn) in enumerate(self.rows, start=1):
+            for col, w in enumerate(widgets):
+                parent = w.get_parent()
+                if parent:
+                    parent.remove(w)
+                self.grid.attach(w, col, row_i, 1, 1)
+
+            parent = remove_btn.get_parent()
+            if parent:
+                parent.remove(remove_btn)
+            self.grid.attach(remove_btn, len(self.column_names), row_i, 1, 1)
+
+    def raw_data(self) -> list[list[Any]]:
+        result: list[list[Any]] = []
+        for widgets, _ in self.rows:
+            row_data: list[Any] = []
+            for w in widgets:
+                if isinstance(w, Entry):
+                    row_data.append(w.get_text())
+                elif isinstance(w, SpinButton):
+                    row_data.append(w.get_value())
+                elif isinstance(w, Switch):
+                    row_data.append(w.get_active())
+            result.append(row_data)
+        self.row_datas = result
+        return result
+
+    def get_data(self) -> list[Any]:
+        result = self.raw_data()
+        if self.data_builder:
+            result = self.data_builder(result)
+        return result
+
+    def clear(self):
+        for widgets, btn in self.rows:
+            for w in widgets:
+                parent = w.get_parent()
+                if parent:
+                    parent.remove(w)
+            parent = btn.get_parent()
+            if parent:
+                parent.remove(btn)
+
+        self.rows.clear()
+
+        for data in self.row_datas:
+            self.add_row(data)

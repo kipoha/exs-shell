@@ -1,12 +1,14 @@
-from ignis.widgets import Button, Entry, Separator
+from typing import Any
+from ignis.widgets import Button, Entry, Separator, SpinButton
 
-from exs_shell.configs.user import weather, osd, notifications
+from exs_shell.configs.user import weather, osd, notifications, user
 from exs_shell.interfaces.enums.configs.position import PositionSide
 from exs_shell.interfaces.enums.configs.osd import osd_type
 from exs_shell.interfaces.enums.icons import Icons
 from exs_shell.ui.modules.settings.tabs.base import BaseTab, BaseCategory
 from exs_shell.ui.modules.settings.widgets import (
     CategoryLabel,
+    DynamicTable,
     SettingsRow,
     DialogRow,
     SpinRow,
@@ -173,12 +175,81 @@ class OSDCategory(BaseCategory):
         )
 
 
+class BatteryTrackerCategory(BaseCategory):
+    def __init__(self):
+        super().__init__(
+            [
+                CategoryLabel(title="Battery Tracker", icon=Icons.battery.CHARGING),
+                SettingsRow(
+                    title="Battery Critical Percentage",
+                    description="Set the battery critical percentage",
+                    child=[
+                        SpinRow(
+                            min=0,
+                            max=100,
+                            step=1,
+                            value=user.bind("critical_percentage"),
+                            on_change=lambda x: user.set_critical_percentage(x),
+                        )
+                    ],
+                ),
+            ]
+        )
+
+
+class IdleCategory(BaseCategory):
+    def __init__(self):
+        row_datas = [
+            [a.timeout_seconds, a.on_timeout, a.on_resume]
+            for a in user.get_idle_actions_objs()
+        ]
+
+        def build(datas: list[list[Any]]) -> list[dict]:
+            return [
+                {
+                    "timeout_seconds": int(data[0]),
+                    "on_timeout": data[1],
+                    "on_resume": data[2],
+                }
+                for data in datas
+            ]
+
+        self.actions_table = DynamicTable(
+            ["Timeout", "On Timeout", "On Resume"],
+            [SpinButton, Entry, Entry],
+            row_datas,
+            build,
+            150,
+        )
+        super().__init__(
+            [
+                CategoryLabel(title="Idle", icon=Icons.ui.IDLE),
+                SettingsRow(
+                    title="Idle Actions",
+                    description="Set the idle actions",
+                    child=[
+                        DialogRow(
+                            title="Idle Actions",
+                            description="Set the idle actions",
+                            child=[self.actions_table],
+                            value_getter=self.actions_table.get_data,
+                            on_change=lambda x: user.set_idle_actions(x),
+                            clear_on_cancel=lambda: self.actions_table.clear(),
+                        )
+                    ],
+                ),
+            ]
+        )
+
+
 class ServicesTab(BaseTab):
     def __init__(self):
         super().__init__(
             child=[
                 NotificationsCategory(),
                 OSDCategory(),
+                BatteryTrackerCategory(),
+                IdleCategory(),
                 WeatherCategory(),
             ]
         )

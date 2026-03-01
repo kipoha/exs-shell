@@ -1,18 +1,16 @@
 import os
+import traceback
 import psutil
 import signal
 import ctypes
-
-
-kill_process_names = ["cava", "bwrap"]
+from loguru import logger
 
 
 def kill_process():
     parent = psutil.Process(os.getpid())
     for child in parent.children(recursive=True):
         try:
-            name = child.name()
-            if name in kill_process_names:
+            if child.status() == psutil.STATUS_ZOMBIE:
                 child.terminate()
                 try:
                     child.wait(timeout=1)
@@ -20,6 +18,7 @@ def kill_process():
                     child.kill()
                     child.wait(timeout=1)
         except Exception:
+            logger.error(traceback.format_exc())
             pass
 
 

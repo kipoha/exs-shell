@@ -57,6 +57,14 @@ class App:
         after.modules.init()
 
     @classmethod
+    def on_activate(cls, _: IgnisApp) -> None:
+        cls.after_init()
+
+    @classmethod
+    def on_shutdown(cls, _: IgnisApp) -> None:
+        kill_process()
+
+    @classmethod
     def run(cls, dev: bool = False, debug: bool = False, reload: bool = False) -> None:
         client = IgnisClient()
         cls.before_init(dev, reload)
@@ -71,7 +79,8 @@ class App:
             _enable_deprecation_warnings()
         configure_logger(debug)
 
-        cls._app.connect("activate", lambda _: cls.after_init())
+        cls._app.connect("activate", cls.on_activate)
+        cls._app.connect("shutdown", cls.on_shutdown)
 
         try:
             cls._app.run(None)
