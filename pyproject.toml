@@ -36,10 +36,16 @@ exs = "exs_shell.cli:main"
 include-package-data = true
 
 [tool.setuptools.packages.find]
-include = ["exs_shell", "exs_shell.configs.other.matugen"]
+include = ["exs_shell", "exs_shell.configs.other.matugen", "exs_shell.extensions.idle"]
 
 [tool.setuptools.package-data]
 "exs_shell.configs.other.matugen" = [
     "config.toml",
     "templates/*",
+]
+"exs_shell.extensions.idle" = [
+    "wl_idle_helper.c",
+    "ext-idle-notify-v1-protocol.c",
+    "ext-idle-notify-v1-client-protocol.h",
+    "wl_idle_helper"
 ]
