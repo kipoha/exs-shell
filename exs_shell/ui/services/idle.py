@@ -80,8 +80,6 @@ class IdleService(BaseService):
 
     def _check_idle(self):
         if self._is_idle and self._idle_start is not None:
-            print("IDLE:", self._is_idle)
-            print("IDLE seconds:", time.time() - self._idle_start)
             now = time.time()
             idle_seconds = now - self._idle_start
             for i, action in enumerate(self.actions):
