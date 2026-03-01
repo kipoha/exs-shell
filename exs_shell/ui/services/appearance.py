@@ -64,9 +64,15 @@ class WallpaperLayerWindow(Gtk.Window):
         self.set_visible(True)
 
     def unrealize(self) -> None:
+        duration = self.revealer.get_transition_duration()
         self.revealer.set_reveal_child(False)
-        GLib.timeout_add(500, self.destroy)
-        super().unrealize()
+
+        def finish():
+            self.destroy()
+            super(WallpaperLayerWindow, self).unrealize()
+            return False
+
+        GLib.timeout_add(duration, finish)
 
 
 @register.event
@@ -92,29 +98,33 @@ class AppearanceService(BaseService):
                 shutil.copyfile(appearance.wallpaper_path, CACHE_WALLPAPER_PATH)
         except shutil.SameFileError:
             return
-        Matugen.update()
+        GLib.idle_add(Matugen.update)
 
         self.__sync()
 
     def __sync(self) -> None:
-        for i in self._windows:
-            i.unrealize()
-
         if not os.path.isfile(CACHE_WALLPAPER_PATH):
             return
 
-        self._windows = []
+        new_windows: list[WallpaperLayerWindow] = []
 
         for monitor_id in range(utils.get_n_monitors()):
             gdkmonitor = utils.get_monitor(monitor_id)
             if not gdkmonitor:
-                return
+                continue
 
             geometry = gdkmonitor.get_geometry()
+
             window = WallpaperLayerWindow(
                 wallpaper_path=CACHE_WALLPAPER_PATH,
                 gdkmonitor=gdkmonitor,
                 width=geometry.width,
                 height=geometry.height,
             )
-            self._windows.append(window)
+
+            new_windows.append(window)
+
+        for old in self._windows:
+            old.unrealize()
+
+        self._windows = new_windows

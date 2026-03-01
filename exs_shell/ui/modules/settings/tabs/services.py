@@ -225,6 +225,17 @@ class IdleCategory(BaseCategory):
             [
                 CategoryLabel(title="Idle", icon=Icons.ui.IDLE),
                 SettingsRow(
+                    title="Enable",
+                    description="Enable the idle",
+                    child=[
+                        SwitchRow(
+                            active=user.bind("idle_enable"),
+                            on_change=lambda active: user.set_idle_enable(active),
+                        )
+                    ],
+                ),
+                Separator(),
+                SettingsRow(
                     title="Idle Actions",
                     description="Set the idle actions",
                     child=[

@@ -67,13 +67,14 @@ class UserConfig(OptionsGroup):
 
     def get_powermenu_actions_objs(self) -> list[PowerMenuAction]:
         return [PowerMenuAction(**i) for i in self.powermenu_actions]
-    
+
+    idle_enable: bool = True
     idle_actions: TrackedList[dict] = TrackedList()
     for i in [
         {
             "timeout_seconds": 600,
             "on_timeout": "hyprlock",
-            "on_resume": None
+            "on_resume": "notify-send -t 10000 'Niri' 'You have been woken up'",
         },
     ]:
         idle_actions.append(i)
