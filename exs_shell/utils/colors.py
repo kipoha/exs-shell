@@ -2,7 +2,7 @@ import os
 import re
 import sys
 
-from exs_shell.interfaces.types import AnyDict
+from exs_shell.interfaces.types import RGB, AnyDict
 from exs_shell.utils.path import Paths, Dirs
 
 
@@ -20,7 +20,7 @@ def get_hex_color() -> AnyDict:
     return variables
 
 
-def hex_to_rgb(hex_color: str) -> tuple[float, float, float]:
+def hex_to_rgb(hex_color: str) -> RGB:
     hex_color = hex_color.lstrip("#")
     r = int(hex_color[0:2], 16) / 255
     g = int(hex_color[2:4], 16) / 255

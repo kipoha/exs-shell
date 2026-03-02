@@ -1,5 +1,7 @@
 import json
 
+from typing import Any
+
 from ignis.utils import exec_sh, get_monitor, get_n_monitors, get_monitors
 
 from exs_shell import register
@@ -34,9 +36,9 @@ def get_active_monitor() -> int:
     return monitor_id
 
 
-def init_windows(cls: type) -> None:
+def init_windows(cls: type, **kwargs: Any) -> None:
     for i in range(get_n_monitors()):
         class_name = f"{cls.__name__}{i}"
         _c = type(class_name, (cls,), {})
         register.window(_c)
-        _c(i)
+        _c(i, **kwargs)

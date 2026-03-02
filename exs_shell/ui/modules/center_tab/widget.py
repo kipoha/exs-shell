@@ -1,50 +1,80 @@
-import psutil
-from gi.repository import Gtk, GLib  # type: ignore
-import collections
-from ignis.widgets import RegularWindow
+from gi.repository import GLib  # type: ignore
+from ignis.widgets import RegularWindow, Box
+
+from exs_shell.ui.widgets.custom.graph import Graph, MultiGraph
+from exs_shell.ui.widgets.custom.mouse_trigger import MouseTrigger
+from exs_shell.utils import monitor
+from exs_shell.utils.colors import hex_to_rgb, get_hex_color
+from exs_shell.utils.system import DiskMonitor, CPUMonitor, MemoryMonitor, NetMonitor
 
 
-# mem = psutil.virtual_memory().percent
-# cpu = psutil.cpu_percent()
-# disk = psutil.disk_usage('/').percent
-# net = psutil.net_io_counters().bytes_recv
-# proc = len(psutil.pids())
-
-class Graph(Gtk.DrawingArea):
-    def __init__(self):
-        super().__init__()
-        self.history = collections.deque(maxlen=100)
-        self.set_draw_func(self.on_draw)
-
-        GLib.timeout_add(1000, self.update)
-
-    def update(self):
-        value = psutil.cpu_percent()
-        self.history.append(value)
-        self.queue_draw()
-        return True
-
-    def on_draw(self, area, cr, width, height):
-        cr.set_line_width(2)
-
-        if not self.history:
-            return
-
-        step = width / len(self.history)
-
-        for i, value in enumerate(self.history):
-            x = i * step
-            y = height - (value / 100) * height
-
-            if i == 0:
-                cr.move_to(x, y)
-            else:
-                cr.line_to(x, y)
-
-        cr.stroke()
-
-
-class CenterTab(RegularWindow):
+class MonitorTab(RegularWindow):
     def __init__(self):
         super().__init__("Center Tab")
-        self.set_child(CpuGraph())
+        self.mem = MemoryMonitor("GB")
+        self.disk = DiskMonitor("GB")
+        self.net = NetMonitor("MB")
+        self.cpu = CPUMonitor()
+        colors = get_hex_color()
+        primary = hex_to_rgb(colors["primary"])
+        on_primary = hex_to_rgb(colors["on_primary"])
+        self.mem_graph = Graph(
+            max_value=self.mem.total,
+            line_color=primary,
+            text_color=primary,
+            unit="GB",
+        )
+        self.cpu_graph = Graph(
+            line_color=primary,
+            text_color=primary,
+            unit="%",
+        )
+        self.disk_graph = Graph(
+            line_color=primary,
+            text_color=primary,
+            max_value=self.disk.total,
+            unit="GB",
+        )
+        self.net_graph = MultiGraph(
+            line_colors=[primary, on_primary],
+            text_color=primary,
+            autoscale=True,
+            unit="MB",
+        )
+        self._box = Box(
+            spacing=50,
+            vertical=True,
+            child=[
+                self.mem_graph,
+                self.cpu_graph,
+                self.disk_graph,
+                self.net_graph,
+            ],
+            style=f"background-color: {get_hex_color()['background']};",
+        )
+        h = 200
+        w = 100
+        self.mem_graph.set_size_request(w, h)
+        self.cpu_graph.set_size_request(w, h)
+        self.disk_graph.set_size_request(w, h)
+        self.net_graph.set_size_request(w, h)
+        self.set_child(self._box)
+        GLib.timeout_add_seconds(1, self.update)
+
+    def update(self):
+        self.mem_graph.push(self.mem.used)
+        self.cpu_graph.push(self.cpu.percent)
+        self.disk_graph.push(self.disk.used)
+        self.net_graph.push([self.net.rx, self.net.tx])
+        return True
+
+
+def init() -> None:
+    monitor.init_windows(
+        MouseTrigger,
+        namespace="center_tab_trigger",
+        size=(400, 1),
+        on_hover=lambda: print("hovered"),
+        on_hover_lost=lambda: print("hover lost"),
+        anchor=["bottom"],
+    )

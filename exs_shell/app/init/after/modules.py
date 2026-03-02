@@ -1,4 +1,4 @@
-# from exs_shell.ui.modules.center_tab.widget import CenterTab
+# from exs_shell.ui.modules.center_tab import widget as Cwidget
 from exs_shell.utils import monitor
 from exs_shell.ui.modules.corners import Corners
 from exs_shell.ui.modules.bar.widget import Bar
@@ -17,4 +17,5 @@ def init() -> None:
     monitor.init_windows(Bar)
     monitor.init_windows(NotificationPopup)
     monitor.init_windows(Corners)
-    # CenterTab()
+    # Cwidget.init()
+    # Cwidget.MonitorTab()
