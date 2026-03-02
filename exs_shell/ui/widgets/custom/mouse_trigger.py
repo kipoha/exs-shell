@@ -13,8 +13,8 @@ class MouseTrigger(Window):
         monitor: int,
         namespace: str,
         size: tuple[int, int],  #  width, height
-        on_hover: Callable[[], None] = lambda: None,
-        on_hover_lost: Callable[[], None] = lambda: None,
+        on_hover: Callable[[int], None] = lambda _: None,
+        on_hover_lost: Callable[[int], None] = lambda _: None,
         anchor: list[Anchor] | None = None,
         layer: Layer = Layer.BOTTOM,
         margin_bottom: int = 0,
@@ -23,6 +23,7 @@ class MouseTrigger(Window):
         margin_top: int = 0,
         **kwargs: Any,
     ):
+        self.monitor_id = monitor
         super().__init__(
             namespace=f"{namespace}{monitor}",
             monitor=monitor,
@@ -38,8 +39,8 @@ class MouseTrigger(Window):
         event_box = EventBox(
             halign="fill",
             valign="fill",
-            on_hover=lambda _: on_hover(),
-            on_hover_lost=lambda _: on_hover_lost(),
+            on_hover=lambda _: on_hover(self.monitor_id),
+            on_hover_lost=lambda _: on_hover_lost(self.monitor_id),
             style="background: rgba(0,0,0,0.01);",
         )
 

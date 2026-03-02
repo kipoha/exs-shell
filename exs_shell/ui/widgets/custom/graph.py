@@ -1,7 +1,10 @@
 import collections
 import cairo
+
 from gi.repository import Gtk, Pango, PangoCairo  # type: ignore
+
 from exs_shell.interfaces.types import RGB, RGBA
+
 
 class MultiGraph(Gtk.DrawingArea):
     def __init__(
@@ -105,14 +108,8 @@ class MultiGraph(Gtk.DrawingArea):
         cr.set_source_rgb(*self.text_color)
         cr.move_to(x, y)
         PangoCairo.show_layout(cr, layout)
-# import collections
-# import cairo
-#
-# from gi.repository import Gtk, Pango, PangoCairo  # type: ignore
-#
-# from exs_shell.interfaces.types import RGB, RGBA
-#
-#
+
+
 class Graph(Gtk.DrawingArea):
     def __init__(
         self,

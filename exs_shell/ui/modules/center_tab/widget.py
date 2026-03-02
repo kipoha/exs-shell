@@ -74,7 +74,7 @@ def init() -> None:
         MouseTrigger,
         namespace="center_tab_trigger",
         size=(400, 1),
-        on_hover=lambda: print("hovered"),
-        on_hover_lost=lambda: print("hover lost"),
+        on_hover=lambda _: print("hovered" , _),
+        on_hover_lost=lambda _: print("hover lost", _),
         anchor=["bottom"],
     )
