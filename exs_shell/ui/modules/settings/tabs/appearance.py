@@ -83,17 +83,17 @@ class WallpaperCategory(BaseCategory):
         file_chooser_button.remove_css_class("settings-row-dialog-button")
 
         wallpaper_icon = Box(
-            valign="fill",
-            halign="fill",
+            valign="center",
+            halign="center",
             css_classes=["settings-wallpaper-icon"],
             child=[
-                # Icon(
-                #     label=Icons.ui.IMAGE,
-                #     size="xxl",
-                #     halign="center",
-                #     valign="center",
-                #     css_classes=["settings-wallpaper-icon-label"],
-                # )
+                Icon(
+                    label=Icons.ui.IMAGE,
+                    size="xxxl",
+                    halign="center",
+                    valign="center",
+                    css_classes=["settings-wallpaper-icon-label"],
+                )
             ],
             can_target=False,
         )

@@ -19,6 +19,7 @@ from exs_shell import register
 from exs_shell.configs.user import bar, user, notifications, appearance
 from exs_shell.interfaces.enums.configs.position import TopBottom
 from exs_shell.state import State
+from exs_shell.ui.widgets.custom.icon import Icon
 from exs_shell.utils.loop import run_async_task
 from exs_shell.interfaces.enums.icons import Icons
 from exs_shell.ui.modules.settings.tabs.base import BaseTab, BaseCategory
@@ -85,17 +86,17 @@ class AppearanceCategory(BaseCategory):
         file_chooser_button.remove_css_class("settings-row-dialog-button")
 
         wallpaper_icon = Box(
-            valign="fill",
-            halign="fill",
+            valign="center",
+            halign="center",
             css_classes=["settings-wallpaper-icon"],
             child=[
-                # Icon(
-                #     label=Icons.ui.IMAGE,
-                #     size="xxl",
-                #     halign="center",
-                #     valign="center",
-                #     css_classes=["settings-wallpaper-icon-label"],
-                # )
+                Icon(
+                    label=Icons.ui.IMAGE,
+                    size="xxxl",
+                    halign="center",
+                    valign="center",
+                    css_classes=["settings-wallpaper-icon-label"],
+                )
             ],
             can_target=False,
         )

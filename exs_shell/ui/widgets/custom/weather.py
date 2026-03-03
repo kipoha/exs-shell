@@ -40,6 +40,11 @@ class WeatherLabel(Label):
                 params["u"] = ""
             r = requests.get("https://wttr.in/", params=params, timeout=10)
             return r.text.strip()
+        except requests.exceptions.ReadTimeout:
+            pass
+        except requests.exceptions.RequestException:
+            pass
         except Exception:
             logger.error(traceback.format_exc())
+        finally:
             return "N/A"

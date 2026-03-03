@@ -1,0 +1,39 @@
+.exs-center-tab-right-corner,
+.exs-center-tab-left-corner {
+  color: c.$background;
+}
+
+.exs-center-tab-inner {
+  background-color: c.$background;
+  padding: .6rem 1rem;
+  color: c.$primary;
+  border-radius: 0 0 1.5rem 1.5rem;
+
+  separator {
+    background-color: c.$surface_container_highest;
+    min-width: .2rem;
+    border-radius: 1rem;
+  }
+}
+
+.exs-center-tab-menu-button {
+  padding: .1rem .3rem;
+  &:hover {
+    background-color: c.$surface_container;
+    border-radius: .5rem;
+  }
+}
+
+.exs-center-tab-workspace-button {
+  padding: 0 .4rem;
+  color: c.$on_secondary;
+  &:hover {
+    background-color: c.$surface_container;
+    border-radius: 1rem;
+  }
+
+  &.active {
+    color: c.$primary;
+    border-radius: 1rem;
+  }
+}

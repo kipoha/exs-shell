@@ -1,4 +1,4 @@
-from ignis.widgets import CenterBox, Box
+from ignis.widgets import CenterBox, Box, EventBox
 
 from exs_shell import register
 from exs_shell.interfaces.schemas.widget.base import WindowEntity
@@ -9,7 +9,7 @@ from exs_shell.utils.monitor import get_active_monitor, get_monitor_scale
 class BaseWidget:
     def __init__(
         self,
-        child: Box | CenterBox,
+        child: Box | CenterBox | EventBox,
         window_param: WindowEntity,
     ) -> None:
         self._box = child
@@ -19,7 +19,7 @@ class BaseWidget:
     def set_visible(self, value: bool):
         self._main.visible = value
 
-    def set_child(self, value: Box | CenterBox) -> None:
+    def set_child(self, value: Box | CenterBox | EventBox) -> None:
         self._box = value
         self._main.set_child(value)
 
@@ -48,7 +48,7 @@ class BaseWidget:
 class RevealerBaseWidget(BaseWidget):
     def __init__(
         self,
-        child: Box | CenterBox,
+        child: Box | CenterBox | EventBox,
         window_param: WindowEntity,
         revealers: list[Revealer] = [],
     ) -> None:
@@ -97,7 +97,7 @@ class MonitorWidget(BaseWidget):
 
 
 class MonitorBaseWidget(MonitorWidget, BaseWidget):
-    def __init__(self, child: Box | CenterBox, window_param: WindowEntity) -> None:
+    def __init__(self, child: Box | CenterBox | EventBox, window_param: WindowEntity) -> None:
         MonitorWidget.__init__(self)
         BaseWidget.__init__(self, child=child, window_param=window_param)
 
@@ -105,7 +105,7 @@ class MonitorBaseWidget(MonitorWidget, BaseWidget):
 class MonitorRevealerBaseWidget(MonitorWidget, RevealerBaseWidget):
     def __init__(
         self,
-        child: Box | CenterBox,
+        child: Box | CenterBox | EventBox,
         window_param: WindowEntity,
         revealers: list[Revealer] | None = None,
     ) -> None:

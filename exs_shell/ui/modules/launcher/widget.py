@@ -131,11 +131,9 @@ class Launcher(MonitorRevealerBaseWidget):
         self._rev_inner = Revealer(self._inner, RevealerTransition.SLIDE_UP, 300)
         self._box = Box(
             child=[
-                # self.left_corner,
                 self._rev_left,
                 self._rev_inner,
                 self._rev_right,
-                # self.right_corner,
             ],
         )
 
@@ -156,7 +154,9 @@ class Launcher(MonitorRevealerBaseWidget):
                     ClipboardItemButton(c, self.scale) for c in get_clipboard_history()
                 ]
             case LauncherMode.POWER_MENU:
-                items = [ActionItem(action, self.scale) for action in self.powermenu_actions]
+                items = [
+                    ActionItem(action, self.scale) for action in self.powermenu_actions
+                ]
             case _:
                 raise ValueError
 
@@ -291,7 +291,11 @@ class Launcher(MonitorRevealerBaseWidget):
     def __search(self, *_):
         query: str = self._entry.text.lower().strip()
         prefix = user.command_prefix
-        if self.mode not in [LauncherMode.APPLICATIONS, LauncherMode.CLIPBOARD, LauncherMode.POWER_MENU]:
+        if self.mode not in [
+            LauncherMode.APPLICATIONS,
+            LauncherMode.CLIPBOARD,
+            LauncherMode.POWER_MENU,
+        ]:
             self.mode = LauncherMode.APPLICATIONS
 
         if not query:
@@ -345,6 +349,7 @@ class Launcher(MonitorRevealerBaseWidget):
 
     @register.command("launcher", description="Toggle launcher")
     def toggle(self):
+        self.mode = LauncherMode.APPLICATIONS
         self.set_visible(not self.visible)
 
     @register.command("launcher", description="Toggle Power Menu")

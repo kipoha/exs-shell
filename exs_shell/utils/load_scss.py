@@ -52,6 +52,8 @@ def build_scss():
     font-family: "Material Symbols Sharp", "Material Icons Sharp";
   }}
 
+  &:hover,
+  &:focus,
   &.active {{
     font-variation-settings:
       "FILL" 1,
@@ -91,6 +93,15 @@ def build_scss():
 
 .icon.active,
 .active .icon {{
+  font-variation-settings:
+    "FILL" 1,
+    "wght" 700,
+    "GRAD" 0,
+    "opsz" 48;
+}}
+
+button:hover .icon,
+button:focus .icon {{
   font-variation-settings:
     "FILL" 1,
     "wght" 700,
