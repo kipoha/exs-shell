@@ -1,4 +1,5 @@
 from typing import Any
+
 from gi.repository import GLib  # type: ignore
 
 from ignis.services.niri import NiriService
@@ -8,6 +9,7 @@ from exs_shell import register
 from exs_shell.interfaces.enums.gtk.transitions import RevealerTransition
 from exs_shell.interfaces.enums.icons import Icons
 from exs_shell.state import State
+from exs_shell.ui.modules.center_tab.childs.metrics import MonitorTab
 from exs_shell.ui.modules.center_tab.childs.workspaces import Workspaces
 from exs_shell.ui.factory import window as win_factory
 from exs_shell.ui.widgets.base import MonitorRevealerBaseWidget
@@ -30,6 +32,7 @@ class CenterTab(MonitorRevealerBaseWidget):
         )
         self.monitor = monitor_id
         self.widget_build()
+        self.widget_build_metrics()
         super().__init__(
             self._box,
             win,
@@ -44,44 +47,14 @@ class CenterTab(MonitorRevealerBaseWidget):
     def on_open_close(self, *_: Any):
         def do():
             if self.visible:
-                self._container = Box(
-                    css_classes=["exs-center-tab-inner-container"],
-                    spacing=10,
-                    hexpand=True,
-                    child=[
-                        Workspaces(self.monitor),
-                        Separator(vertical=True),
-                        Button(
-                            child=Icon(Icons.ui.MENU, "m"),
-                            on_click=lambda _: self.open_menu(),
-                            css_classes=["exs-center-tab-menu-button"],
-                            can_focus=False,
-                        ),
-                    ],
-                )
-                self._rev_container.set_child(self._container)
-                self._rev_container.set_reveal_child(True)
+                self.close_metrics(100)
             else:
                 self._rev_container.set_reveal_child(False)
 
         GLib.timeout_add(300, do)
 
     def widget_build(self) -> None:
-        self._container = Box(
-            css_classes=["exs-center-tab-inner-container"],
-            spacing=10,
-            hexpand=True,
-            child=[
-                Workspaces(self.monitor),
-                Separator(vertical=True),
-                Button(
-                    child=Icon(Icons.ui.MENU, "m"),
-                    on_click=lambda _: self.open_menu(),
-                    css_classes=["exs-center-tab-menu-button"],
-                    can_focus=False,
-                ),
-            ],
-        )
+        self._container = self.main_content()
         self._rev_container = Revealer(
             self._container, RevealerTransition.SLIDE_LEFT, 300
         )
@@ -135,67 +108,99 @@ class CenterTab(MonitorRevealerBaseWidget):
             GLib.idle_add(lambda: self.set_visible(False))
 
     def open_menu(self):
-        self._rev_container.set_reveal_child(False)
-
-        def do():
-            self._container = Box(
-                css_classes=["exs-center-tab-inner-container"],
-                spacing=10,
-                hexpand=True,
-                child=[
-                    Button(
-                        child=Icon(Icons.ui.MONITOR_HEART, "m"),
-                        on_click=lambda _: print("monitor"),
-                        css_classes=["exs-center-tab-menu-button"],
-                        can_focus=False,
-                    ),
-                    Button(
-                        child=Icon(Icons.ui.WEATHER, "m"),
-                        on_click=lambda _: print("weather"),
-                        css_classes=["exs-center-tab-menu-button"],
-                        can_focus=False,
-                    ),
-                    Button(
-                        child=Icon(Icons.ui.TERM, "m"),
-                        on_click=lambda _: print("terminal"),
-                        css_classes=["exs-center-tab-menu-button"],
-                        can_focus=False,
-                    ),
-                    Button(
-                        child=Icon(Icons.ui.WINDOW_CLOSE, "m"),
-                        on_click=lambda _: self.close_menu(),
-                        css_classes=["exs-center-tab-menu-button"],
-                        can_focus=False,
-                    ),
-                ],
-            )
-            self._rev_container.set_child(self._container)
-            self._rev_container.set_reveal_child(True)
-            return False
-
-        GLib.timeout_add(400, do)
+        self._set_content(self.menu(), 400)
 
     def close_menu(self):
+        self._set_content(self.main_content(), 400)
+
+    def _set_content(self, box: Box, delay_ms: int = 0):
         self._rev_container.set_reveal_child(False)
 
         def do():
-            self._container = Box(
-                css_classes=["exs-center-tab-inner-container"],
-                spacing=10,
-                hexpand=True,
-                child=[
-                    Workspaces(self.monitor),
-                    Separator(vertical=True),
-                    Button(
-                        child=Icon(Icons.ui.MENU, "m"),
-                        on_click=lambda _: self.open_menu(),
-                        css_classes=["exs-center-tab-menu-button"],
-                        can_focus=False,
-                    ),
-                ],
-            )
-            self._rev_container.set_child(self._container)
+            self._rev_container.set_child(box)
             self._rev_container.set_reveal_child(True)
             return False
 
+        GLib.timeout_add(delay_ms, do)
+
+    def open_metrics(self):
+        self._set_content(self._rev_metrics, 400)
+
+        def do():
+            self._rev_metrics.set_reveal_child(True)
+            return False
+
         GLib.timeout_add(400, do)
+
+    def menu(self) -> Box:
+        return Box(
+            css_classes=["exs-center-tab-inner-container"],
+            spacing=10,
+            hexpand=True,
+            child=[
+                Button(
+                    child=Icon(Icons.ui.MONITOR_HEART, "m"),
+                    on_click=lambda _: self.open_metrics(),
+                    css_classes=["exs-center-tab-menu-button"],
+                    can_focus=False,
+                ),
+                Button(
+                    child=Icon(Icons.ui.WEATHER, "m"),
+                    on_click=lambda _: print("weather"),
+                    css_classes=["exs-center-tab-menu-button"],
+                    can_focus=False,
+                ),
+                Button(
+                    child=Icon(Icons.ui.TERM, "m"),
+                    on_click=lambda _: print("terminal"),
+                    css_classes=["exs-center-tab-menu-button"],
+                    can_focus=False,
+                ),
+                Button(
+                    child=Icon(Icons.ui.WINDOW_CLOSE, "m"),
+                    on_click=lambda _: self.close_menu(),
+                    css_classes=["exs-center-tab-menu-button"],
+                    can_focus=False,
+                ),
+            ],
+        )
+
+    def main_content(self) -> Box:
+        return Box(
+            css_classes=["exs-center-tab-inner-container"],
+            spacing=10,
+            hexpand=True,
+            child=[
+                Workspaces(self.monitor),
+                Separator(vertical=True),
+                Button(
+                    child=Icon(Icons.ui.MENU, "m"),
+                    on_click=lambda _: self.open_menu(),
+                    css_classes=["exs-center-tab-menu-button"],
+                    can_focus=False,
+                ),
+            ],
+        )
+
+    def widget_build_metrics(self):
+        monitor_tab = MonitorTab()
+
+        close_btn = Button(
+            child=Icon(Icons.ui.WINDOW_CLOSE, "m"),
+            on_click=lambda _: self.close_metrics(200),
+            css_classes=["exs-center-tab-menu-button"],
+            can_focus=False,
+        )
+        box = Box(
+            vertical=True,
+            spacing=5,
+            hexpand=True,
+            valign="start",
+            halign="start",
+            child=[close_btn, monitor_tab],
+        )
+        self._rev_metrics = Revealer(box, RevealerTransition.SLIDE_DOWN, 400)
+
+    def close_metrics(self, delay_ms: int = 0):
+        self._rev_metrics.set_reveal_child(False)
+        self._set_content(self.main_content(), delay_ms)
