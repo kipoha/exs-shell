@@ -24,6 +24,7 @@ class CenterTab(MonitorRevealerBaseWidget):
         monitor_id: int,
     ) -> None:
         self.niri: NiriService = State.services.niri
+        self.animating: bool = False
         win = win_factory.create(
             f"centertab{monitor_id}",
             monitor_id,
@@ -47,8 +48,13 @@ class CenterTab(MonitorRevealerBaseWidget):
     def on_open_close(self, *_: Any):
         def do():
             if self.visible:
-                self.close_metrics(100)
+                if self._rev_metrics.get_reveal_child():
+                    self.close_metrics(100)
+                else:
+                    self._set_content(self.main_content(), 100)
             else:
+                self.animating = False
+                self._rev_metrics.set_reveal_child(False)
                 self._rev_container.set_reveal_child(False)
 
         GLib.timeout_add(300, do)
@@ -104,6 +110,8 @@ class CenterTab(MonitorRevealerBaseWidget):
         self.set_visible(niri.overview_opened)
 
     def on_hover_lost(self, *_: Any):
+        if self.animating:
+            return
         if not self.niri.overview_opened:
             GLib.idle_add(lambda: self.set_visible(False))
 
@@ -114,11 +122,13 @@ class CenterTab(MonitorRevealerBaseWidget):
         self._set_content(self.main_content(), 400)
 
     def _set_content(self, box: Box, delay_ms: int = 0):
+        self.animating = True
         self._rev_container.set_reveal_child(False)
 
         def do():
             self._rev_container.set_child(box)
             self._rev_container.set_reveal_child(True)
+            self.animating = False
             return False
 
         GLib.timeout_add(delay_ms, do)
@@ -151,8 +161,20 @@ class CenterTab(MonitorRevealerBaseWidget):
                     can_focus=False,
                 ),
                 Button(
-                    child=Icon(Icons.ui.TERM, "m"),
-                    on_click=lambda _: print("terminal"),
+                    child=Icon(Icons.ui.WORKSPACE, "m"),
+                    on_click=lambda _: print("workspace"),
+                    css_classes=["exs-center-tab-menu-button"],
+                    can_focus=False,
+                ),
+                Button(
+                    child=Icon(Icons.ui.TOOL, "m"),
+                    on_click=lambda _: print("tool"),
+                    css_classes=["exs-center-tab-menu-button"],
+                    can_focus=False,
+                ),
+                Button(
+                    child=Icon(Icons.ui.POWER, "m"),
+                    on_click=lambda _: print("power"),
                     css_classes=["exs-center-tab-menu-button"],
                     can_focus=False,
                 ),
@@ -202,5 +224,8 @@ class CenterTab(MonitorRevealerBaseWidget):
         self._rev_metrics = Revealer(box, RevealerTransition.SLIDE_DOWN, 400)
 
     def close_metrics(self, delay_ms: int = 0):
+        if not self.visible:
+            self._rev_metrics.set_reveal_child(False)
+            return
         self._rev_metrics.set_reveal_child(False)
         self._set_content(self.main_content(), delay_ms)

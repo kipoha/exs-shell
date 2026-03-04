@@ -8,6 +8,7 @@
   padding: .6rem 1rem;
   color: c.$primary;
   border-radius: 0 0 1.5rem 1.5rem;
+  min-height: 2rem;
 
   separator {
     background-color: c.$surface_container_highest;
@@ -18,8 +19,15 @@
 
 .exs-center-tab-menu-button {
   padding: .1rem .3rem;
+
   &:hover {
     background-color: c.$surface_container;
+    border-radius: .5rem;
+  }
+
+  &.active {
+    color: c.$background;
+    background-color: c.$primary;
     border-radius: .5rem;
   }
 }
@@ -27,6 +35,7 @@
 .exs-center-tab-workspace-button {
   padding: 0 .4rem;
   color: c.$on_secondary;
+
   &:hover {
     background-color: c.$surface_container;
     border-radius: 1rem;

@@ -35,9 +35,8 @@ class MultiGraph(Gtk.DrawingArea):
             line_colors = [(0.2, 0.8, 1.0)]
         self.line_colors = line_colors
 
-        initial = (min_value + max_value) / 2
         self.histories = [
-            collections.deque([initial] * max_points, maxlen=max_points)
+            collections.deque([min_value] * max_points, maxlen=max_points)
             for _ in self.line_colors
         ]
 
@@ -50,10 +49,8 @@ class MultiGraph(Gtk.DrawingArea):
 
     def on_draw(self, _, cr: cairo.Context, width: int, height: int):
         pad = self.padding
-        usable_width = width - pad * 2
         usable_height = height - pad * 2
 
-        # Автоскейлинг
         all_values = [v for hist in self.histories for v in hist]
         if self.autoscale:
             min_v = min(all_values)
@@ -67,31 +64,29 @@ class MultiGraph(Gtk.DrawingArea):
         if value_range == 0:
             value_range = 1
 
-        step_x = usable_width / (self.max_points - 1)
+        step_x = width / (self.max_points - 1)
 
-        # Рисуем сетку
         cr.set_line_width(1)
         cr.set_source_rgba(*self.grid_color)
         grid_lines = 4
         for i in range(grid_lines + 1):
             y = pad + i * usable_height / grid_lines
-            cr.move_to(pad, height - y)
-            cr.line_to(width - pad, height - y)
+            cr.move_to(4, height - y)
+            cr.line_to(width, height - y)
             cr.stroke()
 
             val = min_v + (value_range * i / grid_lines)
             val_text = f"{val:.1f}" + (f" {self.unit}" if self.unit else "")
-            self._draw_text(cr, val_text, 4, height - y - self.font_size / 2)
+            self._draw_text(cr, val_text, 4, height - y - self.font_size - 4)
 
-        # Рисуем линии
         for idx, hist in enumerate(self.histories):
             cr.set_line_width(2)
             cr.set_source_rgb(*self.line_colors[idx])
             values = list(hist)
             for i, value in enumerate(values):
-                x = pad + i * step_x
+                x = i * step_x
                 y = pad + ((value - min_v) / value_range) * usable_height
-                y = height - y  # инвертируем ось y
+                y = height - y
                 if i == 0:
                     cr.move_to(x, y)
                 else:
@@ -138,8 +133,7 @@ class Graph(Gtk.DrawingArea):
         self.padding = padding
         self.unit = unit
 
-        initial = (min_value + max_value) / 2
-        self.history = collections.deque([initial] * max_points, maxlen=max_points)
+        self.history = collections.deque([min_value] * max_points, maxlen=max_points)
 
         self.set_draw_func(self.on_draw)
 
@@ -153,7 +147,6 @@ class Graph(Gtk.DrawingArea):
 
         pad = self.padding
 
-        usable_width = width - pad * 2
         usable_height = height - pad * 2
 
         values = list(self.history)
@@ -171,7 +164,7 @@ class Graph(Gtk.DrawingArea):
         if value_range == 0:
             value_range = 1
 
-        step_x = usable_width / (len(values) - 1)
+        step_x = width / (len(values) - 1)
 
         cr.set_line_width(1)
         cr.set_source_rgba(*self.grid_color)
@@ -180,21 +173,21 @@ class Graph(Gtk.DrawingArea):
         for i in range(grid_lines + 1):
             y = height - pad - (i / grid_lines) * usable_height
 
-            cr.move_to(pad, y)
-            cr.line_to(width - pad, y)
+            cr.move_to(4, y)
+            cr.line_to(width, y)
             cr.stroke()
 
             val = min_v + (value_range * i / grid_lines)
             val_text = f"{val:.1f}"
             if self.unit:
                 val_text += f" {self.unit}"
-            self._draw_text(cr, val_text, 4, y - self.font_size / 2)
+            self._draw_text(cr, val_text, 4, y - self.font_size - 4)
 
         cr.set_line_width(2)
         cr.set_source_rgb(*self.line_color)
 
         for i, value in enumerate(values):
-            x = pad + i * step_x
+            x = i * step_x
             y = height - pad - ((value - min_v) / value_range) * usable_height
 
             if i == 0:
