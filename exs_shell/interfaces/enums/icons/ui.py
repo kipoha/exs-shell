@@ -77,6 +77,7 @@ class UIIcons(StrEnum):
     MEMORY = "memory_alt"
     CPU = "memory"
     NETWORK = "network_cell"
+    PROCESSES = "component_exchange"
     # WINDOW_CLOSE = ""
     # WIDGET = "󰜬"
     # TERM = ""
