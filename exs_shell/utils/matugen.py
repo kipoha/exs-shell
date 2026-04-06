@@ -9,6 +9,7 @@ from typing import Awaitable
 from ignis.css_manager import CssManager
 from ignis.utils import AsyncCompletedProcess, Timeout, exec_sh_async
 
+from exs_shell.interfaces.types import AnyDict
 from exs_shell.utils.loop import run_async_task
 from exs_shell.utils.path import Dirs
 from exs_shell.utils.other import SCB
@@ -58,14 +59,23 @@ class Matugen:
             results = await gather(*tasks)
 
             for i, result in enumerate(results):
-                prefix = schemes[i]
+                prefix: ColorSchemes = schemes[i]
                 scss += f"/* {prefix} */\n"
-                colors = (
-                    json.loads(result.stdout).get("colors", {}) if result.stdout else {}
-                )
+
+                try:
+                    data: AnyDict = json.loads(result.stdout) if result.stdout else {}
+                    colors: AnyDict = data.get("colors", {})
+                except json.JSONDecodeError:
+                    colors: AnyDict = {}
+
                 if colors:
                     for key, value in colors.items():
-                        scss += f"$palette_{prefix.replace('-', '_')}_{key}: {value['default']};\n"
+                        default_obj = value.get('default', {})
+                        color_hex = default_obj.get('color')
+                        
+                        if color_hex:
+                            scss += f"$palette_{prefix.replace('-', '_')}_{key}: {color_hex};\n"
+
                 scss += "\n"
             scss_file = Dirs.CONFIG_DIR / "palettes.scss"
             scss_file.write_text(scss)

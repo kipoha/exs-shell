@@ -12,7 +12,7 @@ class ShellCommandBuilder:
         mode = "dark" if dark else "light"
         other_param = " ".join(args)
         return (
-            f"matugen image -c '{config_file}' -t scheme-{scheme} '{image_path}' -m '{mode}' --contrast {contrast}"
+            f"matugen image -c '{config_file}' -t scheme-{scheme} '{image_path}' -m '{mode}' --contrast {contrast} --source-color-index 0"
             + " "
             + other_param
         )

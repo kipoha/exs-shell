@@ -8,12 +8,13 @@ from ignis import utils
 from ignis.app import IgnisApp
 from ignis.base_service import BaseService
 from ignis.exceptions import LayerShellNotSupportedError
-from ignis.widgets.picture import Picture
+from ignis.widgets import Picture
 
 from exs_shell import register
 from exs_shell.app.vars import NAMESPACE
 from exs_shell.configs.user import appearance
 from exs_shell.interfaces.enums.gtk.transitions import RevealerTransition
+# from exs_shell.ui.widgets.custom.smart_picture import SmartPicture
 from exs_shell.ui.widgets.windows import Revealer
 from exs_shell.utils.matugen import Matugen
 from exs_shell.utils.path import Dirs
@@ -52,6 +53,11 @@ class WallpaperLayerWindow(Gtk.Window):
             width=width,
             height=height,
         )
+        # pic = SmartPicture(
+        #     image=wallpaper_path,
+        #     width=width,
+        #     height=height,
+        # )
         self.revealer = Revealer(
             pic,
             transition_type=RevealerTransition.CROSSFADE,

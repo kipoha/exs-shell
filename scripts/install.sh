@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-REPO="kipoha/exs-shell"
+REPO="exs-lab/exs-shell"
 
 echo "Fetching releases..."
 

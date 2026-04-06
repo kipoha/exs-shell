@@ -161,7 +161,6 @@ class CPU(Box):
             self.core_temp_labels[i].set_label(self._fmt_temp(temp))
 
 
-
 class Memory(Box):
     def __init__(self, **kwargs: Any):
         self.mem = MemoryMonitor("GB")
@@ -179,11 +178,12 @@ class Memory(Box):
         )
         self.graph.set_size_request(W, H - STAT_H * 3 - PADDING * 4)
 
-        self.stat_used = _label("", css_classes=["exs-stat-value"])
-        self.stat_free = _label("", css_classes=["exs-stat-value"])
-        self.stat_cached = _label("", css_classes=["exs-stat-value"])
-        self.stat_available = _label("", css_classes=["exs-stat-value"])
-        self._push_stats()
+        self._lbl_used = _label("", css_classes=["exs-stat-value"])
+        self._lbl_free = _label("", css_classes=["exs-stat-value"])
+        self._lbl_cached = _label("", css_classes=["exs-stat-value"])
+        self._lbl_available = _label("", css_classes=["exs-stat-value"])
+
+        self._update_stat_labels()
 
         super().__init__(
             vertical=True,
@@ -195,6 +195,51 @@ class Memory(Box):
             ],
             **kwargs,
         )
+
+    def _build_stats(self) -> Box:
+        def row(name: str, lbl: Label) -> Box:
+            return Box(
+                spacing=8,
+                child=[
+                    _label(name, css_classes=["exs-stat-name"]),
+                    lbl,
+                ],
+            )
+
+        return Box(
+            spacing=16,
+            child=[
+                Box(
+                    vertical=True,
+                    spacing=2,
+                    child=[
+                        row("Used", self._lbl_used),
+                        row("Free", self._lbl_free),
+                    ],
+                ),
+                Box(
+                    vertical=True,
+                    spacing=2,
+                    child=[
+                        row("Cached", self._lbl_cached),
+                        row("Available", self._lbl_available),
+                    ],
+                ),
+            ],
+        )
+
+    def _update_stat_labels(self) -> None:
+        total, used, free, cached, available = self.mem.all
+        self._lbl_used.set_label(f"{used:.2f} GB")
+        self._lbl_free.set_label(f"{free:.2f} GB")
+        self._lbl_cached.set_label(f"{cached:.2f} GB")
+        self._lbl_available.set_label(f"{available:.2f} GB")
+
+    @register.events.poll(1000)
+    def update(self) -> None:
+        total, used, free, cached, available = self.mem.all
+        self.graph.push([used, cached])
+        self._update_stat_labels()
 
     def _build_legend(self) -> Box:
         def line(color: str, text: str) -> Box:
@@ -221,90 +266,90 @@ class Memory(Box):
                 line(self.on_tertiary_hex, "Cached"),
             ],
         )
-
-    def _build_stats(self) -> Box:
-        return Box(
-            spacing=16,
-            child=[
-                Box(
-                    vertical=True,
-                    spacing=2,
-                    child=[
-                        _stat_row("Used", "", self.primary_hex),
-                        _stat_row("Free", "", self.primary_hex),
-                    ],
-                ),
-                Separator(
-                    vertical=True,
-                    style=f"background-color: {self.primary_hex}; min-width: .1rem; min-height: 1rem; border-radius: 1rem; margin: 0.5rem;",
-                ),
-                Box(
-                    vertical=True,
-                    spacing=2,
-                    child=[
-                        _stat_row("Cached", "", self.primary_hex),
-                        _stat_row("Available", "", self.primary_hex),
-                    ],
-                ),
-            ],
-        )
-
-    def _push_stats(self) -> None:
-        total, used, free, cached, available = self.mem.all
-        self.graph.push([used, cached])
-        self._used = used
-        self._free = free
-        self._cached = cached
-        self._available = available
-
-    def update(self) -> None:
-        _, used, free, cached, available = self.mem.all
-        self.graph.push([used, cached])
-        stats = self.get_last_child()
-        if stats:
-            rows = stats.get_first_child()
-        self._rebuild_stats(used, free, cached, available)
-
-    def _rebuild_stats(
-        self, used: float, free: float, cached: float, available: float
-    ) -> None:
-        child = self.get_first_child()
-        last = None
-        while child:
-            last = child
-            child = child.get_next_sibling()
-        if last:
-            self.remove(last)
-
-        self.append(
-            Box(
-                spacing=16,
-                child=[
-                    Box(
-                        vertical=True,
-                        spacing=2,
-                        child=[
-                            _stat_row("Used", f"{used:.2f} GB", self.primary_hex),
-                            _stat_row("Free", f"{free:.2f} GB", self.primary_hex),
-                        ],
-                    ),
-                    Separator(
-                        vertical=True,
-                        style=f"background-color: {self.primary_hex}; min-width: .1rem; min-height: 1rem; border-radius: 1rem; margin: 0.5rem;",
-                    ),
-                    Box(
-                        vertical=True,
-                        spacing=2,
-                        child=[
-                            _stat_row("Cached", f"{cached:.2f} GB", self.primary_hex),
-                            _stat_row(
-                                "Available", f"{available:.2f} GB", self.primary_hex
-                            ),
-                        ],
-                    ),
-                ],
-            )
-        )
+    #
+    # def _build_stats(self) -> Box:
+    #     return Box(
+    #         spacing=16,
+    #         child=[
+    #             Box(
+    #                 vertical=True,
+    #                 spacing=2,
+    #                 child=[
+    #                     _stat_row("Used", "", self.primary_hex),
+    #                     _stat_row("Free", "", self.primary_hex),
+    #                 ],
+    #             ),
+    #             Separator(
+    #                 vertical=True,
+    #                 style=f"background-color: {self.primary_hex}; min-width: .1rem; min-height: 1rem; border-radius: 1rem; margin: 0.5rem;",
+    #             ),
+    #             Box(
+    #                 vertical=True,
+    #                 spacing=2,
+    #                 child=[
+    #                     _stat_row("Cached", "", self.primary_hex),
+    #                     _stat_row("Available", "", self.primary_hex),
+    #                 ],
+    #             ),
+    #         ],
+    #     )
+    #
+    # def _push_stats(self) -> None:
+    #     total, used, free, cached, available = self.mem.all
+    #     self.graph.push([used, cached])
+    #     self._used = used
+    #     self._free = free
+    #     self._cached = cached
+    #     self._available = available
+    #
+    # def update(self) -> None:
+    #     _, used, free, cached, available = self.mem.all
+    #     self.graph.push([used, cached])
+    #     stats = self.get_last_child()
+    #     if stats:
+    #         rows = stats.get_first_child()
+    #     self._rebuild_stats(used, free, cached, available)
+    #
+    # def _rebuild_stats(
+    #     self, used: float, free: float, cached: float, available: float
+    # ) -> None:
+    #     child = self.get_first_child()
+    #     last = None
+    #     while child:
+    #         last = child
+    #         child = child.get_next_sibling()
+    #     if last:
+    #         self.remove(last)
+    #
+    #     self.append(
+    #         Box(
+    #             spacing=16,
+    #             child=[
+    #                 Box(
+    #                     vertical=True,
+    #                     spacing=2,
+    #                     child=[
+    #                         _stat_row("Used", f"{used:.2f} GB", self.primary_hex),
+    #                         _stat_row("Free", f"{free:.2f} GB", self.primary_hex),
+    #                     ],
+    #                 ),
+    #                 Separator(
+    #                     vertical=True,
+    #                     style=f"background-color: {self.primary_hex}; min-width: .1rem; min-height: 1rem; border-radius: 1rem; margin: 0.5rem;",
+    #                 ),
+    #                 Box(
+    #                     vertical=True,
+    #                     spacing=2,
+    #                     child=[
+    #                         _stat_row("Cached", f"{cached:.2f} GB", self.primary_hex),
+    #                         _stat_row(
+    #                             "Available", f"{available:.2f} GB", self.primary_hex
+    #                         ),
+    #                     ],
+    #                 ),
+    #             ],
+    #         )
+    #     )
 
 
 class Disk(Box):
@@ -484,6 +529,7 @@ class Processes(Box):
         self.primary = hex_to_rgb(self.primary_hex)
         self._sort_by: ProcessSortBy = "cpu"
         self._filter: str = ""
+        self._row_cache: list[Box] = []
 
         self._search = Entry(
             placeholder_text="Search...",
@@ -507,7 +553,6 @@ class Processes(Box):
         )
 
         self._refresh()
-        GLib.timeout_add(2000, lambda: (self._refresh(), True)[1])
 
     def _build_toolbar(self) -> Box:
         self._sort_btns: dict[str, Button] = {}
@@ -595,13 +640,56 @@ class Processes(Box):
             ],
         )
 
+    # def _refresh(self) -> None:
+    #     procs = self.procs.lst(sort_by=self._sort_by, filter_name=self._filter or None)
+    #     for c in list(self._list_box.get_child()):
+    #         self._list_box.remove(c)
+    #     self._list_box.append(self._build_header())
+    #     for p in procs[:80]:
+    #         self._list_box.append(self._build_row(p))
     def _refresh(self) -> None:
-        procs = self.procs.lst(sort_by=self._sort_by, filter_name=self._filter or None)
-        for c in list(self._list_box.get_child()):
-            self._list_box.remove(c)
-        self._list_box.append(self._build_header())
-        for p in procs[:80]:
-            self._list_box.append(self._build_row(p))
+        procs = self.procs.lst(
+            sort_by=self._sort_by,
+            filter_name=self._filter or None,
+        )[:80]
+
+        for i, proc in enumerate(procs):
+            if i < len(self._row_cache):
+                self._update_row(self._row_cache[i], proc)
+            else:
+                row = self._build_row(proc)
+                self._row_cache.append(row)
+                self._list_box.append(row)
+
+        for i in range(len(procs), len(self._row_cache)):
+            self._row_cache[i].set_visible(False)
+
+    def _update_row(self, row: Box, proc) -> None:
+        row.set_visible(True)
+        cells = list(row.get_child())
+        is_suspended = proc.status == "stopped"
+
+        values = [
+            str(proc.pid),
+            proc.name[:24],
+            (proc.username or "")[:24],
+            f"{proc.cpu_percent:.1f}",
+            f"{proc.memory:.1f}",
+            proc.status,
+        ]
+        for i, val in enumerate(values):
+            cells[i].set_label(val)
+
+        action_box = cells[6]
+        btns = list(action_box.get_child())
+        if len(btns) >= 3:
+            btns[2].get_child().set_label("Res" if is_suspended else "Susp")
+
+        row._proc_pid = proc.pid
+        row._proc_suspended = is_suspended
+
+    def update(self) -> None:
+        self._refresh()
 
     def _do(self, fn, pid: int) -> None:
         fn(pid)
