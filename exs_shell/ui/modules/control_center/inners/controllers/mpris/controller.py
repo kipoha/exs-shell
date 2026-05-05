@@ -1,8 +1,7 @@
 from ignis.widgets import Box
 from ignis.services.mpris import MprisPlayer, MprisService
 
-from exs_shell import register
-from exs_shell.state import State
+from libexs import register, State
 from exs_shell.ui.modules.control_center.inners.controllers.mpris.full import Player
 from exs_shell.ui.modules.control_center.inners.controllers.mpris.mini import MiniPlayer
 
@@ -11,7 +10,7 @@ from exs_shell.ui.modules.control_center.inners.controllers.mpris.mini import Mi
 class MprisController(Box):
     def __init__(self):
         self.mpris: MprisService = State.services.mpris
-        super().__init__(css_classes=["control-center-mpris"])
+        super().__init__(css_classes=["control-center-mpris"], vertical=True, spacing=5)
 
         self._players_map: dict[
             MprisPlayer, tuple[MiniPlayer, Player]

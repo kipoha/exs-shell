@@ -7,11 +7,11 @@ from loguru import logger
 
 from ignis.base_service import BaseService
 from ignis.utils import exec_sh_async
+from libexs import register
+from libexs.utils.loop import run_async_task
 
-from exs_shell import register
+from exs_shell.app.path import Paths
 from exs_shell.configs.user import user
-from exs_shell.utils.loop import run_async_task
-from exs_shell.utils.path import Paths
 
 
 @register.event

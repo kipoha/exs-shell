@@ -1,8 +1,7 @@
 from ignis import widgets
 from ignis.services.niri import NiriService
 
-from exs_shell import register
-from exs_shell.state import State
+from libexs import register, State
 
 
 @register.widget

@@ -1,11 +1,11 @@
 import argparse
 import traceback
 
+from libexs.utils import run_async
 from loguru import logger
 
 from exs_shell.app.vars import APP_NAME
 from exs_shell.controllers.ipc.client import send_command
-from exs_shell.utils.loop import run_async
 
 
 def ipc_cmd(parser: argparse.ArgumentParser):

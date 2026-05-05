@@ -3,12 +3,11 @@ from typing import Any
 from ignis import utils
 from ignis.services.notifications import Notification, NotificationService
 from ignis.widgets import Box
+from libexs import register, State
 
-from exs_shell import register
 from exs_shell.configs.user import notifications
 from exs_shell.interfaces.enums.gtk.transitions import RevealerTransition
 from exs_shell.interfaces.enums.gtk.windows import Layer
-from exs_shell.state import State
 from exs_shell.ui.factory import window
 from exs_shell.ui.modules.notification.shared import NotificationWidget
 from exs_shell.ui.widgets.base import RevealerBaseWidget

@@ -2,10 +2,11 @@ import cairo
 
 from math import pi
 
-from gi.repository import Gtk, GLib, Pango, PangoCairo  # type: ignore
+from gi.repository import Gtk, GLib, Pango, PangoCairo
+from libexs.utils import hex_to_rgb
 
 from exs_shell.interfaces.types import IconType
-from exs_shell.utils.colors import get_hex_color, hex_to_rgb
+from exs_shell.utils.colors import get_hex_color
 
 
 class ArcMeter(Gtk.DrawingArea):

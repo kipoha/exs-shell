@@ -3,8 +3,8 @@ from typing import Any
 from datetime import datetime
 
 from ignis.widgets import Label
+from libexs import register
 
-from exs_shell import register
 from exs_shell.configs.user import user
 
 

@@ -3,8 +3,8 @@ import os
 from ignis.options_manager import OptionsManager
 from ignis.options import Options
 
+from exs_shell.app.path import Dirs
 from exs_shell.configs.user.lock import LockGroup
-from exs_shell.utils.path import Dirs
 from exs_shell.configs.user.appearence import Appearance
 from exs_shell.configs.user.bar import Bar
 from exs_shell.configs.user.main import UserConfig

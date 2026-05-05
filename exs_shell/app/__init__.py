@@ -1,5 +1,6 @@
 import traceback
 
+from libexs.utils import kill_process, run_in_thread, send_notification
 from loguru import logger
 
 from watchdog.observers import Observer
@@ -8,10 +9,7 @@ from watchdog.observers.api import BaseObserver
 from exs_shell.app.watch import ReloadHandler
 from exs_shell.app.vars import APP_NAME
 from exs_shell.app.init import before, after
-from exs_shell.utils.loop import run_in_thread
-from exs_shell.utils.notify_system import send_notification
-from exs_shell.utils.path import Paths
-from exs_shell.utils.proc import kill_process
+from exs_shell.app.path import Paths
 
 try:
     from ignis.app import IgnisApp

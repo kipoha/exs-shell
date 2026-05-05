@@ -8,17 +8,14 @@ local_scheme = "node-and-date"
 
 [project]
 name = "exs-shell"
-version = "0.2.8"
+version = "0.3.0"
 description = "Just Desktop for Niri Wayland Compositor"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "exs-core>=0.0.4",
     "ignis @ git+https://git@github.com/ignis-sh/ignis.git",
     "pam>=0.2.0",
-    "pillow>=12.0.0",
-    "psutil>=7.1.0",
-    "pygobject>=3.54.3",
-    "requests>=2.32.5",
     "six>=1.17.0",
     "watchdog>=6.0.0",
 ]

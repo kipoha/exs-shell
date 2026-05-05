@@ -4,12 +4,13 @@ import subprocess
 
 from typing import Callable
 
-from exs_shell import register
-from exs_shell.utils import Dirs, Paths
-from exs_shell.utils.proc import set_death_signal
-from exs_shell.utils.loop import run_in_thread
+from gi.repository import GLib
+from libexs import register
+from libexs.utils.proc import set_death_signal
+from libexs.utils.loop import run_in_thread
 
-from gi.repository import GLib  # type: ignore
+from exs_shell.app.path import Dirs, Paths
+
 
 
 @register.service

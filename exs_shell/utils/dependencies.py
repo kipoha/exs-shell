@@ -3,7 +3,7 @@ from typing import cast
 from ignis.utils import exec_sh
 from ignis.services.niri import NiriService
 
-from exs_shell.state import State
+from libexs import State
 
 
 def check_lock() -> bool:

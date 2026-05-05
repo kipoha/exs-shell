@@ -8,11 +8,10 @@ from ignis.services.network import (
     WifiAccessPoint,
 )
 
-from exs_shell import register
-from exs_shell.interfaces.enums.icons import Icons
-from exs_shell.state import State
-from exs_shell.ui.widgets.custom.icon import Icon
-from exs_shell.utils.commands import run_command
+from libexs import register, State
+from libexs.utils.commands import run_command
+from libexs.enums.icons import Icons
+from libexs.widgets.icon import Icon
 
 
 @register.event

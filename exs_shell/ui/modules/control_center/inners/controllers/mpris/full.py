@@ -2,14 +2,14 @@ from typing import Any, Callable
 
 from ignis.widgets import Box, Button, CenterBox, Label, Overlay, Picture, Scale
 from ignis.services.mpris import MprisPlayer
+from libexs.enums.icons import Icons
+from libexs.widgets.icon import Icon
+from libexs.utils.loop import run_async_task
 
+from exs_shell.app.path import Paths
 from exs_shell.interfaces.enums.gtk.transitions import RevealerTransition
-from exs_shell.interfaces.enums.icons import Icons
 from exs_shell.ui.widgets.custom.audio_visualizer import CircularAudioVisualizer
-from exs_shell.ui.widgets.custom.icon import Icon
 from exs_shell.ui.widgets.windows import Revealer
-from exs_shell.utils.path import Paths
-from exs_shell.utils.loop import run_async_task
 
 
 class Player(Box):

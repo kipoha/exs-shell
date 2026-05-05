@@ -1,6 +1,7 @@
 from ignis.widgets import Box, CenterBox
+from libexs import register
+from libexs.utils import get_monitor_scale
 
-from exs_shell import register
 from exs_shell.configs.user import bar
 from exs_shell.interfaces.enums.gtk.transitions import RevealerTransition
 from exs_shell.interfaces.enums.gtk.windows import Layer
@@ -9,7 +10,6 @@ from exs_shell.ui.factory import window
 from exs_shell.ui.factory.bar_widgets import create_bar_widgets
 from exs_shell.ui.widgets.base import RevealerBaseWidget
 from exs_shell.ui.widgets.windows import Revealer
-from exs_shell.utils.monitor import get_monitor_scale
 
 
 @register.event

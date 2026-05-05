@@ -1,7 +1,7 @@
 import json
 import asyncio
 
-from exs_shell.utils import Dirs
+from exs_shell.app.path import Dirs
 
 
 async def send_command(*cmd: str) -> None:

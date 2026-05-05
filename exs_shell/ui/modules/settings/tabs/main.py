@@ -14,16 +14,11 @@ from ignis.widgets import (
     Overlay,
 )
 from ignis.services.fetch import FetchService
-
-from exs_shell import register
-from exs_shell.configs.user import bar, user, notifications, appearance
-from exs_shell.interfaces.enums.configs.position import TopBottom
-from exs_shell.state import State
-from exs_shell.ui.widgets.custom.icon import Icon
-from exs_shell.utils.loop import run_async_task
-from exs_shell.interfaces.enums.icons import Icons
-from exs_shell.ui.modules.settings.tabs.base import BaseTab, BaseCategory
-from exs_shell.ui.modules.settings.widgets import (
+from libexs import register
+from libexs import State
+from libexs.enums.icons import Icons
+from libexs.settings.base import BaseTab, BaseCategory
+from libexs.settings.widgets import (
     CategoryLabel,
     SettingsRow,
     SelectRow,
@@ -31,6 +26,11 @@ from exs_shell.ui.modules.settings.widgets import (
     SwitchRow,
     FileDialogRow,
 )
+from libexs.utils.loop import run_async_task
+from libexs.widgets.icon import Icon
+
+from exs_shell.configs.user import bar, user, notifications, appearance
+from exs_shell.interfaces.enums.configs.position import TopBottom
 
 
 class AppearanceCategory(BaseCategory):

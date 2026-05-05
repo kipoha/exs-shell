@@ -1,4 +1,4 @@
-from exs_shell.utils.path import Dirs, Paths
+from exs_shell.app.path import Dirs, Paths
 
 
 def build_scss():

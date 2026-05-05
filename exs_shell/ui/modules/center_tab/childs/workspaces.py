@@ -2,12 +2,10 @@ from typing import Any
 
 from ignis.services.niri import NiriService, NiriWorkspace
 from ignis.widgets import Box, Button
-
-from exs_shell import register
-from exs_shell.state import State
-from exs_shell.ui.widgets.custom.icon import Icon
-from exs_shell.utils import monitor
-from exs_shell.interfaces.enums.icons import Icons
+from libexs import State, register
+from libexs.enums.icons import Icons
+from libexs.utils import monitor
+from libexs.widgets.icon import Icon
 
 
 @register.event

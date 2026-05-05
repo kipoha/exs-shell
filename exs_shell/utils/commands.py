@@ -1,7 +1,7 @@
 from typing import Any
 
+from libexs import State
 from exs_shell.interfaces.types import Commands
-from exs_shell.state import State
 
 all_commands: Commands = State.commands
 

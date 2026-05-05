@@ -1,8 +1,9 @@
 import json
 import asyncio
 
-from exs_shell.state import State
-from exs_shell.utils import Dirs
+from libexs import State
+
+from exs_shell.app.path import Dirs
 from exs_shell.interfaces.schemas.ipc.commands import Command
 from exs_shell.interfaces.types import Commands
 

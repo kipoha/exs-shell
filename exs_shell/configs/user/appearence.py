@@ -1,7 +1,7 @@
 from ignis.options_manager import OptionsGroup
 
+from exs_shell.app.path import Paths
 from exs_shell.interfaces.enums.colorschemes import ColorSchemes
-from exs_shell.utils.path import Paths
 
 
 class Appearance(OptionsGroup):

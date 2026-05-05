@@ -2,7 +2,8 @@ import os
 import sys
 from pathlib import Path
 from loguru import logger
-from gi.repository import GLib  # type: ignore
+
+from gi.repository import GLib
 
 
 is_sphinx_build: bool = "sphinx" in sys.modules

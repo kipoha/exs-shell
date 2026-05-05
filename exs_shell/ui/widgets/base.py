@@ -1,9 +1,9 @@
 from ignis.widgets import CenterBox, Box, EventBox
+from libexs import register
+from libexs.utils.monitor import get_active_monitor, get_monitor_scale
 
-from exs_shell import register
 from exs_shell.interfaces.schemas.widget.base import WindowEntity
 from exs_shell.ui.widgets.windows import RevealerWindow, Revealer, Window
-from exs_shell.utils.monitor import get_active_monitor, get_monitor_scale
 
 
 class BaseWidget:

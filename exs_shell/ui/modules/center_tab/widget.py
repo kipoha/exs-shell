@@ -1,19 +1,18 @@
 from typing import Any
 
-from gi.repository import GLib  # type: ignore
+from gi.repository import GLib
 
 from ignis.services.niri import NiriService
 from ignis.widgets import Button, Corner, EventBox, Box, Separator
+from libexs import State, register
+from libexs.enums.icons import Icons
+from libexs.widgets.icon import Icon
 
-from exs_shell import register
 from exs_shell.interfaces.enums.gtk.transitions import RevealerTransition
-from exs_shell.interfaces.enums.icons import Icons
-from exs_shell.state import State
-from exs_shell.ui.modules.center_tab.childs.metrics import MonitorTab
+# from exs_shell.ui.modules.center_tab.childs.metrics import MonitorTab
 from exs_shell.ui.modules.center_tab.childs.workspaces import Workspaces
 from exs_shell.ui.factory import window as win_factory
 from exs_shell.ui.widgets.base import MonitorRevealerBaseWidget
-from exs_shell.ui.widgets.custom.icon import Icon
 from exs_shell.ui.widgets.windows import Revealer
 
 
@@ -33,7 +32,7 @@ class CenterTab(MonitorRevealerBaseWidget):
         )
         self.monitor = monitor_id
         self.widget_build()
-        self.widget_build_metrics()
+        # self.widget_build_metrics()
         super().__init__(
             self._box,
             win,
@@ -48,13 +47,13 @@ class CenterTab(MonitorRevealerBaseWidget):
     def on_open_close(self, *_: Any):
         def do():
             if self.visible:
-                if self._rev_metrics.get_reveal_child():
-                    self.close_metrics(100)
-                else:
+                # if self._rev_metrics.get_reveal_child():
+                #     self.close_metrics(100)
+                # else:
                     self._set_content(self.main_content(), 100)
             else:
                 self.animating = False
-                self._rev_metrics.set_reveal_child(False)
+                # self._rev_metrics.set_reveal_child(False)
                 self._rev_container.set_reveal_child(False)
 
         GLib.timeout_add(300, do)
@@ -133,14 +132,14 @@ class CenterTab(MonitorRevealerBaseWidget):
 
         GLib.timeout_add(delay_ms, do)
 
-    def open_metrics(self):
-        self._set_content(self._rev_metrics, 400)
-
-        def do():
-            self._rev_metrics.set_reveal_child(True)
-            return False
-
-        GLib.timeout_add(400, do)
+    # def open_metrics(self):
+    #     self._set_content(self._rev_metrics, 400)
+    #
+    #     def do():
+    #         self._rev_metrics.set_reveal_child(True)
+    #         return False
+    #
+    #     GLib.timeout_add(400, do)
 
     def menu(self) -> Box:
         return Box(
@@ -150,7 +149,7 @@ class CenterTab(MonitorRevealerBaseWidget):
             child=[
                 Button(
                     child=Icon(Icons.ui.MONITOR_HEART, "m"),
-                    on_click=lambda _: self.open_metrics(),
+                    # on_click=lambda _: self.open_metrics(),
                     css_classes=["exs-center-tab-menu-button"],
                     can_focus=False,
                 ),
@@ -204,28 +203,28 @@ class CenterTab(MonitorRevealerBaseWidget):
             ],
         )
 
-    def widget_build_metrics(self):
-        monitor_tab = MonitorTab()
+    # def widget_build_metrics(self):
+    #     monitor_tab = MonitorTab()
+    #
+    #     close_btn = Button(
+    #         child=Icon(Icons.ui.WINDOW_CLOSE, "m"),
+    #         on_click=lambda _: self.close_metrics(200),
+    #         css_classes=["exs-center-tab-menu-button"],
+    #         can_focus=False,
+    #     )
+    #     box = Box(
+    #         vertical=True,
+    #         spacing=5,
+    #         hexpand=True,
+    #         valign="start",
+    #         halign="start",
+    #         child=[close_btn, monitor_tab],
+    #     )
+    #     self._rev_metrics = Revealer(box, RevealerTransition.SLIDE_DOWN, 400)
 
-        close_btn = Button(
-            child=Icon(Icons.ui.WINDOW_CLOSE, "m"),
-            on_click=lambda _: self.close_metrics(200),
-            css_classes=["exs-center-tab-menu-button"],
-            can_focus=False,
-        )
-        box = Box(
-            vertical=True,
-            spacing=5,
-            hexpand=True,
-            valign="start",
-            halign="start",
-            child=[close_btn, monitor_tab],
-        )
-        self._rev_metrics = Revealer(box, RevealerTransition.SLIDE_DOWN, 400)
-
-    def close_metrics(self, delay_ms: int = 0):
-        if not self.visible:
-            self._rev_metrics.set_reveal_child(False)
-            return
-        self._rev_metrics.set_reveal_child(False)
-        self._set_content(self.main_content(), delay_ms)
+    # def close_metrics(self, delay_ms: int = 0):
+    #     if not self.visible:
+    #         self._rev_metrics.set_reveal_child(False)
+    #         return
+    #     self._rev_metrics.set_reveal_child(False)
+    #     self._set_content(self.main_content(), delay_ms)

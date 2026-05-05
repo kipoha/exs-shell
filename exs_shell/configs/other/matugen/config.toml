@@ -75,3 +75,13 @@ post_hook = 'pkill -SIGUSR1 nvim'
 input_path = './templates/tmux.conf'
 output_path = '~/.config/tmux/generated.conf'
 post_hook = 'tmux source-file ~/.config/tmux/generated.conf' 
+
+[templates.spicetify]
+input_path = './templates/spicetify.ini'
+output_path = '~/.config/spicetify/Themes/exs/color.ini'
+post_hook = 'spicetify apply -n'
+
+[templates.telegram]
+input_path = './templates/telegram.tdesktop-palette'
+output_path = '~/.local/share/TelegramDesktop/tdata/themes/exs.tdesktop-palette'
+post_hook = 'kill -HUP $(pidof telegram-desktop) 2>/dev/null || true'

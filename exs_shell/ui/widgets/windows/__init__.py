@@ -32,7 +32,7 @@ class Window(IgnisWindow):
         **kwargs: Any,
     ):
         super().__init__(
-            f"{NAMESPACE}_{namespace}",
+            f"{NAMESPACE}.{namespace.replace('_', '.')}",
             monitor,
             anchor,  # type: ignore
             exclusivity,

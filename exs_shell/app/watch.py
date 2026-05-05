@@ -1,12 +1,11 @@
 import os
 import sys
-import traceback
 
 from loguru import logger
 
 from watchdog.events import DirModifiedEvent, FileModifiedEvent, FileSystemEventHandler
 
-from exs_shell.utils.path import Paths
+from exs_shell.app.path import Paths
 
 IGNORE_PATHS = (
     ".venv",
@@ -16,8 +15,6 @@ IGNORE_PATHS = (
     "pg_storage",
     "exs_shell_deprecated",
 )
-
-
 
 
 class ReloadHandler(FileSystemEventHandler):

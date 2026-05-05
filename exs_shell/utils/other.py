@@ -1,4 +1,4 @@
-from exs_shell.utils.path import Paths, Dirs
+from exs_shell.app.path import Paths, Dirs
 
 
 class ShellCommandBuilder:

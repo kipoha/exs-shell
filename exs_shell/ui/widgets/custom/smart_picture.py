@@ -1,11 +1,13 @@
-from gi.repository import GdkPixbuf, Gtk, GLib, Gdk  # type: ignore
+from gi.repository import GdkPixbuf, Gtk, GLib, Gdk
 from ignis.widgets import Box, Picture
 
 
 def is_animated_gif(path: str) -> bool:
     try:
         anim = GdkPixbuf.PixbufAnimation.new_from_file(path)
-        return not anim.is_static_image()
+        if anim:
+            return not anim.is_static_image()
+        return False
     except Exception:
         return False
 

@@ -1,7 +1,7 @@
 import os
 from threading import Thread
 
-from gi.repository import GLib  # type: ignore
+from gi.repository import GLib
 
 from ignis.widgets import (
     Box,
@@ -14,20 +14,20 @@ from ignis.widgets import (
     Scroll,
     Separator,
 )
-
-from exs_shell import register
-from exs_shell.configs.user import appearance
-from exs_shell.interfaces.enums.colorschemes import ColorSchemes
-from exs_shell.interfaces.enums.icons import Icons
-from exs_shell.ui.modules.settings.tabs.base import BaseTab, BaseCategory
-from exs_shell.ui.modules.settings.widgets import (
+from libexs import register
+from libexs.enums.icons import Icons
+from libexs.settings.base import BaseCategory, BaseTab
+from libexs.settings.widgets import (
     CategoryLabel,
-    SettingsRow,
     FileDialogRow,
+    SettingsRow,
     SpinRow,
     SwitchRow,
 )
-from exs_shell.ui.widgets.custom.icon import Icon  # noqa: F401
+from libexs.widgets.icon import Icon
+
+from exs_shell.configs.user import appearance
+from exs_shell.interfaces.enums.colorschemes import ColorSchemes
 
 
 class WallpaperCategory(BaseCategory):
@@ -136,8 +136,7 @@ class ThemeCategory(BaseCategory):
                                     css_classes=[
                                         "settings-row-palette-button",
                                         "active"
-                                        if scheme.value
-                                        == appearance.scheme
+                                        if scheme.value == appearance.scheme
                                         else "",
                                     ],
                                     on_click=lambda _, s=scheme: self.on_palette_change(

@@ -1,19 +1,18 @@
-from asyncio import sleep
+from asyncio import Task, sleep
 from typing import Any
+
 from ignis.services.bluetooth import BluetoothService, BluetoothDevice
 from ignis.widgets import Box, Button, Label, Separator
-
-from exs_shell import register
-from exs_shell.interfaces.enums.icons import Icons
-from exs_shell.state import State
-from exs_shell.ui.modules.settings.tabs.base import BaseTab, BaseCategory
-from exs_shell.ui.modules.settings.widgets import (
+from libexs import State, register
+from libexs.enums.icons import Icons
+from libexs.settings.base import BaseTab, BaseCategory
+from libexs.settings.widgets import (
     CategoryLabel,
     SettingsRow,
     SwitchRow,
 )
-from exs_shell.ui.widgets.custom.icon import Icon
-from exs_shell.utils.loop import run_async_task
+from libexs.utils.loop import run_async_task
+from libexs.widgets.icon import Icon
 
 
 @register.event
@@ -64,7 +63,7 @@ class BluetoothCategory(BaseCategory):
                 SettingsRow(
                     vertical=True,
                     child=[self.device_list_box],
-                )
+                ),
             ]
         )
 
@@ -153,14 +152,22 @@ class BluetoothCategory(BaseCategory):
 
         if device.connected:
             row_content.append(
-                Label(label="Connected", css_classes=["settings-bluetooth-connected-status-label"])
+                Label(
+                    label="Connected",
+                    css_classes=["settings-bluetooth-connected-status-label"],
+                )
             )
-            button_handler = lambda *_: run_async_task(device.disconnect_from())
+            def button_handler(*_: Any) -> Task:
+                return run_async_task(device.disconnect_from())
         else:
             row_content.append(
-                Label(label="Not Connected", css_classes=["settings-bluetooth-not-connected-status-label"])
+                Label(
+                    label="Not Connected",
+                    css_classes=["settings-bluetooth-not-connected-status-label"],
+                )
             )
-            button_handler = lambda *_: run_async_task(device.connect_to())
+            def button_handler(*_: Any) -> Task:
+                return run_async_task(device.connect_to())
 
         row_button = Button(
             on_click=button_handler,

@@ -1,5 +1,5 @@
 from ignis.widgets import Label
-from exs_shell import register
+from libexs import register
 
 
 @register.event

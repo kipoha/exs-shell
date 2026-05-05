@@ -2,8 +2,8 @@ import os
 import re
 import sys
 
-from exs_shell.interfaces.types import RGB, AnyDict
-from exs_shell.utils.path import Paths, Dirs
+from exs_shell.app.path import Paths, Dirs
+from exs_shell.interfaces.types import AnyDict
 
 
 def get_hex_color() -> AnyDict:
@@ -18,11 +18,3 @@ def get_hex_color() -> AnyDict:
                 var_name, value = m.groups()
                 variables[var_name] = value
     return variables
-
-
-def hex_to_rgb(hex_color: str) -> RGB:
-    hex_color = hex_color.lstrip("#")
-    r = int(hex_color[0:2], 16) / 255
-    g = int(hex_color[2:4], 16) / 255
-    b = int(hex_color[4:6], 16) / 255
-    return r, g, b

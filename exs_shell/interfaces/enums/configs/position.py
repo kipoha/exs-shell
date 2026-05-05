@@ -1,7 +1,7 @@
 from enum import StrEnum
 
-from exs_shell.interfaces.enums.icons import Icons
-from exs_shell.core.py import classproperty
+from libexs.enums.icons import Icons
+from libexs import classproperty
 
 Align = Icons.align
 Arrow = Icons.arrow

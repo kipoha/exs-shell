@@ -3,10 +3,9 @@ from typing import Any
 from ignis.widgets import Box, Button
 from ignis.services.power_profiles import PowerProfilesService
 
-from exs_shell import register
-from exs_shell.interfaces.enums.icons import Icons
-from exs_shell.state import State
-from exs_shell.ui.widgets.custom.icon import Icon
+from libexs import register, State
+from libexs.enums.icons import Icons
+from libexs.widgets.icon import Icon
 
 
 @register.event

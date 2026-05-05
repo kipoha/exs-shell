@@ -1,16 +1,13 @@
 import gi
-import ignis
+import ignis._version as ignis
 from ignis.widgets import Picture, Separator
 from ignis.services.fetch import FetchService
+from libexs import State
+from libexs.enums.icons import Icons
+from libexs.settings.base import BaseCategory, BaseTab
+from libexs.settings.widgets import CategoryLabel, SettingsRow
 
 import exs_shell
-from exs_shell.state import State
-from exs_shell.interfaces.enums.icons import Icons
-from exs_shell.ui.modules.settings.tabs.base import BaseTab, BaseCategory
-from exs_shell.ui.modules.settings.widgets import (
-    CategoryLabel,
-    SettingsRow,
-)
 
 
 class SoftwareCategory(BaseCategory):
@@ -66,7 +63,7 @@ class SoftwareCategory(BaseCategory):
                 SettingsRow(
                     title="PyGObject version",
                     description=gi.__version__,
-                )
+                ),
             ]
         )
 
@@ -103,7 +100,9 @@ class HardwareCategory(BaseCategory):
                 Separator(),
                 SettingsRow(
                     title="RAM",
-                    description=(str(round(self.fetch.mem_total / 1024 / 1024, 2)) + " GiB"),
+                    description=(
+                        str(round(self.fetch.mem_total / 1024 / 1024, 2)) + " GiB"
+                    ),
                 ),
                 Separator(),
                 SettingsRow(

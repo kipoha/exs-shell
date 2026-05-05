@@ -8,10 +8,10 @@ from typing import Awaitable
 
 from ignis.css_manager import CssManager
 from ignis.utils import AsyncCompletedProcess, Timeout, exec_sh_async
+from libexs.utils.loop import run_async_task
 
+from exs_shell.app.path import Dirs
 from exs_shell.interfaces.types import AnyDict
-from exs_shell.utils.loop import run_async_task
-from exs_shell.utils.path import Dirs
 from exs_shell.utils.other import SCB
 from exs_shell.configs.user import appearance
 from exs_shell.interfaces.enums.colorschemes import ColorSchemes

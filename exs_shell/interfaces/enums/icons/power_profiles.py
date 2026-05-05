@@ -1,6 +1,6 @@
 from enum import StrEnum
 
-from exs_shell.core.py import classproperty
+from libexs import classproperty
 
 class PPIcons(StrEnum):
     PERFORMANCE = "electric_bolt"

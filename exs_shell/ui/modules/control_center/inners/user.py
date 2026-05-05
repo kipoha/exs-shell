@@ -5,13 +5,12 @@ from typing import Any
 
 from ignis.widgets import Box, Button, CenterBox, Label, Picture
 from ignis.services.fetch import FetchService
+from libexs import register, State
+from libexs.widgets.icon import Icon
+from libexs.utils import window as win_utils
+from libexs.utils.commands import run_command
+from libexs.enums.icons import Icons
 
-from exs_shell import register
-from exs_shell.ui.widgets.custom.icon import Icon
-from exs_shell.utils import window as win_utils
-from exs_shell.utils.commands import run_command
-from exs_shell.interfaces.enums.icons import Icons
-from exs_shell.state import State
 from exs_shell.configs.user import user
 
 

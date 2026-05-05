@@ -1,23 +1,20 @@
 from typing import Any
-from ignis.widgets import Box, Button, Entry, Separator
+from ignis.widgets import Entry, Separator
+from libexs.enums.icons import Icons
+from libexs.settings.base import BaseCategory, BaseTab
+from libexs.settings.widgets import (
+    CategoryLabel,
+    DialogRow,
+    DnDBox,
+    DynamicTable,
+    SelectRow,
+    SettingsRow,
+    SwitchRow,
+)
 
 from exs_shell.app.vars import BAR_WIDGETS
 from exs_shell.configs.user import bar, user
 from exs_shell.interfaces.enums.configs.position import TopBottom
-from exs_shell.interfaces.enums.icons import Icons
-from exs_shell.interfaces.types import AnyDict
-from exs_shell.ui.modules.settings.tabs.base import BaseTab, BaseCategory
-from exs_shell.ui.modules.settings.widgets import (
-    CategoryLabel,
-    DnDBox,
-    DynamicTable,
-    SettingsRow,
-    DialogRow,
-    SelectRow,
-    SwitchRow,
-    SpinRow,
-)
-from exs_shell.ui.widgets.custom.icon import Icon
 
 
 class BarCategory(BaseCategory):
@@ -174,7 +171,7 @@ class LauncherCategory(BaseCategory):
                     description="Set actions command prefix",
                     child=[
                         DialogRow(
-                            button_name=user.bind("command_prefix"),
+                            button_name=user.bind("command_prefix"),  # type: ignore
                             title="Actions Prefix",
                             description="Actions prefix",
                             child=[self.entry_actions_prefix],

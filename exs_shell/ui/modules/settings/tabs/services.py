@@ -1,12 +1,8 @@
 from typing import Any
 from ignis.widgets import Button, Entry, Separator, SpinButton
-
-from exs_shell.configs.user import weather, osd, notifications, user
-from exs_shell.interfaces.enums.configs.position import PositionSide
-from exs_shell.interfaces.enums.configs.osd import osd_type
-from exs_shell.interfaces.enums.icons import Icons
-from exs_shell.ui.modules.settings.tabs.base import BaseTab, BaseCategory
-from exs_shell.ui.modules.settings.widgets import (
+from libexs.enums.icons import Icons
+from libexs.settings.base import BaseTab, BaseCategory
+from libexs.settings.widgets import (
     CategoryLabel,
     DynamicTable,
     SettingsRow,
@@ -15,8 +11,12 @@ from exs_shell.ui.modules.settings.widgets import (
     SwitchRow,
     SelectRow,
 )
-from exs_shell.utils.commands import run_command
-from exs_shell.utils.notify_system import send_notification
+from libexs.utils.commands import run_command
+from libexs.utils.notify_system import send_notification
+
+from exs_shell.configs.user import weather, osd, notifications, user
+from exs_shell.interfaces.enums.configs.position import PositionSide
+from exs_shell.interfaces.enums.configs.osd import osd_type
 
 
 class WeatherCategory(BaseCategory):

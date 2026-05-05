@@ -6,12 +6,14 @@ from loguru import logger
 from ignis import utils
 from ignis.css_manager import CssInfoPath, CssManager
 
+from exs_shell.app.path import Dirs, Paths
 from exs_shell.app.vars import NAME
 from exs_shell.utils.load_scss import build_scss
-from exs_shell.utils.path import Dirs, Paths
 
 
-def set_css_file(css_manager: CssManager, css_file_path: str | Path | Iterable[str | Path]) -> None:
+def set_css_file(
+    css_manager: CssManager, css_file_path: str | Path | Iterable[str | Path]
+) -> None:
     if isinstance(css_file_path, (str, Path)):
         file = css_file_path
     else:
@@ -30,7 +32,6 @@ def set_css_file(css_manager: CssManager, css_file_path: str | Path | Iterable[s
         CssInfoPath(
             name=NAME,
             compiler_function=lambda path: utils.sass_compile(path, compiler="sass"),
-            # compiler_function=lambda path: utils.sass_compile(path, compiler="grass"),
             path=Paths.generate_path(str(file)),
         )
     )

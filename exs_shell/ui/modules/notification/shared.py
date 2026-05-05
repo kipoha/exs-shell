@@ -9,10 +9,10 @@ from gi.repository import GLib  # type: ignore
 from ignis.widgets import Box, Picture, Button, Label, Scale
 from ignis.services.notifications import Notification
 from ignis.utils import exec_sh_async
+from libexs.enums.icons import Icons
+from libexs.utils import run_async_task
+from libexs.widgets.icon import Icon
 
-from exs_shell.ui.widgets.custom.icon import Icon
-from exs_shell.interfaces.enums.icons import Icons
-from exs_shell.utils.loop import run_async_task
 from exs_shell.configs.user import notifications
 
 

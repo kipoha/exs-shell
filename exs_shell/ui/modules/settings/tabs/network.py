@@ -1,9 +1,7 @@
 from typing import Any
-
 from loguru import logger
 
-from gi.repository import Gtk, GLib, Gdk  # type: ignore
-
+from gi.repository import Gtk, GLib, Gdk
 from ignis.widgets import Box, Entry, Label, Separator, Button
 from ignis.services.network import (
     NetworkService,
@@ -11,18 +9,16 @@ from ignis.services.network import (
     WifiDevice,
     WifiAccessPoint,
 )
-
-from exs_shell import register
-from exs_shell.interfaces.enums.icons import Icons
-from exs_shell.state import State
-from exs_shell.ui.modules.settings.tabs.base import BaseTab, BaseCategory
-from exs_shell.ui.modules.settings.widgets import (
+from libexs import State, register
+from libexs.enums.icons import Icons
+from libexs.settings.base import BaseTab, BaseCategory
+from libexs.settings.widgets import (
     CategoryLabel,
     SettingsRow,
     SwitchRow,
 )
-from exs_shell.ui.widgets.custom.icon import Icon
-from exs_shell.utils.loop import run_async_task
+from libexs.utils.loop import run_async_task
+from libexs.widgets.icon import Icon
 
 
 @register.event

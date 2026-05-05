@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
 
-@dataclass()
+@dataclass
 class IdleAction:
     timeout_seconds: int
     on_timeout: str

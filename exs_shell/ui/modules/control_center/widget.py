@@ -2,15 +2,14 @@ from typing import Any
 
 from ignis.services.notifications import NotificationService
 from ignis.widgets import Box, Button, CenterBox, Corner, Label, Scroll
+from libexs import State, register
+from libexs.enums.icons import Icons
+from libexs.utils import monitor
+from libexs.widgets.icon import Icon
 
-from exs_shell import register
-from exs_shell.interfaces.enums.icons import Icons
-from exs_shell.ui.widgets.custom.icon import Icon
-from exs_shell.utils import monitor
 from exs_shell.configs.user import notifications
 from exs_shell.interfaces.enums.gtk.transitions import RevealerTransition
 from exs_shell.interfaces.enums.gtk.windows import KeyboardMode
-from exs_shell.state import State
 from exs_shell.ui.factory import window
 from exs_shell.ui.modules.control_center.inners.notification import NotificationList
 from exs_shell.ui.widgets.base import MonitorRevealerBaseWidget

@@ -1,7 +1,7 @@
 import collections
 import cairo
 
-from gi.repository import Gtk, Pango, PangoCairo  # type: ignore
+from gi.repository import Gtk, Pango, PangoCairo
 
 from exs_shell.interfaces.types import RGB, RGBA
 

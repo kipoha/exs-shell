@@ -10,8 +10,8 @@ from ignis.services.upower import UPowerService
 from ignis.services.systemd import SystemdService
 from ignis.services.power_profiles import PowerProfilesService
 from ignis.services.fetch import FetchService
+from libexs import State
 
-from exs_shell.state import State
 from exs_shell.ui.services.cava import Cava
 from exs_shell.ui.services.appearance import AppearanceService
 

@@ -6,10 +6,10 @@ from typing import Any
 from loguru import logger
 
 from ignis.widgets import Label
+from libexs import register
+from libexs.utils.loop import run_in_thread
 
-from exs_shell import register
 from exs_shell.configs.user import weather
-from exs_shell.utils.loop import run_in_thread
 
 
 @register.event

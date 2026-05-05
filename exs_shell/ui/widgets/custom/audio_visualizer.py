@@ -2,13 +2,13 @@ import cairo
 
 from math import pi, cos, sin
 
-from gi.repository import Gtk, GLib  # type: ignore
+from gi.repository import Gtk, GLib
 
 from ignis import widgets
+from libexs import register, State
+from libexs.utils import hex_to_rgb
 
-from exs_shell import register
-from exs_shell.state import State
-from exs_shell.utils.colors import get_hex_color, hex_to_rgb
+from exs_shell.utils.colors import get_hex_color
 from exs_shell.ui.services.cava import Cava
 
 

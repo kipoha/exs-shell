@@ -7,7 +7,7 @@ from exs_shell.ui.widgets.custom.weather import WeatherLabel
 
 
 APP_NAME = "Exs Shell"
-NAMESPACE = "EXS_SHELL"
+NAMESPACE = "exs.shell.app"
 NAME = "exs-shell"
 
 

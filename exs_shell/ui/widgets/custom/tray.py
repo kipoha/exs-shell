@@ -4,7 +4,7 @@ from ignis.dbus_menu import DBusMenu
 from ignis.services.system_tray import SystemTrayService, SystemTrayItem
 from ignis.widgets import Box, EventBox, Icon
 
-from exs_shell import register
+from libexs import register
 
 
 @register.event

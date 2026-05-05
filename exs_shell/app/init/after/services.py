@@ -1,6 +1,6 @@
 from ignis.services.mpris import MprisService
+from libexs import State
 
-from exs_shell.state import State
 from exs_shell.ui.services.battery_tracker import BatteryTrackerService
 from exs_shell.ui.services.idle import IdleService
 

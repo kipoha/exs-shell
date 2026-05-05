@@ -1,10 +1,10 @@
+from libexs.utils import monitor, window
 from exs_shell.ui.modules.center_tab.widget import CenterTab
 from exs_shell.ui.widgets.custom.mouse_trigger import MouseTrigger
-from exs_shell.utils import monitor, window
 
 
 def on_hover(monitor_id: int) -> None:
-    window.get(f"centertab{monitor_id}").set_visible(True)
+    window.get(f"centertab{monitor_id}").set_visible(True)  # type: ignore
 
 
 def init() -> None:

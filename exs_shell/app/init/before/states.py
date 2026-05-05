@@ -1,6 +1,5 @@
 from ignis.window_manager import WindowManager
-
-from exs_shell.state import State
+from libexs import State
 
 
 def init() -> None:

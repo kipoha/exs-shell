@@ -1,12 +1,12 @@
 from ignis.app import IgnisApp
 from ignis.widgets import Label, Button, Box, RegularWindow, Scroll
+from libexs import register
+from libexs.enums.icons import Icons
+from libexs.settings.base import BaseTab
+from libexs.widgets.icon import Icon
 
-from exs_shell import register
 from exs_shell.app.vars import NAMESPACE
-from exs_shell.interfaces.enums.icons import Icons
 from exs_shell.ui.factory.navigation import Navigation
-from exs_shell.ui.widgets.custom.icon import Icon
-from exs_shell.ui.modules.settings.tabs.base import BaseTab
 from exs_shell.ui.modules.settings.tabs.main import MainTab
 from exs_shell.ui.modules.settings.tabs.appearance import AppearanceTab
 from exs_shell.ui.modules.settings.tabs.interface import InterfaceTab
@@ -88,7 +88,7 @@ class Settings(RegularWindow):
         main_box.append(content_box)
 
         super().__init__(
-            f"{NAMESPACE}_settings",
+            f"{NAMESPACE}.settings",
             title="Exs Settings",
             visible=False,
             default_width=1200,

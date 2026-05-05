@@ -1,16 +1,10 @@
 from ignis.widgets import Separator
+from libexs.enums.icons import Icons
+from libexs.settings.base import BaseCategory, BaseTab
+from libexs.settings.widgets import CategoryLabel, SelectRow, SettingsRow, SpinRow, SwitchRow
 
 from exs_shell.configs.user import lock
 from exs_shell.interfaces.enums.configs.position import LockEntryPosition
-from exs_shell.interfaces.enums.icons import Icons
-from exs_shell.ui.modules.settings.tabs.base import BaseTab, BaseCategory
-from exs_shell.ui.modules.settings.widgets import (
-    CategoryLabel,
-    SettingsRow,
-    SwitchRow,
-    SelectRow,
-    SpinRow,
-)
 
 
 class LockCategory(BaseCategory):

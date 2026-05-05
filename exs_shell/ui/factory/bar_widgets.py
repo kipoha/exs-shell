@@ -1,13 +1,13 @@
-from typing import Sequence
+from typing import Any, Sequence
 
 from ignis.base_widget import BaseWidget
+from libexs import State
 
 from exs_shell.interfaces.types import AnyDict
 from exs_shell.app.vars import BAR_WIDGETS
-from exs_shell.state import State
 
 
-def get_or_create_widget(name: str, **kwargs):
+def get_or_create_widget(name: str, **kwargs: Any):
     if name in State.widgets:
         widget = State.widgets[name]
 

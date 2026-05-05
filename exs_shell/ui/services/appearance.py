@@ -9,15 +9,15 @@ from ignis.app import IgnisApp
 from ignis.base_service import BaseService
 from ignis.exceptions import LayerShellNotSupportedError
 from ignis.widgets import Picture
+from libexs import register
 
-from exs_shell import register
+from exs_shell.app.path import Dirs
 from exs_shell.app.vars import NAMESPACE
 from exs_shell.configs.user import appearance
 from exs_shell.interfaces.enums.gtk.transitions import RevealerTransition
 # from exs_shell.ui.widgets.custom.smart_picture import SmartPicture
 from exs_shell.ui.widgets.windows import Revealer
 from exs_shell.utils.matugen import Matugen
-from exs_shell.utils.path import Dirs
 
 CACHE_WALLPAPER_PATH = f"{Dirs.DATA_DIR}/wallpaper"
 
@@ -40,7 +40,7 @@ class WallpaperLayerWindow(Gtk.Window):
         GtkLayerShell.set_exclusive_zone(self, -1)  # ignore other layers
 
         GtkLayerShell.set_namespace(
-            self, name_space=f"{NAMESPACE}_wallpaper_{gdkmonitor.get_model()}"
+            self, name_space=f"{NAMESPACE}.wallpaper.{gdkmonitor.get_connector()}"
         )
 
         GtkLayerShell.set_layer(self, GtkLayerShell.Layer.BACKGROUND)

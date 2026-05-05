@@ -3,14 +3,14 @@ from typing import Any
 from ignis.widgets import Entry, Scroll, Corner, Box, Icon
 from ignis.services.applications import ApplicationsService, Application
 
-from gi.repository import GLib, Gdk  # type: ignore
+from gi.repository import GLib, Gdk
+from libexs import register, State
+from libexs.utils.clipboard import get_clipboard_history
 
-from exs_shell import register
 from exs_shell.configs.user import user
 from exs_shell.interfaces.enums.gtk.windows import KeyboardMode
 from exs_shell.interfaces.enums.gtk.transitions import RevealerTransition
 from exs_shell.interfaces.enums.modules.launcher import LauncherMode
-from exs_shell.state import State
 from exs_shell.ui.factory import window as window_factory
 from exs_shell.ui.modules.launcher.items import (
     ActionItem,
@@ -20,7 +20,6 @@ from exs_shell.ui.modules.launcher.items import (
 )
 from exs_shell.ui.widgets.base import MonitorRevealerBaseWidget
 from exs_shell.ui.widgets.windows import Revealer
-from exs_shell.utils.clipboard import get_clipboard_history
 
 
 @register.window

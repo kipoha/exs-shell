@@ -4,7 +4,9 @@
 */
 layout {
     focus-ring {
-        active-color "{{colors.primary.default.hex}}"
+        // active-color "{{colors.primary.default.hex}}"
+
+        active-gradient from="{{colors.primary.default.hex}}" to="{{colors.on_primary_fixed_variant.default.hex}}" angle=45 relative-to="workspace-view"
         inactive-color "{{colors.outline.default.hex}}"
         urgent-color   "{{colors.error.default.hex}}"
     }

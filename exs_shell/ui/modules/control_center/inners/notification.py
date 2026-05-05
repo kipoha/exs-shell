@@ -1,14 +1,12 @@
 from typing import Any
 
+from gi.repository import GLib  # type: ignore
 from ignis import utils
 from ignis.services.notifications import Notification, NotificationService
 from ignis.widgets import Box, Label
+from libexs import register, State
 
-from gi.repository import GLib  # type: ignore
-
-from exs_shell import register
 from exs_shell.interfaces.enums.gtk.transitions import RevealerTransition
-from exs_shell.state import State
 from exs_shell.ui.modules.notification.shared import NotificationWidget
 from exs_shell.ui.widgets.windows import Revealer
 

@@ -1,6 +1,6 @@
 from ignis.options_manager import OptionsGroup, TrackedList
+from libexs.enums.icons import Icons
 
-from exs_shell.interfaces.enums.icons import Icons
 from exs_shell.interfaces.schemas import IdleAction
 from exs_shell.interfaces.schemas.widget.launcher import Action, PowerMenuAction
 

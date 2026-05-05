@@ -2,10 +2,10 @@ from typing import Any
 
 from ignis.widgets import Box, Button, Label
 
-from exs_shell import register
+from libexs import register
+from libexs.enums.icons import Icons
+from libexs.widgets.icon import Icon
 from exs_shell.configs.user import appearance
-from exs_shell.interfaces.enums.icons import Icons
-from exs_shell.ui.widgets.custom.icon import Icon
 
 
 @register.event

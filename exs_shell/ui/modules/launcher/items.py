@@ -1,6 +1,10 @@
 import subprocess
 from typing import Any
 
+from libexs import register
+from libexs.utils import is_url, run_async_task, window
+from libexs.utils.clipboard import ClipboardItem
+from libexs.widgets.icon import Icon
 from loguru import logger
 
 from gi.repository import Gio, GdkPixbuf  # type: ignore
@@ -10,18 +14,12 @@ from ignis.services.applications import Application, ApplicationAction
 from ignis.utils import exec_sh, exec_sh_async
 from ignis.widgets import Box, Button, Icon as IgnisIcon, Label, Picture, PopoverMenu
 
-from exs_shell import register
 from exs_shell.configs.user import user
-from exs_shell.ui.widgets.custom.icon import Icon
-from exs_shell.interfaces.schemas.utils.clipboard import ClipboardItem
 from exs_shell.interfaces.schemas.widget.launcher import (
     Action,
     PowerMenuAction,
     WebAction,
 )
-from exs_shell.utils import window
-from exs_shell.utils.loop import run_async_task
-from exs_shell.utils.urls import is_url
 
 
 class BaseLauncherItem(Button):
@@ -48,7 +46,7 @@ class BaseLauncherItem(Button):
         )
 
     def close_launcher(self) -> None:
-        _window = window.get("launcher")
+        _window = window.get_window("launcher")
         _window.set_visible(False)
 
     def launch(self, *_: Any) -> None:

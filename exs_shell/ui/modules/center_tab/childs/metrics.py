@@ -1,22 +1,17 @@
 import math
 from typing import Any
-from gi.repository import GLib, Gtk  # type: ignore
+from gi.repository import GLib, Gtk
 
 from ignis.widgets import Box, Button, Separator, Label, Entry, Scroll
+from libexs import register
+from libexs.enums.icons import Icons
+from libexs.utils.colors import hex_to_rgb
+from libexs.utils.system import CPUMonitor, DiskMonitor, MemoryMonitor, NetMonitor, ProcessMonitor
+from libexs.widgets.icon import Icon
 
-from exs_shell import register
-from exs_shell.interfaces.enums.icons import Icons
 from exs_shell.interfaces.types import ProcessSortBy, SystemSizeUnit
 from exs_shell.ui.widgets.custom.graph import Graph, MultiGraph
-from exs_shell.ui.widgets.custom.icon import Icon
-from exs_shell.utils.colors import hex_to_rgb, get_hex_color
-from exs_shell.utils.system import (
-    DiskMonitor,
-    CPUMonitor,
-    MemoryMonitor,
-    NetMonitor,
-    ProcessMonitor,
-)
+from exs_shell.utils.colors import get_hex_color
 
 
 H = 300
@@ -235,7 +230,7 @@ class Memory(Box):
         self._lbl_cached.set_label(f"{cached:.2f} GB")
         self._lbl_available.set_label(f"{available:.2f} GB")
 
-    @register.events.poll(1000)
+    @register.events.poll(1_000)
     def update(self) -> None:
         total, used, free, cached, available = self.mem.all
         self.graph.push([used, cached])

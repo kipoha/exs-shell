@@ -1,6 +1,5 @@
+from libexs import State
 from loguru import logger
-
-from exs_shell.state import State
 
 
 def init() -> None:

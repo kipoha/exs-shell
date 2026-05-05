@@ -5,17 +5,17 @@ from typing import Any
 from ignis.widgets import Box, Label, Scale
 from ignis.services.audio import Stream
 from ignis.services.backlight import BacklightService
+from libexs import register
+from libexs.enums.icons import Icons
+from libexs.utils import run_async_task
+from libexs.widgets.icon import Icon
 
-from exs_shell import register
 from exs_shell.configs.user import osd
 from exs_shell.interfaces.enums.gtk.transitions import RevealerTransition
-from exs_shell.interfaces.enums.icons import Icons
 from exs_shell.ui.widgets.base import MonitorRevealerBaseWidget
 from exs_shell.ui.factory import window
 from exs_shell.ui.widgets.custom.circle import ArcMeter
-from exs_shell.ui.widgets.custom.icon import Icon
 from exs_shell.ui.widgets.windows import Revealer
-from exs_shell.utils.loop import run_async_task
 
 
 @register.window
@@ -110,7 +110,7 @@ class OSD(MonitorRevealerBaseWidget):
             self.icon = Icon(
                 label=Icons.volume.MUTED,
                 size="l",
-                css_classes=["vertical" if vertical else "horizontal"]
+                css_classes=["vertical" if vertical else "horizontal"],
             )
             self.inner = Box(
                 child=[self.icon, self.progress],

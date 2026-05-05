@@ -1,13 +1,10 @@
 from ignis.widgets import Box, Label, Picture
+from libexs.enums.icons import Icons
+from libexs.settings.base import BaseCategory, BaseTab
+from libexs.settings.widgets import CategoryLabel
 
-import exs_shell
 from exs_shell import __author__, __version__
-from exs_shell.interfaces.enums.icons import Icons
-from exs_shell.ui.modules.settings.tabs.base import BaseTab, BaseCategory
-from exs_shell.ui.modules.settings.widgets import (
-    CategoryLabel,
-)
-from exs_shell.utils.path import Paths
+from exs_shell.app.path import Paths
 
 authors = __author__.split(",")
 author_text = ", ".join([f'<a href="https://github.com/{author}">{author}</a>' for author in authors])
