@@ -1,16 +1,17 @@
 from ignis.app import IgnisApp
 from ignis.widgets import Label, Button, Box, RegularWindow, Scroll
 from libexs import register
-from libexs.enums.icons import Icons
 from libexs.settings.base import BaseTab
 from libexs.widgets.icon import Icon
 
 from exs_shell.app.vars import NAMESPACE
+from exs_shell.interfaces.enums.icons import Icons
 from exs_shell.ui.factory.navigation import Navigation
 from exs_shell.ui.modules.settings.tabs.main import MainTab
 from exs_shell.ui.modules.settings.tabs.appearance import AppearanceTab
 from exs_shell.ui.modules.settings.tabs.interface import InterfaceTab
 from exs_shell.ui.modules.settings.tabs.lock import LockTab
+from exs_shell.ui.modules.settings.tabs.plugins_manage import PluginManagerTab
 from exs_shell.ui.modules.settings.tabs.services import ServicesTab
 from exs_shell.ui.modules.settings.tabs.network import NetworkTab
 from exs_shell.ui.modules.settings.tabs.bluetooth import BluetoothTab
@@ -48,6 +49,8 @@ class Settings(RegularWindow):
             "interface": (Icons.ui.INTERFACE, "Interface"),
             "lock": (Icons.ui.LOCK, "Lock"),
             "services": (Icons.ui.SERVICES, "Services"),
+            "plugins_manage": (Icons.ui2.DISCOVER_TUNE, "Manage Pl"),
+            "plugins": (Icons.ui.EXTENSION, "Plugins"),
             "network": (Icons.wifi.CONNECTED, "Network"),
             "bluetooth": (Icons.ui.BLUETOOTH, "Bluetooth"),
             "system": (Icons.ui.SYSTEM, "System"),
@@ -63,6 +66,7 @@ class Settings(RegularWindow):
             "bluetooth": BluetoothTab(),
             "system": SystemTab(),
             "about": AboutTab(),
+            "plugins_manage": PluginManagerTab(),
         }
 
         self.active_tab_label = Label(

@@ -4,7 +4,7 @@ from exs_shell.ui.widgets.custom.mouse_trigger import MouseTrigger
 
 
 def on_hover(monitor_id: int) -> None:
-    window.get(f"centertab{monitor_id}").set_visible(True)  # type: ignore
+    window.get_window(f"centertab{monitor_id}").set_visible(True)
 
 
 def init() -> None:

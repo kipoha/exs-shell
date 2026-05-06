@@ -2,12 +2,14 @@ import gi
 import ignis._version as ignis
 from ignis.widgets import Picture, Separator
 from ignis.services.fetch import FetchService
+import libexs
 from libexs import State
 from libexs.enums.icons import Icons
 from libexs.settings.base import BaseCategory, BaseTab
 from libexs.settings.widgets import CategoryLabel, SettingsRow
 
 import exs_shell
+from exs_shell.utils.gpu import get_all_gpus
 
 
 class SoftwareCategory(BaseCategory):
@@ -53,6 +55,11 @@ class SoftwareCategory(BaseCategory):
                 SettingsRow(
                     title="Exs Shell version",
                     description=exs_shell.__version__,
+                ),
+                Separator(),
+                SettingsRow(
+                    title="Exs Core version",
+                    description=libexs.__version__,
                 ),
                 Separator(),
                 SettingsRow(
@@ -104,11 +111,14 @@ class HardwareCategory(BaseCategory):
                         str(round(self.fetch.mem_total / 1024 / 1024, 2)) + " GiB"
                     ),
                 ),
-                Separator(),
-                SettingsRow(
-                    title="GPU",
-                    description="N/A",
-                ),
+                *[
+                    item
+                    for i, (vendor, gpu) in enumerate(get_all_gpus())
+                    for item in (
+                        Separator(),
+                        SettingsRow(title=f"GPU {i}", description=f"{vendor} - {gpu}"),
+                    )
+                ],
             ]
         )
 

@@ -88,5 +88,5 @@ class UserWidget(CenterBox):
         self.uptime.set_label(self.format_uptime(self.fetch.uptime))
 
     def toggle_window(self, window: str) -> None:
-        win = win_utils.get("settings")
+        win = win_utils.get_window("settings")
         win.set_visible(not win.visible)
