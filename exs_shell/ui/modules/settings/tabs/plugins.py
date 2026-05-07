@@ -2,7 +2,7 @@ from collections.abc import Sequence
 from pathlib import Path
 from typing import Any
 from ignis.widgets import Box, Button, Label, Separator
-from libexs import register
+from libexs import State, register
 from libexs.enums.icons import Icons
 from libexs.settings.base import BaseCategory, BaseTab
 from libexs.settings.widgets import CategoryLabel, SettingsRow, SwitchRow, DialogRow
@@ -49,7 +49,7 @@ class PluginManagerCategory(BaseCategory):
                         SwitchRow(
                             plugin in user.plugins,
                             lambda switched, plugin=plugin: self.add_remove(
-                                plugin, plugin.name, switched
+                                plugin, switched
                             ),
                             halign="end",
                         ),
@@ -67,18 +67,19 @@ class PluginManagerCategory(BaseCategory):
         )
         return dialog
 
-    def add_remove(self, _, plugin: str, switched: bool) -> None:
+    def add_remove(self, plugin: Path, switched: bool) -> None:
         if plugin in user.plugins and not switched:
-            user.plugins.remove(plugin)
+            user.plugins.remove(str(plugin))
         else:
-            user.plugins.append(plugin)
+            user.plugins.append(str(plugin))
 
 
 class PluginManagerTab(BaseTab):
     def __init__(self):
+        plugins_category: Sequence[BaseCategory] = State.plugin_settings
         super().__init__(
             child=[
                 PluginManagerCategory(),
-                # PluginToggleCategory(),
+                *plugins_category,
             ],
         )

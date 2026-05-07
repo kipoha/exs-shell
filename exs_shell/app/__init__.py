@@ -54,6 +54,7 @@ class App:
         after.system.init()
         after.services.init()
         after.modules.init()
+        after.plugins.init()
 
     @classmethod
     def on_activate(cls, _: IgnisApp) -> None:

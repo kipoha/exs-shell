@@ -8,7 +8,7 @@ from ignis.css_manager import CssInfoPath, CssManager
 
 from exs_shell.app.path import Dirs, Paths
 from exs_shell.app.vars import NAME
-from exs_shell.utils.load_scss import build_scss
+from exs_shell.utils.load import build_scss
 
 
 def set_css_file(

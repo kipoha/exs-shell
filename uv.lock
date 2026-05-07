@@ -107,7 +107,7 @@ wheels = [
 
 [[package]]
 name = "exs-core"
-version = "0.0.6"
+version = "0.1.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "pillow" },
@@ -116,9 +116,9 @@ dependencies = [
     { name = "pygobject-stubs" },
     { name = "requests" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/fd/14/29a2e771c45ae2b7b3feadf003d2f75292b27ef0e82a7f080a01699c8d99/exs_core-0.0.6.tar.gz", hash = "sha256:8f4e65d846c3cbc2554c7c03bbe7bc49b2a7acdf9a3cd5d1bd26928a8ead5c17", size = 31908, upload-time = "2026-05-07T19:14:23.923Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/9e/23/f96ffcdb5371c9a7efd94ddd5d20716db76d59c02d6ca0fdfab6e8d739cd/exs_core-0.1.1.tar.gz", hash = "sha256:6806047dac447215848059f16b96f0a8b962129d11eaa4eada441d8a916bb0c6", size = 33063, upload-time = "2026-05-07T21:18:03.174Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/20/d3/d16c8789024b34c2f935e9d54ad28437032973d16fa13960ae6024c1dcfc/exs_core-0.0.6-py3-none-any.whl", hash = "sha256:e5a85e8978a700737669af54353907c0a172b85b6732eb8624ef7f00acd1c33f", size = 39133, upload-time = "2026-05-07T19:14:22.704Z" },
+    { url = "https://files.pythonhosted.org/packages/0b/c2/5d03cde40b1b62e860ee18cf6d021d0541ec0e92dbdcf53eaf4c875032e8/exs_core-0.1.1-py3-none-any.whl", hash = "sha256:35c13cd19bb709e8e586ececced9a775b3bfa26d57913018182c7915a9706308", size = 40544, upload-time = "2026-05-07T21:18:02.075Z" },
 ]
 
 [[package]]
@@ -136,7 +136,7 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
-    { name = "exs-core", specifier = "==0.0.6" },
+    { name = "exs-core", specifier = "==0.1.1" },
     { name = "ignis", git = "https://github.com/ignis-sh/ignis.git" },
     { name = "pam", specifier = ">=0.2.0" },
     { name = "pyudev", specifier = ">=0.24.4" },

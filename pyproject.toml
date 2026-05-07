@@ -13,7 +13,7 @@ description = "Just Desktop for Niri Wayland Compositor"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-    "exs-core==0.0.6",
+    "exs-core==0.1.1",
     "ignis @ git+https://git@github.com/ignis-sh/ignis.git",
     "pam>=0.2.0",
     "pyudev>=0.24.4",

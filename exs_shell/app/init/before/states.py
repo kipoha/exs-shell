@@ -7,4 +7,5 @@ def init() -> None:
     State.services
     State.windows
     State.commands
+    State["plugin_settings"] = []
     State.window_manager = WindowManager()

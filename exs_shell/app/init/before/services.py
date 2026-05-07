@@ -1,3 +1,4 @@
+from ignis.base_service import BaseService
 from ignis.services.niri import NiriService
 from ignis.services.system_tray import SystemTrayService
 from ignis.services.audio import AudioService
@@ -15,7 +16,7 @@ from libexs import State
 from exs_shell.ui.services.cava import Cava
 from exs_shell.ui.services.appearance import AppearanceService
 
-services = {
+services: dict[str, type[BaseService]] = {
     "niri": NiriService,
     "tray": SystemTrayService,
     "audio": AudioService,
@@ -34,7 +35,7 @@ services = {
 
 def init_services() -> None:
     for name, service in services.items():
-        State.services[name] = service.get_default()  # type: ignore
+        State.services[name] = service.get_default()
     State.services.systemd_system = SystemdService.get_default("system")  # type: ignore
 
 
