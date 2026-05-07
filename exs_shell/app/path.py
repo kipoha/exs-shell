@@ -42,10 +42,11 @@ class Dirs:
         / config_dir_name
     )
     CONFIG_DIR: Path = Path.home() / ".config" / config_dir_name
+    PLUGINS_DIR: Path = CONFIG_DIR / "plugins"
 
     @classmethod
     def ensure_dirs_exist(cls) -> None:
-        for directory in (cls.TEMP_DIR, cls.CACHE_DIR, cls.DATA_DIR, cls.CONFIG_DIR):
+        for directory in (cls.TEMP_DIR, cls.CACHE_DIR, cls.DATA_DIR, cls.CONFIG_DIR, cls.PLUGINS_DIR):
             try:
                 directory.mkdir(parents=True, exist_ok=True)
             except Exception as e:

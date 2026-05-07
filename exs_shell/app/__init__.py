@@ -1,5 +1,6 @@
 import traceback
 
+from gi.repository import GLib
 from libexs.utils import kill_process, run_in_thread, send_notification
 from loguru import logger
 
@@ -7,7 +8,7 @@ from watchdog.observers import Observer
 from watchdog.observers.api import BaseObserver
 
 from exs_shell.app.watch import ReloadHandler
-from exs_shell.app.vars import APP_NAME
+from exs_shell.app.vars import APP_ID, APP_NAME, NAME
 from exs_shell.app.init import before, after
 from exs_shell.app.path import Paths
 
@@ -64,6 +65,8 @@ class App:
 
     @classmethod
     def run(cls, dev: bool = False, debug: bool = False, reload: bool = False) -> None:
+        GLib.set_prgname(NAME)
+        GLib.set_application_name(APP_ID)
         client = IgnisClient()
         cls.before_init(dev, reload)
 

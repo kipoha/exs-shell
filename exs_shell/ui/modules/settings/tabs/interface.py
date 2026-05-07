@@ -1,5 +1,5 @@
 from typing import Any
-from ignis.widgets import Entry, Separator
+from ignis.widgets import Box, Entry, Separator
 from libexs.enums.icons import Icons
 from libexs.settings.base import BaseCategory, BaseTab
 from libexs.settings.widgets import (
@@ -72,10 +72,15 @@ class BarCategory(BaseCategory):
                             title="Bar widgets",
                             description="Widgets on bar",
                             child=[
-                                self.available_widgets,
-                                self.left_widgets,
-                                self.center_widgets,
-                                self.right_widgets,
+                                Box(
+                                    vertical=True,
+                                    child=[
+                                        self.available_widgets,
+                                        self.left_widgets,
+                                        self.center_widgets,
+                                        self.right_widgets,
+                                    ],
+                                )
                             ],
                             value_getter=self.get_widgets,
                             on_change=self.update_widgets,
@@ -209,7 +214,7 @@ class LauncherCategory(BaseCategory):
                     child=[
                         DialogRow(
                             title="Actions",
-                            description="Actions commands\n\nCommand Names: Clipboard, Power Menu",
+                            description="Actions commands",
                             child=[self.actions_table],
                             value_getter=self.actions_table.get_data,
                             on_change=lambda x: user.set_actions(x),

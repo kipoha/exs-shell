@@ -1,7 +1,6 @@
 from ignis.options_manager import OptionsGroup, TrackedList
 from libexs.enums.icons import Icons
 
-from exs_shell.app.path import Dirs
 from exs_shell.interfaces.schemas import IdleAction
 from exs_shell.interfaces.schemas.widget.launcher import Action, PowerMenuAction
 
@@ -12,7 +11,6 @@ class UserConfig(OptionsGroup):
     clock_format: str = "󰥔 %H:%M:%S"
     critical_percentage: int = 15
     terminal_format: str = "kitty %command%"
-    plugins_dir: str = f"{Dirs.CONFIG_DIR}/plugins"
     plugins: TrackedList[str] = TrackedList()
 
     actions: TrackedList[dict] = TrackedList()

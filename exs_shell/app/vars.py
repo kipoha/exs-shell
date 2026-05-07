@@ -1,3 +1,5 @@
+from gi.repository import Gtk
+
 from exs_shell.ui.widgets.custom.battery import Battery
 from exs_shell.ui.widgets.custom.cava_tui import CavaLabel
 from exs_shell.ui.widgets.custom.clock import Clock
@@ -8,10 +10,11 @@ from exs_shell.ui.widgets.custom.weather import WeatherLabel
 
 APP_NAME = "Exs Shell"
 NAMESPACE = "exs.shell.app"
+APP_ID = "libexs.shell"
 NAME = "exs-shell"
 
 
-BAR_WIDGETS: dict[str, type] = {
+BAR_WIDGETS: dict[str, type[Gtk.Widget]] = {
     "battery": Battery,
     "clock": Clock,
     "kb_layout": KeyboardLayout,

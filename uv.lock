@@ -107,7 +107,7 @@ wheels = [
 
 [[package]]
 name = "exs-core"
-version = "0.0.4"
+version = "0.0.6"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "pillow" },
@@ -116,9 +116,9 @@ dependencies = [
     { name = "pygobject-stubs" },
     { name = "requests" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/10/18/02e0e2a204fb5d6049d14644706d9d8a705cc4bc9b74f581bf99c1aed60c/exs_core-0.0.4.tar.gz", hash = "sha256:4e6dde514f1e768381941a927c5df244b370d274351eaf0498f17308eb68cd44", size = 31902, upload-time = "2026-05-05T19:46:55.069Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/fd/14/29a2e771c45ae2b7b3feadf003d2f75292b27ef0e82a7f080a01699c8d99/exs_core-0.0.6.tar.gz", hash = "sha256:8f4e65d846c3cbc2554c7c03bbe7bc49b2a7acdf9a3cd5d1bd26928a8ead5c17", size = 31908, upload-time = "2026-05-07T19:14:23.923Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/b6/ad/8e81f008f86bf399da3fa937bdbb852c55228e206441e291cf898033f639/exs_core-0.0.4-py3-none-any.whl", hash = "sha256:93b2bbd0c8b639ac8b8634b9616e368a6e708ee4b56ad7eb164a196cabf5ab1d", size = 39117, upload-time = "2026-05-05T19:46:54.126Z" },
+    { url = "https://files.pythonhosted.org/packages/20/d3/d16c8789024b34c2f935e9d54ad28437032973d16fa13960ae6024c1dcfc/exs_core-0.0.6-py3-none-any.whl", hash = "sha256:e5a85e8978a700737669af54353907c0a172b85b6732eb8624ef7f00acd1c33f", size = 39133, upload-time = "2026-05-07T19:14:22.704Z" },
 ]
 
 [[package]]
@@ -136,7 +136,7 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
-    { name = "exs-core", specifier = ">=0.0.4" },
+    { name = "exs-core", specifier = "==0.0.6" },
     { name = "ignis", git = "https://github.com/ignis-sh/ignis.git" },
     { name = "pam", specifier = ">=0.2.0" },
     { name = "pyudev", specifier = ">=0.24.4" },
@@ -420,11 +420,11 @@ wheels = [
 
 [[package]]
 name = "urllib3"
-version = "2.6.3"
+version = "2.7.0"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/c7/24/5f1b3bdffd70275f6661c76461e25f024d5a38a46f04aaca912426a2b1d3/urllib3-2.6.3.tar.gz", hash = "sha256:1b62b6884944a57dbe321509ab94fd4d3b307075e0c2eae991ac71ee15ad38ed", size = 435556, upload-time = "2026-01-07T16:24:43.925Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/53/0c/06f8b233b8fd13b9e5ee11424ef85419ba0d8ba0b3138bf360be2ff56953/urllib3-2.7.0.tar.gz", hash = "sha256:231e0ec3b63ceb14667c67be60f2f2c40a518cb38b03af60abc813da26505f4c", size = 433602, upload-time = "2026-05-07T16:13:18.596Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/39/08/aaaad47bc4e9dc8c725e68f9d04865dbcb2052843ff09c97b08904852d84/urllib3-2.6.3-py3-none-any.whl", hash = "sha256:bf272323e553dfb2e87d9bfd225ca7b0f467b919d7bbd355436d3fd37cb0acd4", size = 131584, upload-time = "2026-01-07T16:24:42.685Z" },
+    { url = "https://files.pythonhosted.org/packages/7f/3e/5db95bcf282c52709639744ca2a8b149baccf648e39c8cc87553df9eae0c/urllib3-2.7.0-py3-none-any.whl", hash = "sha256:9fb4c81ebbb1ce9531cce37674bbc6f1360472bc18ca9a553ede278ef7276897", size = 131087, upload-time = "2026-05-07T16:13:17.151Z" },
 ]
 
 [[package]]

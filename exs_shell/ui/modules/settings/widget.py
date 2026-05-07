@@ -11,7 +11,7 @@ from exs_shell.ui.modules.settings.tabs.main import MainTab
 from exs_shell.ui.modules.settings.tabs.appearance import AppearanceTab
 from exs_shell.ui.modules.settings.tabs.interface import InterfaceTab
 from exs_shell.ui.modules.settings.tabs.lock import LockTab
-from exs_shell.ui.modules.settings.tabs.plugins_manage import PluginManagerTab
+from exs_shell.ui.modules.settings.tabs.plugins import PluginManagerTab
 from exs_shell.ui.modules.settings.tabs.services import ServicesTab
 from exs_shell.ui.modules.settings.tabs.network import NetworkTab
 from exs_shell.ui.modules.settings.tabs.bluetooth import BluetoothTab
@@ -49,7 +49,6 @@ class Settings(RegularWindow):
             "interface": (Icons.ui.INTERFACE, "Interface"),
             "lock": (Icons.ui.LOCK, "Lock"),
             "services": (Icons.ui.SERVICES, "Services"),
-            "plugins_manage": (Icons.ui2.DISCOVER_TUNE, "Manage Pl"),
             "plugins": (Icons.ui.EXTENSION, "Plugins"),
             "network": (Icons.wifi.CONNECTED, "Network"),
             "bluetooth": (Icons.ui.BLUETOOTH, "Bluetooth"),
@@ -66,7 +65,7 @@ class Settings(RegularWindow):
             "bluetooth": BluetoothTab(),
             "system": SystemTab(),
             "about": AboutTab(),
-            "plugins_manage": PluginManagerTab(),
+            "plugins": PluginManagerTab(),
         }
 
         self.active_tab_label = Label(
