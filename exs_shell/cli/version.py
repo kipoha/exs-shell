@@ -1,5 +1,5 @@
 from exs_shell import __version__
 
 
-def version_cmd(_):
+def cmd(_):
     print(__version__)

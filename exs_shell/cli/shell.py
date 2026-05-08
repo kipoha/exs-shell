@@ -2,7 +2,7 @@ import argparse
 from exs_shell.app import App
 
 
-def shell_cmd(parser: argparse.ArgumentParser):
+def cmd(parser: argparse.ArgumentParser):
     parser.add_argument("--dev", action="store_true", help="Run the app in development mode")
     parser.add_argument("--debug", action="store_true", help="Run the app in debug mode")
     parser.add_argument("--reload", action="store_true", help="Run the app in reload mode")

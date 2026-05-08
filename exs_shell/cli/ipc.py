@@ -8,7 +8,7 @@ from exs_shell.app.vars import APP_NAME
 from exs_shell.controllers.ipc.client import send_command
 
 
-def ipc_cmd(parser: argparse.ArgumentParser):
+def cmd(parser: argparse.ArgumentParser):
     parser.add_argument("group", nargs="?", default="-h", help="Command group")
     parser.add_argument("action", nargs="?", default=None, help="Command action")
     parser.set_defaults(func=run_ipc)

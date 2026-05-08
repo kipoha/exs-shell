@@ -1,8 +1,6 @@
 import argparse
 
-from exs_shell.cli.shell import shell_cmd
-from exs_shell.cli.ipc import ipc_cmd
-from exs_shell.cli.version import version_cmd
+from exs_shell.cli import ipc, plugin, shell, version
 
 
 def main():
@@ -10,13 +8,16 @@ def main():
 
     sub = parser.add_subparsers(dest="command", required=True)
 
-    shell = sub.add_parser("shell", help="Shell commands")
-    shell_cmd(shell)
+    shell_ = sub.add_parser("shell", help="Shell commands")
+    shell.cmd(shell_)
 
-    ipc = sub.add_parser("ipc", help="IPC commands", add_help=False)
-    ipc_cmd(ipc)
+    ipc_ = sub.add_parser("ipc", help="IPC commands", add_help=False)
+    ipc.cmd(ipc_)
 
-    sub.add_parser("version", help="Show version").set_defaults(func=version_cmd)
+    sub.add_parser("version", help="Show version").set_defaults(func=version.cmd)
+
+    plugin_ = sub.add_parser("plugin", help="Plugin commands")
+    plugin.cmd(plugin_)
 
     args = parser.parse_args()
     args.func(args)

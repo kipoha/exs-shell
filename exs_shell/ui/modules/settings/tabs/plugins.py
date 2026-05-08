@@ -17,14 +17,17 @@ from exs_shell.interfaces.schemas.plugin import Plugin
 
 class PluginManagerCategory(BaseCategory):
     def __init__(self):
+        self.init_plugins()
+        super().__init__()
+        self.update()
+
+    def init_plugins(self) -> None:
         self.plugins: Sequence[Plugin] = [
-            Plugin(name=p_data[1] or p_data[0].name, path=p_data[0])
+            Plugin(name=f"{p_data[1]} ({p_data[0].name})", path=p_data[0])
             for p in Dirs.PLUGINS_DIR.iterdir()
             if (p_data := plugin.check(p))
         ]
         self.plugins_state = self.plugin_state()
-        super().__init__()
-        self.update()
 
     def plugin_state(self) -> dict[str, tuple[Path, bool]]:
         return {
@@ -49,6 +52,7 @@ class PluginManagerCategory(BaseCategory):
         GLib.timeout_add(100, lambda: IgnisApp.get_initialized().reload() or False)
 
     def update(self) -> None:
+        self.init_plugins()
         child = [
             CategoryLabel(title="Manage", icon=Icons.ui.SYSTEM),
             SettingsRow(
