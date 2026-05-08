@@ -6,6 +6,7 @@ import tomllib
 from libexs.utils import plugin as pl_core
 
 from exs_shell.app.path import Dirs
+from exs_shell.configs.user import user
 from exs_shell.interfaces.types import AnyDict
 
 git_regex = re.compile(r"^https://github\.com/[\w-]+/[\w-]+$")
@@ -32,6 +33,7 @@ def install(name_url: str) -> None:
         repo = index["plugins"][name_url]["repo"]
         _clone(repo, Dirs.PLUGINS_DIR / name_url)
 
+    _update()
     print(f"Plugin '{plugin_name}' installed")
 
 
@@ -47,10 +49,18 @@ def _clone(url: str, dest: Path) -> None:
     subprocess.run(["git", "clone", url, str(dest)], check=True)
 
 
+def _update():
+    subprocess.Popen(["exs", "ipc", "plugin", "update"], stdout=subprocess.DEVNULL)
+
+
 def remove(name: str) -> None:
     dest = Dirs.PLUGINS_DIR / name
     if dest.exists():
+        if str(dest) in user.plugins:
+            print(f"Plugin '{name}' is enabled\nDisable it first")
+            return
         subprocess.run(["rm", "-rf", str(dest)], check=True)
+        _update()
         print(f"Plugin '{name}' removed")
     else:
         print(f"Plugin '{name}' not found")

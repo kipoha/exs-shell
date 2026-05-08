@@ -4,6 +4,7 @@ from pathlib import Path
 from gi.repository import GLib
 from ignis.app import IgnisApp
 from ignis.widgets import Box, Button, Label
+from libexs import register
 from libexs.enums.icons import Icons
 from libexs.settings.base import BaseCategory, BaseTab
 from libexs.settings.widgets import CategoryLabel, SettingsRow, SwitchRow, DialogRow
@@ -15,6 +16,7 @@ from exs_shell.configs.user import user
 from exs_shell.interfaces.schemas.plugin import Plugin
 
 
+@register.commands
 class PluginManagerCategory(BaseCategory):
     def __init__(self):
         self.init_plugins()
@@ -23,7 +25,7 @@ class PluginManagerCategory(BaseCategory):
 
     def init_plugins(self) -> None:
         self.plugins: Sequence[Plugin] = [
-            Plugin(name=f"{p_data[1]} ({p_data[0].name})", path=p_data[0])
+            Plugin(name=f"{p_data[1]} (dir: {p_data[0].name})", path=p_data[0])
             for p in Dirs.PLUGINS_DIR.iterdir()
             if (p_data := plugin.check(p))
         ]
@@ -43,14 +45,13 @@ class PluginManagerCategory(BaseCategory):
 
     def save_pl(self) -> None:
         plugins = [
-            str(path)
-            for _, (path, enabled) in self.plugins_state.items()
-            if enabled
+            str(path) for _, (path, enabled) in self.plugins_state.items() if enabled
         ]
         user.plugins.clear()
         user.plugins.extend(plugins)
         GLib.timeout_add(100, lambda: IgnisApp.get_initialized().reload() or False)
 
+    @register.command("plugin", name="update", description="Update plugin list")
     def update(self) -> None:
         self.init_plugins()
         child = [
