@@ -1,6 +1,6 @@
 from ignis.app import IgnisApp
 from ignis.widgets import Label, Button, Box, RegularWindow, Scroll
-from libexs import register
+from libexs import State, register
 from libexs.settings.base import BaseTab
 from libexs.widgets.icon import Icon
 
@@ -55,6 +55,7 @@ class Settings(RegularWindow):
             "system": (Icons.ui.SYSTEM, "System"),
             "about": (Icons.ui.INFO, "About"),
         }
+        State.plugin_tab = PluginManagerTab()
         self.tabs_obj: dict[str, BaseTab] = {
             "main": MainTab(),
             "appearance": AppearanceTab(),
@@ -65,7 +66,7 @@ class Settings(RegularWindow):
             "bluetooth": BluetoothTab(),
             "system": SystemTab(),
             "about": AboutTab(),
-            "plugins": PluginManagerTab(),
+            "plugins": State.plugin_tab,
         }
 
         self.active_tab_label = Label(
