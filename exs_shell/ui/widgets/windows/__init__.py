@@ -77,20 +77,20 @@ class BaseRevealerWindow(Window):
         )
         super().__init__(**kwargs)
 
-    def set_property(self, prop_name: str, value: Any) -> None:
-        if prop_name == "visible":
+    def set_property(self, property_name: str, value: Any) -> None:
+        if property_name == "visible":
             if value:
-                super().set_property(prop_name, value)
+                super().set_property(property_name, value)
             else:
                 Timeout(
                     ms=self.transition_duration,
-                    target=lambda x=super(): x.set_property(prop_name, value),
+                    target=lambda x=super(): x.set_property(property_name, value),
                 )
             for revealer in self._revealers:
                 revealer.reveal_child = value
             self.notify("visible")
         else:
-            super().set_property(prop_name, value)
+            super().set_property(property_name, value)
 
     @IgnisProperty
     def visible(self) -> bool:

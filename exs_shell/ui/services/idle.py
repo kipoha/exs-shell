@@ -1,7 +1,7 @@
 import time
 import subprocess
 
-from gi.repository import GLib  # type: ignore
+from gi.repository import GLib
 
 from loguru import logger
 

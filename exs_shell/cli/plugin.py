@@ -14,6 +14,9 @@ def cmd(parser: argparse.ArgumentParser):
     remove_ = plugin_sub.add_parser("remove", help="Remove plugin")
     remove_.add_argument("name", help="Plugin name")
 
+    new_ = plugin_sub.add_parser("new", help="Create and init new plugin")
+    new_.add_argument("name", help="Plugin name")
+
     parser.set_defaults(func=run_plugin, plugin_parser=parser)
 
 
@@ -26,5 +29,7 @@ def run_plugin(args: argparse.Namespace):
             plugin.remove(args.name)
         case "list":
             plugin.list()
+        case "new":
+            plugin.new(args.name)
         case _:
             args.plugin_parser.print_help()
